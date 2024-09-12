@@ -103,3 +103,24 @@ SkillSyntax is an online course management system developed by our inter-team pr
   - Password: string
   - Type: integer| 1=Admin, 2=Instructor, 3=Student
 
+
+
+## Git commands:
+```
+git checkout -b feature-branch  # Create and switch to a new branch
+git add .  # Stage all changes
+git commit -m "Describe changes"  # Commit changes
+git push origin feature-branch  # Push the branch to GitHub
+git checkout feature-branch  # Switch to the feature branch
+git fetch origin  # Fetch latest changes
+git merge origin/main  # Merge latest main branch into feature-branch
+git checkout feature-branch  # Switch to the feature branch
+git fetch origin  # Fetch latest changes
+git rebase origin/main  # Rebase feature branch on top of the latest main branch
+git add <file>  # Mark conflict-resolved files
+git rebase --continue  # If using rebase
+git commit  # If using merge
+git push --force-with-lease  # For rebase (force push)
+git push  # For merge
+ ```
+
