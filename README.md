@@ -103,3 +103,13 @@ SkillSyntax is an online course management system developed by our inter-team pr
   - Password: string
   - Type: integer| 1=Admin, 2=Instructor, 3=Student
 
+
+
+
+
+
+
+
+
+  ### se valo nai 
+
