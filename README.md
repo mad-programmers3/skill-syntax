@@ -111,5 +111,5 @@ SkillSyntax is an online course management system developed by our inter-team pr
 
 
 
-  ### se valo nai 
-
+  ### Git Pull Command=>
+  git branch --set-upstream-to=origin/mehedi
