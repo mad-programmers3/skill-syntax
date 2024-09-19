@@ -6,5 +6,5 @@ mix.alias({
     '@': path.join(__dirname, 'resources/js')
 });
 
-mix.js('resources/js/app.js', 'public/js').vue();
-mix.sass('resources/css/app.scss', 'public/css');
+mix.js('resources/vue-app/backend/js/app.js', 'public/vue-app/backend/js').vue();
+mix.sass('resources/vue-app/backend/css/app.scss', 'public/vue-app/backend/css');

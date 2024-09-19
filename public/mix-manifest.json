@@ -1,4 +1,4 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/vue-app/backend/js/app.js": "/vue-app/backend/js/app.js",
+    "/vue-app/backend/css/app.css": "/vue-app/backend/css/app.css"
 }

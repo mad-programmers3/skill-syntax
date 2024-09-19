@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="{{asset('backend/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css')}}" />
     <link rel="stylesheet" href="{{asset('backend/assets/css/style.css')}}" />
     <link rel="shortcut icon" href="{{asset('backend/assets/images/favicon.png')}}" />
+
+    <!-- vue app css -->
+     <link rel="stylesheet" href="{{asset('vue-app/backend/css/app.css')}}" />
 </head>
 <body>
 
@@ -32,7 +35,10 @@
 <script src="{{asset('backend/assets/js/hoverable-collapse.js')}}"></script>
 <script src="{{asset('backend/assets/js/misc.js')}}"></script>
 <script src="{{asset('backend/assets/js/dashboard.js')}}"></script>
-<script src="{{asset('js/app.js')}}"></script>
+
+
+<!-- vue app -->
+<script src="{{asset('vue-app/backend/js/app.js')}}"></script>
 
 <!-- End Js section -->
 

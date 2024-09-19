@@ -1,4 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-Route::view('admin/{any}', 'welcome')->where('any', '.*');
+
+
+Route::view('admin/{any}', 'backend-app')->where('any', '.*');
