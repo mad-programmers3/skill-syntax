@@ -3,7 +3,7 @@
 
         <header-menu />
 
-        <home-component />
+        <router-view></router-view>
 
         <my-footer />
 
@@ -16,7 +16,6 @@
     export default {
         components: {MyFooter, HomeComponent, HeaderMenu}
 
-        //
     }
 </script>
 <style scoped>

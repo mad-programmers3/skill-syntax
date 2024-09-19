@@ -10,8 +10,7 @@
 
                     <!-- Hero Slide -->
                     <div class="hero_slide">
-                        <div class="hero_slide_background"
-                             :style="'background-image:url('+ baseUrl +'/frontend/images/slider_background.jpg)'"></div>
+                        <div class="hero_slide_background" :style="{ backgroundImage: 'url('+ baseUrl +'/frontend/images/slider_background.jpg)' }"></div>
                         <div
                                 class="hero_slide_container d-flex flex-column align-items-center justify-content-center">
                             <div class="hero_slide_content text-center">
@@ -23,8 +22,7 @@
 
                     <!-- Hero Slide -->
                     <div class="hero_slide">
-                        <div class="hero_slide_background"
-                             :style="'background-image:url('+ baseUrl +'/frontend/images/slider_background.jpg)'"></div>
+                        <div class="hero_slide_background" :style="{ backgroundImage: 'url('+ baseUrl +'/frontend/images/slider_background.jpg)' }"></div>
                         <div
                                 class="hero_slide_container d-flex flex-column align-items-center justify-content-center">
                             <div class="hero_slide_content text-center">
@@ -36,8 +34,7 @@
 
                     <!-- Hero Slide -->
                     <div class="hero_slide">
-                        <div class="hero_slide_background"
-                             :style="'background-image:url('+ baseUrl +'/frontend/images/slider_background.jpg)'"></div>
+                        <div class="hero_slide_background" :style="{ backgroundImage: 'url('+ baseUrl +'/frontend/images/slider_background.jpg)' }"></div>
                         <div
                                 class="hero_slide_container d-flex flex-column align-items-center justify-content-center">
                             <div class="hero_slide_content text-center">

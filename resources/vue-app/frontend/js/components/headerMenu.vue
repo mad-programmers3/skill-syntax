@@ -17,9 +17,9 @@
                 <nav class="main_nav_container">
                     <div class="main_nav">
                         <ul class="main_nav_list">
-                            <li class="main_nav_item"><a href="#">home</a></li>
-                            <li class="main_nav_item"><a href="#">about us</a></li>
-                            <li class="main_nav_item"><a href="courses.html">courses</a></li>
+                            <li class="main_nav_item"><router-link to="/">home</router-link></li>
+                            <li class="main_nav_item"><router-link to="/about">about us</router-link></li>
+                            <li class="main_nav_item"><router-link to="/courses">courses</router-link></li>
                             <li class="main_nav_item"><a href="elements.html">elements</a></li>
                             <li class="main_nav_item"><a href="news.html">news</a></li>
                             <li class="main_nav_item"><a href="contact.html">contact</a></li>
