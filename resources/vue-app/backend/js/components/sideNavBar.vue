@@ -83,27 +83,42 @@
                 <div class="nav-link">
                     <div class="mt-4">
                         <div class="border-none">
-                            <p class="text-black">Notification</p>
+                            <p class="text-black"><i class="fa fa-bell"></i> Notification</p>
                         </div>
                         <ul class="mt-4 pl-0">
-                            <li>Sign Out</li>
+                            <li @click.prevent="logout">
+                                <i class="fa fa-sign-out"></i> Sign Out
+                            </li>
                         </ul>
                     </div>
                 </div>
             </li>
         </ul>
     </nav>
-
 </template>
 
-
 <script>
+    import axios from 'axios';
+
     export default {
-        name:'sideNavBar'
+        name: 'sideNavBar',
+        methods: {
+            async logout() {
+                try {
+                    await axios.post('/logout', {}, {
+                        headers: {
+                            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        }
+                    });
+
+                    window.location.href = '/login';
+                } catch (error) {
+                    console.error('Logout failed', error);
+                }
+            }
+        }
     }
-
 </script>
-
 
 <style scoped>
 
