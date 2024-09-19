@@ -17,9 +17,13 @@
                     <div class="col text-center">
                         <div class="newsletter_form_container mx-auto">
                             <form action="post">
-                                <div class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-center">
-                                    <input id="newsletter_email" class="newsletter_email" type="email" placeholder="Email Address" required="required" data-error="Valid email is required.">
-                                    <button id="newsletter_submit" type="submit" class="newsletter_submit_btn trans_300" value="Submit">Subscribe</button>
+                                <div
+                                        class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-center">
+                                    <input id="newsletter_email" class="newsletter_email" type="email"
+                                           placeholder="Email Address" required="required"
+                                           data-error="Valid email is required.">
+                                    <button id="newsletter_submit" type="submit"
+                                            class="newsletter_submit_btn trans_300" value="Submit">Subscribe</button>
                                 </div>
                             </form>
                         </div>
@@ -39,13 +43,14 @@
                         <!-- Logo -->
                         <div class="logo_container">
                             <div class="logo">
-                                <img :src="baseUrl + '/frontend/images/logo.png'" alt=""/>
-<!--                                <img src="{{asset('frontend/images/logo.png')}}" alt="">-->
+                                <img :src="baseUrl + '/frontend/images/logo.png'" alt="">
                                 <span>course</span>
                             </div>
                         </div>
 
-                        <p class="footer_about_text">In aliquam, augue a gravida rutrum, ante nisl fermentum nulla, vitae tempor nisl ligula vel nunc. Proin quis mi malesuada, finibus tortor fermentum, tempor lacus.</p>
+                        <p class="footer_about_text">In aliquam, augue a gravida rutrum, ante nisl fermentum nulla,
+                            vitae tempor nisl ligula vel nunc. Proin quis mi malesuada, finibus tortor fermentum,
+                            tempor lacus.</p>
 
                     </div>
 
@@ -87,22 +92,22 @@
                             <ul>
                                 <li class="footer_contact_item">
                                     <div class="footer_contact_icon">
-                                        <img :src="baseUrl + '/frontend/images/placeholder.svg'" alt="https://www.flaticon.com/authors/lucy-g"/>
-<!--                                        <img src="{{asset('frontend/images/placeholder.svg')}}" alt="https://www.flaticon.com/authors/lucy-g">-->
+                                        <img :src="baseUrl + '/frontend/images/placeholder.svg'"
+                                             alt="https://www.flaticon.com/authors/lucy-g">
                                     </div>
                                     Blvd Libertad, 34 m05200 Arévalo
                                 </li>
                                 <li class="footer_contact_item">
                                     <div class="footer_contact_icon">
-                                        <img :src="baseUrl + '/frontend/images/smartphone.svg'" alt="https://www.flaticon.com/authors/lucy-g"/>
-<!--                                        <img src="{{asset('frontend/images/smartphone.svg')}}" alt="https://www.flaticon.com/authors/lucy-g">-->
+                                        <img :src="baseUrl + '/frontend/images/smartphone.svg'"
+                                             alt="https://www.flaticon.com/authors/lucy-g">
                                     </div>
                                     0034 37483 2445 322
                                 </li>
                                 <li class="footer_contact_item">
                                     <div class="footer_contact_icon">
-                                        <img :src="baseUrl + '/frontend/images/envelope.svg'" alt="https://www.flaticon.com/authors/lucy-g"/>
-<!--                                        <img src="{{asset('frontend/images/envelope.svg')}}" alt="https://www.flaticon.com/authors/lucy-g">-->
+                                        <img :src="baseUrl + '/frontend/images/envelope.svg'"
+                                             alt="https://www.flaticon.com/authors/lucy-g">
                                     </div>hello@company.com
                                 </li>
                             </ul>
@@ -116,11 +121,13 @@
 
             <div class="footer_bar d-flex flex-column flex-sm-row align-items-center">
                 <div class="footer_copyright">
-					<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;
-<!--                        <script>document.write(new Date().getFullYear());</script>-->
-                        All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></span>
+						<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							2024 All rights reserved | This
+							template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
+                                    href="https://colorlib.com" target="_blank">Colorlib</a>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</span>
                 </div>
                 <div class="footer_social ml-sm-auto">
                     <ul class="menu_social">
@@ -135,7 +142,6 @@ Copyright &copy;
 
         </div>
     </footer>
-
 </template>
 <script>
     export default {

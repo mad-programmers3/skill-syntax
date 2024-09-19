@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import commonMixin from "./mixins/commonMixin";
-Vue.mixin(commonMixin);
 
 Vue.use(VueRouter);
 import App from './App.vue'
@@ -13,6 +12,9 @@ const router = new VueRouter({
     routes : route,
     linkActiveClass : 'active'
 });
+
+
+Vue.mixin(commonMixin);
 
 
 const vue = new Vue({

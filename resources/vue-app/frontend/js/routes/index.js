@@ -1,10 +1,11 @@
 import homeComponent from "../views/homeComponent";
 
-const routes =[
+const route = [
     {
-        path: '/',
-        name:'home',
-        component: homeComponent
-    }
+        path : '/',
+        name : 'home',
+        component : homeComponent,
+        meta : {'pageTitle' : 'Home'},
+    },
 ];
-export default routes;
+export default route;

@@ -32,9 +32,9 @@
 <script src="{{asset('frontend/plugins/scrollTo/jquery.scrollTo.min.js')}}"></script>
 <script src="{{asset('frontend/plugins/easing/easing.js')}}"></script>
 <script src="{{asset('frontend/js/custom.js')}}"></script>
-<script src="{{asset('vue-app/frontend/js/app.js')}}"></script>
 
 <script>window.baseUrl = '{{url('/')}}';</script>
+<script src="{{asset('vue-app/frontend/js/app.js')}}"></script>
 
 </body>
 </html>
