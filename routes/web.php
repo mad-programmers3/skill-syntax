@@ -21,8 +21,8 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 
-Route::view('admin/{any}', 'backend-app')->where('any', '.*');
-Route::prefix('api')->middleware('auth')->group(function () {
+Route::view('admin/{any}', 'backend-app')->middleware('auth')->where('any', '.*');
 
+Route::prefix('api')->middleware('auth')->group(function () {
 
 });
