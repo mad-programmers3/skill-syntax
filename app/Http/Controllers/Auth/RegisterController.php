@@ -13,7 +13,7 @@ class RegisterController extends Controller
         // Validation with unique email check
         $request->validate([
             'name' => 'required',
-            'email' => 'required|unique',
+            'email' => 'required',
             'password' => 'required|confirmed', // Added confirmation rule
         ]);
 
