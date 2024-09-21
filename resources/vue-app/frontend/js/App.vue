@@ -1,23 +1,29 @@
 <template>
-    <div class="super_container">
+    <div>
+        <header-menu></header-menu>
 
-        <header-menu />
-
+        <!--================ Start Home Banner Area =================-->
+<!--        <home-component></home-component>-->
         <router-view></router-view>
+        <!--================ End Testimonial Area =================-->
 
-        <my-footer />
 
+        <!--================ Start footer Area  =================-->
+      <MyFooter></MyFooter>
+        <!--================ End footer Area  =================-->
     </div>
-</template>
-<script>
-    import HeaderMenu from "./components/headerMenu";
-    import HomeComponent from "./views/homeComponent";
-    import MyFooter from "./components/myFooter";
-    export default {
-        components: {MyFooter, HomeComponent, HeaderMenu}
 
-    }
+
+</template>
+<script >
+ import HeaderMenu from "./components/headerMenu";
+ import MyFooter from "./components/myFooter";
+ import HomeComponent from "./views/homeComponent";
+ export default {
+     components: {HomeComponent, MyFooter, HeaderMenu}
+ }
 </script>
 <style scoped>
 
 </style>
+

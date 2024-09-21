@@ -1,195 +1,521 @@
 <template>
     <div>
-        <div class="home">
-            <div class="home_background_container prlx_parent">
-                <div class="home_background prlx"  :style="'background-image:url('+ baseUrl +'/frontend/images/slider_background.jpg)'"></div>
+        <header class="header_area white-header">
+            <div class="main_menu">
+                <nav class="navbar navbar-expand-lg navbar-light">
+                    <div class="container">
+                        <!-- Brand and toggle get grouped for better mobile display -->
+                        <a class="navbar-brand" href="index.html">
+                            <img class="logo-2" :src="baseUrl + '/frontend/img/logo2.png'" alt="" />
+                        </a>
+                        <button
+                                class="navbar-toggler"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent"
+                                aria-expanded="false"
+                                aria-label="Toggle navigation"
+                        >
+                            <span class="icon-bar"></span> <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div
+                                class="collapse navbar-collapse offset"
+                                id="navbarSupportedContent"
+                        >
+                            <ul class="nav navbar-nav menu_nav ml-auto">
+                                <li class="nav-item">
+                                    <router-link class="nav-link" to="/">Home</router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link class="nav-link" to="/about">About</router-link>
+                                </li>
+                                <li class="nav-item submenu dropdown active">
+                                    <a
+                                            href="#"
+                                            class="nav-link dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            role="button"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                    >Pages</a
+                                    >
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <router-link class="nav-link" to="/courses">Courses</router-link>
+                                        </li>
+                                        <li class="nav-item">
+                                            <router-link class="nav-link" to="/courseDetails">Course Details</router-link>
+                                        </li>
+                                        <li class="nav-item">
+                                            <router-link class="nav-link" to="/elements">Elements</router-link>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item submenu dropdown">
+                                    <a
+                                            href="#"
+                                            class="nav-link dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            role="button"
+                                            aria-haspopup="true"
+                                            aria-expanded="false"
+                                    >Blog</a
+                                    >
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <router-link class="nav-link" to="/blog">Blog</router-link>
+                                        </li>
+                                        <li class="nav-item">
+                                            <router-link class="nav-link" to="/blogDetails">Blog Details</router-link>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <router-link class="nav-link" to="/contact">Contact</router-link>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link search" id="search">
+                                        <i class="ti-search"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
             </div>
-            <div class="home_content">
-                <h1>Courses</h1>
+        </header>
+        <!--================ End Header Menu Area =================-->
+
+        <!--================Home Banner Area =================-->
+        <section class="banner_area">
+            <div class="banner_inner d-flex align-items-center">
+                <div class="overlay"></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6">
+                            <div class="banner_content text-center">
+                                <h2>Courses</h2>
+                                <div class="page_link">
+                                    <a href="index.html">Home</a>
+                                    <a href="courses.html">Courses</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+        <!--================End Home Banner Area =================-->
 
-        <!-- Popular -->
-
-        <div class="popular page_section">
+        <!--================ Start Popular Courses Area =================-->
+        <div class="popular_courses">
             <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="section_title text-center">
-                            <h1>Popular Courses</h1>
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="main_title">
+                            <h2 class="mb-3">Our Popular Courses</h2>
+                            <p>
+                                Replenish man have thing gathering lights yielding shall you
+                            </p>
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <!-- single course -->
+                    <div class="col-lg-12">
+                        <div class="owl-carousel active_course owl-loaded owl-drag">
 
-                <div class="row course_boxes">
 
-                    <!-- Popular Course Item -->
-                    <div class="col-lg-4 course_box">
-                        <div class="card">
-                            <img class="card-img-top" :src="baseUrl + '/frontend/images/course_1.jpg'" alt="https://unsplash.com/@kellybrito">
-                            <div class="card-body text-center">
-                                <div class="card-title"><a href="courses.html">A complete guide to design</a></div>
-                                <div class="card-text">Adobe Guide, Layes, Smart Objects etc...</div>
-                            </div>
-                            <div class="price_box d-flex flex-row align-items-center">
-                                <div class="course_author_image">
-                                    <img :src="baseUrl + '/frontend/images/author.jpg'" alt="https://unsplash.com/@mehdizadeh">
+
+
+
+                            <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1520px, 0px, 0px); transition: all 0s ease 0s; width: 3420px;"><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
+                                <div class="course_head">
+                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
                                 </div>
-                                <div class="course_author_name">Michael Smith, <span>Author</span></div>
-                                <div class="course_price d-flex flex-column align-items-center justify-content-center"><span>$29</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Popular Course Item -->
-                    <div class="col-lg-4 course_box">
-                        <div class="card">
-                            <img class="card-img-top" :src="baseUrl + '/frontend/images/course_2.jpg'" alt="https://unsplash.com/@cikstefan">
-                            <div class="card-body text-center">
-                                <div class="card-title"><a href="courses.html">Beginners guide to HTML</a></div>
-                                <div class="card-text">Adobe Guide, Layes, Smart Objects etc...</div>
-                            </div>
-                            <div class="price_box d-flex flex-row align-items-center">
-                                <div class="course_author_image">
-                                    <img :src="baseUrl + '/frontend/images/author.jpg'" alt="https://unsplash.com/@mehdizadeh">
+                                <div class="course_content">
+                                    <span class="price">$25</span>
+                                    <span class="tag mb-4 d-inline-block">design</span>
+                                    <h4 class="mb-3">
+                                        <a href="course-details.html">Custom Product Design</a>
+                                    </h4>
+                                    <p>
+                                        One make creepeth man bearing their one firmament won't fowl
+                                        meat over sea
+                                    </p>
+                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
+                                        <div class="authr_meta">
+                                            <img :src="baseUrl + '/frontend/img/courses/author1.png'" alt="">
+                                            <span class="d-inline-block ml-2">Cameron</span>
+                                        </div>
+                                        <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="course_author_name">Michael Smith, <span>Author</span></div>
-                                <div class="course_price d-flex flex-column align-items-center justify-content-center"><span>$29</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Popular Course Item -->
-                    <div class="col-lg-4 course_box">
-                        <div class="card">
-                            <img class="card-img-top" :src="baseUrl + '/frontend/images/course_3.jpg'" alt="https://unsplash.com/@dsmacinnes">
-                            <div class="card-body text-center">
-                                <div class="card-title"><a href="courses.html">Advanced Photoshop</a></div>
-                                <div class="card-text">Adobe Guide, Layes, Smart Objects etc...</div>
-                            </div>
-                            <div class="price_box d-flex flex-row align-items-center">
-                                <div class="course_author_image">
-                                    <img :src="baseUrl + '/frontend/images/author.jpg'" alt="https://unsplash.com/@mehdizadeh">
+                            </div></div><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
+                                <div class="course_head">
+                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
                                 </div>
-                                <div class="course_author_name">Michael Smith, <span>Author</span></div>
-                                <div class="course_price d-flex flex-column align-items-center justify-content-center"><span>$29</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Popular Course Item -->
-                    <div class="col-lg-4 course_box">
-                        <div class="card">
-                            <img class="card-img-top" :src="baseUrl + '/frontend/images/course_4.jpg'" alt="https://unsplash.com/@kellitungay">
-                            <div class="card-body text-center">
-                                <div class="card-title"><a href="courses.html">A complete guide to design</a></div>
-                                <div class="card-text">Adobe Guide, Layes, Smart Objects etc...</div>
-                            </div>
-                            <div class="price_box d-flex flex-row align-items-center">
-                                <div class="course_author_image">
-                                    <img :src="baseUrl + '/frontend/images/author.jpg'" alt="https://unsplash.com/@mehdizadeh">
+                                <div class="course_content">
+                                    <span class="price">$25</span>
+                                    <span class="tag mb-4 d-inline-block">design</span>
+                                    <h4 class="mb-3">
+                                        <a href="course-details.html">Social Media Network</a>
+                                    </h4>
+                                    <p>
+                                        One make creepeth man bearing their one firmament won't fowl
+                                        meat over sea
+                                    </p>
+                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
+                                        <div class="authr_meta">
+                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="">
+                                            <span class="d-inline-block ml-2">Cameron</span>
+                                        </div>
+                                        <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="course_author_name">Michael Smith, <span>Author</span></div>
-                                <div class="course_price d-flex flex-column align-items-center justify-content-center"><span>$29</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Popular Course Item -->
-                    <div class="col-lg-4 course_box">
-                        <div class="card">
-                            <img class="card-img-top" :src="baseUrl + '/frontend/images/course_5.jpg'" alt="https://unsplash.com/@claybanks1989">
-                            <div class="card-body text-center">
-                                <div class="card-title"><a href="courses.html">Beginners guide to HTML</a></div>
-                                <div class="card-text">Adobe Guide, Layes, Smart Objects etc...</div>
-                            </div>
-                            <div class="price_box d-flex flex-row align-items-center">
-                                <div class="course_author_image">
-                                    <img :src="baseUrl + '/frontend/images/author.jpg'" alt="https://unsplash.com/@mehdizadeh">
+                            </div></div><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
+                                <div class="course_head">
+                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
                                 </div>
-                                <div class="course_author_name">Michael Smith, <span>Author</span></div>
-                                <div class="course_price d-flex flex-column align-items-center justify-content-center"><span>$29</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Popular Course Item -->
-                    <div class="col-lg-4 course_box">
-                        <div class="card">
-                            <img class="card-img-top" :src="baseUrl + '/frontend/images/course_6.jpg'" alt="https://unsplash.com/@element5digital">
-                            <div class="card-body text-center">
-                                <div class="card-title"><a href="courses.html">Advanced Photoshop</a></div>
-                                <div class="card-text">Adobe Guide, Layes, Smart Objects etc...</div>
-                            </div>
-                            <div class="price_box d-flex flex-row align-items-center">
-                                <div class="course_author_image">
-                                    <img :src="baseUrl + '/frontend/images/author.jpg'" alt="https://unsplash.com/@mehdizadeh">
+                                <div class="course_content">
+                                    <span class="price">$25</span>
+                                    <span class="tag mb-4 d-inline-block">design</span>
+                                    <h4 class="mb-3">
+                                        <a href="course-details.html">Computer Engineering</a>
+                                    </h4>
+                                    <p>
+                                        One make creepeth man bearing their one firmament won't fowl
+                                        meat over sea
+                                    </p>
+                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
+                                        <div class="authr_meta">
+                                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
+                                            <span class="d-inline-block ml-2">Cameron</span>
+                                        </div>
+                                        <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="course_author_name">Michael Smith, <span>Author</span></div>
-                                <div class="course_price d-flex flex-column align-items-center justify-content-center"><span>$29</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Popular Course Item -->
-                    <div class="col-lg-4 course_box">
-                        <div class="card">
-                            <img class="card-img-top" :src="baseUrl + '/frontend/images/course_7.jpg'" alt="https://unsplash.com/@gaellemm">
-                            <div class="card-body text-center">
-                                <div class="card-title"><a href="courses.html">A complete guide to design</a></div>
-                                <div class="card-text">Adobe Guide, Layes, Smart Objects etc...</div>
-                            </div>
-                            <div class="price_box d-flex flex-row align-items-center">
-                                <div class="course_author_image">
-                                    <img :src="baseUrl + '/frontend/images/author.jpg'" alt="https://unsplash.com/@mehdizadeh">
+                            </div></div><div class="owl-item" style="width: 350px; margin-right: 30px;"><div class="single_course">
+                                <div class="course_head">
+                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
                                 </div>
-                                <div class="course_author_name">Michael Smith, <span>Author</span></div>
-                                <div class="course_price d-flex flex-column align-items-center justify-content-center"><span>$29</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Popular Course Item -->
-                    <div class="col-lg-4 course_box">
-                        <div class="card">
-                            <img class="card-img-top" :src="baseUrl + '/frontend/images/course_8.jpg'" alt="https://unsplash.com/@juanmramosjr">
-                            <div class="card-body text-center">
-                                <div class="card-title"><a href="courses.html">Beginners guide to HTML</a></div>
-                                <div class="card-text">Adobe Guide, Layes, Smart Objects etc...</div>
-                            </div>
-                            <div class="price_box d-flex flex-row align-items-center">
-                                <div class="course_author_image">
-                                    <img :src="baseUrl + '/frontend/images/author.jpg'" alt="https://unsplash.com/@mehdizadeh">
+                                <div class="course_content">
+                                    <span class="price">$25</span>
+                                    <span class="tag mb-4 d-inline-block">design</span>
+                                    <h4 class="mb-3">
+                                        <a href="course-details.html">Custom Product Design</a>
+                                    </h4>
+                                    <p>
+                                        One make creepeth man bearing their one firmament won't fowl
+                                        meat over sea
+                                    </p>
+                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
+                                        <div class="authr_meta">
+                                            <img :src="baseUrl + '/frontend/img/courses/author1.png'" alt="">
+                                            <span class="d-inline-block ml-2">Cameron</span>
+                                        </div>
+                                        <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="course_author_name">Michael Smith, <span>Author</span></div>
-                                <div class="course_price d-flex flex-column align-items-center justify-content-center"><span>$29</span></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Popular Course Item -->
-                    <div class="col-lg-4 course_box">
-                        <div class="card">
-                            <img class="card-img-top" :src="baseUrl + '/frontend/images/course_9.jpg'" alt="https://unsplash.com/@kimberlyfarmer">
-                            <div class="card-body text-center">
-                                <div class="card-title"><a href="courses.html">Advanced Photoshop</a></div>
-                                <div class="card-text">Adobe Guide, Layes, Smart Objects etc...</div>
-                            </div>
-                            <div class="price_box d-flex flex-row align-items-center">
-                                <div class="course_author_image">
-                                    <img :src="baseUrl + '/frontend/images/author.jpg'" alt="https://unsplash.com/@mehdizadeh">
+                            </div></div><div class="owl-item active" style="width: 350px; margin-right: 30px;"><div class="single_course">
+                                <div class="course_head">
+                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
                                 </div>
-                                <div class="course_author_name">Michael Smith, <span>Author</span></div>
-                                <div class="course_price d-flex flex-column align-items-center justify-content-center"><span>$29</span></div>
-                            </div>
-                        </div>
+                                <div class="course_content">
+                                    <span class="price">$25</span>
+                                    <span class="tag mb-4 d-inline-block">design</span>
+                                    <h4 class="mb-3">
+                                        <a href="course-details.html">Social Media Network</a>
+                                    </h4>
+                                    <p>
+                                        One make creepeth man bearing their one firmament won't fowl
+                                        meat over sea
+                                    </p>
+                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
+                                        <div class="authr_meta">
+                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="">
+                                            <span class="d-inline-block ml-2">Cameron</span>
+                                        </div>
+                                        <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></div><div class="owl-item active" style="width: 350px; margin-right: 30px;"><div class="single_course">
+                                <div class="course_head">
+                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
+                                </div>
+                                <div class="course_content">
+                                    <span class="price">$25</span>
+                                    <span class="tag mb-4 d-inline-block">design</span>
+                                    <h4 class="mb-3">
+                                        <a href="course-details.html">Computer Engineering</a>
+                                    </h4>
+                                    <p>
+                                        One make creepeth man bearing their one firmament won't fowl
+                                        meat over sea
+                                    </p>
+                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
+                                        <div class="authr_meta">
+                                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
+                                            <span class="d-inline-block ml-2">Cameron</span>
+                                        </div>
+                                        <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></div><div class="owl-item cloned active" style="width: 350px; margin-right: 30px;"><div class="single_course">
+                                <div class="course_head">
+                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
+                                </div>
+                                <div class="course_content">
+                                    <span class="price">$25</span>
+                                    <span class="tag mb-4 d-inline-block">design</span>
+                                    <h4 class="mb-3">
+                                        <a href="course-details.html">Custom Product Design</a>
+                                    </h4>
+                                    <p>
+                                        One make creepeth man bearing their one firmament won't fowl
+                                        meat over sea
+                                    </p>
+                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
+                                        <div class="authr_meta">
+                                            <img :src="baseUrl + '/frontend/img/courses/author1.png'" alt="">
+                                            <span class="d-inline-block ml-2">Cameron</span>
+                                        </div>
+                                        <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></div><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
+                                <div class="course_head">
+                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
+                                </div>
+                                <div class="course_content">
+                                    <span class="price">$25</span>
+                                    <span class="tag mb-4 d-inline-block">design</span>
+                                    <h4 class="mb-3">
+                                        <a href="course-details.html">Social Media Network</a>
+                                    </h4>
+                                    <p>
+                                        One make creepeth man bearing their one firmament won't fowl
+                                        meat over sea
+                                    </p>
+                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
+                                        <div class="authr_meta">
+                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="">
+                                            <span class="d-inline-block ml-2">Cameron</span>
+                                        </div>
+                                        <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></div><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
+                                <div class="course_head">
+                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
+                                </div>
+                                <div class="course_content">
+                                    <span class="price">$25</span>
+                                    <span class="tag mb-4 d-inline-block">design</span>
+                                    <h4 class="mb-3">
+                                        <a href="course-details.html">Computer Engineering</a>
+                                    </h4>
+                                    <p>
+                                        One make creepeth man bearing their one firmament won't fowl
+                                        meat over sea
+                                    </p>
+                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
+                                        <div class="authr_meta">
+                                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
+                                            <span class="d-inline-block ml-2">Cameron</span>
+                                        </div>
+                                        <div class="mt-lg-0 mt-3">
+                      <span class="meta_info mr-4">
+                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                      </span>
+                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div></div></div></div><div class="owl-nav disabled"><div class="owl-prev"><img :src="baseUrl + '/frontend/img/prev.png'"></div><div class="owl-next"><img :src="baseUrl + '/frontend/img/next.png'"></div></div><div class="owl-dots disabled"></div></div>
                     </div>
-
                 </div>
             </div>
         </div>
+        <!--================ End Popular Courses Area =================-->
 
+        <!--================ Start Registration Area =================-->
+        <div class="section_gap registration_area">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-7">
+                        <div class="row clock_sec clockdiv" id="clockdiv">
+                            <div class="col-lg-12">
+                                <h1 class="mb-3">Register Now</h1>
+                                <p>
+                                    There is a moment in the life of any aspiring astronomer that
+                                    it is time to buy that first telescope. It’s exciting to think
+                                    about setting up your own viewing station.
+                                </p>
+                            </div>
+                            <div class="col clockinner1 clockinner">
+                                <h1 class="days">150</h1>
+                                <span class="smalltext">Days</span>
+                            </div>
+                            <div class="col clockinner clockinner1">
+                                <h1 class="hours">23</h1>
+                                <span class="smalltext">Hours</span>
+                            </div>
+                            <div class="col clockinner clockinner1">
+                                <h1 class="minutes">47</h1>
+                                <span class="smalltext">Mins</span>
+                            </div>
+                            <div class="col clockinner clockinner1">
+                                <h1 class="seconds">59</h1>
+                                <span class="smalltext">Secs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 offset-lg-1">
+                        <div class="register_form">
+                            <h3>Courses for Free</h3>
+                            <p>It is high time for learning</p>
+                            <form
+                                    class="form_area"
+                                    id="myForm"
+                                    action="mail.html"
+                                    method="post"
+                            >
+                                <div class="row">
+                                    <div class="col-lg-12 form_group">
+                                        <input
+                                                name="name"
+                                                placeholder="Your Name"
+                                                required=""
+                                                type="text"
+                                        />
+                                        <input
+                                                name="name"
+                                                placeholder="Your Phone Number"
+                                                required=""
+                                                type="tel"
+                                        />
+                                        <input
+                                                name="email"
+                                                placeholder="Your Email Address"
+                                                pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
+                                                required=""
+                                                type="email"
+                                        />
+                                    </div>
+                                    <div class="col-lg-12 text-center">
+                                        <button class="primary-btn">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--================ End Registration Area =================-->
+
+        <!--================ Start Feature Area =================-->
+        <section class="feature_area section_gap">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5">
+                        <div class="main_title">
+                            <h2 class="mb-3">Awesome Feature</h2>
+                            <p>
+                                Replenish man have thing gathering lights yielding shall you
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single_feature">
+                            <div class="icon"><span class="flaticon-student"></span></div>
+                            <div class="desc">
+                                <h4 class="mt-3 mb-2">Scholarship Facility</h4>
+                                <p>
+                                    One make creepeth, man bearing theira firmament won't great
+                                    heaven
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single_feature">
+                            <div class="icon"><span class="flaticon-book"></span></div>
+                            <div class="desc">
+                                <h4 class="mt-3 mb-2">Sell Online Course</h4>
+                                <p>
+                                    One make creepeth, man bearing theira firmament won't great
+                                    heaven
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single_feature">
+                            <div class="icon"><span class="flaticon-earth"></span></div>
+                            <div class="desc">
+                                <h4 class="mt-3 mb-2">Global Certification</h4>
+                                <p>
+                                    One make creepeth, man bearing theira firmament won't great
+                                    heaven
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================ End Feature Area =================-->
     </div>
+
 
 
 </template>

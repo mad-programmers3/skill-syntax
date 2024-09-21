@@ -1,147 +1,99 @@
 <template>
-    <footer class="footer">
-        <div class="container">
+    <div>
 
-            <!-- Newsletter -->
-
-            <div class="newsletter">
+        <footer class="footer-area section_gap">
+            <div class="container">
                 <div class="row">
-                    <div class="col">
-                        <div class="section_title text-center">
-                            <h1>Subscribe to newsletter</h1>
-                        </div>
+                    <div class="col-lg-2 col-md-6 single-footer-widget">
+                        <h4>Top Products</h4>
+                        <ul>
+                            <li><a href="#">Managed Website</a></li>
+                            <li><a href="#">Manage Reputation</a></li>
+                            <li><a href="#">Power Tools</a></li>
+                            <li><a href="#">Marketing Service</a></li>
+                        </ul>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col text-center">
-                        <div class="newsletter_form_container mx-auto">
-                            <form action="post">
-                                <div
-                                        class="newsletter_form d-flex flex-md-row flex-column flex-xs-column align-items-center justify-content-center">
-                                    <input id="newsletter_email" class="newsletter_email" type="email"
-                                           placeholder="Email Address" required="required"
-                                           data-error="Valid email is required.">
-                                    <button id="newsletter_submit" type="submit"
-                                            class="newsletter_submit_btn trans_300" value="Submit">Subscribe</button>
+                    <div class="col-lg-2 col-md-6 single-footer-widget">
+                        <h4>Quick Links</h4>
+                        <ul>
+                            <li><a href="#">Jobs</a></li>
+                            <li><a href="#">Brand Assets</a></li>
+                            <li><a href="#">Investor Relations</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 single-footer-widget">
+                        <h4>Features</h4>
+                        <ul>
+                            <li><a href="#">Jobs</a></li>
+                            <li><a href="#">Brand Assets</a></li>
+                            <li><a href="#">Investor Relations</a></li>
+                            <li><a href="#">Terms of Service</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-2 col-md-6 single-footer-widget">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">Guides</a></li>
+                            <li><a href="#">Research</a></li>
+                            <li><a href="#">Experts</a></li>
+                            <li><a href="#">Agencies</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-4 col-md-6 single-footer-widget">
+                        <h4>Newsletter</h4>
+                        <p>You can trust us. we only send promo offers,</p>
+                        <div class="form-wrap" id="mc_embed_signup">
+                            <form
+                                    target="_blank"
+                                    action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                                    method="get"
+                                    class="form-inline"
+                            >
+                                <input
+                                        class="form-control"
+                                        name="EMAIL"
+                                        placeholder="Your Email Address"
+                                        onfocus="this.placeholder = ''"
+                                        onblur="this.placeholder = 'Your Email Address'"
+                                        required=""
+                                        type="email"
+                                />
+                                <button class="click-btn btn btn-default">
+                                    <span>subscribe</span>
+                                </button>
+                                <div style="position: absolute; left: -5000px;">
+                                    <input
+                                            name="b_36c4fd991d266f23781ded980_aefe40901a"
+                                            tabindex="-1"
+                                            value=""
+                                            type="text"
+                                    />
                                 </div>
+
+                                <div class="info"></div>
                             </form>
                         </div>
                     </div>
                 </div>
-
-            </div>
-
-            <!-- Footer Content -->
-
-            <div class="footer_content">
-                <div class="row">
-
-                    <!-- Footer Column - About -->
-                    <div class="col-lg-3 footer_col">
-
-                        <!-- Logo -->
-                        <div class="logo_container">
-                            <div class="logo">
-                                <img :src="baseUrl + '/frontend/images/logo.png'" alt="">
-                                <span>course</span>
-                            </div>
-                        </div>
-
-                        <p class="footer_about_text">In aliquam, augue a gravida rutrum, ante nisl fermentum nulla,
-                            vitae tempor nisl ligula vel nunc. Proin quis mi malesuada, finibus tortor fermentum,
-                            tempor lacus.</p>
-
+                <div class="row footer-bottom d-flex justify-content-between">
+                    <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;2024 All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </p>
+                    <div class="col-lg-4 col-sm-12 footer-social">
+                        <a href="#"><i class="ti-facebook"></i></a>
+                        <a href="#"><i class="ti-twitter"></i></a>
+                        <a href="#"><i class="ti-dribbble"></i></a>
+                        <a href="#"><i class="ti-linkedin"></i></a>
                     </div>
-
-                    <!-- Footer Column - Menu -->
-
-                    <div class="col-lg-3 footer_col">
-                        <div class="footer_column_title">Menu</div>
-                        <div class="footer_column_content">
-                            <ul>
-                                <li class="footer_list_item"><a href="#">Home</a></li>
-                                <li class="footer_list_item"><a href="#">About Us</a></li>
-                                <li class="footer_list_item"><a href="courses.html">Courses</a></li>
-                                <li class="footer_list_item"><a href="news.html">News</a></li>
-                                <li class="footer_list_item"><a href="contact.html">Contact</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Footer Column - Usefull Links -->
-
-                    <div class="col-lg-3 footer_col">
-                        <div class="footer_column_title">Usefull Links</div>
-                        <div class="footer_column_content">
-                            <ul>
-                                <li class="footer_list_item"><a href="#">Testimonials</a></li>
-                                <li class="footer_list_item"><a href="#">FAQ</a></li>
-                                <li class="footer_list_item"><a href="#">Community</a></li>
-                                <li class="footer_list_item"><a href="#">Campus Pictures</a></li>
-                                <li class="footer_list_item"><a href="#">Tuitions</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <!-- Footer Column - Contact -->
-
-                    <div class="col-lg-3 footer_col">
-                        <div class="footer_column_title">Contact</div>
-                        <div class="footer_column_content">
-                            <ul>
-                                <li class="footer_contact_item">
-                                    <div class="footer_contact_icon">
-                                        <img :src="baseUrl + '/frontend/images/placeholder.svg'"
-                                             alt="https://www.flaticon.com/authors/lucy-g">
-                                    </div>
-                                    Blvd Libertad, 34 m05200 Arévalo
-                                </li>
-                                <li class="footer_contact_item">
-                                    <div class="footer_contact_icon">
-                                        <img :src="baseUrl + '/frontend/images/smartphone.svg'"
-                                             alt="https://www.flaticon.com/authors/lucy-g">
-                                    </div>
-                                    0034 37483 2445 322
-                                </li>
-                                <li class="footer_contact_item">
-                                    <div class="footer_contact_icon">
-                                        <img :src="baseUrl + '/frontend/images/envelope.svg'"
-                                             alt="https://www.flaticon.com/authors/lucy-g">
-                                    </div>hello@company.com
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
             </div>
+        </footer>
 
-            <!-- Footer Copyright -->
+    </div>
 
-            <div class="footer_bar d-flex flex-column flex-sm-row align-items-center">
-                <div class="footer_copyright">
-						<span><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							Copyright &copy;
-							2024 All rights reserved | This
-							template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
-                                    href="https://colorlib.com" target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-						</span>
-                </div>
-                <div class="footer_social ml-sm-auto">
-                    <ul class="menu_social">
-                        <li class="menu_social_item"><a href="#"><i class="fab fa-pinterest"></i></a></li>
-                        <li class="menu_social_item"><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                        <li class="menu_social_item"><a href="#"><i class="fab fa-instagram"></i></a></li>
-                        <li class="menu_social_item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                        <li class="menu_social_item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                    </ul>
-                </div>
-            </div>
-
-        </div>
-    </footer>
 </template>
 <script>
     export default {
