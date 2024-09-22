@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\RegisterController;
@@ -19,7 +20,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::prefix('api')->middleware('auth')->group(function () {
-
+    Route::resource('categories', CategoryController::class);
 });
 
 

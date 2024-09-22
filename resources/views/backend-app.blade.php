@@ -39,6 +39,11 @@
 
 
 <!-- vue app -->
+
+<script>
+    window.baseUrl = "{{url('/')}}";
+    window.authUser = "{{ auth()->user() ? auth()->user()->toJson() : 'null' }}";
+</script>
 <script src="{{asset('vue-app/backend/js/app.js')}}"></script>
 
 <!-- End Js section -->

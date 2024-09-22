@@ -39,7 +39,10 @@
 <script src="{{asset('frontend/js/gmaps.min.js')}}"></script>
 <script src="{{asset('frontend/js/theme.js')}}"></script>
 
-<script>window.baseUrl = '{{url('/')}}';</script>
+<script>
+    window.baseUrl = "{{url('/')}}";
+    window.authUser = "{{ auth()->user() ? auth()->user()->toJson() : 'null' }}";
+</script>
 <script src="{{asset('vue-app/frontend/js/app.js')}}"></script>
 
 </body>

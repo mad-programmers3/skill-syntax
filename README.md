@@ -44,6 +44,23 @@ SkillSyntax is an online course management system developed by our inter-team pr
 - Create migration, model, controller
 - CRUD for course
 
+### Main Task
+
+This section outlines the main tasks related to managing the application. For each task, use the format below to indicate the model name in singular.
+
+- **View**: `model_name_view`
+- **Add**: `model_name_add`
+- **Edit**: `model_name_edit`
+- **Delete**: `model_name_delete`
+
+**Example**:  
+- For categories:  
+  - Add: `category_add`  
+  - Edit: `category_edit`  
+- For subcategories:  
+  - Add: `sub_category_add`  
+  - Edit: `sub_category_edit`
+
 
 
 ## Course table details
@@ -57,9 +74,16 @@ SkillSyntax is an online course management system developed by our inter-team pr
     - Star date: date
     - End date: date
     - Thumbnail: string|nullable
+    - Status: integer
     ##### Opt:
     - $table->string('level')->nullable(); // Beginner, Intermediate, Advanced
 
+
+## Categories table details
+1. Columns:
+    - Title: string|max:255
+    - Details: text|5000
+    - Status: integer
 
 ## User table details
 
