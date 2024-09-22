@@ -11,7 +11,8 @@ const routes =[
     {
         path: '/admin/categories',
         name:'categories',
-        component:categoriesComponent
+        component:categoriesComponent,
+        meta : {'pageTitle' : 'Category List', dataUrl : 'api/categories'},
     }
 ];
 export default routes;

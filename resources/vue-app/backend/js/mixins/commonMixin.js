@@ -6,15 +6,15 @@ export  default {
         }
     },
     computed: {
-        // dataList() {
-        //     return this.getDataList();
-        // },
+        dataList() {
+            return this.getDataList();
+        },
         formData() {
             return this.getFormData();
         },
-        // Config() {
-        //     return this.getConfig()
-        // }
+        Config() {
+            return this.getConfig()
+        }
     },
     methods : {
         /**
@@ -45,9 +45,10 @@ export  default {
 
 
         // auth
-        // can(task) {
-        //     return  this.getConfig().permissions.includes(task)
-        // },
+        can(task) {
+            // return  this.getConfig().permissions.includes(task)
+            return true;
+        },
 
 
         // store
