@@ -61,9 +61,7 @@
                                             data-toggle="dropdown"
                                             role="button"
                                             aria-haspopup="true"
-                                            aria-expanded="false"
-                                    >Blog</a
-                                    >
+                                            aria-expanded="false">Blog</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <router-link class="nav-link" to="/blog">Blog</router-link>
