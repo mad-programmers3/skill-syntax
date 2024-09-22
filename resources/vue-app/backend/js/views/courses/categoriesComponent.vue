@@ -85,7 +85,7 @@
     import axios from 'axios';
 
     export default {
-        name: "categoryComponent",
+        name: "categoriesComponent",
         data() {
             return {
                 categories: [],

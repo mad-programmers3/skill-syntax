@@ -1,5 +1,5 @@
 import DashboardComponent from "../views/DashboardComponent";
-import categoryComponent from "../../../../views/courses/categoryComponent";
+import categoriesComponent from "../views/courses/categoriesComponent";
 
 
 const routes =[
@@ -11,7 +11,7 @@ const routes =[
     {
         path: '/admin/categories',
         name:'categories',
-        component:categoryComponent
+        component:categoriesComponent
     }
 ];
 export default routes;
