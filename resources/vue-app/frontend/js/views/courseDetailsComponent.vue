@@ -87,27 +87,9 @@
         </header>
         <!--================ End Header Menu Area =================-->
 
-        <!--================Home Banner Area =================-->
-        <section class="banner_area">
-            <div class="banner_inner d-flex align-items-center">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="banner_content text-center">
-                                <h2>Course Details</h2>
-                                <div class="page_link">
-                                    <a href="index.html">Home</a>
-                                    <a href="courses.html">Courses</a>
-                                    <a href="course-details.html">Courses Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--================End Home Banner Area =================-->
+
+        <banner_area />
+
 
         <!--================ Start Course Details Area =================-->
         <section class="course_details_area section_gap">
@@ -371,8 +353,10 @@
 </template>
 
 <script>
+    import Banner_area from "../components/sections/banner_area";
     export default {
-        name: "courseDetailsComponent.vue"
+        name: "courseDetailsComponent.vue",
+        components: {Banner_area}
     }
 </script>
 

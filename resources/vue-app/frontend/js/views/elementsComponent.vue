@@ -91,24 +91,7 @@
         <!--================ End Header Menu Area =================-->
 
         <!--================Home Banner Area =================-->
-        <section class="banner_area">
-            <div class="banner_inner d-flex align-items-center">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="banner_content text-center">
-                                <h2>Elements</h2>
-                                <div class="page_link">
-                                    <a href="index.html">Home</a>
-                                    <a href="elements.html">Elements</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <banner_area />
         <!--================End Home Banner Area =================-->
 
 
@@ -710,8 +693,10 @@
 </template>
 
 <script>
+    import Banner_area from "../components/sections/banner_area";
     export default {
-        name: "elementsComponent.vue"
+        name: "elementsComponent.vue",
+        components: {Banner_area}
     }
 </script>
 
