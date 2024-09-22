@@ -35,7 +35,6 @@
 <script src="{{asset('backend/assets/js/off-canvas.js')}}"></script>
 <script src="{{asset('backend/assets/js/hoverable-collapse.js')}}"></script>
 <script src="{{asset('backend/assets/js/misc.js')}}"></script>
-<script src="{{asset('backend/assets/js/dashboard.js')}}"></script>
 
 
 <!-- vue app -->
