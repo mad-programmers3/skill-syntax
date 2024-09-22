@@ -17,8 +17,9 @@ class Category extends Model
     ];
 
 
-//    public function products()
-//    {
-//        return $this->hasMany(SubCategory::class);
-//    }
+    // Relationship with Courses
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'category_id');
+    }
 }
