@@ -6,7 +6,7 @@
                     <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
                         <a class="navbar-brand" href="index.html">
-                            <img class="logo-2" :src="baseUrl + '/frontend/img/logo2.png'" alt="" />
+                            <img class="logo-2" :src="baseUrl + '/frontend/img/logo2.png'" alt=""/>
                         </a>
                         <button
                                 class="navbar-toggler"
@@ -47,7 +47,8 @@
                                             <router-link class="nav-link" to="/courses">Courses</router-link>
                                         </li>
                                         <li class="nav-item">
-                                            <router-link class="nav-link" to="/courseDetails">Course Details</router-link>
+                                            <router-link class="nav-link" to="/courseDetails">Course Details
+                                            </router-link>
                                         </li>
                                         <li class="nav-item">
                                             <router-link class="nav-link" to="/elements">Elements</router-link>
@@ -89,440 +90,36 @@
         </header>
         <!--================ End Header Menu Area =================-->
 
-        <!--================Home Banner Area =================-->
-        <section class="banner_area">
-            <div class="banner_inner d-flex align-items-center">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="banner_content text-center">
-                                <h2>Courses</h2>
-                                <div class="page_link">
-                                    <a href="index.html">Home</a>
-                                    <a href="courses.html">Courses</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--================End Home Banner Area =================-->
+        <banner_area />
 
-        <!--================ Start Popular Courses Area =================-->
-        <div class="popular_courses">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="main_title">
-                            <h2 class="mb-3">Our Popular Courses</h2>
-                            <p>
-                                Replenish man have thing gathering lights yielding shall you
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <!-- single course -->
-                    <div class="col-lg-12">
-                        <div class="owl-carousel active_course owl-loaded owl-drag">
+
+       <popular_courses />
 
 
 
+        <gap_registration_area />
 
 
-                            <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1520px, 0px, 0px); transition: all 0s ease 0s; width: 3420px;"><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
-                                <div class="course_head">
-                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
-                                </div>
-                                <div class="course_content">
-                                    <span class="price">$25</span>
-                                    <span class="tag mb-4 d-inline-block">design</span>
-                                    <h4 class="mb-3">
-                                        <a href="course-details.html">Custom Product Design</a>
-                                    </h4>
-                                    <p>
-                                        One make creepeth man bearing their one firmament won't fowl
-                                        meat over sea
-                                    </p>
-                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                                        <div class="authr_meta">
-                                            <img :src="baseUrl + '/frontend/img/courses/author1.png'" alt="">
-                                            <span class="d-inline-block ml-2">Cameron</span>
-                                        </div>
-                                        <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div></div><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
-                                <div class="course_head">
-                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
-                                </div>
-                                <div class="course_content">
-                                    <span class="price">$25</span>
-                                    <span class="tag mb-4 d-inline-block">design</span>
-                                    <h4 class="mb-3">
-                                        <a href="course-details.html">Social Media Network</a>
-                                    </h4>
-                                    <p>
-                                        One make creepeth man bearing their one firmament won't fowl
-                                        meat over sea
-                                    </p>
-                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                                        <div class="authr_meta">
-                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="">
-                                            <span class="d-inline-block ml-2">Cameron</span>
-                                        </div>
-                                        <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div></div><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
-                                <div class="course_head">
-                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
-                                </div>
-                                <div class="course_content">
-                                    <span class="price">$25</span>
-                                    <span class="tag mb-4 d-inline-block">design</span>
-                                    <h4 class="mb-3">
-                                        <a href="course-details.html">Computer Engineering</a>
-                                    </h4>
-                                    <p>
-                                        One make creepeth man bearing their one firmament won't fowl
-                                        meat over sea
-                                    </p>
-                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                                        <div class="authr_meta">
-                                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
-                                            <span class="d-inline-block ml-2">Cameron</span>
-                                        </div>
-                                        <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div></div><div class="owl-item" style="width: 350px; margin-right: 30px;"><div class="single_course">
-                                <div class="course_head">
-                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
-                                </div>
-                                <div class="course_content">
-                                    <span class="price">$25</span>
-                                    <span class="tag mb-4 d-inline-block">design</span>
-                                    <h4 class="mb-3">
-                                        <a href="course-details.html">Custom Product Design</a>
-                                    </h4>
-                                    <p>
-                                        One make creepeth man bearing their one firmament won't fowl
-                                        meat over sea
-                                    </p>
-                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                                        <div class="authr_meta">
-                                            <img :src="baseUrl + '/frontend/img/courses/author1.png'" alt="">
-                                            <span class="d-inline-block ml-2">Cameron</span>
-                                        </div>
-                                        <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div></div><div class="owl-item active" style="width: 350px; margin-right: 30px;"><div class="single_course">
-                                <div class="course_head">
-                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
-                                </div>
-                                <div class="course_content">
-                                    <span class="price">$25</span>
-                                    <span class="tag mb-4 d-inline-block">design</span>
-                                    <h4 class="mb-3">
-                                        <a href="course-details.html">Social Media Network</a>
-                                    </h4>
-                                    <p>
-                                        One make creepeth man bearing their one firmament won't fowl
-                                        meat over sea
-                                    </p>
-                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                                        <div class="authr_meta">
-                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="">
-                                            <span class="d-inline-block ml-2">Cameron</span>
-                                        </div>
-                                        <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div></div><div class="owl-item active" style="width: 350px; margin-right: 30px;"><div class="single_course">
-                                <div class="course_head">
-                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
-                                </div>
-                                <div class="course_content">
-                                    <span class="price">$25</span>
-                                    <span class="tag mb-4 d-inline-block">design</span>
-                                    <h4 class="mb-3">
-                                        <a href="course-details.html">Computer Engineering</a>
-                                    </h4>
-                                    <p>
-                                        One make creepeth man bearing their one firmament won't fowl
-                                        meat over sea
-                                    </p>
-                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                                        <div class="authr_meta">
-                                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
-                                            <span class="d-inline-block ml-2">Cameron</span>
-                                        </div>
-                                        <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div></div><div class="owl-item cloned active" style="width: 350px; margin-right: 30px;"><div class="single_course">
-                                <div class="course_head">
-                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
-                                </div>
-                                <div class="course_content">
-                                    <span class="price">$25</span>
-                                    <span class="tag mb-4 d-inline-block">design</span>
-                                    <h4 class="mb-3">
-                                        <a href="course-details.html">Custom Product Design</a>
-                                    </h4>
-                                    <p>
-                                        One make creepeth man bearing their one firmament won't fowl
-                                        meat over sea
-                                    </p>
-                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                                        <div class="authr_meta">
-                                            <img :src="baseUrl + '/frontend/img/courses/author1.png'" alt="">
-                                            <span class="d-inline-block ml-2">Cameron</span>
-                                        </div>
-                                        <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div></div><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
-                                <div class="course_head">
-                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
-                                </div>
-                                <div class="course_content">
-                                    <span class="price">$25</span>
-                                    <span class="tag mb-4 d-inline-block">design</span>
-                                    <h4 class="mb-3">
-                                        <a href="course-details.html">Social Media Network</a>
-                                    </h4>
-                                    <p>
-                                        One make creepeth man bearing their one firmament won't fowl
-                                        meat over sea
-                                    </p>
-                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                                        <div class="authr_meta">
-                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="">
-                                            <span class="d-inline-block ml-2">Cameron</span>
-                                        </div>
-                                        <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div></div><div class="owl-item cloned" style="width: 350px; margin-right: 30px;"><div class="single_course">
-                                <div class="course_head">
-                                    <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
-                                </div>
-                                <div class="course_content">
-                                    <span class="price">$25</span>
-                                    <span class="tag mb-4 d-inline-block">design</span>
-                                    <h4 class="mb-3">
-                                        <a href="course-details.html">Computer Engineering</a>
-                                    </h4>
-                                    <p>
-                                        One make creepeth man bearing their one firmament won't fowl
-                                        meat over sea
-                                    </p>
-                                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                                        <div class="authr_meta">
-                                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
-                                            <span class="d-inline-block ml-2">Cameron</span>
-                                        </div>
-                                        <div class="mt-lg-0 mt-3">
-                      <span class="meta_info mr-4">
-                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                      </span>
-                                            <span class="meta_info"><a href="#"> <i class="ti-heart mr-2"></i>35 </a></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div></div></div></div><div class="owl-nav disabled"><div class="owl-prev"><img :src="baseUrl + '/frontend/img/prev.png'"></div><div class="owl-next"><img :src="baseUrl + '/frontend/img/next.png'"></div></div><div class="owl-dots disabled"></div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--================ End Popular Courses Area =================-->
 
-        <!--================ Start Registration Area =================-->
-        <div class="section_gap registration_area">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-7">
-                        <div class="row clock_sec clockdiv" id="clockdiv">
-                            <div class="col-lg-12">
-                                <h1 class="mb-3">Register Now</h1>
-                                <p>
-                                    There is a moment in the life of any aspiring astronomer that
-                                    it is time to buy that first telescope. It’s exciting to think
-                                    about setting up your own viewing station.
-                                </p>
-                            </div>
-                            <div class="col clockinner1 clockinner">
-                                <h1 class="days">150</h1>
-                                <span class="smalltext">Days</span>
-                            </div>
-                            <div class="col clockinner clockinner1">
-                                <h1 class="hours">23</h1>
-                                <span class="smalltext">Hours</span>
-                            </div>
-                            <div class="col clockinner clockinner1">
-                                <h1 class="minutes">47</h1>
-                                <span class="smalltext">Mins</span>
-                            </div>
-                            <div class="col clockinner clockinner1">
-                                <h1 class="seconds">59</h1>
-                                <span class="smalltext">Secs</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 offset-lg-1">
-                        <div class="register_form">
-                            <h3>Courses for Free</h3>
-                            <p>It is high time for learning</p>
-                            <form
-                                    class="form_area"
-                                    id="myForm"
-                                    action="mail.html"
-                                    method="post"
-                            >
-                                <div class="row">
-                                    <div class="col-lg-12 form_group">
-                                        <input
-                                                name="name"
-                                                placeholder="Your Name"
-                                                required=""
-                                                type="text"
-                                        />
-                                        <input
-                                                name="name"
-                                                placeholder="Your Phone Number"
-                                                required=""
-                                                type="tel"
-                                        />
-                                        <input
-                                                name="email"
-                                                placeholder="Your Email Address"
-                                                pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{1,63}$"
-                                                required=""
-                                                type="email"
-                                        />
-                                    </div>
-                                    <div class="col-lg-12 text-center">
-                                        <button class="primary-btn">Submit</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--================ End Registration Area =================-->
+       <feature_area_section />
 
-        <!--================ Start Feature Area =================-->
-        <section class="feature_area section_gap">
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-5">
-                        <div class="main_title">
-                            <h2 class="mb-3">Awesome Feature</h2>
-                            <p>
-                                Replenish man have thing gathering lights yielding shall you
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_feature">
-                            <div class="icon"><span class="flaticon-student"></span></div>
-                            <div class="desc">
-                                <h4 class="mt-3 mb-2">Scholarship Facility</h4>
-                                <p>
-                                    One make creepeth, man bearing theira firmament won't great
-                                    heaven
-                                </p>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_feature">
-                            <div class="icon"><span class="flaticon-book"></span></div>
-                            <div class="desc">
-                                <h4 class="mt-3 mb-2">Sell Online Course</h4>
-                                <p>
-                                    One make creepeth, man bearing theira firmament won't great
-                                    heaven
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-6">
-                        <div class="single_feature">
-                            <div class="icon"><span class="flaticon-earth"></span></div>
-                            <div class="desc">
-                                <h4 class="mt-3 mb-2">Global Certification</h4>
-                                <p>
-                                    One make creepeth, man bearing theira firmament won't great
-                                    heaven
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--================ End Feature Area =================-->
     </div>
-
 
 
 </template>
 
+
 <script>
+    import Popular_courses from "../components/sections/popular_courses";
+    import Feature_area_section from "../components/sections/feature_area_section";
+    import Gap_registration_area from "../components/sections/gap_registration_area";
+    import Banner_area from "../components/sections/banner_area";
+
     export default {
-        name: "coursesComponent"
+        name: "coursesComponent",
+        components: {Banner_area, Gap_registration_area, Feature_area_section, Popular_courses},
+
     }
 </script>
 

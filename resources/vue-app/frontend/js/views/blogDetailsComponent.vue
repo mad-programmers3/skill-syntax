@@ -2,25 +2,6 @@
     <div>
         <header class="header_area white-header">
             <div class="main_menu">
-                <div class="search_input" id="search_input_box">
-                    <div class="container">
-                        <form class="d-flex justify-content-between" method="" action="">
-                            <input
-                                    type="text"
-                                    class="form-control"
-                                    id="search_input"
-                                    placeholder="Search Here"
-                            />
-                            <button type="submit" class="btn"></button>
-                            <span
-                                    class="ti-close"
-                                    id="close_search"
-                                    title="Close Search"
-                            ></span>
-                        </form>
-                    </div>
-                </div>
-
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container">
                         <!-- Brand and toggle get grouped for better mobile display -->
@@ -108,27 +89,7 @@
         </header>
         <!--================ End Header Menu Area =================-->
 
-        <!--================Home Banner Area =================-->
-        <section class="banner_area">
-            <div class="banner_inner d-flex align-items-center">
-                <div class="overlay"></div>
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-lg-6">
-                            <div class="banner_content text-center">
-                                <h2>Blog Details</h2>
-                                <div class="page_link">
-                                    <a href="index.html">Home</a>
-                                    <a href="blog.html">Blog</a>
-                                    <a href="single-blog.html">Blog Details</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!--================End Home Banner Area =================-->
+       <banner_area />
 
         <!--================Blog Area =================-->
         <section class="blog_area single-post-area section_gap">
@@ -535,8 +496,10 @@
 </template>
 
 <script>
+    import Banner_area from "../components/sections/banner_area";
     export default {
-        name: "blogDetailsComponent.vue"
+        name: "blogDetailsComponent.vue",
+        components: {Banner_area}
     }
 </script>
 
