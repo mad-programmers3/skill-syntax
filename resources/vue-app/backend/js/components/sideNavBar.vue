@@ -34,10 +34,10 @@
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/buttons.html">Courses</a>
+                            <router-link class="nav-link" to="/admin/courses">Courses</router-link>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="pages/ui-features/dropdowns.html">Categories</a>
+                            <router-link class="nav-link" to="/admin/categories">Categories</router-link>
                         </li>
                     </ul>
                 </div>
