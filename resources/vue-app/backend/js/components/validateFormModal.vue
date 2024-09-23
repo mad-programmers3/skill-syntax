@@ -41,6 +41,11 @@
             }
         },
 
+        mounted() {
+            this.fetchAuth();
+            this.formData.user_id = this.auth.id;
+        },
+
         methods: {
             handleSubmit() {
                 const _this = this;
