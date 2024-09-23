@@ -19,7 +19,7 @@
                         </div>
                         <div class="course_content">
                             <span class="price">{{ course.price }}</span>
-                            <span class="tag mb-4 d-inline-block">{{ course.title }}</span>
+                            <span class="tag mb-4 d-inline-block">{{ course.category.title }}</span>
                             <h4 class="mb-3">
                                 <a href="course-details.html">{{ course.title }}</a>
                             </h4>
