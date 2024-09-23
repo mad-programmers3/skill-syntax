@@ -34,7 +34,7 @@
                 <div class="collapse" id="ui-basic">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/courses">Courses</router-link>
+                            <router-link class="nav-link" to="/admin/course/courses">Courses</router-link>
                         </li>
                         <li class="nav-item">
                             <router-link class="nav-link" to="/admin/categories">Categories</router-link>
