@@ -78,6 +78,14 @@ This section outlines the main tasks related to managing the application. For ea
     ##### Opt:
     - $table->string('level')->nullable(); // Beginner, Intermediate, Advanced
 
+## Lesson table details
+1. Columns:
+    - Course ID
+    - Title: string|max:255
+    - Description: text|5000
+    - Video: string
+    - Status: integer
+
 
 ## Categories table details
 1. Columns:
