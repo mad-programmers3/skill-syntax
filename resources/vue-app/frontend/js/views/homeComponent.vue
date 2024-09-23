@@ -4,7 +4,7 @@
 
         <feature_area_section />
 
-        <popular_courses/>
+        <popular_courses />
 
         <gap_registration_area />
 
