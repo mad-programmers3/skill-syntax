@@ -2,7 +2,8 @@ export  default {
     data(){
         return{
             baseUrl: window.baseUrl,
-            authUser : window.authUser
+            authUser : window.authUser,
+            auth: {},
         }
     },
     computed: {
@@ -45,6 +46,11 @@ export  default {
 
 
         // auth
+        fetchAuth() {
+            let decodedJson = window.authUser.replace(/&quot;/g, '"');
+            this.auth = JSON.parse(decodedJson);
+        },
+
         can(task) {
             // return  this.getConfig().permissions.includes(task)
             return true;

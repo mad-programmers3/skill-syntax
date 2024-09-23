@@ -55,6 +55,43 @@
                     ></textarea>
                 </label>
             </div>
+            <div class="mb-3 d-flex">
+                <div class="w-50 pe-2">
+                    <label class="form-label d-block">
+                        Category
+                        <select
+                                class="form-control"
+                                v-model="formData.category_id"
+                                v-validate="'required'"
+                                name="category_id"
+                                @change="validateField"
+                        >
+                            <option value="">Select a category</option>
+                            <option v-for="category in categories" :key="category.id" :value="category.id">
+                                {{ category.title }}
+                            </option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="w-50 ps-2">
+                    <label class="form-label d-block">
+                        Sub Category
+                        <select
+                                class="form-control"
+                                v-model="formData.sub_category_id"
+                                v-validate="'required'"
+                                name="sub_category_id"
+                                @change="validateField"
+                        >
+                            <option value="">Select a sub category</option>
+                            <option v-for="subCategory in subCategories" :key="subCategory.id" :value="subCategory.id">
+                                {{ subCategory.title }}
+                            </option>
+                        </select>
+                    </label>
+                </div>
+            </div>
             <div class="mb-3">
                 <label class="form-label w-100">
                     Start Date
@@ -91,8 +128,22 @@
                             class="form-control"
                             placeholder="Enter course price"
                             v-model="formData.price"
-                            v-validate="'required|numeric'"
+                            v-validate="'required|decimal'"
                             name="price"
+                            @input="validateField"
+                    />
+                </label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label w-100">
+                    Sits
+                    <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Enter available sits"
+                            v-model="formData.sits"
+                            v-validate="'required|numeric'"
+                            name="sits"
                             @input="validateField"
                     />
                 </label>
@@ -142,10 +193,37 @@
         data() {
             return {
                 tableHeading: ['SL', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
+                categories: {},
+                subCategories: {}
             }
         },
+        mounted() {
+            this.formData.sub_category_id = 1;
+
+            this.fetchCategories();
+            this.fetchSubCategories();
+        },
         methods: {
-            //
+            fetchCategories() {
+                const _this = this;
+                _this.httpReq({
+                    customUrl: 'api/categories',
+                    callback: (response) => {
+                        if (response.data)
+                            _this.categories = response.data.result;
+                    }
+                })
+            },
+            fetchSubCategories() {
+                const _this = this;
+                _this.httpReq({
+                    customUrl: 'api/sub-categories',
+                    callback: (response) => {
+                        if (response.data)
+                            _this.subCategories = response.data.result;
+                    }
+                })
+            },
         },
     }
 </script>
