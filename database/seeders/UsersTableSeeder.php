@@ -16,25 +16,26 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $adminRoleID = Role::where('name', 'admin')->value('id');
-        $vendorRoleID = Role::where('name', 'vendor')->value('id');
-        $customerRoleID = Role::where('name', 'customer')->value('id');
+        $supAdminRoleID = Role::where('name', 'Super Admin')->value('id');
+        $adminRoleID = Role::where('name', 'Admin')->value('id');
+        $instructorRoleID = Role::where('name', 'Instructor')->value('id');
+        $studentRoleID = Role::where('name', 'Student')->value('id');
 
         $users = [
             [
-                'role_id' => $adminRoleID,
+                'role_id' => $supAdminRoleID,
                 'name' => 'Mehedi Hasan',
                 'email' => 'mehedi@gmail.com',
                 'password' => Hash::make('123456'),
             ],
             [
-                'role_id' => $adminRoleID,
+                'role_id' => $supAdminRoleID,
                 'name' => 'Mamun',
                 'email' => 'mamun@gmail.com',
                 'password' => Hash::make('123456'),
             ],
             [
-                'role_id' => $adminRoleID,
+                'role_id' => $supAdminRoleID,
                 'name' => 'Shihab',
                 'email' => 'shihab@gmail.com',
                 'password' => Hash::make('123456'),
@@ -42,19 +43,26 @@ class UsersTableSeeder extends Seeder
 
 
             [
-                'role_id' => $vendorRoleID,
+                'role_id' => $adminRoleID,
+                'name' => 'Our Admin',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('123456'),
+            ],
+            [
+                'role_id' => $instructorRoleID,
                 'name' => 'Our Teacher',
                 'email' => 'teacher@gmail.com',
                 'password' => Hash::make('123456'),
             ],
             [
-                'role_id' => $customerRoleID,
+                'role_id' => $studentRoleID,
                 'name' => 'Our Student',
                 'email' => 'student@gmail.com',
                 'password' => Hash::make('123456'),
             ],
         ];
 
+        // insert all users into users table
         foreach ($users as $user) {
             User::create($user);
         }

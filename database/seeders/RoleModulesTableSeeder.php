@@ -16,7 +16,8 @@ class RoleModulesTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->giveRoleModules('admin');
+        $this->giveRoleModules('Super Admin');
+        $this->giveRoleModules('Admin', ['Dashboard', 'Product', 'Products', 'Category', 'Categories', 'Sub Categories', 'User', 'Profile', 'Users']);
         $this->giveRoleModules('vendor', ['Dashboard', 'Product', 'Products', 'User', 'Profile']);
     }
 

@@ -16,8 +16,9 @@ class RolePermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        $this->giveRolePermissions('admin');
-        $this->giveRolePermissions('vendor', ['product_add', 'product_view', 'product_edit', 'product_delete']);
+        $this->giveRolePermissions('Super Admin');
+        $this->giveRolePermissions('Admin', ['course_add', 'course_view', 'course_edit', 'course_delete', 'category_add', 'category_view', 'category_edit', 'category_delete']);
+        $this->giveRolePermissions('Instructor', ['course_add', 'course_view', 'course_edit', 'course_delete']);
     }
 
     private function giveRolePermissions($roleName, array $permissions = ['all'])

@@ -20,15 +20,15 @@ class ModulesAndPermissionsTableSeeder extends Seeder
 
         $modulesNodes = [
             [
-                'module' => ['name' => 'Dashboard', 'link' => '/admin/home', 'icon' => 'far fa-clock fa-fw'],
+                'module' => ['name' => 'Dashboard', 'link' => '/admin/dashboard', 'icon' => 'far fa-clock fa-fw'],
                 'permissions' => $rawPermissions,
                 'nodes' => []
             ],
             [
-                'module' => ['name' => 'Product', 'icon' => 'fa fa-boxes'],
+                'module' => ['name' => 'Course', 'icon' => 'fa fa-boxes'],
                 'nodes' => [
                     [
-                        'module' => ['name' => 'Products', 'link' => '/admin/product/products', 'icon' => 'fa fa-box'],
+                        'module' => ['name' => 'Course', 'link' => '/admin/course/courses', 'icon' => 'fa fa-box'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
@@ -36,12 +36,12 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                         'module' => ['name' => 'Category', 'icon' => 'fa fa-tags'],
                         'nodes' => [
                             [
-                                'module' => ['name' => 'Categories', 'link' => '/admin/product/categories', 'icon' => 'fa fa-tags'],
+                                'module' => ['name' => 'Categories', 'link' => '/admin/course/categories', 'icon' => 'fa fa-tags'],
                                 'permissions' => $rawPermissions,
                                 'nodes' => []
                             ],
                             [
-                                'module' => ['name' => 'Sub Categories', 'link' => '/admin/product/sub-categories', 'icon' => 'fa fa-tag'],
+                                'module' => ['name' => 'Sub Categories', 'link' => '/admin/course/sub-categories', 'icon' => 'fa fa-tag'],
                                 'permissions' => $rawPermissions,
                                 'nodes' => []
                             ],
