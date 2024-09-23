@@ -37,10 +37,13 @@
                             <router-link class="nav-link" to="/admin/course/courses">Courses</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/categories">Categories</router-link>
+                            <router-link class="nav-link" to="/admin/course/lessons">Lessons</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/subcategories">SubCategories</router-link>
+                            <router-link class="nav-link" to="/admin/course/categories">Categories</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/course/subcategories">SubCategories</router-link>
                         </li>
                     </ul>
                 </div>
