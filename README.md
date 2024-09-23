@@ -84,6 +84,12 @@ This section outlines the main tasks related to managing the application. For ea
     - Title: string|max:255
     - Details: text|5000
     - Status: integer
+    
+## Sub categories table details
+1. Columns:
+    - Category ID
+    - Title: string|max:255
+    - Status: integer
 
 ## User table details
 

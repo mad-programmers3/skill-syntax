@@ -3,6 +3,7 @@
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\CourseController;
 use App\Http\Controllers\backend\ReviewController;
+use App\Http\Controllers\backend\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\RegisterController;
@@ -23,6 +24,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::prefix('api')->middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
+    Route::resource('sub-categories', SubCategoryController::class);
     Route::resource('courses', CourseController::class);
     Route::resource('reviews', ReviewController::class);
 });
