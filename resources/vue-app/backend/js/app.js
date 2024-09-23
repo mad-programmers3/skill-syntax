@@ -2,6 +2,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 
+import Toast from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
+Vue.use(Toast);
+
+
 Vue.use(VueRouter);
 
 import App from './App.vue'
@@ -41,11 +46,11 @@ const router = new VueRouter({
 //
 // helper(store, router);
 
-// import VueSweetalert2 from 'vue-sweetalert2';
+import VueSweetalert2 from 'vue-sweetalert2';
 
-// Vue.use(VueSweetalert2);
+Vue.use(VueSweetalert2);
 
-// import 'sweetalert2/dist/sweetalert2.min.css';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const vue = new Vue({
     el: '#app',

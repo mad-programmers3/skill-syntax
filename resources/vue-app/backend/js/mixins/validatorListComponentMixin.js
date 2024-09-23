@@ -1,18 +1,28 @@
+
 import validatorMixin from "./validatorMixin";
 
-export  default {
+export default {
     mixins: [validatorMixin],
     data() {
         return {
             //
-        }
+        };
     },
     mounted() {
         this.fetchData();
     },
     methods: {
+        // Reusable toast notification function
+        showToast(message, type = "success") {
+            this.$toast(message, {
+                type: type,
+                timeout: 3000,        // 3 seconds timeout
+                position: "top-right", // Toast position at top-right
+            });
+        },
+
+        // Handle form submission
         handleSubmit() {
-            const _this = this;
             let urlSuffix = this.formData.id ?? false;
             let method = this.formData.id ? 'put' : 'post';
 
@@ -21,39 +31,58 @@ export  default {
                 method: method,
                 callback: (response) => {
                     if (response.data) {
-                        alert(response.data.message);
-                        _this.fetchData();
-                        // toastr.success(response.data.message, 'Category Updated!');
+                        // Show success toast notification instead of alert
+                        this.showToast(response.data.message, "success");
+                        this.fetchData();
                     }
                 }
             });
 
             this.closeModal();
         },
+
+        // When user clicks update
         onClickUpdate(item) {
             let cat = Object.assign({}, item);
-            this.setFormData(cat);
+            this.setFormData(cat)
+            ;
             this.openModal();
         },
-        deleteItem(id) {
-            let _this = this;
-            if (confirm('Are you sure to delete this category?'))
-                _this.httpReq({
-                    urlSuffix: id,
-                    method : 'delete',
-                    callback : (response) => {
-                        if (response.data) {
-                            // toastr.success(response.data.message, 'Category Deleted!', {positionClass: 'toast-top-center'});
-                            _this.fetchData();
+
+        // Handle delete action
+        deleteItem(id)
+        {
+            this.$swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.httpReq({
+                        urlSuffix: id,
+                        method: 'delete',
+                        callback: (response) => {
+                            if (response.data) {
+                                // Show success toast notification for deletion
+                                this.showToast(response.data.message, "success");
+                                this.fetchData();
+                            }
                         }
-                    }
-                });
+                    });
+                }
+            });
         },
 
+        // Close modal and reset form data
         closeModal() {
             $('#categoryModal').modal('hide');
             this.resetFormData();
         },
+
+        // Open modal to update or add category
         openModal() {
             $('#categoryModal').modal('show');
         }
