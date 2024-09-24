@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('lesson_reviews', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
+            $table->foreignId('review_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

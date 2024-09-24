@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\CourseController;
+use App\Http\Controllers\backend\CourseReviewController;
 use App\Http\Controllers\backend\LessonController;
+use App\Http\Controllers\backend\LessonReviewController;
 use App\Http\Controllers\backend\ReviewController;
 use App\Http\Controllers\backend\SubCategoryController;
+use App\Http\Controllers\backend\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\RegisterController;
@@ -29,6 +32,9 @@ Route::prefix('api')->middleware('auth')->group(function () {
     Route::resource('courses', CourseController::class);
     Route::resource('lessons', LessonController::class);
     Route::resource('reviews', ReviewController::class);
+    Route::resource('review/course-reviews', CourseReviewController::class);
+    Route::resource('review/lesson-reviews', LessonReviewController::class);
+    Route::resource('review/testimonials', TestimonialController::class);
 });
 
 

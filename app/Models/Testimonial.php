@@ -8,4 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Testimonial extends Model
 {
     use HasFactory;
+
+
+    protected $fillable = [
+        'review_id'
+    ];
+
+
+
+    // Relationship with review
+    public function review()
+    {
+        return $this->belongsTo(Review::class);
+    }
 }
