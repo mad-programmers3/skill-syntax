@@ -25,12 +25,6 @@ class Course extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
-
-    // Relationship with Reviews
-    public function reviews()
-    {
-        return $this->hasMany(Review::class, 'course_id');
-    }
     // Relationship with Lessons
     public function lessons()
     {
