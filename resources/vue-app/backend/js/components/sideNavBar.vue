@@ -49,11 +49,20 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="pages/icons/mdi.html">
+                <a class="nav-link" data-toggle="collapse" href="#review-basic" aria-expanded="false" aria-controls="review-basic">
                     <i class="mdi mdi-contacts menu-icon"></i>
-                    <span class="menu-title">Icons</span>
+                    <span class="menu-title">Review</span>
+                    <i class="menu-arrow"></i>
                 </a>
+                <div class="collapse" id="review-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/review/reviews">Reviews</router-link>
+                        </li>
+                    </ul>
+                </div>
             </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="pages/forms/basic_elements.html">
                     <i class="mdi mdi-format-list-bulleted menu-icon"></i>

@@ -5,7 +5,7 @@
                 <td>{{ index + 1 }}</td>
                 <td>{{ data.title}}</td>
                 <td>{{ data.course.title }}</td>
-                <td>
+                    <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
                         {{ data.status ? 'Active' : 'Inactive' }}
                     </span>

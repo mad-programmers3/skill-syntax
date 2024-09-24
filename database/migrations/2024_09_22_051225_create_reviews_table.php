@@ -19,6 +19,7 @@ return new class extends Migration
             $table->tinyInteger('rating'); // Rating (e.g., 1-5)
             $table->text('comment')->nullable(); // Review comment
             $table->tinyInteger('type')->default(1); // 1 => testimonial, 2 => course review, 3 => lesson review
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }
