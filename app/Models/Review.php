@@ -10,14 +10,8 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'course_id', 'user_id', 'rating', 'comment',
+        'course_id', 'user_id', 'rating', 'comment', 'type'
     ];
-
-    // Relationship with Course
-    public function course()
-    {
-        return $this->belongsTo(Course::class, 'course_id');
-    }
 
     // Relationship with User
     public function user()

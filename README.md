@@ -87,6 +87,13 @@ This section outlines the main tasks related to managing the application. For ea
     - Status: integer
 
 
+## Reviews table details
+1. Columns:
+    - User ID
+    - Ratting: tiny int (e.g., 1-5)
+    - Comment: text
+    - Type: 1 => testimonial, 2 => course review, 3 => lesson review
+
 ## Categories table details
 1. Columns:
     - Title: string|max:255

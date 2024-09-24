@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('course_reviews', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Foreign key for users
-            $table->tinyInteger('rating'); // Rating (e.g., 1-5)
-            $table->text('comment')->nullable(); // Review comment
-            $table->tinyInteger('type')->default(1); // 1 => testimonial, 2 => course review, 3 => lesson review
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reviews');
+        Schema::dropIfExists('course_reviews');
     }
 };
