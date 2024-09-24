@@ -24,21 +24,19 @@
             </tr>
         </data-table>
 
-        <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Category">
-            <div class="mb-3">
+        <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Course Review">
+            <div v-if="formData.review" class="mb-3">
                 <div class="custom-control custom-switch">
                     <input
                             type="checkbox"
                             class="custom-control-input"
                             id="customSwitch"
-                            v-model="formData.status"
+                            v-model="formData.review.status"
                             :true-value="1"
                             :false-value="0"
-                            v-validate="'required'"
-                            name="status"
                     />
                     <label class="custom-control-label" for="customSwitch">
-                        {{ formData.status ? 'Active' : 'Inactive' }}
+                        {{ formData.review.status ? 'Active' : 'Inactive' }}
                     </label>
                 </div>
             </div>
