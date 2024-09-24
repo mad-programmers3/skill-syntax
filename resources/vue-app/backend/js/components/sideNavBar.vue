@@ -59,10 +59,14 @@
                         <li class="nav-item">
                             <router-link class="nav-link" to="/admin/review/reviews">Reviews</router-link>
                         </li>
-
-
                         <li class="nav-item">
                             <router-link class="nav-link" to="/admin/review/course-review">CourseReviews</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/review/lesson-review">LessonReviews</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/review/testimonials">Testimonials</router-link>
                         </li>
                     </ul>
                 </div>

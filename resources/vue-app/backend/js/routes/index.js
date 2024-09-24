@@ -54,6 +54,18 @@ const routes =[
         component:courseReviewComponent,
         meta : {'pageTitle' : 'course-review List', dataUrl : 'api/review/course-reviews'},
     },
+    {
+        path: '/admin/review/lesson-review',
+        name:'lesson-review',
+        component:courseReviewComponent,
+        meta : {'pageTitle' : 'lesson-review List', dataUrl : 'api/review/lesson-reviews'},
+    },
+    {
+        path: '/admin/review/testimonials',
+        name:'testimonials',
+        component:courseReviewComponent,
+        meta : {'pageTitle' : 'testimonials List', dataUrl : 'api/review/testimonials'},
+    },
 
 ];
 export default routes;
