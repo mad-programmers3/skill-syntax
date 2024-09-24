@@ -15,8 +15,8 @@ SkillSyntax is an online course management system developed by our inter-team pr
 - **Backend Framework**: Laravel 9
 - **Frontend Framework**: Vue 2
 - **UI Framework**: Bootstrap 4
-- **Frontend Template**: https://themewagon.com/themes/free-education-html-template-bootstrap-4-course/
-- **Backend Template**: https://themewagon.com/themes/breeze-free-bootstrap-4-responsive-admin-dashboard-template/
+- **Frontend Template**: [Edustage](https://themewagon.com/themes/free-responsive-bootstrap-4-html-5-educational-website-template-edustage/)
+- **Backend Template**: [Breeze Admin Dashboard](https://themewagon.com/themes/breeze-free-bootstrap-4-responsive-admin-dashboard-template/)
 
 ## Project Setup
 
@@ -26,25 +26,18 @@ SkillSyntax is an online course management system developed by our inter-team pr
 - Composer
 - Node.js & npm
 
-### Installation
+### Workflow
 
-1. *Clone the repository:*
-   bash
-   git clone https://github.com/your-repo/skill-syntax.git
-   cd skill-syntax
+1. Installation
+2. Setup Git
+3. Mastering
+4. Route Setup
+5. Database Connection
+6. Authentication
+7. Create Migration, Model, Controller
+8. CRUD for Courses
 
-
-## Workflow
-- Installation
-- Setup git
-- Mastering
-- Route setup
-- DB Connection
-- Authentication
-- Create migration, model, controller
-- CRUD for course
-
-### Main Task
+### Main Tasks
 
 This section outlines the main tasks related to managing the application. For each task, use the format below to indicate the model name in singular.
 
@@ -61,54 +54,61 @@ This section outlines the main tasks related to managing the application. For ea
   - Add: `sub_category_add`  
   - Edit: `sub_category_edit`
 
+## Course Table Details
 
-
-## Course table details
-1. Columns:
-    - Title: string|max:255
-    - Description: text|5000
-    - Price: decimal(8, 2)|def(0.00)
-    - User id(Instructor id): forenkey|5000
-    - Category id: frenkey // Category of the course (e.g., Web Development)
-    - Sits: integer // available sits
-    - Star date: date
-    - End date: date
-    - Thumbnail: string|nullable
-    - Status: integer
-    ##### Opt:
-    - $table->string('level')->nullable(); // Beginner, Intermediate, Advanced
-
-## Lesson table details
-1. Columns:
-    - Course ID
-    - Title: string|max:255
-    - Description: text|5000
-    - Video: string
-    - Status: integer
-
-
-## Reviews table details
-1. Columns:
-    - User ID
-    - Ratting: tiny int (e.g., 1-5)
-    - Comment: text
-    - Type: 1 => testimonial, 2 => course review, 3 => lesson review
-
-## Categories table details
-1. Columns:
-    - Title: string|max:255
-    - Details: text|5000
-    - Status: integer
+1. **Columns**:
+    - Title: `string|max:255`
+    - Description: `text|5000`
+    - Price: `decimal(8, 2)|def(0.00)`
+    - User ID (Instructor ID): `foreign key|5000`
+    - Category ID: `foreign key` (e.g., Web Development)
+    - Seats: `integer` (available seats)
+    - Start Date: `date`
+    - End Date: `date`
+    - Thumbnail: `string|nullable`
+    - Status: `integer`
     
-## Sub categories table details
-1. Columns:
+    **Optional**:
+    - `$table->string('level')->nullab~~~~~~****************~~~~~~le(); // Beginner, Intermediate, Advanced`
+
+## Lesson Table Details
+
+1. **Columns**:
+    - Course ID
+    - Title: `string|max:255`
+    - Description: `text|5000`
+    - Video: `string`
+    - Status: `integer`
+
+## Reviews Table Details
+
+1. **Columns**:
+    - User ID
+    - Rating: `tinyint` (e.g., 1-5)
+    - Comment: `text`
+    - Type: 
+      - 1 => testimonial 
+      - 2 => course review 
+      - 3 => lesson review
+
+## Categories Table Details
+
+1. **Columns**:
+    - Title: `string|max:255`
+    - Details: `text|5000`
+    - Status: `integer`
+    
+## Subcategories Table Details
+
+1. **Columns**:
     - Category ID
-    - Title: string|max:255
-    - Status: integer
+    - Title: `string|max:255`
+    - Status: `integer`
 
-## User table details
+## User Table Details
 
-### User rules/types:
+### User Roles/Types:
+
 1. **Admin**: 
     - Has full access to the system.
     - **Permissions**:
@@ -143,18 +143,12 @@ This section outlines the main tasks related to managing the application. For ea
         - Receive certificates or course completion badges.
         
 ### Columns:
-  - Name: string|max:255
-  - Email: string|unique
-  - Password: string
-  - Type: integer| 1=Admin, 2=Instructor, 3=Student
+  - Name: `string|max:255`
+  - Email: `string|unique`
+  - Password: `string`
+  - Type: `integer| 1=Admin, 2=Instructor, 3=Student`
 
-
-
-
-
-
-
-
-
-  ### Git Pull Command=>
-  git branch --set-upstream-to=origin/mehedi
+### Git Pull Command
+To pull the latest changes, use:
+```bash
+git branch --set-upstream-to=origin/mehedi

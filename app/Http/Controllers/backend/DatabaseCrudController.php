@@ -53,7 +53,7 @@ class DatabaseCrudController extends Controller
             $record->fill($request->all());
             $record->save(); // Use save() instead of update()
 
-            return response()->json(['success' => true, 'message' => $this->modelNameFormatted() . ' updated successfully.']);
+            return response()->json(['success' => true, 'message' => $this->modelNameFormatted() . ' updated successfully.', 'status' => 2000]);
         }, 'edit');
     }
 

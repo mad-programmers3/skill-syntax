@@ -1,4 +1,3 @@
-
 import validatorMixin from "./validatorMixin";
 
 export default {
@@ -44,14 +43,12 @@ export default {
         // When user clicks update
         onClickUpdate(item) {
             let cat = Object.assign({}, item);
-            this.setFormData(cat)
-            ;
+            this.setFormData(cat);
             this.openModal();
         },
 
         // Handle delete action
-        deleteItem(id)
-        {
+        deleteItem(id) {
             this.$swal({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",

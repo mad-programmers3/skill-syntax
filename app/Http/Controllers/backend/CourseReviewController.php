@@ -5,7 +5,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\CourseReview;
 
-class CourseReviewController extends DatabaseCrudController
+class CourseReviewController extends ItemReviewCrudController
 {
     public function __construct() {
         parent::__construct(new CourseReview());

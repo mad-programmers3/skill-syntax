@@ -108,7 +108,7 @@
                         <a class="dropdown-item" href="#" @click.prevent="logout">
                             <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log
                         </a>
-                        <a class="dropdown-item" href="#" @click.prevent="logout">
+                        <a class="dropdown-item" href="#" @click.prevent="confirmLogout">
                             <i class="mdi mdi-logout mr-2 text-primary"></i> Logout
                         </a>
                     </div>
@@ -123,10 +123,27 @@
 
 <script>
     import axios from 'axios';
+    import Swal from 'sweetalert2';  // Import SweetAlert
 
     export default {
         name: 'topNavBar',
         methods: {
+            confirmLogout() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to log out?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#28a745',
+                    confirmButtonText: 'Yes, log me out!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.logout();
+                    }
+                });
+            },
             async logout() {
                 try {
                     await axios.post('/logout', {}, {
@@ -134,7 +151,6 @@
                             'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         }
                     });
-
                     window.location.href = '/login';
                 } catch (error) {
                     console.error('Logout failed', error);
@@ -145,5 +161,7 @@
 </script>
 
 <style scoped>
-
+    /* Add your styles here */
 </style>
+
+
