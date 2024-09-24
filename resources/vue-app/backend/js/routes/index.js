@@ -4,6 +4,7 @@ import coursesComponent from "../views/courses/coursesComponent";
 import subCategoriesComponent from "../views/courses/subCategoriesComponent";
 import lessonsComponent from "../views/courses/lessonsComponent";
 import reviewsComponent from "../views/Review/reviewsComponent";
+import courseReviewComponent from "../views/Review/courseReviewComponent";
 
 
 const routes =[
@@ -46,6 +47,12 @@ const routes =[
         name:'reviews',
         component:reviewsComponent,
         meta : {'pageTitle' : 'reviews List', dataUrl : 'api/reviews'},
+    },
+    {
+        path: '/admin/review/course-review',
+        name:'course-review',
+        component:courseReviewComponent,
+        meta : {'pageTitle' : 'course-review List', dataUrl : 'api/review/course-reviews'},
     },
 
 ];
