@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('title', 255);
             $table->text('description');
             $table->string('video')->nullable();
+            $table->integer('status')->default(1);
             $table->timestamps();
         });
     }

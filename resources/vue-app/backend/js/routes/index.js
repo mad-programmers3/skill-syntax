@@ -21,7 +21,7 @@ const routes =[
         path: '/admin/course/lessons',
         name:'lesson',
         component:lessonsComponent,
-        meta : {'pageTitle' : 'Lessons List', dataUrl : 'api/lesson'},
+        meta : {'pageTitle' : 'Lessons List', dataUrl : 'api/lessons'},
     },
     {
         path: '/admin/course/categories',
