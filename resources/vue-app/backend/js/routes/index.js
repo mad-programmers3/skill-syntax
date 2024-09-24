@@ -5,6 +5,8 @@ import subCategoriesComponent from "../views/courses/subCategoriesComponent";
 import lessonsComponent from "../views/courses/lessonsComponent";
 import reviewsComponent from "../views/Review/reviewsComponent";
 import courseReviewComponent from "../views/Review/courseReviewComponent";
+import lessonReviewComponent from "../views/Review/lessonReviewComponent";
+import testimonialComponent from "../views/Review/testimonialComponent";
 
 
 const routes =[
@@ -57,13 +59,13 @@ const routes =[
     {
         path: '/admin/review/lesson-review',
         name:'lesson-review',
-        component:courseReviewComponent,
+        component:lessonReviewComponent,
         meta : {'pageTitle' : 'lesson-review List', dataUrl : 'api/review/lesson-reviews'},
     },
     {
         path: '/admin/review/testimonials',
         name:'testimonials',
-        component:courseReviewComponent,
+        component:testimonialComponent,
         meta : {'pageTitle' : 'testimonials List', dataUrl : 'api/review/testimonials'},
     },
 
