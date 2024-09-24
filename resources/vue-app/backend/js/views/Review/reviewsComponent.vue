@@ -27,30 +27,20 @@
         </data-table>
         <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Category">
 
-            <label>Status</label>
             <div class="mb-3">
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label w-100">
-                        <input
-                                class="form-check-input"
-                                type="radio"
-                                :value="1"
-                                v-model="formData.status"
-                                v-validate="'required'"
-                                name="status"
-                        />Show
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <label class="form-check-label w-100">
-                        <input
-                                class="form-check-input"
-                                type="radio"
-                                :value="0"
-                                v-model="formData.status"
-                                v-validate="'required'"
-                                name="status"
-                        />Hide
+                <div class="custom-control custom-switch">
+                    <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            id="customSwitch"
+                            v-model="formData.status"
+                            :true-value="1"
+                            :false-value="0"
+                            v-validate="'required'"
+                            name="status"
+                    />
+                    <label class="custom-control-label" for="customSwitch">
+                        {{ formData.status ? 'Active' : 'Inactive' }}
                     </label>
                 </div>
             </div>
