@@ -30,4 +30,9 @@ class Course extends Model
     {
         return $this->hasMany(Lesson::class, 'course_id');
     }
+    // Relationship with CourseLike
+    public function likes()
+    {
+        return $this->hasMany(CourseLike::class, 'course_id');
+    }
 }

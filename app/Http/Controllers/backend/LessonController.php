@@ -11,7 +11,7 @@ class LessonController extends DatabaseCrudController
         parent::__construct(new Lesson());
     }
 
-    public function index($with = ['course:id,title'])
+    public function index($with = ['course:id,title', 'likes'])
     {
         return parent::index($with);
     }

@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\CourseController;
+use App\Http\Controllers\backend\CourseLikeController;
 use App\Http\Controllers\backend\CourseReviewController;
 use App\Http\Controllers\backend\LessonController;
+use App\Http\Controllers\backend\LessonLikeController;
 use App\Http\Controllers\backend\LessonReviewController;
 use App\Http\Controllers\backend\ReviewController;
 use App\Http\Controllers\backend\SubCategoryController;
@@ -30,11 +32,14 @@ Route::prefix('api')->middleware('auth')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('sub-categories', SubCategoryController::class);
     Route::resource('courses', CourseController::class);
+    Route::resource('course/likes', CourseLikeController::class);
     Route::resource('lessons', LessonController::class);
+    Route::resource('lesson/likes', LessonLikeController::class);
     Route::resource('reviews', ReviewController::class);
     Route::resource('review/course-reviews', CourseReviewController::class);
     Route::resource('review/lesson-reviews', LessonReviewController::class);
     Route::resource('review/testimonials', TestimonialController::class);
+
 });
 
 

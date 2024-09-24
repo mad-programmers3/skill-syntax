@@ -10,7 +10,7 @@ class CourseController extends DatabaseCrudController
         parent::__construct(new Course());
     }
 
-    public function index($with = ['category:id,title'])
+    public function index($with = ['category:id,title', 'likes'])
     {
         return parent::index($with);
     }
