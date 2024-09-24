@@ -99,7 +99,7 @@
                             <p class="text-black"><i class="fa fa-bell"></i> Notification</p>
                         </div>
                         <ul class="mt-4 pl-0">
-                            <li @click.prevent="logout">
+                            <li @click.prevent="confirmLogout">
                                 <i class="fa fa-sign-out"></i> Sign Out
                             </li>
                         </ul>
@@ -112,13 +112,27 @@
 
 <script>
     import axios from 'axios';
+    import Swal from 'sweetalert2';  // Import SweetAlert
 
     export default {
-        name: 'sideNavBar',
-        mounted() {
-            //
-        },
+        name: 'topNavBar',
         methods: {
+            confirmLogout() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to log out?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#28a745',
+                    confirmButtonText: 'Yes, log me out!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.logout();
+                    }
+                });
+            },
             async logout() {
                 try {
                     await axios.post('/logout', {}, {
@@ -126,14 +140,13 @@
                             'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                         }
                     });
-
                     window.location.href = '/login';
                 } catch (error) {
                     console.error('Logout failed', error);
                 }
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
