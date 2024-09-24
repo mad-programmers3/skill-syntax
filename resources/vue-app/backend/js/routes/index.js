@@ -3,6 +3,7 @@ import categoriesComponent from "../views/courses/categoriesComponent";
 import coursesComponent from "../views/courses/coursesComponent";
 import subCategoriesComponent from "../views/courses/subCategoriesComponent";
 import lessonsComponent from "../views/courses/lessonsComponent";
+import reviewsComponent from "../views/Review/reviewsComponent";
 
 
 const routes =[
@@ -11,6 +12,7 @@ const routes =[
         name:'home',
         component: DashboardComponent
     },
+    //Courses
     {
         path: '/admin/course/courses',
         name:'courses',
@@ -34,6 +36,16 @@ const routes =[
         name:'subcategories',
         component:subCategoriesComponent,
         meta : {'pageTitle' : 'subCategory List', dataUrl : 'api/sub-categories'},
+    },
+
+
+//    Review
+
+    {
+        path: '/admin/review/reviews',
+        name:'reviews',
+        component:reviewsComponent,
+        meta : {'pageTitle' : 'reviews List', dataUrl : 'api/reviews'},
     },
 
 ];

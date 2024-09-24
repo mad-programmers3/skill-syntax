@@ -3,10 +3,12 @@
         <data-table :table-heading="tableHeading" @open-modal="openModal">
             <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
-                <td>{{ data.title }}</td>
+                <td>{{ data.user.name }}</td>
+                <td>{{ data.comment }}</td>
+                <td>{{ data.rating}}</td>
                 <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
-                        {{ data.status ? 'Active' : 'Inactive' }}
+                        {{ data.status ? 'Showing' : 'Hidden' }}
                     </span>
                 </td>
                 <td>
@@ -24,34 +26,7 @@
             </tr>
         </data-table>
         <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Category">
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    Title
-                    <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Category title here"
-                            v-model="formData.title"
-                            v-validate="'required|min:3|max:255'"
-                            name="title"
-                            @input="validateField"
-                    />
-                </label>
-            </div>
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    Details
-                    <textarea
-                            type="text"
-                            class="form-control"
-                            placeholder="Category details here"
-                            v-model="formData.details"
-                            v-validate="'max:500'"
-                            name="details"
-                            @input="validateField"
-                    ></textarea>
-                </label>
-            </div>
+
             <div class="mb-3">
                 <div class="custom-control custom-switch">
                     <input
@@ -80,12 +55,12 @@
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
 
     export default {
-        name: "categoriesComponent",
+        name: "reviewsComponent",
         components: {ValidateFormModal, DataTable},
         mixins: [validatorMixin, validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Title', 'Status', 'Actions'],
+                tableHeading: ['SL', 'Users','Comment','Rating', 'Status', 'Actions'],
             }
         },
         methods: {
