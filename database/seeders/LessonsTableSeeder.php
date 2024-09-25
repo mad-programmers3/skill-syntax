@@ -19,7 +19,7 @@ class LessonsTableSeeder extends Seeder
         $courses = Course::all();
 
         foreach ($courses as $course) {
-            for ($i = 1; $i <= 10; $i++) {
+            for ($i = 1; $i <= 5; $i++) {
                 Lesson::create([
                     'course_id' => $course->id,
                     'title' => "Lesson {$i} for {$course->title}",
