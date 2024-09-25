@@ -26,7 +26,7 @@
                 </td>
             </tr>
         </data-table>
-        <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Course">
+        <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Course" width="700px">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
@@ -56,7 +56,7 @@
                 </label>
             </div>
             <div class="mb-3 d-flex">
-                <div class="w-50 pe-2">
+                <div class="w-50 pr-2">
                     <label class="form-label d-block">
                         Category
                         <select
@@ -74,7 +74,7 @@
                     </label>
                 </div>
 
-                <div class="w-50 ps-2">
+                <div class="w-50 pl-2">
                     <label class="form-label d-block">
                         Sub Category
                         <select
@@ -92,61 +92,67 @@
                     </label>
                 </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    Start Date
-                    <input
-                            type="date"
-                            class="form-control"
-                            placeholder="Category title here"
-                            v-model="formData.start_date"
-                            v-validate=""
-                            name="title"
-                            @input="validateField"
-                    />
-                </label>
+            <div class="mb-3 d-flex">
+                <div class="w-50 pr-2">
+                    <label class="form-label w-100">
+                        Start Date
+                        <input
+                                type="date"
+                                class="form-control"
+                                placeholder="Category title here"
+                                v-model="formData.start_date"
+                                v-validate=""
+                                name="title"
+                                @input="validateField"
+                        />
+                    </label>
+                </div>
+
+                <div class="w-50 pl-2">
+                    <label class="form-label w-100">
+                        End Date
+                        <input
+                                type="date"
+                                class="form-control"
+                                placeholder="Category title here"
+                                v-model="formData.end_date"
+                                v-validate=""
+                                name="title"
+                                @input="validateField"
+                        />
+                    </label>
+                </div>
             </div>
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    End Date
-                    <input
-                            type="date"
-                            class="form-control"
-                            placeholder="Category title here"
-                            v-model="formData.end_date"
-                            v-validate=""
-                            name="title"
-                            @input="validateField"
-                    />
-                </label>
-            </div>
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    Price
-                    <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter course price"
-                            v-model="formData.price"
-                            v-validate="'required|decimal'"
-                            name="price"
-                            @input="validateField"
-                    />
-                </label>
-            </div>
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    Sits
-                    <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter available sits"
-                            v-model="formData.sits"
-                            v-validate="'required|numeric'"
-                            name="sits"
-                            @input="validateField"
-                    />
-                </label>
+            <div class="mb-3 d-flex">
+                <div class="w-50 pr-2">
+                    <label class="form-label w-100">
+                        Price
+                        <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Enter course price"
+                                v-model="formData.price"
+                                v-validate="'required|decimal'"
+                                name="price"
+                                @input="validateField"
+                        />
+                    </label>
+                </div>
+
+                <div class="w-50 pl-2">
+                    <label class="form-label w-100">
+                        Sits
+                        <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Enter available sits"
+                                v-model="formData.sits"
+                                v-validate="'required|numeric'"
+                                name="sits"
+                                @input="validateField"
+                        />
+                    </label>
+                </div>
             </div>
 
             <div class="mb-3">
@@ -220,5 +226,4 @@
 </script>
 
 <style scoped>
-
 </style>

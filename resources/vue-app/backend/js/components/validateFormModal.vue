@@ -1,7 +1,7 @@
 <template>
     <!-- Modal -->
     <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog" :style="{maxWidth: windowWidth >= 700 ? this.width : '90%', /*90% for small screens*/}">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="categoryModalLabel">{{ title }}</h1>
@@ -28,8 +28,17 @@
     export default {
         name: "validateFormModal",
         mixins: [validatorMixin],
+        data() {
+            return {
+                windowWidth: window.innerWidth,
+            };
+        },
         props: {
             title: String,
+            width: {
+                type: Number,
+                default: 500,
+            }
         },
 
         watch: {
