@@ -173,6 +173,24 @@
                 </div>
             </div>
 
+            <!--    Upload image        -->
+            <div>
+                <div
+                        class="upload-area d-block m-auto"
+                        @click="triggerFileInput"
+                >
+                    <img :src="imageUrl ?? baseUrl + '/backend/assets/images/upload.png'" alt="Preview" class="preview-img" />
+                </div>
+                <input
+                        type="file"
+                        ref="fileInput"
+                        @change="handleFileChange"
+                        class="file-input"
+                        accept="image/*"
+                />
+            </div>
+
+
         </validate-form-modal>
     </div>
 </template>
@@ -191,7 +209,8 @@
             return {
                 tableHeading: ['SL', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
                 categories: {},
-                subCategories: {}
+                subCategories: {},
+                imageUrl: null, // To store the image URL for preview
             }
         },
         mounted() {
@@ -221,9 +240,58 @@
                     }
                 })
             },
+
+
+            // Trigger the file input on click
+            triggerFileInput() {
+                this.$refs.fileInput.click();
+            },
+            // Handle file input change
+            handleFileChange(event) {
+                const file = event.target.files[0];
+                this.handleFileUpload(file);
+            },
+            // Handle file processing
+            handleFileUpload(file) {
+                if (!file || !file.type.startsWith("image/")) {
+                    alert("Please upload a valid image file.");
+                    return;
+                }
+
+                // Create a URL for the image preview
+                this.imageUrl = URL.createObjectURL(file);
+                const imgFormData = new FormData();
+                imgFormData.append('image', file);
+
+                this.httpReq({
+                    customUrl: 'api/files',
+                    method: 'post',
+                    callback: (res)=>{console.log(res)},
+                    data: imgFormData
+                })
+
+            },
         },
-    }
+    };
 </script>
 
 <style scoped>
+    .upload-area {
+        width: 300px;
+        height: 200px;
+        border: 2px dashed #34a9cc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .preview-img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    .file-input {
+        display: none;
+    }
 </style>

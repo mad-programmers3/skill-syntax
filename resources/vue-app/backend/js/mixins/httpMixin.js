@@ -17,12 +17,12 @@ export  default {
                 }
             });
         },
-        httpReq({customUrl = false, urlSuffix = false, method='get', callback = false}){
+        httpReq({customUrl = false, urlSuffix = false, method='get', callback = false, data = this.getFormData()}){
             const _this = this;
             Axios({
                 method: method,
                 url: _this.urlGenerate(customUrl, urlSuffix),
-                data: _this.getFormData()
+                data: data
             }).then(function (response) {
                 if (typeof callback === 'function'){
                     callback(response)

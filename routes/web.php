@@ -41,7 +41,6 @@ Route::prefix('api')->middleware('auth')->group(function () {
     Route::resource('review/lesson-reviews', LessonReviewController::class);
     Route::resource('review/testimonials', TestimonialController::class);
     Route::resource('files', MyFileController::class);
-
 });
 
 
