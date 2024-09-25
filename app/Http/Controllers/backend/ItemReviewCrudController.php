@@ -8,8 +8,12 @@ use Illuminate\Http\Request;
 
 class ItemReviewCrudController extends DatabaseCrudController
 {
-    public function __construct($model) {
+    private $revCon;
+
+    public function __construct($model)
+    {
         parent::__construct($model);
+        $this->revCon = new ReviewController();
     }
 
     public function update(Request $request, $id)
@@ -26,6 +30,15 @@ class ItemReviewCrudController extends DatabaseCrudController
         }
 
         return $res;
+    }
+
+
+    // for delete old record
+    public function destroy($id, $afterDone = false)
+    {
+        return parent::destroy($id, function ($result) {
+            $this->revCon->destroy($result['review_id']);
+        });
     }
 
 }

@@ -59,18 +59,37 @@ class DatabaseCrudController extends Controller
 
 
     // for delete old record
-    public function destroy($id)
+    public function destroy($id, $callBack = false)
     {
-        return $this->customHandleRequest(function () use ($id) {
-            $record = $this->model->where('id', $id)->first(); // Use instance method
+        return $this->customHandleRequest(function () use ($id, $callBack) {
+            // Fetch the record by its ID
+            $record = $this->model->where('id', $id)->first();
 
             if ($record) {
+                // Delete the record
                 $record->delete();
-                return response()->json(['success' => true, 'message' => $this->modelNameFormatted() . ' deleted successfully.']);
+
+                // If callback is enabled, run the callback action (like updating related records)
+                if (is_callable($callBack)) {
+                    // Execute the callback function and pass the deleted record
+                    call_user_func($callBack, $record);
+                }
+
+                return response()->json([
+                    'result' => $record,
+                    'success' => true,
+                    'message' => $this->modelNameFormatted() . ' deleted successfully.',
+                    'status' => 2000 // Custom status indicating success
+                ]);
             }
-            return response()->json(['success' => false, 'message' => $this->modelNameFormatted() . ' not found.']);
+
+            return response()->json([
+                'success' => false,
+                'message' => $this->modelNameFormatted() . ' not found.'
+            ]);
         }, 'delete');
     }
+
 
     // check the given title is it unique or not
     public function checkTitle(Request $request)
@@ -85,8 +104,8 @@ class DatabaseCrudController extends Controller
     }
 
 
-
-    private function modelNameFormatted() {
+    private function modelNameFormatted()
+    {
         /************************************
          *  subCategory => sub Category     *
          *  SubCategory => Sub Category     *
@@ -97,7 +116,8 @@ class DatabaseCrudController extends Controller
     }
 
     // returns lower and underscored replaced with space
-    private function modelNameLwrUdr() {
+    private function modelNameLwrUdr()
+    {
         /************************************
          *  sub Category => sub_category     *
          *  Sub Category => sub_category     *
@@ -105,7 +125,8 @@ class DatabaseCrudController extends Controller
         return strtolower(str_replace(' ', '_', $this->modelNameFormatted()));
     }
 
-    private function customHandleRequest($callback, $task = false) {
+    private function customHandleRequest($callback, $task = false)
+    {
         $moduleNameLwr = $this->modelNameLwrUdr();
 
         return $this->handleRequest($callback, $task, $moduleNameLwr);
