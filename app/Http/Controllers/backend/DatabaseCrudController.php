@@ -12,12 +12,14 @@ class DatabaseCrudController extends Controller
 
     protected $model;
     protected $modelName;
+    protected $taskPrefix;
 
     // Constructor to initialize the model
-    public function __construct($model)
+    public function __construct($model, $taskPrefix = false)
     {
         $this->model = $model;
         $this->modelName = basename(str_replace('\\', '/', get_class($this->model)));
+        $this->taskPrefix = $taskPrefix;
     }
 
     // return all records
@@ -36,22 +38,28 @@ class DatabaseCrudController extends Controller
     }
 
     // for insert new record
-    public function store(Request $request)
+    public function store(Request $request, $callBack = false)
     {
-        return $this->customHandleRequest(function () use ($request) {
-            $this->model->create($request->all()); // Use instance method
-            return response()->json(['success' => true, 'message' => $this->modelNameFormatted() . ' created successfully.']);
+        return $this->customHandleRequest(function () use ($request, $callBack) {
+            $record = $this->model->create($request->all()); // Use instance method
+            // if callable then call the callBack() with passing $record
+            if (is_callable($callBack)) call_user_func($callBack, $record);
+
+            return response()->json(['success' => true, 'result' => $record, 'message' => $this->modelNameFormatted() . ' created successfully.']);
         }, 'add');
     }
 
 
     // for update old record
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $callBack = false)
     {
-        return $this->customHandleRequest(function () use ($request, $id) {
+        return $this->customHandleRequest(function () use ($request, $id, $callBack) {
             $record = $this->model->findOrFail($id); // Use instance method
             $record->fill($request->all());
             $record->save(); // Use save() instead of update()
+
+            // if callable then call the callBack()
+            if (is_callable($callBack)) call_user_func($callBack);
 
             return response()->json(['success' => true, 'message' => $this->modelNameFormatted() . ' updated successfully.', 'status' => 2000]);
         }, 'edit');
@@ -68,25 +76,13 @@ class DatabaseCrudController extends Controller
             if ($record) {
                 // Delete the record
                 $record->delete();
+                // if callable then call the callBack() with passing $record
+                if (is_callable($callBack)) call_user_func($callBack, $record);
 
-                // If callback is enabled, run the callback action (like updating related records)
-                if (is_callable($callBack)) {
-                    // Execute the callback function and pass the deleted record
-                    call_user_func($callBack, $record);
-                }
-
-                return response()->json([
-                    'result' => $record,
-                    'success' => true,
-                    'message' => $this->modelNameFormatted() . ' deleted successfully.',
-                    'status' => 2000 // Custom status indicating success
-                ]);
+                return response()->json(['result' => $record, 'success' => true, 'message' => $this->modelNameFormatted() . ' deleted successfully.', 'status' => 2000]);
             }
 
-            return response()->json([
-                'success' => false,
-                'message' => $this->modelNameFormatted() . ' not found.'
-            ]);
+            return response()->json(['success' => false, 'message' => $this->modelNameFormatted() . ' not found.' ]);
         }, 'delete');
     }
 
@@ -127,7 +123,7 @@ class DatabaseCrudController extends Controller
 
     private function customHandleRequest($callback, $task = false)
     {
-        $moduleNameLwr = $this->modelNameLwrUdr();
+        $moduleNameLwr = $this->taskPrefix ? $this->taskPrefix : $this->modelNameLwrUdr(); // task prefix
 
         return $this->handleRequest($callback, $task, $moduleNameLwr);
     }
