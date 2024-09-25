@@ -21,7 +21,7 @@
                             <span class="price">{{ course.price }}</span>
                             <span class="tag mb-4 d-inline-block">{{ course.category.title }}</span>
                             <h4 class="mb-3">
-                                <a href="course-details.html">{{ course.title }}</a>
+                                <router-link to="/courses">{{ course.title }}</router-link>
                             </h4>
                             <p>{{ course.description }}</p>
                             <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">

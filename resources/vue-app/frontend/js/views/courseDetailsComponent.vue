@@ -37,232 +37,239 @@
                                 irure dolor in reprehenderit in voluptate velit esse cillum.
                             </div>
 
-                            <h4 class="title">Eligibility</h4>
-                            <div class="content">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                ut aliquip ex ea commodo
-                                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.
-                                <br>
-                                <br>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                ut aliquip ex ea
-                                commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum. Lorem ipsum dolor sit
-                                amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Ut enim
-                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. Duis aute
-                                irure dolor in reprehenderit in voluptate velit esse cillum.
-                            </div>
-
-                            <h4 class="title">Course Outline</h4>
-                            <div class="content">
-                                <ul class="course_list">
-                                    <li class="justify-content-between d-flex">
-                                        <p>Introduction Lesson</p>
-                                        <a class="primary-btn text-uppercase" href="#">View Details</a>
-                                    </li>
-                                    <li class="justify-content-between d-flex">
-                                        <p>Basics of HTML</p>
-                                        <a class="primary-btn text-uppercase" href="#">View Details</a>
-                                    </li>
-                                    <li class="justify-content-between d-flex">
-                                        <p>Getting Know about HTML</p>
-                                        <a class="primary-btn text-uppercase" href="#">View Details</a>
-                                    </li>
-                                    <li class="justify-content-between d-flex">
-                                        <p>Tags and Attributes</p>
-                                        <a class="primary-btn text-uppercase" href="#">View Details</a>
-                                    </li>
-                                    <li class="justify-content-between d-flex">
-                                        <p>Basics of CSS</p>
-                                        <a class="primary-btn text-uppercase" href="#">View Details</a>
-                                    </li>
-                                    <li class="justify-content-between d-flex">
-                                        <p>Getting Familiar with CSS</p>
-                                        <a class="primary-btn text-uppercase" href="#">View Details</a>
-                                    </li>
-                                    <li class="justify-content-between d-flex">
-                                        <p>Introduction to Bootstrap</p>
-                                        <a class="primary-btn text-uppercase" href="#">View Details</a>
-                                    </li>
-                                    <li class="justify-content-between d-flex">
-                                        <p>Responsive Design</p>
-                                        <a class="primary-btn text-uppercase" href="#">View Details</a>
-                                    </li>
-                                    <li class="justify-content-between d-flex">
-                                        <p>Canvas in HTML 5</p>
-                                        <a class="primary-btn text-uppercase" href="#">View Details</a>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-4 right-contents">
-                        <ul>
-                            <li>
-                                <a class="justify-content-between d-flex" href="#">
-                                    <p>Trainer’s Name</p>
-                                    <span class="or">George Mathews</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="justify-content-between d-flex" href="#">
-                                    <p>Course Fee </p>
-                                    <span>$230</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="justify-content-between d-flex" href="#">
-                                    <p>Available Seats </p>
-                                    <span>15</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="justify-content-between d-flex" href="#">
-                                    <p>Schedule </p>
-                                    <span>2.00 pm to 4.00 pm</span>
-                                </a>
-                            </li>
-                        </ul>
-                        <a href="#" class="primary-btn2 text-uppercase enroll rounded-0 text-white">Enroll the course</a>
-
-                        <h4 class="title">Reviews</h4>
-                        <div class="content">
-                            <div class="review-top row pt-40">
-                                <div class="col-lg-12">
-                                    <h6 class="mb-15">Provide Your Rating</h6>
-                                    <div class="d-flex flex-row reviews justify-content-between">
-                                        <span>Quality</span>
-                                        <div class="star">
+                            <h4 class="title">Reviews</h4>
+                            <div class="reviews-list">
+                                <h6 class="mb-3">Recent Reviews</h6>
+                                <div class="review-item mb-3">
+                                    <div class="user-info d-flex align-items-start justify-content-between">
+                                        <div class="user-thumb mr-3">
+                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="">
+                                        </div>
+                                        <div class="user-details flex-grow-1">
+                                            <h6 class="mb-1">Emilly Blunt</h6>
+                                            <p class="comment mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula justo eget erat volutpat.</p>
+                                            <div class="review-footer mt-2">
+                                                <a href="#" class="mr-3">
+                                                    <i class="ti-thumb-up"></i> 25
+                                                </a>
+                                                <a href="#">
+                                                    <i class="ti-reply"></i> Reply
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="star-rating d-flex align-items-center">
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star"></i>
                                             <i class="ti-star"></i>
                                         </div>
-                                        <span>Outstanding</span>
                                     </div>
-                                    <div class="d-flex flex-row reviews justify-content-between">
-                                        <span>Puncuality</span>
-                                        <div class="star">
+                                </div>
+
+                                <div class="review-item mb-3">
+                                    <div class="user-info d-flex align-items-start justify-content-between">
+                                        <div class="user-thumb mr-3">
+                                            <img :src="baseUrl + '/frontend/img/courses/author1.png'" alt="">
+                                        </div>
+                                        <div class="user-details flex-grow-1">
+                                            <h6 class="mb-1">Elsie Cunningham</h6>
+                                            <p class="comment mb-2">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                            <div class="review-footer mt-2">
+                                                <a href="#" class="mr-3">
+                                                    <i class="ti-thumb-up"></i> 25
+                                                </a>
+                                                <a href="#">
+                                                    <i class="ti-reply"></i> Reply
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="star-rating d-flex align-items-center">
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star"></i>
                                             <i class="ti-star"></i>
                                         </div>
-                                        <span>Outstanding</span>
                                     </div>
-                                    <div class="d-flex flex-row reviews justify-content-between">
-                                        <span>Quality</span>
-                                        <div class="star">
+                                </div>
+
+                                <div class="review-item mb-3">
+                                    <div class="user-info d-flex align-items-start justify-content-between">
+                                        <div class="user-thumb mr-3">
+                                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
+                                        </div>
+                                        <div class="user-details flex-grow-1">
+                                            <h6 class="mb-1">Maria Luna</h6>
+                                            <p class="comment mb-2">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+                                            <div class="review-footer mt-2">
+                                                <a href="#" class="mr-3">
+                                                    <i class="ti-thumb-up"></i> 25
+                                                </a>
+                                                <a href="#">
+                                                    <i class="ti-reply"></i>Reply
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="star-rating d-flex align-items-center">
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star checked"></i>
-                                            <i class="ti-star"></i>
+                                            <i class="ti-star checked"></i>
                                             <i class="ti-star"></i>
                                         </div>
-                                        <span>Outstanding</span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="feedeback">
+                            <div class="feedback mb-4">
                                 <h6>Your Feedback</h6>
-                                <textarea name="feedback" class="form-control" cols="10" rows="10"></textarea>
-                                <div class="mt-10 text-right">
-                                    <a href="#" class="primary-btn2 text-right rounded-0 text-white">Submit</a>
+                                <textarea class="form-control" rows="4" placeholder="Share your experience..."></textarea>
+                                <div class="text-right mt-3">
+                                    <button class="btn btn-primary text-uppercase">Submit</button>
                                 </div>
                             </div>
-                            <div class="comments-area mb-30">
-                                <div class="comment-list">
-                                    <div class="single-comment single-reviews justify-content-between d-flex">
-                                        <div class="user justify-content-between d-flex">
-                                            <div class="thumb">
-                                                <img :src="baseUrl + '/frontend/img/blog/c1.jpg'" alt="">
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4 right-contents">
+                        <h4 class="title mt-5">Lessons</h4>
+                        <div class="playlist">
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
+                                            <div class="mt-lg-0 mt-3">
+                                      <span class="meta_info mr-4">
+                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
+                                      </span>
+                                                <span class="meta_info">
+                                            <a href="#"> <i class="ti-comment"></i>35 </a>
+                                        </span>
                                             </div>
-                                            <div class="desc">
-                                                <h5><a href="#">Emilly Blunt</a>
-                                                    <div class="star">
-                                                        <span class="ti-star checked"></span>
-                                                        <span class="ti-star checked"></span>
-                                                        <span class="ti-star checked"></span>
-                                                        <span class="ti-star"></span>
-                                                        <span class="ti-star"></span>
-                                                    </div>
-                                                </h5>
-                                                <p class="comment">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore.
-                                                </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
+                                            <div class="mt-lg-0 mt-3">
+                                      <span class="meta_info mr-4">
+                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
+                                      </span>
+                                                <span class="meta_info">
+                                            <a href="#"> <i class="ti-comment"></i>35 </a>
+                                        </span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
+                                            <div class="mt-lg-0 mt-3">
+                                              <span class="meta_info mr-4">
+                                                <a href="#"> <i class="ti-thumb-up"></i>25 </a>
+                                              </span>
+                                                        <span class="meta_info">
+                                                    <a href="#"> <i class="ti-comment"></i>35 </a>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="comment-list">
-                                    <div class="single-comment single-reviews justify-content-between d-flex">
-                                        <div class="user justify-content-between d-flex">
-                                            <div class="thumb">
-                                                <img :src="baseUrl + '/frontend/img/blog/c2.jpg'" alt="">
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
+                                            <div class="mt-lg-0 mt-3">
+                                      <span class="meta_info mr-4">
+                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
+                                      </span>
+                                                <span class="meta_info">
+                                            <a href="#"> <i class="ti-comment"></i>35 </a>
+                                        </span>
                                             </div>
-                                            <div class="desc">
-                                                <h5><a href="#">Elsie Cunningham</a>
-                                                    <div class="star">
-                                                        <span class="ti-star checked"></span>
-                                                        <span class="ti-star checked"></span>
-                                                        <span class="ti-star checked"></span>
-                                                        <span class="ti-star"></span>
-                                                        <span class="ti-star"></span>
-                                                    </div>
-                                                </h5>
-                                                <p class="comment">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore.
-                                                </p>
-                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
-                                <div class="comment-list">
-                                    <div class="single-comment single-reviews justify-content-between d-flex">
-                                        <div class="user justify-content-between d-flex">
-                                            <div class="thumb">
-                                                <img :src="baseUrl + '/frontend/img/blog/c3.jpg'" alt="">
+                            </div>
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
+                                            <div class="mt-lg-0 mt-3">
+                                      <span class="meta_info mr-4">
+                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
+                                      </span>
+                                                <span class="meta_info">
+                                            <a href="#"> <i class="ti-comment"></i>35 </a>
+                                        </span>
                                             </div>
-                                            <div class="desc">
-                                                <h5><a href="#">Maria Luna</a>
-                                                    <div class="star">
-                                                        <span class="ti-star checked"></span>
-                                                        <span class="ti-star checked"></span>
-                                                        <span class="ti-star checked"></span>
-                                                        <span class="ti-star"></span>
-                                                        <span class="ti-star"></span>
-                                                    </div>
-                                                </h5>
-                                                <p class="comment">
-                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                                                    eiusmod tempor incididunt ut labore et dolore.
-                                                </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3">
+                                <div class="row no-gutters">
+                                    <div class="col-md-4">
+                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
+                                            <div class="mt-lg-0 mt-3">
+                                      <span class="meta_info mr-4">
+                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
+                                      </span>
+                                                <span class="meta_info">
+                                            <a href="#"> <i class="ti-comment"></i>35 </a>
+                                        </span>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </section>
         <!--================ End Course Details Area =================-->
     </div>
-    
+
 </template>
 
 <script>
