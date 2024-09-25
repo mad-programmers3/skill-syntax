@@ -148,6 +148,17 @@ This section outlines the main tasks related to managing the application. For ea
   - Password: `string`
   - Type: `integer| 1=Admin, 2=Instructor, 3=Student`
 
+
+
+## File Table Details
+
+1. **Columns**:
+    - User ID: `forenKey`
+    - Name: `string|max:255`
+    - Path: `string`
+    - Extension: `string`
+    - Size: `unsignedBigInteger`
+
 ### Git Pull Command
 To pull the latest changes, use:
 ```bash
