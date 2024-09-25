@@ -71,90 +71,14 @@
                     </ul>
                 </div>
             </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="pages/forms/basic_elements.html">
-                    <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-                    <span class="menu-title">Forms</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="pages/charts/chartjs.html">
-                    <i class="mdi mdi-chart-bar menu-icon"></i>
-                    <span class="menu-title">Charts</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="pages/tables/basic-table.html">
-                    <i class="mdi mdi-table-large menu-icon"></i>
-                    <span class="menu-title">Tables</span>
-                </a>
-            </li>
-            <li class="nav-item">
-            <span class="nav-link" href="#">
-              <span class="menu-title">Docs</span>
-            </span>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://www.bootstrapdash.com/demo/breeze-free/documentation/documentation.html">
-                    <i class="mdi mdi-file-document-box menu-icon"></i>
-                    <span class="menu-title">Documentation</span>
-                </a>
-            </li>
-            <li class="nav-item sidebar-actions">
-                <div class="nav-link">
-                    <div class="mt-4">
-                        <div class="border-none">
-                            <p class="text-black"><i class="fa fa-bell"></i> Notification</p>
-                        </div>
-                        <ul class="mt-4 pl-0">
-                            <li @click.prevent="confirmLogout">
-                                <i class="fa fa-sign-out"></i> Sign Out
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
         </ul>
     </nav>
 </template>
 
 <script>
-    import axios from 'axios';
-    import Swal from 'sweetalert2';  // Import SweetAlert
 
     export default {
         name: 'topNavBar',
-        methods: {
-            confirmLogout() {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Do you really want to log out?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#28a745',
-                    confirmButtonText: 'Yes, log me out!',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.logout();
-                    }
-                });
-            },
-            async logout() {
-                try {
-                    await axios.post('/logout', {}, {
-                        headers: {
-                            'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        }
-                    });
-                    window.location.href = '/login';
-                } catch (error) {
-                    console.error('Logout failed', error);
-                }
-            }
-        }
     };
 </script>
 

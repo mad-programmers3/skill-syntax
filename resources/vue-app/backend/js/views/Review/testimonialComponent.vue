@@ -3,12 +3,12 @@
         <data-table :table-heading="tableHeading" @open-modal="openModal">
             <tr v-for="(data, index) in dataList" :key="data.id" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
-                <td>{{ data.review.comment }}</td>
-                <td>{{ data.review.user}}</td>
-                <td>{{ data.review.rating }}</td>
+                <td>{{ data.review ? data.review.comment : '' }}</td>
+                <td>{{ data.review ? data.review.user : ''}}</td>
+                <td>{{ data.review ? data.review.rating : ''}}</td>
                 <td>
-                    <span :class="data.review.status ? 'badge badge-success' : 'badge badge-danger'">
-                        {{ data.review.status ? 'Showing' : 'Hidden' }}
+                    <span :class="data.review && data.review.status ? 'badge badge-success' : 'badge badge-danger'">
+                        {{ data.review && data.review.status ? 'Showing' : 'Hidden' }}
                     </span>
                 </td>
                 <td>

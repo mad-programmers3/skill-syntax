@@ -3,8 +3,8 @@
         <data-table :table-heading="tableHeading" @open-modal="openModal">
             <tr v-for="(data, index) in dataList" :key="data.id" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
-                <td>{{ data.review.comment }}</td>
-                <td>{{ data.lesson.title }}</td>
+                <td>{{ data.review ? data.review.comment : '' }}</td>
+                <td>{{ data.lesson ? data.lesson.title : '' }}</td>
                 <td>
                     <span :class="data.review.status ? 'badge badge-success' : 'badge badge-danger'">
                         {{ data.review.status ? 'Showing' : 'Hidden' }}

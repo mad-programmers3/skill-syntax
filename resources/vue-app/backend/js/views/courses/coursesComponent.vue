@@ -4,7 +4,7 @@
             <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
                 <td>{{ data.title }}</td>
-                <td>{{ data.category.title }}</td>
+                <td>{{ data.category ? data.category.title : '' }}</td>
                 <td>{{ data.price }}</td>
                 <td>{{ data.sits }}</td>
                 <td>
@@ -179,7 +179,7 @@
                         class="upload-area d-block m-auto"
                         @click="triggerFileInput"
                 >
-                    <img :src="imageUrl ?? baseUrl + '/backend/assets/images/upload.png'" alt="Preview" class="preview-img" />
+                    <img :src="imageUrl ? imageUrl : baseUrl + '/backend/assets/images/upload.png'" alt="Preview" class="preview-img" />
                 </div>
                 <input
                         type="file"

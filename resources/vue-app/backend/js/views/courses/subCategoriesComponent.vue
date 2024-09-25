@@ -4,7 +4,7 @@
             <tr v-for="(data, index) in dataList" :key="data.id" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
                 <td>{{ data.title }}</td>
-                <td>{{ data.category.title }}</td>
+                <td>{{ data.category ? data.category.title : ''}}</td>
                 <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
                         {{ data.status ? 'Active' : 'Inactive' }}
