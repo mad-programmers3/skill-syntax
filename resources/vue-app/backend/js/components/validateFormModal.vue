@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="categoryModalLabel">{{ title }}</h1>
-                    <button type="button" class="btn-close" @click="closeModal" aria-label="Close"></button>
+                    <a type="button" class="font-weight-bold" @click="closeModal" aria-label="Close">X</a>
                 </div>
 
                 <form role="form" @submit.prevent="handleSubmit" enctype="multipart/form-data">
@@ -36,8 +36,8 @@
         props: {
             title: String,
             width: {
-                type: Number,
-                default: 500,
+                type: String,
+                default: '500px',
             }
         },
 

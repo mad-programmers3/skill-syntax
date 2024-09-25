@@ -5,8 +5,9 @@ namespace Database\Seeders;
 use App\Models\Lesson;
 use App\Models\LessonReview;
 use App\Models\Review;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class LessonReviewsTableSeeder extends Seeder
 {
@@ -17,13 +18,22 @@ class LessonReviewsTableSeeder extends Seeder
      */
     public function run()
     {
-        // Get all lessons and reviews(where type == 3 => lesson review)
+        $faker = Faker::create(); // Instantiate Faker
         $lessons = Lesson::all();
-        $reviews = Review::where('type', 3)->get();
+        $users = User::all();
 
         // Link each lesson to some reviews
         foreach ($lessons as $lesson) {
-            foreach ($reviews as $review) {
+            for ($i = 1; $i <= 2; $i++) {
+
+                // Create a review for the lesson
+                $review = Review::create([
+                    'user_id' => $users->random()->id, // Assign a random user
+                    'comment' => $faker->sentence(), // Random test comment
+                    'type' => 3 // Indicate it's a lesson review
+                ]);
+
+                // Link the review to the lesson
                 LessonReview::create([
                     'lesson_id' => $lesson->id,
                     'review_id' => $review->id,
