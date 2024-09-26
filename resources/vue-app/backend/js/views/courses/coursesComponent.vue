@@ -3,9 +3,9 @@
         <data-table :table-heading="tableHeading" @open-modal="openModal">
             <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
-                <td>{{ data.title }}</td>
-                <td>{{ data.category ? data.category.title : '' }}</td>
-                <td>{{ data.price }}</td>
+                <td>{{ limitText(data.title) }}</td>
+                <td>{{ limitText(data.category ? data.category.title : '' )}}</td>
+                <td>{{formatPrice(data.price)  }}</td>
                 <td>{{ data.sits }}</td>
                 <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
@@ -84,7 +84,7 @@
                                 name="sub_category_id"
                                 @change="validateField"
                         >
-                            <option value="">Select a sub category</option>
+                            <option value="">Select a subCategory</option>
                             <option v-for="subCategory in subCategories" :key="subCategory.id" :value="subCategory.id">
                                 {{ subCategory.title }}
                             </option>
@@ -282,6 +282,19 @@
                 })
 
             },
+
+            formatPrice(value) {
+                const numValue = parseFloat(value);
+                if (!isNaN(numValue)) {
+                    if (Number.isInteger(numValue)) {
+                        return numValue.toString();
+                    }
+                    else {
+                        return numValue.toFixed(2);
+                    }
+                }
+                return value;
+            }
         },
     };
 </script>
