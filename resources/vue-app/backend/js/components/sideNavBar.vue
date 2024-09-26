@@ -27,7 +27,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                    <i class="fa fa-book menu-icon"></i>
                     <span class="menu-title">Course</span>
                     <i class="menu-arrow"></i>
                 </a>
@@ -50,7 +50,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#review-basic" aria-expanded="false" aria-controls="review-basic">
-                    <i class="mdi mdi-contacts menu-icon"></i>
+                    <i class="fa fa-star menu-icon"></i>
                     <span class="menu-title">Review</span>
                     <i class="menu-arrow"></i>
                 </a>

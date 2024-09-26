@@ -5,14 +5,12 @@
                 <div class="col-lg-5">
                     <div class="main_title">
                         <h2 class="mb-3">Our Popular Courses</h2>
-                        <p>
-                            Replenish man have thing gathering lights yielding shall you
-                        </p>
+                        <p>Replenish man have thing gathering lights yielding shall you</p>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div v-for="course in courses" :key="course.id" class="col-md-4 mb-3" >
+                <div v-for="course in courses" :key="course.id" class="col-md-4 mb-3">
                     <div class="single_course">
                         <div class="course_head">
                             <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
@@ -21,13 +19,13 @@
                             <span class="price">{{ course.price }}</span>
                             <span class="tag mb-4 d-inline-block">{{ course.category.title }}</span>
                             <h4 class="mb-3">
-                                <router-link to="/courses">{{ course.title }}</router-link>
+                                <router-link :to="`/courses/${course.id}`">{{ course.title }}</router-link>
                             </h4>
-                            <p>{{ course.description }}</p>
+                            <!-- Using v-html to render HTML content -->
+                            <p v-html="course.description"></p>
                             <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
                                 <div class="authr_meta">
-                                    <img :src="baseUrl + '/frontend/img/courses/author3.png'"
-                                         alt="">
+                                    <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
                                     <span class="d-inline-block ml-2">Cameron</span>
                                 </div>
                                 <div class="mt-lg-0 mt-3">
@@ -49,24 +47,27 @@
 
 <script>
     import axios from 'axios';
+
     export default {
         name: 'popular_courses',
-        data: () => ({
-            courses: [],  // Store courses here
-        }),
+        data() {
+            return {
+                courses: [],  // Store courses here
+            };
+        },
         mounted() {
+            // Fetch the courses from the backend
             axios.get('/api/courses')
                 .then(response => {
-                    this.courses = response.data.result;
+                    this.courses = response.data.result; // Make sure this has the correct structure
                 })
                 .catch(error => {
                     console.error('Failed to fetch courses:', error);
                 });
         }
     }
-
 </script>
 
 <style scoped>
-
+    /* Add your styles here */
 </style>
