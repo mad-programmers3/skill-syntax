@@ -1,28 +1,27 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
+            <tr v-for="(data, index) in dataList" :key="index" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
-                <td>{{ data.title }}</td>
+                <td>{{ limitText(data.title) }}</td>
                 <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
                         {{ data.status ? 'Active' : 'Inactive' }}
                     </span>
                 </td>
                 <td>
-                    <!--    edit btn    -->
-                    <button v-if="can('category_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm"
-                            type="button">
+                    <!-- Edit button -->
+                    <button v-if="can('category_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
-                    <!--    delete btn    -->
-                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm"
-                            type="button">
+                    <!-- Delete button -->
+                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>
             </tr>
         </data-table>
+
         <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Category">
             <div class="mb-3">
                 <label class="form-label w-100">
@@ -73,6 +72,7 @@
     </div>
 </template>
 
+
 <script>
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
@@ -90,7 +90,7 @@
         },
         methods: {
 
-        },
+        }
     }
 </script>
 

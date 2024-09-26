@@ -44,6 +44,14 @@ export  default {
             return null;
         },
 
+        limitText(text, maxLength = 70) {
+            if (text && text.length > maxLength) {
+                return text.substring(0, maxLength) + '...';
+            }
+            return text;
+
+        },
+
 
         // auth
         fetchAuth() {
