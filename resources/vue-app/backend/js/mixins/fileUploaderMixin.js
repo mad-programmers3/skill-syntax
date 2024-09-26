@@ -2,14 +2,14 @@ export default {
     data() {
         return {
             uploadFile: null,
-            uploadfileUrl: null,
+            uploadFileUrl: null,
         }
     },
     methods: {
-        handleSubmitWithImg(e, submitHandler) {
+        handleSubmitWithFile(e, submitHandler) {
             if (this.uploadFile) {
                 this.uploadFile.user_id = this.getAuth().id;
-                this.formData.thumbnail = this.uploadFile;
+                this.formData.uploadFile = this.uploadFile;
             }
 
             if (typeof submitHandler === 'function') submitHandler(e);
@@ -33,7 +33,7 @@ export default {
             }
 
             // Create a URL for the image preview
-            this.imageUrl = URL.createObjectURL(file);
+            this.uploadFileUrl = URL.createObjectURL(file);
 
             const imgFormData = new FormData();
             imgFormData.append('image', file);
@@ -48,5 +48,11 @@ export default {
             })
 
         },
+
+
+        resetUploadFileInfos() {
+            this.uploadFile = null;
+            this.uploadFileUrl = null;
+        }
     }
 }

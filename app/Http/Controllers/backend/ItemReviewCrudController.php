@@ -31,9 +31,9 @@ class ItemReviewCrudController extends DatabaseCrudController
         return $res;
     }
 
-    public function update(Request $request, $id, $callBack = false)
+    public function update(Request $request, $id, $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::update($request, $id, function () use ($request) {
+        return parent::update($request, $id, false, function () use ($request) {
             if ($request->review) {
                 $record = Review::findOrFail($request->review['id']);
                 $record->fill($request->review);

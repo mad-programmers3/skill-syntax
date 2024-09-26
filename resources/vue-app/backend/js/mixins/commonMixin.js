@@ -56,6 +56,11 @@ export  default {
 
         },
 
+        formatDecimal(value) {
+            if (value % 1 === 0) return parseInt(value);
+            return parseFloat(value).toFixed(2);
+        },
+
 
         // auth
         fetchAuth() {

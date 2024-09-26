@@ -74,14 +74,18 @@ export default {
         },
 
         // Close modal and reset form data
-        closeModal() {
+        closeModal(callBack) {
             $('#categoryModal').modal('hide');
+
+            if (typeof callBack === 'function') callBack();
             this.resetFormData();
         },
 
         // Open modal to update or add category
-        openModal() {
+        openModal(callBack) {
             $('#categoryModal').modal('show');
+
+            if (typeof callBack === 'function') callBack();
         }
     }
 }

@@ -1,11 +1,11 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" @open-modal="openModal">
+        <data-table :table-heading="tableHeading" @open-modal="openModalAndResetUploadFileInfos">
             <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
                 <td>{{ limitText(data.title) }}</td>
                 <td>{{ limitText(data.category ? data.category.title : '' )}}</td>
-                <td>{{formatPrice(data.price)  }}</td>
+                <td>{{formatDecimal(data.price) }}</td>
                 <td>{{ data.sits }}</td>
                 <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
@@ -26,7 +26,8 @@
                 </td>
             </tr>
         </data-table>
-        <validate-form-modal @handle-submit="submit" @close-modal="closeModal" title="Course" width="700px">
+        <validate-form-modal @handle-submit="submit" @close-modal="closeModalAndResetUploadFileInfos" title="Course"
+                             width="700px">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
@@ -179,7 +180,8 @@
                         class="upload-area d-block m-auto"
                         @click="triggerFileInput"
                 >
-                    <img :src="uploadfileUrl ? uploadfileUrl : baseUrl + '/backend/assets/images/upload.png'" alt="Preview" class="preview-img" />
+                    <img :src="uploadFileUrl ? uploadFileUrl : formData.thumbnail && formData.thumbnail.path ? generateFileUrl(formData.thumbnail.path) : baseUrl + '/backend/assets/images/upload.png'"
+                         alt="Preview" class="preview-img"/>
                 </div>
                 <input
                         type="file"
@@ -240,21 +242,15 @@
             },
 
             submit(e) {
-              this.handleSubmitWithImg(e, this.handleSubmit);
+                this.handleSubmitWithFile(e, this.handleSubmit);
             },
 
-            formatPrice(value) {
-                const numValue = parseFloat(value);
-                if (!isNaN(numValue)) {
-                    if (Number.isInteger(numValue)) {
-                        return numValue.toString();
-                    }
-                    else {
-                        return numValue.toFixed(2);
-                    }
-                }
-                return value;
-            }
+            closeModalAndResetUploadFileInfos() {
+                this.closeModal(this.resetUploadFileInfos);
+            },
+            openModalAndResetUploadFileInfos() {
+                this.openModal(this.resetUploadFileInfos);
+            },
         },
     };
 </script>
