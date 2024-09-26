@@ -19,7 +19,7 @@
                             <span class="price">{{ course.price }}</span>
                             <span class="tag mb-4 d-inline-block">{{ course.category.title }}</span>
                             <h4 class="mb-3">
-                                <router-link :to="`/courses/${course.id}`">{{ course.title }}</router-link>
+                                <router-link to="/courses">{{ course.title }}</router-link>
                             </h4>
                             <!-- Using v-html to render HTML content -->
                             <p v-html="course.description"></p>
