@@ -1,11 +1,11 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" @open-modal="openModal">
+        <data-table :table-heading="tableHeading" @open-modal="openModalAndResetUploadFileInfos">
             <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
                 <td>{{ limitText(data.title) }}</td>
                 <td>{{ limitText(data.category ? data.category.title : '' )}}</td>
-                <td>{{formatPrice(data.price)  }}</td>
+                <td>{{formatDecimal(data.price) }}</td>
                 <td>{{ data.sits }}</td>
                 <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
@@ -26,7 +26,8 @@
                 </td>
             </tr>
         </data-table>
-        <validate-form-modal @handle-submit="handleSubmitWithImg" @close-modal="closeModal" title="Course" width="700px">
+        <validate-form-modal @handle-submit="submit" @close-modal="closeModalAndResetUploadFileInfos" title="Course"
+                             width="700px">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
@@ -175,7 +176,8 @@
                         class="upload-area d-block m-auto"
                         @click="triggerFileInput"
                 >
-                    <img :src="imageUrl ? imageUrl : baseUrl + '/backend/assets/images/upload.png'" alt="Preview" class="preview-img" />
+                    <img :src="uploadFileUrl ? uploadFileUrl : formData.thumbnail && formData.thumbnail.path ? generateFileUrl(formData.thumbnail.path) : baseUrl + '/backend/assets/images/upload.png'"
+                         alt="Preview" class="preview-img"/>
                 </div>
                 <input
                         type="file"
@@ -196,18 +198,17 @@
     import validatorMixin from "../../mixins/validatorMixin";
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
     import QuillEditor from "../../components/quillEditor"; // Add this component
+    import fileUploaderMixin from "../../mixins/fileUploaderMixin";
 
     export default {
         name: "categoriesComponent",
         components: {ValidateFormModal, DataTable, QuillEditor}, // Register QuillEditor component
-        mixins: [validatorMixin, validatorListComponentMixin],
+        mixins: [validatorMixin, validatorListComponentMixin, fileUploaderMixin],
         data() {
             return {
                 tableHeading: ['SL', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
-                image: null,
-                imageUrl: null,
             }
         },
         mounted() {
@@ -236,61 +237,16 @@
                 })
             },
 
-            handleSubmitWithImg() {
-                if (this.image) {
-                    this.image.user_id = this.getAuth().id;
-                    this.formData.thumbnail = this.image;
-                }
-
-                this.handleSubmit();
+            submit(e) {
+                this.handleSubmitWithFile(e, this.handleSubmit);
             },
 
-
-            // Trigger the file input on click
-            triggerFileInput() {
-                this.$refs.fileInput.click();
+            closeModalAndResetUploadFileInfos() {
+                this.closeModal(this.resetUploadFileInfos);
             },
-            // Handle file input change
-            handleFileChange(event) {
-                const file = event.target.files[0];
-                this.handleFileUpload(file);
+            openModalAndResetUploadFileInfos() {
+                this.openModal(this.resetUploadFileInfos);
             },
-            // Handle file processing
-            handleFileUpload(file) {
-                if (!file || !file.type.startsWith("image/")) {
-                    alert("Please upload a valid image file.");
-                    return;
-                }
-
-                // Create a URL for the image preview
-                this.imageUrl = URL.createObjectURL(file);
-
-                const imgFormData = new FormData();
-                imgFormData.append('image', file);
-
-                this.httpReq({
-                    customUrl: 'api/files/upload',
-                    method: 'post',
-                    callback: (res)=>{
-                        if (res.data.success) this.image = res.data;
-                    },
-                    data: imgFormData
-                })
-
-            },
-
-            formatPrice(value) {
-                const numValue = parseFloat(value);
-                if (!isNaN(numValue)) {
-                    if (Number.isInteger(numValue)) {
-                        return numValue.toString();
-                    }
-                    else {
-                        return numValue.toFixed(2);
-                    }
-                }
-                return value;
-            }
         },
     };
 </script>

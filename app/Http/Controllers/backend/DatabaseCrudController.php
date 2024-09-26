@@ -55,15 +55,18 @@ class DatabaseCrudController extends Controller
 
 
     // for update old record
-    public function update(Request $request, $id, $callBack = false)
+    public function update(Request $request, $id, $callBackBefore = false, $callBackAfter = false)
     {
-        return $this->customHandleRequest(function () use ($request, $id, $callBack) {
+        return $this->customHandleRequest(function () use ($request, $id, $callBackBefore, $callBackAfter) {
+
+            if (is_callable($callBackBefore)) call_user_func($callBackBefore, $request);
+
             $record = $this->model->findOrFail($id); // Use instance method
             $record->fill($request->all());
             $record->save(); // Use save() instead of update()
 
             // if callable then call the callBack()
-            if (is_callable($callBack)) call_user_func($callBack);
+            if (is_callable($callBackAfter)) call_user_func($callBackAfter, $record);
 
             return response()->json(['success' => true, 'message' => $this->modelNameFormatted() . ' updated successfully.', 'status' => 2000]);
         }, 'edit');
