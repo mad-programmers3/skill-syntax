@@ -10,7 +10,7 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'category_id', 'title', 'description', 'price', 'sits', 'start_date', 'end_date', 'thumbnail', 'status',
+        'user_id', 'category_id', 'title', 'description', 'price', 'sits', 'start_date', 'end_date', 'thumbnail_id', 'status',
     ];
 
 
@@ -24,6 +24,11 @@ class Course extends Model
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
+    }
+    // Relationship with File
+    public function thumbnail()
+    {
+        return $this->belongsTo(MyFile::class, 'thumbnail_id');
     }
     // Relationship with Lessons
     public function lessons()

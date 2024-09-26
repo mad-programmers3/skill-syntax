@@ -17,15 +17,14 @@ class CoursesTableSeeder extends Seeder
     {
         $courses = [
             [
-                'user_id' => 1, // Adjust according to your existing user IDs (instructor)
-                'category_id' => 1, // Adjust according to your existing category IDs
+                'user_id' => 1,
+                'category_id' => 1,
                 'title' => 'Introduction to Web Development',
                 'description' => 'Learn the basics of web development, including HTML, CSS, and JavaScript.',
                 'price' => 99.99,
                 'sits' => 50,
                 'start_date' => '2024-01-01',
                 'end_date' => '2024-03-01',
-                'thumbnail' => 'path/to/thumbnail1.jpg',
                 'status' => 1,
             ],
             [
@@ -37,7 +36,6 @@ class CoursesTableSeeder extends Seeder
                 'sits' => 30,
                 'start_date' => '2024-02-01',
                 'end_date' => '2024-04-01',
-                'thumbnail' => 'path/to/thumbnail2.jpg',
                 'status' => 1,
             ],
             [
@@ -49,7 +47,6 @@ class CoursesTableSeeder extends Seeder
                 'sits' => 40,
                 'start_date' => '2024-03-01',
                 'end_date' => '2024-05-01',
-                'thumbnail' => 'path/to/thumbnail3.jpg',
                 'status' => 1,
             ],
         ];

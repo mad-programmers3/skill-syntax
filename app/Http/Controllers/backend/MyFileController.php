@@ -17,7 +17,7 @@ class MyFileController extends DatabaseCrudController
         return parent::index($with);
     }
 
-    public function store(Request $request, $callBack = false)
+    public function upload(Request $request)
     {
         // Validate the incoming request
         $request->validate([
@@ -29,14 +29,22 @@ class MyFileController extends DatabaseCrudController
             $file = $request->file('image');
             $path = $file->store('images', 'public'); // Store the file in public/images
 
-            // Return a response with the path or URL
+            // Extract file information
+            $fileName = $file->getClientOriginalName();  // Get the original file name
+            $extension = $file->getClientOriginalExtension();  // Get the file extension
+            $size = $file->getSize();  // Get the file size in bytes
+
+            // Return a response with file info, path, and URL
             return response()->json([
                 'success' => true,
                 'path' => $path,
-                'url' => Storage::url($path), // Generate a URL for the uploaded file
+                'name' => $fileName,
+                'extension' => $extension,
+                'size' => $size
             ]);
         }
 
         return response()->json(['success' => false, 'message' => 'File upload failed.'], 500);
     }
+
 }

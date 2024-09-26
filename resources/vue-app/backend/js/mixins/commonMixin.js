@@ -38,6 +38,10 @@ export  default {
             return url;
         },
 
+        generateFileUrl(path) {
+            return this.baseUrl+'/storage/'+path;
+        },
+
         objLen(obj){
             if(typeof obj === 'object')
                 return Object.keys(obj).length;
@@ -49,6 +53,10 @@ export  default {
         fetchAuth() {
             let decodedJson = window.authUser.replace(/&quot;/g, '"');
             this.auth = JSON.parse(decodedJson);
+        },
+        getAuth() {
+            let decodedJson = window.authUser.replace(/&quot;/g, '"');
+            return JSON.parse(decodedJson);
         },
 
         can(task) {

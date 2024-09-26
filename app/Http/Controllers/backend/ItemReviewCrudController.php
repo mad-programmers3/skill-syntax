@@ -16,12 +16,12 @@ class ItemReviewCrudController extends DatabaseCrudController
         $this->revCon = new ReviewController();
     }
 
-    public function store(Request $request, $callBack = false)
+    public function store(Request $request, $callBackBefore = false, $callBackAfter = false)
     {
         $res = false;
 
         // store the review first
-        $this->revCon->store($request, function ($record) use ($request, &$res) {
+        $this->revCon->store($request, $callBackBefore = false, function ($record) use ($request, &$res) {
             // set the review_id attribute on the request with the newly created review id
             $request->merge(['review_id' => $record->id]);
             // now store the relation

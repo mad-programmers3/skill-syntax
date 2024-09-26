@@ -26,7 +26,7 @@
                 </td>
             </tr>
         </data-table>
-        <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Course" width="700px">
+        <validate-form-modal @handle-submit="handleSubmitWithImg" @close-modal="closeModal" title="Course" width="700px">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
@@ -210,12 +210,11 @@
                 tableHeading: ['SL', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
-                imageUrl: null, // To store the image URL for preview
+                image: null,
+                imageUrl: null,
             }
         },
         mounted() {
-            this.formData.sub_category_id = 1;
-
             this.fetchCategories();
             this.fetchSubCategories();
         },
@@ -241,6 +240,15 @@
                 })
             },
 
+            handleSubmitWithImg() {
+                if (this.image) {
+                    this.image.user_id = this.getAuth().id;
+                    this.formData.thumbnail = this.image;
+                }
+
+                this.handleSubmit();
+            },
+
 
             // Trigger the file input on click
             triggerFileInput() {
@@ -260,13 +268,16 @@
 
                 // Create a URL for the image preview
                 this.imageUrl = URL.createObjectURL(file);
+
                 const imgFormData = new FormData();
                 imgFormData.append('image', file);
 
                 this.httpReq({
-                    customUrl: 'api/files',
+                    customUrl: 'api/files/upload',
                     method: 'post',
-                    callback: (res)=>{console.log(res)},
+                    callback: (res)=>{
+                        if (res.data.success) this.image = res.data;
+                    },
                     data: imgFormData
                 })
 

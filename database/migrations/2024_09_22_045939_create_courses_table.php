@@ -17,13 +17,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Instructor ID
             $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Course category
+            $table->foreignId('thumbnail_id')->nullable(); // Thumbnail id
             $table->string('title', 255);
             $table->text('description')->nullable(); // Changed from details to description
             $table->decimal('price', 8, 2)->default(0.00);
             $table->integer('sits'); // Available sits
             $table->date('start_date'); // Start date
             $table->date('end_date'); // End date
-            $table->string('thumbnail')->nullable(); // Thumbnail
             $table->tinyInteger('status')->default(1); // Status
             $table->timestamps();
         });

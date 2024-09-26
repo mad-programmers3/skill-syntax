@@ -29,7 +29,7 @@ Route::post('/login', [LoginController::class, 'doLogin']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
-Route::prefix('api')->middleware('auth')->group(function () {
+Route::prefix('api')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('sub-categories', SubCategoryController::class);
     Route::resource('courses', CourseController::class);
@@ -41,6 +41,7 @@ Route::prefix('api')->middleware('auth')->group(function () {
     Route::resource('review/lesson-reviews', LessonReviewController::class);
     Route::resource('review/testimonials', TestimonialController::class);
     Route::resource('files', MyFileController::class);
+    Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
 });
 
 

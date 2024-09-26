@@ -38,12 +38,16 @@ class DatabaseCrudController extends Controller
     }
 
     // for insert new record
-    public function store(Request $request, $callBack = false)
+    public function store(Request $request, $callBackBefore = false, $callBackAfter = false)
     {
-        return $this->customHandleRequest(function () use ($request, $callBack) {
+        return $this->customHandleRequest(function () use ($request, $callBackBefore, $callBackAfter) {
+
+            if (is_callable($callBackBefore)) call_user_func($callBackBefore, $request);
+
             $record = $this->model->create($request->all()); // Use instance method
+
             // if callable then call the callBack() with passing $record
-            if (is_callable($callBack)) call_user_func($callBack, $record);
+            if (is_callable($callBackAfter)) call_user_func($callBackAfter, $record);
 
             return response()->json(['success' => true, 'result' => $record, 'message' => $this->modelNameFormatted() . ' created successfully.']);
         }, 'add');
