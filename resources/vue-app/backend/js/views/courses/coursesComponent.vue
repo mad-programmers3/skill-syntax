@@ -44,17 +44,13 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Description
-                    <textarea
-                            type="text"
-                            class="form-control"
-                            placeholder="Course details here"
+                    <quill-editor
                             v-model="formData.description"
-                            v-validate="'max:500'"
-                            name="details"
-                            @input="validateField"
-                    ></textarea>
+                            class="quill-editor"
+                    ></quill-editor>
                 </label>
             </div>
+
             <div class="mb-3 d-flex">
                 <div class="w-50 pr-2">
                     <label class="form-label d-block">
@@ -190,7 +186,6 @@
                 />
             </div>
 
-
         </validate-form-modal>
     </div>
 </template>
@@ -200,10 +195,11 @@
     import ValidateFormModal from "../../components/validateFormModal";
     import validatorMixin from "../../mixins/validatorMixin";
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
+    import QuillEditor from "../../components/quillEditor"; // Add this component
 
     export default {
         name: "categoriesComponent",
-        components: {ValidateFormModal, DataTable},
+        components: {ValidateFormModal, DataTable, QuillEditor}, // Register QuillEditor component
         mixins: [validatorMixin, validatorListComponentMixin],
         data() {
             return {
