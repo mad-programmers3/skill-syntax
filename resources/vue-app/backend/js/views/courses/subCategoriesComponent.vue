@@ -94,14 +94,17 @@
         mixins: [validatorMixin, validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL','Title', 'Category', 'Status', 'Actions'],
-                categories: {}
+                tableHeading: ['SL','Title', 'Category', 'Status', 'Actions'], // Table headings
+                categories: {}, // Array to hold categories data
             }
         },
         mounted() {
-            this.fetchCategories();
+            this.fetchCategories(); // Fetch categories when the component mounts
         },
         methods: {
+            /**
+             * Fetches categories from the API and sets them in the categories data property.
+             */
             fetchCategories() {
                 const _this = this;
                 _this.httpReq({

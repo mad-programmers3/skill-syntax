@@ -193,11 +193,11 @@
 </template>
 
 <script>
+    import QuillEditor from "../../components/quillEditor"; // Text editor
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
     import validatorMixin from "../../mixins/validatorMixin";
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
-    import QuillEditor from "../../components/quillEditor"; // Add this component
     import fileUploaderMixin from "../../mixins/fileUploaderMixin";
 
     export default {

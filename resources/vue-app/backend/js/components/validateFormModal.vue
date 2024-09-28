@@ -42,6 +42,7 @@
         },
 
         watch: {
+            // Watches for changes in validation errors and triggers custom handler
             '$validator.errors.items': {
                 handler(newErrors) {
                     this.validatorHandler(newErrors);
@@ -51,15 +52,23 @@
         },
 
         mounted() {
+            // Fetches authenticated user info on mount
             this.fetchAuth();
             this.formData.user_id = this.auth.id;
         },
 
         methods: {
+            /**
+             * Handles the form submission, triggers validation before emitting an event.
+             */
             handleSubmit() {
                 const _this = this;
                 _this.validatorSubmit({callBack: ()=> {_this.$emit('handle-submit');}})
             },
+
+            /**
+             * Handles the modal close event, clears validation errors, and emits 'close-modal' event.
+             */
             closeModal() {
                 this.dismissValidate();
                 this.$emit('close-modal');

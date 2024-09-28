@@ -120,14 +120,17 @@
         mixins: [validatorMixin, validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Title', 'Courses', 'Status', 'Actions'],
-                courses: [],
+                tableHeading: ['SL', 'Title', 'Courses', 'Status', 'Actions'], // Column headings for the data table
+                courses: [], // Array to hold courses fetched from the server
             };
         },
         mounted() {
-            this.fetchCategories();
+            this.fetchCategories(); // Fetch categories when the component is mounted
         },
         methods: {
+            /**
+             * Fetch categories from the API and update the courses array.
+             */
             fetchCategories() {
                 const _this = this;
                 _this.httpReq({
