@@ -1,3 +1,4 @@
+
 <template>
     <div class="popular_courses mt-5">
         <div class="container">
@@ -11,31 +12,45 @@
             </div>
             <div class="row">
                 <div v-for="course in courses" :key="course.id" class="col-md-4 mb-3">
-                    <div class="single_course">
+                    <div class="single_course card">
                         <div class="course_head">
                             <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
                         </div>
-                        <div class="course_content">
+                        <div class="course_content card-body">
                             <span class="price">{{ course.price }}</span>
                             <span class="tag mb-4 d-inline-block">{{ course.category.title }}</span>
                             <h4 class="mb-3">
                                 <router-link :to="`/courses/${course.id}`">{{ course.title }}</router-link>
                             </h4>
-                            <!-- Using v-html to render HTML content -->
-                            <p v-html="course.description"></p>
+                            <!-- Truncated description -->
+                            <p class="course-description" v-html="truncateDescription(course.description)"></p>
                             <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
                                 <div class="authr_meta">
                                     <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
                                     <span class="d-inline-block ml-2">Cameron</span>
                                 </div>
                                 <div class="mt-lg-0 mt-3">
-                                      <span class="meta_info mr-4">
+                                    <span class="meta_info mr-4">
                                         <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                                      </span>
+                                    </span>
                                     <span class="meta_info">
-                                            <a href="#"> <i class="ti-heart mr-2"></i>35 </a>
-                                        </span>
+                                        <a href="#"> <i class="ti-heart mr-2"></i>35 </a>
+                                    </span>
                                 </div>
+                            </div>
+                            <!-- See Details Button -->
+                            <div class="mt-4">
+                                <button
+                                        class="btn btn-outline-warning btn-lg btn-block flex items-center justify-center"
+                                        @click="goToCourseDetails(course.id)"
+                                >
+                                    SEE DETAILS
+                                    <img
+                                            class="transition-all duration-200 w-6 h-6 min-w-[24px] ml-2"
+                                            src="https://cdn.ostad.app/public/icons/arrow-right-line.svg"
+                                            alt="Arrow Right"
+                                    >
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -59,15 +74,121 @@
             // Fetch the courses from the backend
             axios.get('/api/courses')
                 .then(response => {
-                    this.courses = response.data.result; // Make sure this has the correct structure
+                    this.courses = response.data.result; // Ensure this has the correct structure
                 })
                 .catch(error => {
                     console.error('Failed to fetch courses:', error);
                 });
+        },
+        methods: {
+            // Truncate description to a maximum of 2 lines
+            truncateDescription(description) {
+                const maxLength = 150; // Set max length for two lines
+                return description.length > maxLength ? description.substring(0, maxLength) + '...' : description;
+            },
+            // Navigate to course details page
+            goToCourseDetails(courseId) {
+                this.$router.push(`/courses/${courseId}`); // Change this URL based on your route setup
+            },
         }
     }
 </script>
 
 <style scoped>
     /* Add your styles here */
+
+    .single_course {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        height: 100%; /* Ensure equal height for all cards */
+    }
+
+    .single_course:hover {
+        transform: translateY(-5px);
+    }
+
+    .course_head img {
+        height: 200px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .price {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #ff5e14; /* Change color as needed */
+    }
+
+    .course-description {
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 20px; /* Space below the description */
+    }
+
+    .authr_meta img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .meta_info i {
+        color: #ff5e14;
+    }
+
+    .meta_info a {
+        font-size: 14px;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .main_title h2 {
+        font-size: 36px;
+        font-weight: bold;
+        color: #333;
+        text-align: center;
+    }
+
+    .main_title p {
+        color: #666;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    /* Button Styling */
+    .btn-outline-warning {
+        width: 100%;
+        font-size: 1.2rem;
+        padding: 10px;
+        border-radius: 4px;
+    }
 </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
