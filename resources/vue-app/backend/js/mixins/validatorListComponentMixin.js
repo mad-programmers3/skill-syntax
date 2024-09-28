@@ -4,11 +4,12 @@ export default {
     mixins: [validatorMixin],
     data() {
         return {
-            //
+            fetches: [], // hold all fetch infos / {} for fetch default datalist
         };
     },
     mounted() {
         this.fetchData();
+        // add other fetches and call fetch in main list component again :)
     },
     methods: {
         /**

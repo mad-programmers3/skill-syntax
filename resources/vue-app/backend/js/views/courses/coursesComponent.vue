@@ -212,31 +212,11 @@
             }
         },
         mounted() {
-            this.fetchCategories();
-            this.fetchSubCategories();
+            this.addFetch({url: 'api/categories', dataHolder: this.categories});
+            this.addFetch({url: 'api/sub-categories', dataHolder: this.subCategories});
+            this.fetchDataAll();
         },
         methods: {
-            fetchCategories() {
-                const _this = this;
-                _this.httpReq({
-                    customUrl: 'api/categories',
-                    callback: (response) => {
-                        if (response.data)
-                            _this.categories = response.data.result;
-                    }
-                })
-            },
-            fetchSubCategories() {
-                const _this = this;
-                _this.httpReq({
-                    customUrl: 'api/sub-categories',
-                    callback: (response) => {
-                        if (response.data)
-                            _this.subCategories = response.data.result;
-                    }
-                })
-            },
-
             submit(e) {
                 this.handleSubmitWithFile(e, this.handleSubmit);
             },

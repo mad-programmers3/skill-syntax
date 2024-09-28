@@ -125,22 +125,8 @@
             };
         },
         mounted() {
-            this.fetchCategories(); // Fetch categories when the component is mounted
-        },
-        methods: {
-            /**
-             * Fetch categories from the API and update the courses array.
-             */
-            fetchCategories() {
-                const _this = this;
-                _this.httpReq({
-                    customUrl: 'api/courses',
-                    callback: (response) => {
-                        if (response.data)
-                            _this.courses = response.data.result; // Set to courses, not categories
-                    }
-                });
-            },
-        },
+            this.addFetch({url: 'api/courses', dataHolder: this.courses});
+            this.fetchDataAll();
+        }
     };
 </script>
