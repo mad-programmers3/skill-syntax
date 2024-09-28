@@ -3,58 +3,32 @@ import Axios from "axios";
 export default {
     data() {
         return {
-            fetches: [], // hold all fetch infos
+            //
         };
     },
     methods: {
         /**
-         * Fetches data from the server using the provided URL.
-         * If a data holder or callback is specified, it uses them to handle the response.
-         * Otherwise, it defaults to updating a local data list.
+         * Fetches data from the server using a given URL.
+         * If a callback is provided, it will handle the response.
+         * Otherwise, the fetched data is used to update the local data list.
          *
-         * @param {String|Boolean} url - The URL from which to fetch data. Defaults to false.
-         * @param {Object|Boolean} dataHolder - An object where the fetched data will be stored. Defaults to false.
-         * @param {Function|Boolean} callback - An optional callback to handle custom actions with the fetched data. Defaults to false.
+         * @param {String|Boolean} url - The URL to fetch data from. Defaults to false.
+         * @param {Function|Boolean} callback - Optional callback to process the fetched data. Defaults to false.
          */
-        fetchData(url = false, dataHolder = false, callback = false) {
+        fetchData(url = false, callback = false) {
             const _this = this;
             // Make the HTTP request using httpReq with the provided URL and callback
             this.httpReq({
                 url,
                 callback: (response) => {
                     if (response.data) {
-                        // If a custom callback is provided, execute it with the result
-                        if (typeof callback == 'function') {
-                            callback(response.data.result);
-                            if (!dataHolder) return;  // If no data holder is specified, exit early
-                        }
-
-                        // Store the result in the provided data holder or update the local data list
-                        if (dataHolder) dataHolder = response.data.result;
-                        else _this.setDataList(response.data.result); // Default behavior: update the data list
+                        // If a callback is provided, use it to handle the data
+                        if (typeof callback === 'function') callback(response.data.result);
+                        // Otherwise, update the local data list with the fetched data
+                        else _this.setDataList(response.data.result);
                     }
                 }
             });
-        },
-
-
-        /**
-         * Iterates through an array of fetch requests and makes each request sequentially.
-         * Each object in the array contains a URL and a data holder to store the fetched data.
-         *
-         * If `url`, `dataHolder`, and `callback` are not provided, the method fetches the paginated URL and stores the result in the store.
-         */
-        fetchDataAll() {
-            const _this = this;
-
-            _this.fetches.forEach(({url, dataHolder}) => {
-                _this.fetchData(url, dataHolder);
-            });
-        },
-
-
-        addFetch({url = false, dataHolder = false, callback = false}) {
-            this.fetches.push({url, dataHolder, callback})
         },
 
         /**

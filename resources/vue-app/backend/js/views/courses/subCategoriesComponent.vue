@@ -99,8 +99,8 @@
             }
         },
         mounted() {
-            this.addFetch({url: 'api/categories', dataHolder: this.categories});
-            this.fetchDataAll();
+            const _this = this;
+            this.fetchData(_this.urlGenerate('api/categories'), (result) => {_this.categories = result});
 
         }
     }
