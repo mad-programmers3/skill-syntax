@@ -58,10 +58,7 @@
             return {
                 tableHeading: ['SL', 'Review','User','Rating', 'Status', 'Actions'],
             }
-        },
-        methods: {
-
-        },
+        }
     }
 </script>
 

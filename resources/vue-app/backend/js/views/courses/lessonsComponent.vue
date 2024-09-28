@@ -120,24 +120,13 @@
         mixins: [validatorMixin, validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Title', 'Courses', 'Status', 'Actions'],
-                courses: [],
+                tableHeading: ['SL', 'Title', 'Courses', 'Status', 'Actions'], // Column headings for the data table
+                courses: [], // Array to hold courses fetched from the server
             };
         },
         mounted() {
-            this.fetchCategories();
-        },
-        methods: {
-            fetchCategories() {
-                const _this = this;
-                _this.httpReq({
-                    customUrl: 'api/courses',
-                    callback: (response) => {
-                        if (response.data)
-                            _this.courses = response.data.result; // Set to courses, not categories
-                    }
-                });
-            },
-        },
+            this.addFetch({url: 'api/courses', dataHolder: this.courses});
+            this.fetchDataAll();
+        }
     };
 </script>

@@ -87,9 +87,6 @@
             return {
                 tableHeading: ['SL', 'Title', 'Status', 'Actions'],
             }
-        },
-        methods: {
-
         }
     }
 </script>

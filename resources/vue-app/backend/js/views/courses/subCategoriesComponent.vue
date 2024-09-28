@@ -94,24 +94,14 @@
         mixins: [validatorMixin, validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL','Title', 'Category', 'Status', 'Actions'],
-                categories: {}
+                tableHeading: ['SL','Title', 'Category', 'Status', 'Actions'], // Table headings
+                categories: [], // Array to hold categories data
             }
         },
         mounted() {
-            this.fetchCategories();
-        },
-        methods: {
-            fetchCategories() {
-                const _this = this;
-                _this.httpReq({
-                    customUrl: 'api/categories',
-                    callback: (response) => {
-                        if (response.data)
-                            _this.categories = response.data.result;
-                    }
-                })
-            },
+            this.addFetch({url: 'api/categories', dataHolder: this.categories});
+            this.fetchDataAll();
+
         }
     }
 </script>

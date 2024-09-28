@@ -4,14 +4,19 @@ export default {
     mixins: [validatorMixin],
     data() {
         return {
-            //
+            fetches: [], // hold all fetch infos / {} for fetch default datalist
         };
     },
     mounted() {
         this.fetchData();
+        // add other fetches and call fetch in main list component again :)
     },
     methods: {
-        // Reusable toast notification function
+        /**
+         * Display a toast notification with a custom message and type.
+         * @param {String} message - The message to display in the toast.
+         * @param {String} [type="success"] - The type of toast (e.g., 'success', 'error').
+         */
         showToast(message, type = "success") {
             this.$toast(message, {
                 type: type,
@@ -20,6 +25,10 @@ export default {
             });
         },
 
+        /**
+         * Handle form submission to create or update data.
+         * Determines whether to send a POST or PUT request based on formData.id.
+         */
         // Handle form submission
         handleSubmit() {
             let urlSuffix = this.formData.id ?? false;
@@ -40,14 +49,21 @@ export default {
             this.closeModal();
         },
 
-        // When user clicks update
+        /**
+         * Prepare the form for updating an existing item.
+         * @param {Object} item - The item to be updated.
+         */
         onClickUpdate(item) {
             let cat = Object.assign({}, item);
             this.setFormData(cat);
             this.openModal();
         },
 
-        // Handle delete action
+        /**
+         * Handle the deletion of an item.
+         * Prompts the user for confirmation before proceeding with the delete action.
+         * @param {Number} id - The ID of the item to be deleted.
+         */
         deleteItem(id) {
             this.$swal({
                 title: 'Are you sure?',
@@ -73,19 +89,27 @@ export default {
             });
         },
 
-        // Close modal and reset form data
+        /**
+         * Close the modal and reset the form data.
+         * Optionally calls a callback function after the modal is closed.
+         * @param {Function} [callBack] - Optional callback to be executed after closing the modal.
+         */
         closeModal(callBack) {
-            $('#categoryModal').modal('hide');
+            $('#categoryModal').modal('hide'); // Hide the modal
 
-            if (typeof callBack === 'function') callBack();
-            this.resetFormData();
+            if (typeof callBack === 'function') callBack(); // Execute callback if provided
+            this.resetFormData(); // Reset the form data
         },
 
-        // Open modal to update or add category
+        /**
+         * Open the modal for adding or updating categories.
+         * Optionally calls a callback function after the modal is opened.
+         * @param {Function} [callBack] - Optional callback to be executed after opening the modal.
+         */
         openModal(callBack) {
-            $('#categoryModal').modal('show');
+            $('#categoryModal').modal('show'); // Show the modal
 
-            if (typeof callBack === 'function') callBack();
+            if (typeof callBack === 'function') callBack(); // Execute callback if provided
         }
     }
 }
