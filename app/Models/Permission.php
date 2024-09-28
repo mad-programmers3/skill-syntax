@@ -9,15 +9,10 @@ class Permission extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'module_id',
-        'name',
-        'status',
-    ];
+    protected $fillable = ['module_id', 'name', 'status'];
 
-
-    public function module()
+    public function roles()
     {
-        return $this->belongsTo(Module::class);
+        return $this->belongsToMany(Role::class, 'role_permissions'); // Assuming 'role_permissions' is the pivot table
     }
 }

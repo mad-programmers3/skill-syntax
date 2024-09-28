@@ -8,79 +8,26 @@ use Illuminate\Http\Request;
 
 class RoleModuleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return response()->json(RoleModule::with(['role', 'module'])->get());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'role_id' => 'required|exists:roles,id',    // Validate that role_id exists in roles table
+            'module_id' => 'required|exists:modules,id' // Validate that module_id exists in modules table
+        ]);
+
+        $roleModule = RoleModule::create($request->all());
+        return response()->json($roleModule, 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\RoleModule  $roleModule
-     * @return \Illuminate\Http\Response
-     */
-    public function show(RoleModule $roleModule)
+    public function destroy($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\RoleModule  $roleModule
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RoleModule $roleModule)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\RoleModule  $roleModule
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, RoleModule $roleModule)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RoleModule  $roleModule
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(RoleModule $roleModule)
-    {
-        //
+        $roleModule = RoleModule::findOrFail($id);
+        $roleModule->delete();
+        return response()->json(null, 204);
     }
 }

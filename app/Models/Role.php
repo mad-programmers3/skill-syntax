@@ -9,13 +9,10 @@ class Role extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'status',
-    ];
+    protected $fillable = ['name', 'description'];
 
-    public function users()
+    public function permissions()
     {
-        return $this->hasMany(User::class);
+        return $this->belongsToMany(Permission::class, 'role_permissions'); // Assuming 'role_permissions' is the pivot table
     }
 }

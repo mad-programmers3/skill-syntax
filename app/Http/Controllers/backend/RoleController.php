@@ -6,81 +6,51 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+
+class RoleController extends Controller {
+
+    // Fetch all roles
+    public function index() {
+        return response()->json(Role::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    // Show specific role
+    public function show($id) {
+        return response()->json(Role::findOrFail($id));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    // Store a new role
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|unique:roles,name',
+        ]);
+
+        $role = Role::create([
+            'name' => $request->name,
+        ]);
+
+        return response()->json(['message' => 'Role created successfully', 'role' => $role], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Role $role)
-    {
-        //
+
+    // Update an existing role
+    public function update(Request $request, $id) {
+        // Validate request
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        // Find the role by ID and update it
+        $role = Role::findOrFail($id);
+        $role->update($request->all());
+
+        return response()->json($role);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Role $role)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Role $role)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Role $role)
-    {
-        //
+    // Delete a role
+    public function destroy($id) {
+        Role::destroy($id);
+        return response()->json(null, 204);  // No content
     }
 }

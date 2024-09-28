@@ -7,6 +7,11 @@ import reviewsComponent from "../views/Review/reviewsComponent";
 import courseReviewComponent from "../views/Review/courseReviewComponent";
 import lessonReviewComponent from "../views/Review/lessonReviewComponent";
 import testimonialComponent from "../views/Review/testimonialComponent";
+import RoleComponent from "../views/RolesPermission/RoleComponent";
+import PermissionComponent from "../views/RolesPermission/PermissionComponent";
+import ModuleComponent from "../views/RolesPermission/ModuleComponent";
+import RoleModuleComponent from "../views/RolesPermission/RoleModuleComponent";
+import RolePermissionComponent from "../views/RolesPermission/RolePermissionComponent";
 
 
 const routes =[
@@ -68,6 +73,36 @@ const routes =[
         component:testimonialComponent,
         meta : {'pageTitle' : 'testimonials List', dataUrl : 'api/review/testimonials'},
     },
+
+
+    //Roles And Permissions
+    {
+        path: '/admin/roles',
+        name: 'roles',
+        component:RoleComponent
+    },
+    {
+        path: '/admin/permissions',
+        name: 'permission',
+        component:PermissionComponent
+    },
+    {
+        path: '/admin/modules',
+        name: 'module',
+        component: ModuleComponent
+    },
+    {
+        path: '/admin/roleModules',
+        name: 'roleModule',
+        component: RoleModuleComponent
+    },
+    {
+        path: '/admin/rolePermissions',
+        name: 'rolePermissions',
+        component: RolePermissionComponent
+    }
+
+
 
 ];
 export default routes;
