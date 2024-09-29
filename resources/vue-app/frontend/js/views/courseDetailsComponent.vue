@@ -1,41 +1,46 @@
 <template>
     <div>
-
-        <banner_area />
-
-
         <!--================ Start Course Details Area =================-->
         <section class="course_details_area section_gap">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 course_details_left">
                         <div class="main_image">
-                            <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/course-details.jpg'" alt="">
+                            <!-- Display the course thumbnail or a default image if it's not available -->
+                            <img class="img-fluid" :src="course && course.thumbnail && course.thumbnail.path ? generateFileUrl(course.thumbnail.path) : baseUrl + '/images/course-def-thumbnail.jpg'" alt="Course Thumbnail">
                         </div>
                         <div class="content_wrapper">
-                            <h4 class="title">Objectives</h4>
+                            <br/>
+                            <h4 class="yellow-text">{{ course.title }}</h4>
                             <div class="content">
-                                When you enter into any new area of science, you almost always find yourself with a
-                                baffling new language of
-                                technical terms to learn before you can converse with the experts. This is certainly
-                                true in astronomy both in
-                                terms of terms that refer to the cosmos and terms that describe the tools of the trade,
-                                the most prevalent
-                                being the telescope.
-                                <br>
-                                <br>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                ut aliquip ex ea
-                                commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum. Lorem ipsum dolor sit
-                                amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Ut enim
-                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. Duis aute
-                                irure dolor in reprehenderit in voluptate velit esse cillum.
+                                <div v-html="course.description" class="course-description mb-4"></div>
+
+                                <!-- Course Details -->
+                                <div class="course-details ">
+                                    <ul class="list-unstyled">
+                                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                                            <strong class="yellow-text">Price:</strong>
+                                            <span class="text-muted">${{ course.price }}</span>
+                                        </li>
+                                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                                            <strong class="yellow-text">Seats Available:</strong>
+                                            <span class="text-muted">{{ course.sits }}</span>
+                                        </li>
+                                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                                            <strong class="yellow-text">Start Date:</strong>
+                                            <span class="text-muted">{{ course.start_date }}</span>
+                                        </li>
+                                        <li class="mb-3 d-flex justify-content-between align-items-center">
+                                            <strong class="yellow-text">End Date:</strong>
+                                            <span class="text-muted">{{ course.end_date }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </div>
+
+
+
 
                             <h4 class="title">Reviews</h4>
                             <div class="reviews-list">
@@ -268,9 +273,6 @@
             </div>
         </section>
         <!--================ End Course Details Area =================-->
-        <pre>
-            {{ course }}
-        </pre>
     </div>
 
 </template>
@@ -279,12 +281,13 @@
     import Banner_area from "../components/sections/banner_area";
     import axios from 'axios';
     export default {
-        name: "courseDetailsComponent.vue",
+        name: "courseDetails",
         components: {Banner_area},
         props: ['courseId'],
         data() {
             return {
-                course: null
+                course: null,
+                baseUrl: window.location.origin
             };
         },
         mounted() {
@@ -295,18 +298,36 @@
                 .catch(error => {
                     console.error('Error fetching course details:', error);
                 });
+
         },
+
         computed: {
             course_id() {
                 return this.$route.params.id;
             }
         },
         methods: {
-            //
+            generateFileUrl(path) {
+                return `${this.baseUrl}/storage/${path}`;
+            },
         }
     }
 </script>
 
 <style scoped>
+    .yellow-text {
+        color: #f39c12; /* Refined yellow color */
+        font-weight: bold;
+    }
+
+    .course-details li {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.2rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e0e0e0; /* Separator lines */
+    }
+
 
 </style>
