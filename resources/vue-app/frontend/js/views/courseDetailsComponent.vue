@@ -291,14 +291,7 @@
             };
         },
         mounted() {
-            axios.get(`/api/courses/${this.course_id}`)
-                .then(response => {
-                    this.course = response.data.result;
-                })
-                .catch(error => {
-                    console.error('Error fetching course details:', error);
-                });
-
+            this.fetchData(this.urlGenerate('api/courses', this.course_id), (result) => {this.course = result;});
         },
 
         computed: {
@@ -307,9 +300,7 @@
             }
         },
         methods: {
-            generateFileUrl(path) {
-                return `${this.baseUrl}/storage/${path}`;
-            },
+            //
         }
     }
 </script>
