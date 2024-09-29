@@ -8,79 +8,40 @@ use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        return response()->json(Module::all());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name' => 'required']);
+        $module = Module::create($request->all());
+        return response()->json($module, 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Module  $module
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Module $module)
+    public function show($id)
     {
-        //
+        return response()->json(Module::findOrFail($id));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Module  $module
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Module $module)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate(['name' => 'required']);
+        $module = Module::findOrFail($id);
+        $module->update($request->all());
+        return response()->json($module);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Module  $module
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Module $module)
+    public function destroy($id)
     {
-        //
-    }
+        // Check if the module exists before trying to delete it
+        $module = Module::find($id);
+        if (!$module) {
+            return response()->json(['message' => 'Module not found'], 404);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Module  $module
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Module $module)
-    {
-        //
+        $module->delete(); // Use delete method on the model instance
+        return response()->json(null, 204);
     }
 }
