@@ -44,9 +44,6 @@
                                             <router-link class="nav-link" to="/courses">Courses</router-link>
                                         </li>
                                         <li class="nav-item">
-                                            <router-link class="nav-link" to="/courseDetails">Course Details</router-link>
-                                        </li>
-                                        <li class="nav-item">
                                             <router-link class="nav-link" to="/elements">Elements</router-link>
                                         </li>
                                     </ul>

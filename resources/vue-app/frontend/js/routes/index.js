@@ -6,6 +6,8 @@ import elementsComponent from "../views/elementsComponent";
 import blogComponent from "../views/blogComponent";
 import blogDetailsComponent from "../views/blogDetailsComponent";
 import contactComponent from "../views/contactComponent";
+import lessonsComponent from "../../../backend/js/views/courses/lessonsComponent";
+import lessonComponent from "../views/lessonComponent";
 
 const route = [
     {
@@ -56,6 +58,12 @@ const route = [
         name : 'contact',
         component: contactComponent,
         meta : {'pageTitle' : 'Contact'},
+    },
+    {
+        path : '/lessonDetails',
+        name : 'lessonDetails',
+        component:lessonComponent,
+        meta : {'pageTitle' : 'LessonDetails'},
     },
 ];
 export default route;
