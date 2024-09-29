@@ -4,7 +4,7 @@
             <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
                 <td>
-                    <img :src="generateFileUrl(data.thumbnail.path)"
+                    <img :src="data.thumbnail && data.thumbnail.path? generateFileUrl(data.thumbnail.path) :  baseUrl + '/images/course-def-thumbnail.jpg'"
                          style="width: 50px; height: 50px; border-radius: 0%" alt="">
                 </td>
                 <td>{{ limitText(data.title) }}</td>

@@ -15,7 +15,7 @@
                     <div class="single_course card">
                         <div class="course_head">
                             <!-- Display the dynamic thumbnail image -->
-                            <img class="img-fluid" :src="generateFileUrl(course.thumbnail.path)" alt="">
+                            <img class="img-fluid" :src="courses.thumbnail && courses.thumbnail.path? generateFileUrl(courses.thumbnail.path) :  baseUrl + '/images/course-def-thumbnail.jpg'" alt="">
                         </div>
                         <div class="course_content card-body">
                             <span class="price">{{ course.price }}</span>
@@ -72,11 +72,6 @@
                 baseUrl: window.location.origin // Base URL for images
             };
         },
-        methods: {
-            generateFileUrl(path) {
-                return this.baseUrl+'/storage/'+path;
-            },
-        },
         mounted() {
             axios.get('/api/courses')
                 .then(response => {
@@ -95,6 +90,9 @@
             // Navigate to course details page
             goToCourseDetails(courseId) {
                 this.$router.push(`/courses/${courseId}`); // Change this URL based on your route setup
+            },
+            generateFileUrl(path) {
+                return this.baseUrl+'/storage/'+path;
             },
         }
     }
