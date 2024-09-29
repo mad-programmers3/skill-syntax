@@ -15,7 +15,7 @@
                     <div class="single_course card">
                         <div class="course_head">
                             <!-- Display the dynamic thumbnail image -->
-                            <img class="img-fluid" :src="courses.thumbnail && courses.thumbnail.path? generateFileUrl(courses.thumbnail.path) :  baseUrl + '/images/course-def-thumbnail.jpg'" alt="">
+                            <img class="img-fluid" :src="course.thumbnail && course.thumbnail.path ? generateFileUrl(course.thumbnail.path) :  baseUrl + '/images/course-def-thumbnail.jpg'" alt="">
                         </div>
                         <div class="course_content card-body">
                             <span class="price">{{ course.price }}</span>
