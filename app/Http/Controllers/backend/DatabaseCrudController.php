@@ -27,13 +27,32 @@ class DatabaseCrudController extends Controller
     {
         return $this->customHandleRequest(function () use ($with) {
             $query = $this->model->query();
-            foreach ($with as $w) {
+            foreach ($with as $w)
                 if ($w) $query->with($w);
-            }
+
             $data = $query->get();
 
 
             return response()->json(['result' => $data, 'status' => 2000], 200);
+        }, 'view');
+    }
+
+    public function show($id, $with = [])
+    {
+        return $this->customHandleRequest(function () use ($id, $with) {
+            // Fetch the record by its ID
+            $query = $this->model->query();
+            foreach ($with as $w)
+                if ($w) $query->with($w);
+
+            $record =    $query->find($id); // Use find() to get the item or null if not found
+
+            // If the record exists, return it with a success message
+            if ($record)
+                return response()->json(['result' => $record, 'status' => 2000], 200);
+
+            // If the record is not found, return an error message
+            return response()->json(['success' => false, 'message' => $this->modelNameFormatted() . ' not found.'], 404);
         }, 'view');
     }
 

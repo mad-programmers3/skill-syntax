@@ -268,15 +268,42 @@
             </div>
         </section>
         <!--================ End Course Details Area =================-->
+        <pre>
+            {{ course }}
+        </pre>
     </div>
 
 </template>
 
 <script>
     import Banner_area from "../components/sections/banner_area";
+    import axios from 'axios';
     export default {
         name: "courseDetailsComponent.vue",
-        components: {Banner_area}
+        components: {Banner_area},
+        props: ['courseId'],
+        data() {
+            return {
+                course: null
+            };
+        },
+        mounted() {
+            axios.get(`/api/courses/${this.course_id}`)
+                .then(response => {
+                    this.course = response.data.result;
+                })
+                .catch(error => {
+                    console.error('Error fetching course details:', error);
+                });
+        },
+        computed: {
+            course_id() {
+                return this.$route.params.id;
+            }
+        },
+        methods: {
+            //
+        }
     }
 </script>
 

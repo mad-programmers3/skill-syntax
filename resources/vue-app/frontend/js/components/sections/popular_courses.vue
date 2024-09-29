@@ -41,9 +41,9 @@
                             </div>
                             <!-- See Details Button -->
                             <div class="mt-4">
-                                <button
+                                <router-link
                                         class="btn btn-outline-warning btn-lg btn-block flex items-center justify-center"
-                                        @click="goToCourseDetails(course.id)"
+                                        :to="{ name: 'courseDetails', params: { id: course.id } }"
                                 >
                                     SEE DETAILS
                                     <img
@@ -51,7 +51,7 @@
                                             src="https://cdn.ostad.app/public/icons/arrow-right-line.svg"
                                             alt="Arrow Right"
                                     >
-                                </button>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -88,9 +88,9 @@
                 return description.length > maxLength ? description.substring(0, maxLength) + '...' : description;
             },
             // Navigate to course details page
-            goToCourseDetails(courseId) {
-                this.$router.push(`/courses/${courseId}`); // Change this URL based on your route setup
-            },
+            // goToCourseDetailsPage(courseId) {
+            //     this.$router.push({ name: 'courseDetails', params: { courseId: courseId } });
+            // },
             generateFileUrl(path) {
                 return this.baseUrl+'/storage/'+path;
             },

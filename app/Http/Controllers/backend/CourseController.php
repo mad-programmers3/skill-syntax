@@ -21,6 +21,11 @@ class CourseController extends DatabaseCrudController
         return parent::index($with);
     }
 
+    public function show($id, $with = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons'])
+    {
+        return parent::show($id, $with);
+    }
+
     public function store(Request $request, $callBackBefore = false, $callBackAfter = false)
     {
         return parent::store($request, function ($req) {

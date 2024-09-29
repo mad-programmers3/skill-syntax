@@ -27,9 +27,10 @@ const route = [
         meta : {'pageTitle' : 'Courses'},
     },
     {
-        path : '/courseDetails',
+        path : '/courses/:id',
         name : 'courseDetails',
         component : courseDetailsComponent,
+        props: true,
         meta : {'pageTitle' : 'CourseDetails'},
     },
     {
