@@ -3,6 +3,10 @@
         <data-table :table-heading="tableHeading" @open-modal="openModalAndResetUploadFileInfos">
             <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
+                <td>
+                    <img :src="generateFileUrl(data.thumbnail.path)"
+                         style="width: 50px; height: 50px; border-radius: 0%" alt="">
+                </td>
                 <td>{{ limitText(data.title) }}</td>
                 <td>{{ limitText(data.category ? data.category.title : '' )}}</td>
                 <td>{{formatDecimal(data.price) }}</td>
@@ -206,7 +210,7 @@
         mixins: [validatorMixin, validatorListComponentMixin, fileUploaderMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
+                tableHeading: ['SL', 'Images', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
             }
@@ -227,6 +231,8 @@
             openModalAndResetUploadFileInfos() {
                 this.openModal(this.resetUploadFileInfos);
             },
+
+
         },
     };
 </script>

@@ -14,13 +14,14 @@
                 <div v-for="course in courses" :key="course.id" class="col-md-4 mb-3">
                     <div class="single_course card">
                         <div class="course_head">
-                            <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
+                            <!-- Display the dynamic thumbnail image -->
+                            <img class="img-fluid" :src="generateFileUrl(course.thumbnail.path)" alt="">
                         </div>
                         <div class="course_content card-body">
                             <span class="price">{{ course.price }}</span>
                             <span class="tag mb-4 d-inline-block">{{ course.category.title }}</span>
                             <h4 class="mb-3">
-                                <router-link :to="`/courses/${course.id}`">{{ course.title }}</router-link>
+                                <router-link to="/courses">{{ course.title }}</router-link>
                             </h4>
                             <!-- Truncated description -->
                             <p class="course-description" v-html="truncateDescription(course.description)"></p>
@@ -64,14 +65,19 @@
     import axios from 'axios';
 
     export default {
-        name: 'popular_courses',
+        name: 'PopularCourses',
         data() {
             return {
                 courses: [],  // Store courses here
+                baseUrl: window.location.origin // Base URL for images
             };
         },
+        methods: {
+            generateFileUrl(path) {
+                return this.baseUrl+'/storage/'+path;
+            },
+        },
         mounted() {
-            // Fetch the courses from the backend
             axios.get('/api/courses')
                 .then(response => {
                     this.courses = response.data.result; // Ensure this has the correct structure
