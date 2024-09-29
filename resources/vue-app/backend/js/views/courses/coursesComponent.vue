@@ -216,9 +216,10 @@
             }
         },
         mounted() {
-            this.addFetch({url: 'api/categories', dataHolder: this.categories});
-            this.addFetch({url: 'api/sub-categories', dataHolder: this.subCategories});
-            this.fetchDataAll();
+            const _this = this;
+
+            this.fetchData(_this.urlGenerate('api/categories'), (result) => {_this.categories = result});
+            this.fetchData(_this.urlGenerate('api/sub-categories'), (result) => {_this.subCategories = result});
         },
         methods: {
             submit(e) {

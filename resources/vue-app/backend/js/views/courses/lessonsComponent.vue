@@ -125,8 +125,8 @@
             };
         },
         mounted() {
-            this.addFetch({url: 'api/courses', dataHolder: this.courses});
-            this.fetchDataAll();
+            const _this = this;
+            this.fetchData(_this.urlGenerate('api/courses'), (result) => {_this.courses = result});
         }
     };
 </script>
