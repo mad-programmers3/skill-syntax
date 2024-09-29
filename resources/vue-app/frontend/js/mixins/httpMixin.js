@@ -1,6 +1,7 @@
-import Axios from "axios";
+import httpMixinUtil from "../../../utils/mixins/httpMixinUtil";
 
 export default {
+    mixins: [httpMixinUtil],
     data() {
         return {
             //
@@ -16,16 +17,7 @@ export default {
          * @param {Function|Boolean} callback - Optional callback to process the fetched data. Defaults to false.
          */
         fetchData(url = false, callback = false) {
-            // Make the HTTP request using httpReq with the provided URL and callback
-            this.httpReq({
-                url,
-                callback: (response) => {
-                    if (response.data) {
-                        // If a callback is provided, use it to handle the data
-                        if (typeof callback === 'function') callback(response.data.result);
-                    }
-                }
-            });
+            this.fetchDataUtil(url, callback);
         },
 
         /**
@@ -41,23 +33,8 @@ export default {
          * @param {Function|Boolean} [options.callback=false] - A function to handle the response. Defaults to false.
          * @param {Object} [options.data=this.getFormData()] - Data to send with the request (usually for POST or PUT). Defaults to the form data.
          */
-        httpReq({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data /*= this.getFormData()*/ }) {
-            const _this = this;
-
-            Axios({
-                method: method,  // HTTP method (GET, POST, etc.)
-                url: url /* ? url : _this.urlGenerate(customUrl, urlSuffix)*/,  // Generate the full URL
-                data: data       // The data to be sent with the request (for POST/PUT)
-            })
-                .then(function (response) {
-                    if (typeof callback === 'function') {
-                        callback(response);  // Execute the callback with the response
-                    }
-                })
-                .catch(function (error) {
-                    // Handle the error here, for example by showing a toast notification
-                    // toastr.error(error.message, 'Error!', {positionClass: 'toast-top-center'});
-                });
+        httpReq({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = {} }) {
+            this.httpReqUtil({url, customUrl, urlSuffix, method, callback, data})
         }
     }
 }

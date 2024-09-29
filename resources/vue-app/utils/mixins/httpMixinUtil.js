@@ -1,12 +1,29 @@
 import Axios from "axios";
 
 export default {
-    data() {
-        return {
-            //
-        };
-    },
     methods: {
+        /**
+         * Generates a URL using the base URL, custom URL, and optional suffix.
+         * If a `customUrl` is passed, it will append it to the base URL; otherwise, it will use the `dataUrl` from the current route.
+         * A `suffix` can also be appended to the generated URL.
+         * @param {String|Boolean} [customUrl=false] - Optional custom URL to append to the base URL.
+         * @param {String|Boolean} [suffix=false] - Optional suffix to append to the generated URL.
+         * @returns {String} The full generated URL.
+         */
+        urlGenerate(customUrl = false, suffix = false) {
+            let url = window.baseUrl;
+
+            if (customUrl)
+                url += '/' + customUrl;
+            else
+                url += '/' + this.$route.meta.dataUrl;
+
+            if (suffix)
+                url += '/' + suffix;
+
+            return url;
+        },
+
         /**
          * Fetches data from the server using a given URL.
          * If a callback is provided, it will handle the response.
@@ -15,8 +32,7 @@ export default {
          * @param {String|Boolean} url - The URL to fetch data from. Defaults to false.
          * @param {Function|Boolean} callback - Optional callback to process the fetched data. Defaults to false.
          */
-        fetchData(url = false, callback = false) {
-            const _this = this;
+        fetchDataUtil(url = false, callback = false) {
             // Make the HTTP request using httpReq with the provided URL and callback
             this.httpReq({
                 url,
@@ -24,8 +40,6 @@ export default {
                     if (response.data) {
                         // If a callback is provided, use it to handle the data
                         if (typeof callback === 'function') callback(response.data.result);
-                        // Otherwise, update the local data list with the fetched data
-                        else _this.setDataList(response.data.result);
                     }
                 }
             });
@@ -44,7 +58,7 @@ export default {
          * @param {Function|Boolean} [options.callback=false] - A function to handle the response. Defaults to false.
          * @param {Object} [options.data=this.getFormData()] - Data to send with the request (usually for POST or PUT). Defaults to the form data.
          */
-        httpReq({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = this.getFormData() }) {
+        httpReqUtil({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = {} }) {
             const _this = this;
 
             Axios({
