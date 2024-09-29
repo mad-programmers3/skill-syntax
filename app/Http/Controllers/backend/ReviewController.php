@@ -11,8 +11,8 @@ class ReviewController extends DatabaseCrudController
         parent::__construct(new Review());
     }
 
-    public function index($with = ['user'])
+    public function index($with = ['user'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::index($with);
+        return parent::index($with, $callBackBefore, $callBackAfter);
     }
 }

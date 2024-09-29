@@ -10,8 +10,8 @@ class SubCategoryController extends DatabaseCrudController
         parent::__construct(new SubCategory());
     }
 
-    public function index($with = ['category:id,title'])
+    public function index($with = ['category:id,title'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::index($with);
+        return parent::index($with, $callBackBefore, $callBackAfter);
     }
 }

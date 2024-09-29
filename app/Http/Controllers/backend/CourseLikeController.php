@@ -11,8 +11,8 @@ class CourseLikeController extends DatabaseCrudController
         parent::__construct(new CourseLike());
     }
 
-    public function index($with = ['course:id,title', 'user:id,name'])
+    public function index($with = ['course:id,title', 'user:id,name'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::index($with);
+        return parent::index($with, $callBackBefore, $callBackAfter);
     }
 }

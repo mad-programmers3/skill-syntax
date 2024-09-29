@@ -1,5 +1,16 @@
 <?php
 
+use App\Http\Controllers\backend\CategoryController;
+use App\Http\Controllers\backend\CourseController;
+use App\Http\Controllers\backend\CourseLikeController;
+use App\Http\Controllers\backend\CourseReviewController;
+use App\Http\Controllers\backend\LessonController;
+use App\Http\Controllers\backend\LessonLikeController;
+use App\Http\Controllers\backend\LessonReviewController;
+use App\Http\Controllers\backend\MyFileController;
+use App\Http\Controllers\backend\ReviewController;
+use App\Http\Controllers\backend\SubCategoryController;
+use App\Http\Controllers\backend\TestimonialController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +35,20 @@ use App\Http\Controllers\backend\RolePermissionController;
 use App\Http\Controllers\backend\RoleModuleController;
 use App\Http\Controllers\backend\ModuleController;
 use App\Http\Controllers\backend\PermissionController;
+
+Route::resource('categories', CategoryController::class);
+Route::resource('sub-categories', SubCategoryController::class);
+Route::resource('courses', CourseController::class);
+Route::resource('course/likes', CourseLikeController::class);
+Route::resource('lessons', LessonController::class);
+Route::resource('lesson/likes', LessonLikeController::class);
+Route::resource('reviews', ReviewController::class);
+Route::resource('review/course-reviews', CourseReviewController::class);
+Route::resource('review/lesson-reviews', LessonReviewController::class);
+Route::resource('review/testimonials', TestimonialController::class);
+Route::resource('files', MyFileController::class);
+Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
+
 
 // Role routes
 Route::middleware('auth:api')->group(function () {

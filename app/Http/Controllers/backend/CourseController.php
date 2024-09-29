@@ -16,14 +16,20 @@ class CourseController extends DatabaseCrudController
         $this->fileCon = new MyFileController();
     }
 
-    public function index($with = ['thumbnail:id,path', 'category:id,title', 'likes'])
+    public function index($with = ['thumbnail:id,path', 'category:id,title', 'likes'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::index($with);
+        return parent::index($with, $callBackBefore, $callBackAfter);
     }
 
-    public function show($id, $with = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons'])
+    public function show($id, $with = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::show($id, $with);
+        return parent::show($id, $with, function ($query) {
+            $query->with(['reviews'=>function ($reviews){
+                $reviews->with(['review' => function ($review) {
+                    $review->with('user');
+                }]);
+            }]);
+        }, $callBackAfter);
     }
 
     public function store(Request $request, $callBackBefore = false, $callBackAfter = false)

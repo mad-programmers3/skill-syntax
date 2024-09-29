@@ -23,33 +23,47 @@ class DatabaseCrudController extends Controller
     }
 
     // return all records
-    public function index($with = [])
+    public function index($with = [], $callBackBefore = false, $callBackAfter = false)
     {
-        return $this->customHandleRequest(function () use ($with) {
+        return $this->customHandleRequest(function () use ($with, $callBackBefore, $callBackAfter) {
             $query = $this->model->query();
+
+            // call callback for manipulate query if needed
+            if (is_callable($callBackBefore)) call_user_func($callBackBefore, $query);
+
             foreach ($with as $w)
                 if ($w) $query->with($w);
 
             $data = $query->get();
 
+            // after callback for manipulate the data
+            if (is_callable($callBackAfter)) call_user_func($callBackAfter, $data);
 
             return response()->json(['result' => $data, 'status' => 2000], 200);
         }, 'view');
     }
 
-    public function show($id, $with = [])
+    public function show($id, $with = [], $callBackBefore = false, $callBackAfter = false)
     {
-        return $this->customHandleRequest(function () use ($id, $with) {
+        return $this->customHandleRequest(function () use ($id, $with, $callBackBefore, $callBackAfter) {
             // Fetch the record by its ID
             $query = $this->model->query();
+
+            // call callback for manipulate query if needed
+            if (is_callable($callBackBefore)) call_user_func($callBackBefore, $query);
+
             foreach ($with as $w)
                 if ($w) $query->with($w);
 
             $record =    $query->find($id); // Use find() to get the item or null if not found
 
             // If the record exists, return it with a success message
-            if ($record)
+            if ($record) {
+                // after callback for manipulate the record
+                if (is_callable($callBackAfter)) call_user_func($callBackAfter, $record);
+
                 return response()->json(['result' => $record, 'status' => 2000], 200);
+            }
 
             // If the record is not found, return an error message
             return response()->json(['success' => false, 'message' => $this->modelNameFormatted() . ' not found.'], 404);

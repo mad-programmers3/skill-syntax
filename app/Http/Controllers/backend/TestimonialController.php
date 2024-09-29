@@ -11,8 +11,8 @@ class TestimonialController extends ItemReviewCrudController
         parent::__construct(new Testimonial());
     }
 
-    public function index($with = ['review'])
+    public function index($with = ['review'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::index($with);
+        return parent::index($with, $callBackBefore, $callBackAfter);
     }
 }

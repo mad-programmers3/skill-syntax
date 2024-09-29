@@ -25,6 +25,11 @@ class Lesson extends Model
     // Relationship with CourseLike
     public function likes()
     {
-        return $this->hasMany(LessonLike::class, 'lesson_id');
+        return $this->hasMany(LessonLike::class);
+    }
+    // Relationship with LessonReview
+    public function reviews()
+    {
+        return $this->hasMany(LessonReview::class);
     }
 }

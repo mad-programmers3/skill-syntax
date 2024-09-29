@@ -11,8 +11,8 @@ class LessonReviewController extends ItemReviewCrudController
         parent::__construct(new LessonReview());
     }
 
-    public function index($with = ['lesson:id,title', 'review'])
+    public function index($with = ['lesson:id,title', 'review'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::index($with);
+        return parent::index($with, $callBackBefore, $callBackAfter);
     }
 }
