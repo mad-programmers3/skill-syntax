@@ -62,38 +62,22 @@
 </template>
 
 <script>
-    import axios from 'axios';
-
     export default {
         name: 'PopularCourses',
         data() {
             return {
                 courses: [],  // Store courses here
-                baseUrl: window.location.origin // Base URL for images
             };
         },
         mounted() {
-            axios.get('/api/courses')
-                .then(response => {
-                    this.courses = response.data.result; // Ensure this has the correct structure
-                })
-                .catch(error => {
-                    console.error('Failed to fetch courses:', error);
-                });
+            const _this = this;
+
+            this.fetchData(this.urlGenerate('api/courses'), (result) => {
+                _this.courses = result;
+            });
         },
         methods: {
-            // Truncate description to a maximum of 2 lines
-            truncateDescription(description) {
-                const maxLength = 150; // Set max length for two lines
-                return description.length > maxLength ? description.substring(0, maxLength) + '...' : description;
-            },
-            // Navigate to course details page
-            // goToCourseDetailsPage(courseId) {
-            //     this.$router.push({ name: 'courseDetails', params: { courseId: courseId } });
-            // },
-            generateFileUrl(path) {
-                return this.baseUrl+'/storage/'+path;
-            },
+            //
         }
     }
 </script>
