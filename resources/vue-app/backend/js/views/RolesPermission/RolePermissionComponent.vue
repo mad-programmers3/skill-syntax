@@ -16,7 +16,7 @@
 
 
         <!-- Table to Display Permissions -->
-        <div class="overflow-auto">
+        <div class="overflow-auto my-3">
             <table class="role-permission-table">
                 <thead>
                 <tr>
