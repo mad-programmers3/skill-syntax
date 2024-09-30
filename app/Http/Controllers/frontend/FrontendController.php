@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\backend\CourseController;
+use App\Http\Controllers\backend\LessonController;
 use App\Http\Controllers\Controller;
 
 class FrontendController extends Controller
@@ -31,6 +32,18 @@ class FrontendController extends Controller
             false,
             function ($record) use (&$data) {
                 $data['course'] = $record;
+            });
+
+        return $this->retData($data);
+    }
+    public function showLesson($id)
+    {
+        $data = [];
+        (new LessonController())->show($id,
+            ['course:id,title', 'likes'],
+            false,
+            function ($record) use (&$data) {
+                $data['lesson'] = $record;
             });
 
         return $this->retData($data);

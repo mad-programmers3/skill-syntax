@@ -63,7 +63,7 @@ const route = [
         path : '/lesson/:id',
         name : 'lesson',
         component:lessonComponent,
-        meta : {'pageTitle' : 'LessonDetails'},
+        meta : {'pageTitle' : 'LessonDetails', dataUrl : 'api/pages/lessons'},
     },
 ];
 export default route;

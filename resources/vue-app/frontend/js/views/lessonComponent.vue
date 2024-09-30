@@ -9,41 +9,25 @@
                             <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/course-details.jpg'" alt="">
                         </div>
                         <div class="content_wrapper">
-                            <h4 class="title">Objectives</h4>
+                            <h4 class="title">{{lesson.title}}</h4>
                             <div class="content">
-                                When you enter into any new area of science, you almost always find yourself with a
-                                baffling new language of
-                                technical terms to learn before you can converse with the experts. This is certainly
-                                true in astronomy both in
-                                terms of terms that refer to the cosmos and terms that describe the tools of the trade,
-                                the most prevalent
-                                being the telescope.
+                                {{lesson.description}}
                                 <br>
                                 <br>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                                ut aliquip ex ea
-                                commodoconsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                cillum. Lorem ipsum dolor sit
-                                amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                                dolore magna aliqua. Ut enim
-                                ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                                commodo consequat. Duis aute
-                                irure dolor in reprehenderit in voluptate velit esse cillum.
+
                             </div>
 
-                            <h4 class="title">Reviews</h4>
+                            <h4 class="title">Commends</h4>
                             <div class="reviews-list">
-                                <h6 class="mb-3">Recent Reviews</h6>
-                                <div class="review-item mb-3">
+                                <h6 class="mb-3">Recent Commends</h6>
+                                <div v-for="review in lesson.reviews" :key="review.id" class="review-item mb-3">
                                     <div class="user-info d-flex align-items-start justify-content-between">
                                         <div class="user-thumb mr-3">
                                             <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="">
                                         </div>
                                         <div class="user-details flex-grow-1">
-                                            <h6 class="mb-1">Emilly Blunt</h6>
-                                            <p class="comment mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula justo eget erat volutpat.</p>
+                                            <h6 class="mb-1">{{ review.review.user.name }}</h6>
+                                            <p class="comment mb-2">{{ review.review.comment }}</p>
                                             <div class="review-footer mt-2">
                                                 <a href="#" class="mr-3">
                                                     <i class="ti-thumb-up"></i> 25
@@ -52,67 +36,6 @@
                                                     <i class="ti-reply"></i> Reply
                                                 </a>
                                             </div>
-                                        </div>
-                                        <div class="star-rating d-flex align-items-center">
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star"></i>
-                                            <i class="ti-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="review-item mb-3">
-                                    <div class="user-info d-flex align-items-start justify-content-between">
-                                        <div class="user-thumb mr-3">
-                                            <img :src="baseUrl + '/frontend/img/courses/author1.png'" alt="">
-                                        </div>
-                                        <div class="user-details flex-grow-1">
-                                            <h6 class="mb-1">Elsie Cunningham</h6>
-                                            <p class="comment mb-2">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                            <div class="review-footer mt-2">
-                                                <a href="#" class="mr-3">
-                                                    <i class="ti-thumb-up"></i> 25
-                                                </a>
-                                                <a href="#">
-                                                    <i class="ti-reply"></i> Reply
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="star-rating d-flex align-items-center">
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star"></i>
-                                            <i class="ti-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="review-item mb-3">
-                                    <div class="user-info d-flex align-items-start justify-content-between">
-                                        <div class="user-thumb mr-3">
-                                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
-                                        </div>
-                                        <div class="user-details flex-grow-1">
-                                            <h6 class="mb-1">Maria Luna</h6>
-                                            <p class="comment mb-2">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
-                                            <div class="review-footer mt-2">
-                                                <a href="#" class="mr-3">
-                                                    <i class="ti-thumb-up"></i> 25
-                                                </a>
-                                                <a href="#">
-                                                    <i class="ti-reply"></i>Reply
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="star-rating d-flex align-items-center">
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -258,8 +181,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </section>
@@ -272,6 +193,24 @@
 
     export default {
         name: "lessonDetails",
+            props: ['lessonId'],
+            data() {
+                return {
+                    lesson: [],
+                };
+            },
+            mounted() {
+                this.fetchData(this.urlGenerate(false, this.lesson_id), (result) => {
+                    this.lesson = result['lesson']
+                });
+            },
+
+            computed: {
+                lesson_id() {
+                    return this.$route.params.id;
+                }
+            },
+
     }
 </script>
 

@@ -42,15 +42,16 @@
                             <h4 class="title">Reviews</h4>
                             <div class="reviews-list">
                                 <h6 class="mb-3">Recent Reviews</h6>
-                                <div class="review-item mb-3">
+                                <div v-for="review in course.reviews" :key="review.id" class="review-item mb-3">
                                     <div class="user-info d-flex align-items-start justify-content-between">
                                         <div class="user-thumb mr-3">
-                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="">
+                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="User Avatar">
                                         </div>
                                         <div class="user-details flex-grow-1">
-                                            <h6 class="mb-1">Emilly Blunt</h6>
-                                            <p class="comment mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                elit. Ut vehicula justo eget erat volutpat.</p>
+                                            <h6 class="mb-1">{{ review.review.user.name }}</h6>
+
+                                            <p class="comment mb-2">{{ review.review.comment }}</p>
+
                                             <div class="review-footer mt-2">
                                                 <a href="#" class="mr-3">
                                                     <i class="ti-thumb-up"></i> 25
@@ -65,62 +66,6 @@
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star checked"></i>
                                             <i class="ti-star"></i>
-                                            <i class="ti-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="review-item mb-3">
-                                    <div class="user-info d-flex align-items-start justify-content-between">
-                                        <div class="user-thumb mr-3">
-                                            <img :src="baseUrl + '/frontend/img/courses/author1.png'" alt="">
-                                        </div>
-                                        <div class="user-details flex-grow-1">
-                                            <h6 class="mb-1">Elsie Cunningham</h6>
-                                            <p class="comment mb-2">Sed do eiusmod tempor incididunt ut labore et dolore
-                                                magna aliqua.</p>
-                                            <div class="review-footer mt-2">
-                                                <a href="#" class="mr-3">
-                                                    <i class="ti-thumb-up"></i> 25
-                                                </a>
-                                                <a href="#">
-                                                    <i class="ti-reply"></i> Reply
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="star-rating d-flex align-items-center">
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star"></i>
-                                            <i class="ti-star"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="review-item mb-3">
-                                    <div class="user-info d-flex align-items-start justify-content-between">
-                                        <div class="user-thumb mr-3">
-                                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
-                                        </div>
-                                        <div class="user-details flex-grow-1">
-                                            <h6 class="mb-1">Maria Luna</h6>
-                                            <p class="comment mb-2">Quis autem vel eum iure reprehenderit qui in ea
-                                                voluptate velit esse quam nihil molestiae consequatur.</p>
-                                            <div class="review-footer mt-2">
-                                                <a href="#" class="mr-3">
-                                                    <i class="ti-thumb-up"></i> 25
-                                                </a>
-                                                <a href="#">
-                                                    <i class="ti-reply"></i>Reply
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="star-rating d-flex align-items-center">
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
                                             <i class="ti-star"></i>
                                         </div>
                                     </div>
