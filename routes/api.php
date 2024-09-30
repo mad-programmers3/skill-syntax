@@ -86,8 +86,9 @@ Route::middleware('auth:api')->group(function () {
 
     // Role Permission
     Route::get('/role-permissions', [RolePermissionController::class, 'index']);
+    Route::get('/modules', [ModuleController::class, 'index']);
     Route::post('/role-permissions', [RolePermissionController::class, 'store']);
-    Route::delete('role-permissions/{role}/{permission}', [RolePermissionController::class, 'destroy']);
+    Route::delete('/role-permissions/{roleId}/{moduleId}/{action}', [RolePermissionController::class, 'destroy']);
 
 
     // Role Modules
