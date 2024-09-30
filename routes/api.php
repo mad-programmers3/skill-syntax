@@ -37,19 +37,6 @@ use App\Http\Controllers\backend\RoleModuleController;
 use App\Http\Controllers\backend\ModuleController;
 use App\Http\Controllers\backend\PermissionController;
 
-Route::resource('categories', CategoryController::class);
-Route::resource('sub-categories', SubCategoryController::class);
-Route::resource('courses', CourseController::class);
-Route::resource('course/likes', CourseLikeController::class);
-Route::resource('lessons', LessonController::class);
-Route::resource('lesson/likes', LessonLikeController::class);
-Route::resource('reviews', ReviewController::class);
-Route::resource('review/course-reviews', CourseReviewController::class);
-Route::resource('review/lesson-reviews', LessonReviewController::class);
-Route::resource('review/testimonials', TestimonialController::class);
-Route::resource('files', MyFileController::class);
-Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
-
 
 Route::group(['prefix' => 'pages'], function () {
     Route::get('index', [FrontendController::class, 'index']);
@@ -60,6 +47,20 @@ Route::group(['prefix' => 'pages'], function () {
 
 // Role routes
 Route::middleware('auth:api')->group(function () {
+
+    Route::resource('categories', CategoryController::class);
+    Route::resource('sub-categories', SubCategoryController::class);
+    Route::resource('courses', CourseController::class);
+    Route::resource('course/likes', CourseLikeController::class);
+    Route::resource('lessons', LessonController::class);
+    Route::resource('lesson/likes', LessonLikeController::class);
+    Route::resource('reviews', ReviewController::class);
+    Route::resource('review/course-reviews', CourseReviewController::class);
+    Route::resource('review/lesson-reviews', LessonReviewController::class);
+    Route::resource('review/testimonials', TestimonialController::class);
+    Route::resource('files', MyFileController::class);
+    Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
+
     // Roles
     Route::get('/roles', [RoleController::class, 'index']);
     Route::get('/roles/{id}', [RoleController::class, 'show']);
@@ -77,16 +78,17 @@ Route::middleware('auth:api')->group(function () {
 
 
     // Modules
-    Route::get('/modules', [ModuleController::class, 'index']);
-    Route::get('/modules/{id}', [ModuleController::class, 'show']);
-    Route::post('/modules', [ModuleController::class, 'store']);
-    Route::put('/modules/{id}', [ModuleController::class, 'update']);
-    Route::delete('/modules/{id}', [ModuleController::class, 'destroy']);
+
+    Route::resource('modules', ModuleController::class);
+//    Route::get('/modules', [ModuleController::class, 'index']);
+//    Route::get('/modules/{id}', [ModuleController::class, 'show']);
+//    Route::post('/modules', [ModuleController::class, 'store']);
+//    Route::put('/modules/{id}', [ModuleController::class, 'update']);
+//    Route::delete('/modules/{id}', [ModuleController::class, 'destroy']);
 
 
     // Role Permission
     Route::get('/role-permissions', [RolePermissionController::class, 'index']);
-    Route::get('/modules', [ModuleController::class, 'index']);
     Route::post('/role-permissions', [RolePermissionController::class, 'store']);
     Route::delete('/role-permissions/{roleId}/{moduleId}/{action}', [RolePermissionController::class, 'destroy']);
 

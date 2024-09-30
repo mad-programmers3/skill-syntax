@@ -1,71 +1,58 @@
-
 <template>
     <div class="">
         <!-- Form to Add Roles Only -->
-        <form @submit.prevent="addRole" class="role-permission-form d-flex justify-content-between">
-            <select v-model="selectedRole" required class="role-select">
-                <option disabled value="">Select a Role</option>
-                <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
-            </select>
-            <h1>Role-Permission</h1>
-            <button type="submit" class="add-button">Add Role</button>
+        <form @submit.prevent="addRole" class="role-permission-form row d-flex align-items-center px-4 py-3">
+            <div class="col-4">
+                <select v-model="selectedRole" required class="role-select">
+                    <option disabled value="" selected>Select a Role</option>
+                    <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
+                </select>
+            </div>
+            <h1 class="col-4">Role-Permission</h1>
+            <div class="col-4 d-flex justify-content-end">
+                <button type="submit" class="add-button">Add Role</button>
+            </div>
         </form>
 
 
         <!-- Table to Display Permissions -->
-        <table class="role-permission-table">
-            <thead>
-            <tr>
-                <th>Modules</th>
-                <th colspan="4">Permissions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="module in modules" :key="module.id">
-                <td>{{ module.name }}</td>
-                <td>
-                    <label>
-                        <input
-                                type="checkbox"
-                                :checked="hasPermission(selectedRole, module.id, 'add')"
-                                @change="togglePermission(selectedRole, module.id, 'add', $event)"
-                        />
-                        Add
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        <input
-                                type="checkbox"
-                                :checked="hasPermission(selectedRole, module.id, 'view')"
-                                @change="togglePermission(selectedRole, module.id, 'view', $event)"
-                        />
-                        View
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        <input
-                                type="checkbox"
-                                :checked="hasPermission(selectedRole, module.id, 'edit')"
-                                @change="togglePermission(selectedRole, module.id, 'edit', $event)"
-                        />
-                        Edit
-                    </label>
-                </td>
-                <td>
-                    <label>
-                        <input
-                                type="checkbox"
-                                :checked="hasPermission(selectedRole, module.id, 'delete')"
-                                @change="togglePermission(selectedRole, module.id, 'delete', $event)"
-                        />
-                        Delete
-                    </label>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="overflow-auto">
+            <table class="role-permission-table">
+                <thead>
+                <tr>
+                    <th>Modules</th>
+                    <th colspan="4">Permissions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="module in modules" :key="module.id">
+                    <td>
+                        <label class="font-weight-bold">
+                            <input
+                                    type="checkbox"
+                                    :checked="hasPermission(selectedRole, module.id, 'add')"
+                                    @change="togglePermission(selectedRole, module.id, 'add', $event)"
+                            />
+                            {{ module.name }}
+                        </label>
+                    </td>
+
+
+                    <td  v-for="permission in module.permission" :key="permission.id">
+                        <label class="text-capitalize">
+                            <input
+                                    type="checkbox"
+                                    :checked="hasPermission(selectedRole, module.id, 'delete')"
+                                    @change="togglePermission(selectedRole, module.id, 'delete', $event)"
+                            />
+                            {{ getRawPermName(permission.name) }}
+                        </label>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+<!--        <pre>{{modules}}</pre>-->
     </div>
 </template>
 
@@ -84,7 +71,18 @@
             this.fetchRolesAndPermissions();
             this.fetchModules(); // Fetch modules on component creation
         },
+        mounted() {
+            const _this = this;
+            this.fetchData(this.urlGenerate('api/modules'), (result) => {
+                _this.modules = result;
+            });
+        },
         methods: {
+            getRawPermName(str) {
+                let arr = str.split('_');
+                return arr[arr.length-1];
+            },
+
             async fetchRolesAndPermissions() {
                 try {
                     const response = await axios.get("/api/role-permissions");
@@ -99,29 +97,6 @@
                 }
             },
 
-            async fetchModules() {
-                try {
-                    const response = await axios.get('/api/modules');
-                    console.log("Modules Response:", response); // Log full response
-                    this.modules = response.data || []; // Ensure this is defined
-                } catch (error) {
-                    console.error("Error fetching modules:", error);
-                    // Optionally log error response data for debugging
-                    if (error.response) {
-                        console.error("Error response data:", error.response.data);
-                    }
-                }
-            },
-
-
-            async fetchModules() {
-                try {
-                    const response = await axios.get('/api/modules');
-                    this.modules = response.data; // Populate modules array
-                } catch (error) {
-                    console.error("Error fetching modules:", error);
-                }
-            },
             async addRole() {
                 try {
                     const selectedRoleData = this.roles.find(role => role.id === this.selectedRole);
@@ -193,7 +168,6 @@
             }
 
 
-
         },
     };
 </script>
@@ -203,21 +177,18 @@
     h1 {
         text-align: center;
         color: #423a8e;
-        margin-bottom: 30px;
         font-weight: bold;
-        font-size: 2em;
+        font-size: 1.7em;
     }
 
     .role-permission-form {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 30px;
     }
 
     .role-select {
+        min-width: 75%;
         display: block;
-        width: 100%;
-        max-width: 300px;
         padding: 12px;
         border: 1px solid #cccccc;
         border-radius: 5px;
@@ -225,7 +196,6 @@
         transition: border-color 0.3s, box-shadow 0.3s;
         background-color: #ffffff;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        margin-bottom: 20px;
     }
 
     .role-select:focus {
@@ -233,7 +203,6 @@
         outline: none;
         box-shadow: 0 0 5px rgba(66, 58, 142, 0.5);
     }
-
 
 
     .role-select option {
@@ -254,8 +223,6 @@
         cursor: pointer;
         font-size: 16px;
         transition: background-color 0.3s, transform 0.3s;
-        margin-top: 10px; /* Space above the button */
-        margin-bottom: 15px;
     }
 
     .add-button:hover {
@@ -264,16 +231,16 @@
     }
 
     .role-permission-table {
-        width: 100%;
+        min-width: 100%;
         border-collapse: collapse;
         text-align: left;
-        margin-top: 20px;
+        font-size: 12px;
     }
 
     .role-permission-table th,
     .role-permission-table td {
         border: 1px solid #dddddd;
-        padding: 12px;
+        padding: 6px;
     }
 
     .role-permission-table th {
@@ -283,6 +250,7 @@
     }
 
     .role-permission-table td {
+        /*display: flex;*/
         background-color: #f9f9f9;
         color: #555555;
     }
@@ -292,13 +260,14 @@
     }
 
     label {
+        display: flex;
         cursor: pointer;
         font-weight: normal;
     }
 
     input[type="checkbox"] {
         margin-right: 5px;
-        transform: scale(1.2);
+        transform: scale(0.9);
         cursor: pointer;
         accent-color: #423a8e;
     }
@@ -313,6 +282,7 @@
     label {
         cursor: pointer;
         font-weight: normal;
+        margin-bottom: 0;
     }
 </style>
 
