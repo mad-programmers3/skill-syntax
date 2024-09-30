@@ -21,6 +21,20 @@ class FrontendController extends Controller
 
         return $this->retData($data);
     }
+    // for courses page
+    public function courses()
+    {
+        $data = [];
+        (new CourseController())->index(
+            ['thumbnail:id,path', 'category:id,title', 'likes'],
+            false,
+            function ($courses) use (&$data) {
+                $data['courses'] = $courses;
+            }
+        );
+
+        return $this->retData($data);
+    }
 
     // for course details page
     public function showCurse($id)

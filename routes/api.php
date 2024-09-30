@@ -53,6 +53,7 @@ Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.up
 
 Route::group(['prefix' => 'pages'], function () {
     Route::get('index', [FrontendController::class, 'index']);
+    Route::get('courses', [FrontendController::class, 'courses']);
     Route::get('courses/{id}', [FrontendController::class, 'showCurse']);
 });
 
