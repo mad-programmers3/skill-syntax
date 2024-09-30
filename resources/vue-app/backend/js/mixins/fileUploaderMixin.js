@@ -53,7 +53,7 @@ export default {
             this.uploadFileUrl = URL.createObjectURL(file);
 
             const imgFormData = new FormData();
-            imgFormData.append('image', file);  // Append the image file to the FormData
+            imgFormData.append('file', file);  // Append the image file to the FormData
 
             // Send the image to the server
             this.httpReq({
