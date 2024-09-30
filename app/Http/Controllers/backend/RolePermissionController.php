@@ -18,30 +18,57 @@ class RolePermissionController extends Controller
         return response()->json(['roles' => $roles, 'permissions' => $permissions]);
     }
 
-
     public function store(Request $request)
     {
         $request->validate([
             'role_id' => 'required|exists:roles,id',
-            'permission_id' => 'required|exists:permissions,id'
+            'name' => 'required|string|unique:roles,name',  // This will ensure unique name validation
         ]);
 
-        // Attach the permission to the role
-        $role = Role::find($request->role_id);
-        $role->permissions()->attach($request->permission_id);
 
-        return response()->json(['message' => 'Permission added to role successfully'], 201);
+        // Find the role by the ID
+        $role = Role::find($request->role_id);
+
+        // Find the permission based on module_id and action
+        $permission = Permission::where('module_id', $request->module_id)
+            ->where('action', $request->action)
+            ->first();
+
+        if (!$permission) {
+            return response()->json(['message' => 'Permission not found'], 404);
+        }
+
+        // Check if the permission is already attached to the role
+        if ($role->permissions()->where('id', $permission->id)->exists()) {
+            return response()->json(['message' => 'Permission already exists for this role'], 409);
+        }
+
+        // Attach the permission to the role
+        $role->permissions()->attach($permission->id);
+
+        return response()->json(['message' => 'Permission added successfully'], 201);
     }
 
-    public function destroy($roleId, $permissionId)
+
+    public function destroy($roleId, $moduleId, $action)
     {
-        \Log::info("Removing permission $permissionId from role $roleId");
+        \Log::info("Removing permission for role $roleId, module $moduleId, action $action");
 
         $role = Role::findOrFail($roleId);
-        $role->permissions()->detach($permissionId);
 
-        return response()->json(null, 204);
+        $permission = Permission::where('module_id', $moduleId)
+            ->where('action', $action)
+            ->first();
+
+        if (!$permission) {
+            return response()->json(['message' => 'Permission not found'], 404);
+        }
+
+        $role->permissions()->detach($permission->id);
+
+        return response()->json(['message' => 'Permission removed successfully'], 204);
     }
+
 
 
 }

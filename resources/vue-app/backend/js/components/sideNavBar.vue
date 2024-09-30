@@ -1,11 +1,17 @@
+
 <template>
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
-            <a class="sidebar-brand brand-logo" href="index.html"><img :src="baseUrl + '/backend/assets/images/logo.svg'" alt="logo" /></a>
-            <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+            <a class="sidebar-brand brand-logo" href="index.html">
+                <img :src="baseUrl + '/backend/assets/images/logo.svg'" alt="logo" />
+            </a>
+            <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html">
+                <img src="assets/images/logo-mini.svg" alt="logo" />
+            </a>
         </div>
 
         <ul class="nav">
+            <!-- Profile Section -->
             <li class="nav-item nav-profile">
                 <a href="#" class="nav-link">
                     <div class="nav-profile-image">
@@ -19,12 +25,16 @@
                     <span class="badge badge-danger text-white ml-3 rounded">3</span>
                 </a>
             </li>
+
+            <!-- Dashboard -->
             <li class="nav-item">
                 <router-link class="nav-link" to="/admin/dashboard">
                     <i class="mdi mdi-home menu-icon"></i>
                     <span class="menu-title">Dashboard</span>
                 </router-link>
             </li>
+
+            <!-- Course Section -->
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                     <i class="fa fa-book menu-icon"></i>
@@ -48,6 +58,8 @@
                     </ul>
                 </div>
             </li>
+
+            <!-- Review Section -->
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#review-basic" aria-expanded="false" aria-controls="review-basic">
                     <i class="fa fa-star menu-icon"></i>
@@ -71,14 +83,46 @@
                     </ul>
                 </div>
             </li>
+
+            <!-- RolePermission Section -->
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#role-basic" aria-expanded="false" aria-controls="role-basic">
+                    <i class="fa fa-star menu-icon"></i>
+                    <span class="menu-title">RolePermission</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="role-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/roles">Roles</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/permissions">Permissions</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/modules">Modules</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/RoleModules">RoleModules</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/RolePermissions">RolePermissions</router-link>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </nav>
 </template>
 
 <script>
-
     export default {
-        name: 'topNavBar',
+        name: 'Sidebar',
+        data() {
+            return {
+                baseUrl: window.location.origin,
+            };
+        },
     };
 </script>
 
