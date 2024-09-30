@@ -7,7 +7,9 @@
                     <div class="col-lg-8 course_details_left">
                         <div class="main_image">
                             <!-- Display the course thumbnail or a default image if it's not available -->
-                            <img class="img-fluid" :src="course && course.thumbnail && course.thumbnail.path ? generateFileUrl(course.thumbnail.path) : baseUrl + '/images/course-def-thumbnail.jpg'" alt="Course Thumbnail">
+                            <img class="img-fluid"
+                                 :src="course && course.thumbnail && course.thumbnail.path ? generateFileUrl(course.thumbnail.path) : baseUrl + '/images/course-def-thumbnail.jpg'"
+                                 alt="Course Thumbnail">
                         </div>
                         <div class="content_wrapper">
                             <br/>
@@ -40,8 +42,6 @@
                             </div>
 
 
-
-
                             <h4 class="title">Reviews</h4>
                             <div class="reviews-list">
                                 <h6 class="mb-3">Recent Reviews</h6>
@@ -52,7 +52,8 @@
                                         </div>
                                         <div class="user-details flex-grow-1">
                                             <h6 class="mb-1">Emilly Blunt</h6>
-                                            <p class="comment mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vehicula justo eget erat volutpat.</p>
+                                            <p class="comment mb-2">Lorem ipsum dolor sit amet, consectetur adipiscing
+                                                elit. Ut vehicula justo eget erat volutpat.</p>
                                             <div class="review-footer mt-2">
                                                 <a href="#" class="mr-3">
                                                     <i class="ti-thumb-up"></i> 25
@@ -79,7 +80,8 @@
                                         </div>
                                         <div class="user-details flex-grow-1">
                                             <h6 class="mb-1">Elsie Cunningham</h6>
-                                            <p class="comment mb-2">Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                            <p class="comment mb-2">Sed do eiusmod tempor incididunt ut labore et dolore
+                                                magna aliqua.</p>
                                             <div class="review-footer mt-2">
                                                 <a href="#" class="mr-3">
                                                     <i class="ti-thumb-up"></i> 25
@@ -106,7 +108,8 @@
                                         </div>
                                         <div class="user-details flex-grow-1">
                                             <h6 class="mb-1">Maria Luna</h6>
-                                            <p class="comment mb-2">Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.</p>
+                                            <p class="comment mb-2">Quis autem vel eum iure reprehenderit qui in ea
+                                                voluptate velit esse quam nihil molestiae consequatur.</p>
                                             <div class="review-footer mt-2">
                                                 <a href="#" class="mr-3">
                                                     <i class="ti-thumb-up"></i> 25
@@ -128,7 +131,8 @@
                             </div>
                             <div class="feedback mb-4">
                                 <h6>Your Feedback</h6>
-                                <textarea class="form-control" rows="4" placeholder="Share your experience..."></textarea>
+                                <textarea class="form-control" rows="4"
+                                          placeholder="Share your experience..."></textarea>
                                 <div class="text-right mt-3">
                                     <button class="btn btn-primary text-uppercase">Submit</button>
                                 </div>
@@ -193,7 +197,7 @@
                                               <span class="meta_info mr-4">
                                                 <a href="#"> <i class="ti-thumb-up"></i>25 </a>
                                               </span>
-                                                        <span class="meta_info">
+                                                <span class="meta_info">
                                                     <a href="#"> <i class="ti-comment"></i>35 </a>
                                                 </span>
                                             </div>
@@ -280,10 +284,10 @@
 <script>
     import Banner_area from "../components/sections/banner_area";
     import axios from 'axios';
+
     export default {
         name: "courseDetails",
         components: {Banner_area},
-        props: ['courseId'],
         data() {
             return {
                 course: null,
@@ -291,7 +295,9 @@
             };
         },
         mounted() {
-            this.fetchData(this.urlGenerate('api/courses', this.course_id), (result) => {this.course = result;});
+            this.fetchData(this.urlGenerate(false, this.course_id), (result) => {
+                this.course = result['course']
+            });
         },
 
         computed: {
