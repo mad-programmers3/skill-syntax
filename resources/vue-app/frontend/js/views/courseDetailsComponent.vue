@@ -191,6 +191,12 @@
                 this.course = result['course']
             });
         },
+
+        computed: {
+            course_id() {
+                return this.$route.params.id;
+            }
+        },
     }
 </script>
 

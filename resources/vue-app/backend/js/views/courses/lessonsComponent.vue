@@ -121,12 +121,12 @@
         data() {
             return {
                 tableHeading: ['SL', 'Title', 'Courses', 'Status', 'Actions'], // Column headings for the data table
-                popularCourses: [], // Array to hold courses fetched from the server
+                courses: [], // Array to hold courses fetched from the server
             };
         },
         mounted() {
             const _this = this;
-            this.fetchData(_this.urlGenerate('api/courses'), (result) => {_this.popularCourses = result});
+            this.fetchData(_this.urlGenerate('api/courses'), (result) => {_this.courses = result});
         }
     };
 </script>
