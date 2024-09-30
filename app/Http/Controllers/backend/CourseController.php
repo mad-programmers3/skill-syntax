@@ -23,7 +23,7 @@ class CourseController extends DatabaseCrudController
 
     public function show($id, $with = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::show($id, $with, function ($query) {
+        return parent::show($id, $with, $callBackBefore ? $callBackBefore : function ($query) {
             $query->with(['reviews'=>function ($reviews){
                 $reviews->with(['review' => function ($review) {
                     $review->with('user');

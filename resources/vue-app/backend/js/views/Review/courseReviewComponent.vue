@@ -4,7 +4,7 @@
             <tr v-for="(data, index) in dataList" :key="data.id" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
                 <td>{{limitText(data.review ? data.review.comment : '' )}}</td>
-                <td>{{ limitText(data.course ? data.course.title : '' )}}</td>
+                <td>{{ limitText(data.popularCourses ? data.popularCourses.title : '' )}}</td>
                 <td>{{ data.review ? data.review.rating : '' }}</td>
                 <td>
                     <span :class="data.review && data.review.status ? 'badge badge-success' : 'badge badge-danger'">

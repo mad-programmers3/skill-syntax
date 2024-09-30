@@ -4,7 +4,7 @@
             <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
                 <td>{{ limitText(data.title)}}</td>
-                <td>{{ limitText(data.course ? data.course.title : '' )}}</td>
+                <td>{{ limitText(data.popularCourses ? data.popularCourses.title : '' )}}</td>
                     <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
                         {{ data.status ? 'Active' : 'Inactive' }}
@@ -121,12 +121,12 @@
         data() {
             return {
                 tableHeading: ['SL', 'Title', 'Courses', 'Status', 'Actions'], // Column headings for the data table
-                courses: [], // Array to hold courses fetched from the server
+                popularCourses: [], // Array to hold courses fetched from the server
             };
         },
         mounted() {
             const _this = this;
-            this.fetchData(_this.urlGenerate('api/courses'), (result) => {_this.courses = result});
+            this.fetchData(_this.urlGenerate('api/courses'), (result) => {_this.popularCourses = result});
         }
     };
 </script>

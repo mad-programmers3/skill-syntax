@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="row">
-                <div v-for="course in courses" :key="course.id" class="col-md-4 mb-3">
+                <div v-for="course in popularCourses" :key="course.id" class="col-md-4 mb-3">
                     <div class="single_course card">
                         <div class="course_head">
                             <!-- Display the dynamic thumbnail image -->
@@ -64,20 +64,12 @@
 <script>
     export default {
         name: 'PopularCourses',
-        data() {
-            return {
-                courses: [],  // Store courses here
-            };
-        },
-        mounted() {
-            const _this = this;
-
-            this.fetchData(this.urlGenerate('api/courses'), (result) => {
-                _this.courses = result;
-            });
-        },
-        methods: {
-            //
+        props: {
+            // Define the popularCourses prop, which should be an array
+            popularCourses: {
+                type: Array,
+                required: true
+            }
         }
     }
 </script>
