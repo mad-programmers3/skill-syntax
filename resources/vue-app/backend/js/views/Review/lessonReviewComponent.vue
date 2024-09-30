@@ -6,8 +6,8 @@
                 <td>{{ limitText(data.review ? data.review.comment : '' )}}</td>
                 <td>{{ limitText(data.lesson ? data.lesson.title : '' )}}</td>
                 <td>
-                    <span :class="data.review.status ? 'badge badge-success' : 'badge badge-danger'">
-                        {{ data.review.status ? 'Showing' : 'Hidden' }}
+                    <span :class="data.review && data.review.status ? 'badge badge-success' : 'badge badge-danger'">
+                        {{ data.review && data.review.status ? 'Showing' : 'Hidden' }}
                     </span>
                 </td>
                 <td>

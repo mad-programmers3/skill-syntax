@@ -60,8 +60,8 @@ const route = [
         meta : {'pageTitle' : 'Contact'},
     },
     {
-        path : '/lessonDetails',
-        name : 'lessonDetails',
+        path : '/lesson/:id',
+        name : 'lesson',
         component:lessonComponent,
         meta : {'pageTitle' : 'LessonDetails'},
     },

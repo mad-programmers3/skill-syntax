@@ -11,28 +11,28 @@
                         </div>
                         <div class="content_wrapper">
                             <br/>
-                            <h4 class="yellow-text">{{ course.title }}</h4>
+                            <h4 class="yellow-text">{{ course ? course.title : '' }}</h4>
                             <div class="content">
-                                <div v-html="course.description" class="course-description mb-4"></div>
+                                <div v-html=" course ? course.description : ''" class="course-description mb-4"></div>
 
                                 <!-- Course Details -->
                                 <div class="course-details ">
                                     <ul class="list-unstyled">
                                         <li class="mb-3 d-flex justify-content-between align-items-center">
                                             <strong class="yellow-text">Price:</strong>
-                                            <span class="text-muted">${{ course.price }}</span>
+                                            <span class="text-muted">${{ course ? course.price :'' }}</span>
                                         </li>
                                         <li class="mb-3 d-flex justify-content-between align-items-center">
                                             <strong class="yellow-text">Seats Available:</strong>
-                                            <span class="text-muted">{{ course.sits }}</span>
+                                            <span class="text-muted">{{course ? course.sits: ''}}</span>
                                         </li>
                                         <li class="mb-3 d-flex justify-content-between align-items-center">
                                             <strong class="yellow-text">Start Date:</strong>
-                                            <span class="text-muted">{{ course.start_date }}</span>
+                                            <span class="text-muted">{{ course ? course.start_date : '' }}</span>
                                         </li>
                                         <li class="mb-3 d-flex justify-content-between align-items-center">
                                             <strong class="yellow-text">End Date:</strong>
-                                            <span class="text-muted">{{ course.end_date }}</span>
+                                            <span class="text-muted">{{ course ? course.end_date : '' }}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -134,118 +134,17 @@
                     <div class="col-lg-4 right-contents">
                         <h4 class="title mt-5">Lessons</h4>
                         <div class="playlist">
-                            <div class="card mb-3">
+                            <div v-for="lesson in lessons" :key="lesson.id" class="card mb-3">
                                 <div class="row no-gutters">
                                     <div class="col-md-4">
                                         <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <router-link to="/lessonDetails"><h5 class="card-title">Chapter 2: Advanced Topics</h5></router-link>
-                                            <div class="mt-lg-0 mt-3">
-                                      <span class="meta_info mr-4">
-                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
-                                      </span>
-                                                <span class="meta_info">
-                                            <a href="#"> <i class="ti-comment"></i>35 </a>
-                                        </span>
-                                            </div>
+                                            <router-link :to="{ name: 'lesson' , params: {id: lesson.id}}">
+                                                <h5 class="card-title">{{lesson.title}}</h5>
+                                            </router-link>
 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mb-3">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
-                                            <div class="mt-lg-0 mt-3">
-                                      <span class="meta_info mr-4">
-                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
-                                      </span>
-                                                <span class="meta_info">
-                                            <a href="#"> <i class="ti-comment"></i>35 </a>
-                                        </span>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mb-3">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
-                                            <div class="mt-lg-0 mt-3">
-                                              <span class="meta_info mr-4">
-                                                <a href="#"> <i class="ti-thumb-up"></i>25 </a>
-                                              </span>
-                                                        <span class="meta_info">
-                                                    <a href="#"> <i class="ti-comment"></i>35 </a>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mb-3">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'" alt="">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
-                                            <div class="mt-lg-0 mt-3">
-                                      <span class="meta_info mr-4">
-                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
-                                      </span>
-                                                <span class="meta_info">
-                                            <a href="#"> <i class="ti-comment"></i>35 </a>
-                                        </span>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mb-3">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
-                                            <div class="mt-lg-0 mt-3">
-                                      <span class="meta_info mr-4">
-                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
-                                      </span>
-                                                <span class="meta_info">
-                                            <a href="#"> <i class="ti-comment"></i>35 </a>
-                                        </span>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mb-3">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c3.jpg'" alt="">
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <a href="#"><h5 class="card-title">Chapter 2: Advanced Topics</h5></a>
                                             <div class="mt-lg-0 mt-3">
                                       <span class="meta_info mr-4">
                                         <a href="#"> <i class="ti-thumb-up"></i>25 </a>
@@ -264,7 +163,6 @@
                 </div>
             </div>
         </section>
-        <pre>{{course}}</pre>
         <!--================ End Course Details Area =================-->
     </div>
 
@@ -272,19 +170,22 @@
 
 <script>
     import Banner_area from "../components/sections/banner_area";
-    import axios from 'axios';
+
     export default {
         name: "courseDetails",
         components: {Banner_area},
-        props: ['courseId'],
+        props: ['courseId','lessonId'],
         data() {
             return {
                 course: null,
+                lessons: '',
                 baseUrl: window.location.origin
             };
         },
         mounted() {
             this.fetchData(this.urlGenerate('api/courses', this.course_id), (result) => {this.course = result;});
+
+            this.fetchData(this.urlGenerate('api/lessons', this.lesson_id), (result) => {this.lessons = result;});
         },
 
         computed: {
