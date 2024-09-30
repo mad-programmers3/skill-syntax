@@ -55,6 +55,7 @@ Route::group(['prefix' => 'pages'], function () {
     Route::get('index', [FrontendController::class, 'index']);
     Route::get('courses', [FrontendController::class, 'courses']);
     Route::get('courses/{id}', [FrontendController::class, 'showCurse']);
+    Route::get('lessons/{id}', [FrontendController::class, 'showLesson']);
 });
 
 // Role routes
