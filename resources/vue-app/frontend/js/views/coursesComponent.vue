@@ -1,9 +1,5 @@
 <template>
     <div>
-
-        <banner_area />
-
-
         <template>
             <div class="popular_courses mt-5">
                 <div class="container">
