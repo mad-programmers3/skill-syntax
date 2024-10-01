@@ -15,7 +15,7 @@ class ModuleController extends DatabaseCrudController
 
     }
 
-    public function index($with = ['permission:id,module_id,name,status'], $callBackBefore = false, $callBackAfter = false)
+    public function index($with = ['permissions:id,module_id,name,status'], $callBackBefore = false, $callBackAfter = false)
     {
         return parent::index($with, $callBackBefore, $callBackAfter);
     }

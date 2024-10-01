@@ -3,7 +3,7 @@
         <!-- Form to Add Roles Only -->
         <form @submit.prevent="addRole" class="role-permission-form row d-flex align-items-center px-4 py-3">
             <div class="col-4">
-                <select v-model="selectedRole" required class="role-select">
+                <select v-model="formData.role_id" name="role_id" required class="role-select">
                     <option disabled value="" selected>Select a Role</option>
                     <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
                 </select>
@@ -28,146 +28,69 @@
                 <tr v-for="module in modules" :key="module.id">
                     <td>
                         <label class="font-weight-bold">
-                            <input
-                                    type="checkbox"
-                                    :checked="hasPermission(selectedRole, module.id, 'add')"
-                                    @change="togglePermission(selectedRole, module.id, 'add', $event)"
-                            />
+                            <input type="checkbox"/>
                             {{ module.name }}
                         </label>
                     </td>
 
 
-                    <td  v-for="permission in module.permission" :key="permission.id">
-                        <label class="text-capitalize">
-                            <input
-                                    type="checkbox"
-                                    :checked="hasPermission(selectedRole, module.id, 'delete')"
-                                    @change="togglePermission(selectedRole, module.id, 'delete', $event)"
-                            />
-                            {{ getRawPermName(permission.name) }}
+                    <!--                    <td v-for="permission in module.permissions" :key="permission.id">-->
+                    <td v-for="i in colsN" :key="i">
+                        <label v-if="module.permissions[i-1]" class="text-capitalize">
+                            <input type="checkbox"/>
+                            {{ getRawPermName(module.permissions[i-1].name) }}
                         </label>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-<!--        <pre>{{modules}}</pre>-->
+        <pre>{{crrRole}}</pre>
     </div>
 </template>
 
 <script>
-    import axios from "axios";
-
     export default {
         data() {
             return {
+                crrRole: {},
                 roles: [],
                 modules: [],
-                selectedRole: null,
             };
         },
-        created() {
-            this.fetchRolesAndPermissions();
-            this.fetchModules(); // Fetch modules on component creation
+        computed: {
+            // will return the largest number of permissions of any module as colsN, represent table col number
+            colsN() {
+                let largestIndx = 0;
+                this.modules.forEach((module) => {
+                    if (module.permissions && module.permissions.length && module.permissions.length > largestIndx)
+                        largestIndx = module.permissions.length;
+                });
+
+                return largestIndx;
+            }
         },
         mounted() {
             const _this = this;
-            this.fetchData(this.urlGenerate('api/modules'), (result) => {
+            _this.fetchData(_this.urlGenerate('api/config/modules'), (result) => {
                 _this.modules = result;
             });
+            _this.fetchData(_this.urlGenerate('api/config/roles', false), (result) => {
+                _this.roles = result;
+
+                let auth = _this.getAuth();
+                if (auth) {
+                    _this.crrRole = _this.findById(result, auth.role_id);
+                    _this.setFormData({role_id: auth.role_id});
+                }
+            });
+
         },
         methods: {
             getRawPermName(str) {
                 let arr = str.split('_');
-                return arr[arr.length-1];
+                return arr[arr.length - 1];
             },
-
-            async fetchRolesAndPermissions() {
-                try {
-                    const response = await axios.get("/api/role-permissions");
-                    console.log("Roles and Permissions Response:", response); // Log full response
-                    this.roles = response.data.roles || []; // Ensure this is defined
-                } catch (error) {
-                    console.error("Error fetching roles and permissions:", error);
-                    // Optionally log error response data for debugging
-                    if (error.response) {
-                        console.error("Error response data:", error.response.data);
-                    }
-                }
-            },
-
-            async addRole() {
-                try {
-                    const selectedRoleData = this.roles.find(role => role.id === this.selectedRole);
-
-                    // Check if the selected role exists
-                    if (!selectedRoleData) {
-                        alert("Selected role does not exist.");
-                        return;
-                    }
-
-                    // Check if the selected role already exists
-                    const roleExists = this.roles.some(role => role.name === selectedRoleData.name);
-                    if (roleExists) {
-                        alert("The selected role name already exists. Please choose a different name.");
-                        return;
-                    }
-
-                    await axios.post("/api/roles", {
-                        role_id: this.selectedRole,
-                        name: selectedRoleData.name,  // Include the name in the request
-                    });
-
-                    // Clear the selection and reload data
-                    this.selectedRole = null;
-                    this.fetchRolesAndPermissions();
-
-                } catch (error) {
-                    console.error("Error adding role:", error.response ? error.response.data : error);
-                    if (error.response && error.response.status === 422) {
-                        alert(error.response.data.message); // Show a simple alert
-                    }
-                }
-            },
-
-            hasPermission(roleId, moduleId, action) {
-                const role = this.roles.find(r => r.id === roleId);
-                if (!role || !role.permissions) return false; // Check if permissions exist
-                return role.permissions.some((perm) => perm.module_id === moduleId && perm.action === action);
-            }
-            ,
-
-            hasPermission(roleId, moduleId, action) {
-                const role = this.roles.find(r => r.id === roleId);
-                if (!role) return false;
-                return role.permissions.some((perm) => perm.module_id === moduleId && perm.action === action);
-            },
-
-            async togglePermission(moduleId, action, event) {
-                try {
-                    const roleId = this.selectedRole;
-                    if (!roleId) {
-                        console.error("Role ID is missing!");
-                        return;
-                    }
-
-                    if (event.target.checked) {
-                        await axios.post("/api/role-permissions", {
-                            role_id: roleId,
-                            module_id: moduleId,
-                            action: action,
-                        });
-                    } else {
-                        await axios.delete(`/api/role-permissions/${roleId}/${moduleId}/${action}`);
-                    }
-                    this.fetchRolesAndPermissions();
-                } catch (error) {
-                    console.error("Error updating permission:", error.response.data);
-                }
-            }
-
-
         },
     };
 </script>
