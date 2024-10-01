@@ -37,7 +37,7 @@
                     <!--                    <td v-for="permission in module.permissions" :key="permission.id">-->
                     <td v-for="i in colsN" :key="i">
                         <label v-if="module.permissions[i-1]" class="text-capitalize">
-                            <input type="checkbox"/>
+                            <input type="checkbox" :checked="hasParmission(module.permissions[i-1].id)"/>
                             {{ getRawPermName(module.permissions[i-1].name) }}
                         </label>
                     </td>
@@ -72,18 +72,26 @@
         },
         mounted() {
             const _this = this;
+
+            // get all modules with permissions
             _this.fetchData(_this.urlGenerate('api/config/modules'), (result) => {
                 _this.modules = result;
             });
+
+            // get all roles with users
             _this.fetchData(_this.urlGenerate('api/config/roles', false), (result) => {
                 _this.roles = result;
-
-                let auth = _this.getAuth();
-                if (auth) {
-                    _this.crrRole = _this.findById(result, auth.role_id);
-                    _this.setFormData({role_id: auth.role_id});
-                }
             });
+
+            // get current role with users, modules, permission
+            let auth = _this.getAuth();
+            if (auth && auth.role_id) {
+                _this.setFormData({role_id: auth.role_id});
+
+                _this.fetchData(_this.urlGenerate('api/config/roles', auth.role_id), (role) => {
+                    _this.crrRole = role;
+                });
+            }
 
         },
         methods: {
@@ -91,6 +99,26 @@
                 let arr = str.split('_');
                 return arr[arr.length - 1];
             },
+            hasModule(modId) {
+                if (!this.crrRole || !this.crrRole.role_modules) return false;
+
+                this.crrRole.role_modules.forEach((role_mod) => {
+                    if (role_mod.module && role_mod.module.id === modId)
+                        return true;
+                });
+
+                return false;
+            },
+            hasParmission(permId) {
+                if (!this.crrRole || !this.crrRole.role_permissions) return false;
+
+                this.crrRole.role_permissions.forEach((role_perm) => {
+                    if (role_perm.permission && role_perm.permission.id === permId)
+                        return true;
+                });
+
+                return false;
+            }
         },
     };
 </script>
