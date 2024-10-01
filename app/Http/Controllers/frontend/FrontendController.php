@@ -22,6 +22,7 @@ class FrontendController extends Controller
 
         return $this->retData($data);
     }
+
     // for courses page
     public function courses()
     {
@@ -50,12 +51,18 @@ class FrontendController extends Controller
 
         return $this->retData($data);
     }
+
     public function showLesson($id)
     {
         $data = [];
-        (new LessonController())->show($id,
-            ['course:id,title', 'likes'],
-            false,
+        (new LessonController())->show(
+            $id,
+            ['likes'],
+            function ($query) {
+                $query->with('course', function ($course) {
+                    $course->with('lessons');
+                });
+            },
             function ($record) use (&$data) {
                 $data['lesson'] = $record;
             });
