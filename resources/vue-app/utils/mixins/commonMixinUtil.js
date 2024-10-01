@@ -29,6 +29,12 @@ export default {
             return null;
         },
 
+
+        // find a obj by id from a array
+        findById(arrOfObjs, id) {
+            return arrOfObjs.find(obj => obj.id === id);
+        },
+
         /**
          * Trims the provided text to a specified maximum length.
          * Appends "..." to indicate the text was shortened.

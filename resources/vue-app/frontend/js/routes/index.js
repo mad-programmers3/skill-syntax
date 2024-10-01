@@ -6,13 +6,15 @@ import elementsComponent from "../views/elementsComponent";
 import blogComponent from "../views/blogComponent";
 import blogDetailsComponent from "../views/blogDetailsComponent";
 import contactComponent from "../views/contactComponent";
+import lessonsComponent from "../../../backend/js/views/courses/lessonsComponent";
+import lessonComponent from "../views/lessonComponent";
 
 const route = [
     {
         path : '/',
         name : 'home',
         component : homeComponent,
-        meta : {'pageTitle' : 'Home'},
+        meta : {'pageTitle' : 'Home', dataUrl : 'api/pages/index'},
     },
     {
         path : '/about',
@@ -24,14 +26,14 @@ const route = [
         path : '/courses',
         name : 'courses',
         component : coursesComponent,
-        meta : {'pageTitle' : 'Courses'},
+        meta : {'pageTitle' : 'Courses', dataUrl : 'api/pages/courses'},
     },
     {
         path : '/courses/:id',
         name : 'courseDetails',
         component : courseDetailsComponent,
         props: true,
-        meta : {'pageTitle' : 'CourseDetails'},
+        meta : {'pageTitle' : 'CourseDetails', dataUrl : 'api/pages/courses'},
     },
     {
         path : '/elements',
@@ -56,6 +58,12 @@ const route = [
         name : 'contact',
         component: contactComponent,
         meta : {'pageTitle' : 'Contact'},
+    },
+    {
+        path : '/lesson/:id',
+        name : 'lesson',
+        component:lessonComponent,
+        meta : {'pageTitle' : 'LessonDetails', dataUrl : 'api/pages/lessons'},
     },
 ];
 export default route;

@@ -28,24 +28,49 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 'module' => ['name' => 'Course', 'icon' => 'fa fa-boxes'],
                 'nodes' => [
                     [
-                        'module' => ['name' => 'Course', 'link' => '/admin/course/courses', 'icon' => 'fa fa-box'],
+                        'module' => ['name' => 'Courses', 'link' => '/admin/course/courses', 'icon' => 'fa fa-box'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                     [
-                        'module' => ['name' => 'Category', 'icon' => 'fa fa-tags'],
-                        'nodes' => [
-                            [
-                                'module' => ['name' => 'Categories', 'link' => '/admin/course/categories', 'icon' => 'fa fa-tags'],
-                                'permissions' => $rawPermissions,
-                                'nodes' => []
-                            ],
-                            [
-                                'module' => ['name' => 'Sub Categories', 'link' => '/admin/course/sub-categories', 'icon' => 'fa fa-tag'],
-                                'permissions' => $rawPermissions,
-                                'nodes' => []
-                            ],
-                        ]
+                        'module' => ['name' => 'Lessons', 'link' => '/admin/course/lessons', 'icon' => 'fa fa-box'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                    [
+                        'module' => ['name' => 'Categories', 'link' => '/admin/course/categories', 'icon' => 'fa fa-tags'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                    [
+                        'module' => ['name' => 'Sub Categories', 'link' => '/admin/course/sub-categories', 'icon' => 'fa fa-tag'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                ]
+            ],
+            [
+                'module' => ['name' => 'Review', 'icon' => 'fa fa-boxes'],
+                'nodes' => [
+                    [
+                        'module' => ['name' => 'Reviews', 'link' => '/admin/review/reviews', 'icon' => 'fa fa-box'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                    [
+                        'module' => ['name' => 'Course Reviews', 'link' => '/admin/review/course-review', 'icon' => 'fa fa-box'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                    [
+                        'module' => ['name' => 'Lessons Reviews', 'link' => '/admin/review/lesson-review', 'icon' => 'fa fa-tags'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                    [
+                        'module' => ['name' => 'Testimonials', 'link' => '/admin/review/testimonials', 'icon' => 'fa fa-tag'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
                     ],
                 ]
             ],

@@ -8,26 +8,51 @@ use Illuminate\Support\Facades\Storage;
 
 class MyFileController extends DatabaseCrudController
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct(new MyFile());
     }
 
-    public function index($with = ['user:id,name'])
+    public function index($with = ['user:id,name'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::index($with);
+        return parent::index($with, $callBackBefore, $callBackAfter);
+    }
+
+    public function update(Request $request, $id, $callBackBefore = false, $callBackAfter = false)
+    {
+        return parent::update(
+            $request,
+            $id,
+            $callBackBefore,
+            $callBackAfter ? $callBackAfter : function ($newRecord, $oldRecord) {
+                // delete old file from storage
+                $this->deleteFile($oldRecord);
+            }
+        );
+    }
+
+    public function destroy($id, $callBack = false)
+    {
+        return parent::destroy(
+            $id,
+            $callBack ? $callBack : function ($record) {
+                // delete the file from storage also
+                $this->deleteFile($record);
+            }
+        );
     }
 
     public function upload(Request $request)
     {
         // Validate the incoming request
         $request->validate([
-            'image' => 'required|image|max:2048', // Max size of 2MB
+            'file' => 'required|max:2048', // Max size of 2MB
         ]);
 
         // Handle the uploaded file
-        if ($request->file('image')) {
-            $file = $request->file('image');
-            $path = $file->store('images', 'public'); // Store the file in public/images
+        if ($request->file('file')) {
+            $file = $request->file('file');
+            $path = $file->store('uploads', 'public'); // Store the file in public/images
 
             // Extract file information
             $fileName = $file->getClientOriginalName();  // Get the original file name
@@ -47,4 +72,11 @@ class MyFileController extends DatabaseCrudController
         return response()->json(['success' => false, 'message' => 'File upload failed.'], 500);
     }
 
+
+    private function deleteFile($record)
+    {
+        if ($record && $record->path && Storage::exists('public/' . $record->path)) {
+            Storage::delete('public/' . $record->path);
+        }
+    }
 }

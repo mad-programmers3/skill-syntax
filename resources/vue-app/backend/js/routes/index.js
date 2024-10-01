@@ -99,7 +99,8 @@ const routes =[
     {
         path: '/admin/rolePermissions',
         name: 'rolePermissions',
-        component: RolePermissionComponent
+        component: RolePermissionComponent,
+        meta : {'pageTitle' : 'Role Permission'},
     }
 
 

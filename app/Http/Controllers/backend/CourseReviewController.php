@@ -11,8 +11,8 @@ class CourseReviewController extends ItemReviewCrudController
         parent::__construct(new CourseReview());
     }
 
-    public function index($with = ['course:id,title', 'review'])
+    public function index($with = ['course:id,title', 'review'], $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::index($with);
+        return parent::index($with, $callBackBefore, $callBackAfter);
     }
 }

@@ -28,22 +28,5 @@ Route::get('/login',[LoginController::class, 'login'])->name('login');
 Route::post('/login', [LoginController::class, 'doLogin']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-
-Route::prefix('api')->group(function () {
-    Route::resource('categories', CategoryController::class);
-    Route::resource('sub-categories', SubCategoryController::class);
-    Route::resource('courses', CourseController::class);
-    Route::resource('course/likes', CourseLikeController::class);
-    Route::resource('lessons', LessonController::class);
-    Route::resource('lesson/likes', LessonLikeController::class);
-    Route::resource('reviews', ReviewController::class);
-    Route::resource('review/course-reviews', CourseReviewController::class);
-    Route::resource('review/lesson-reviews', LessonReviewController::class);
-    Route::resource('review/testimonials', TestimonialController::class);
-    Route::resource('files', MyFileController::class);
-    Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
-});
-
-
 Route::view('admin/{any}', 'backend-app')->middleware('auth')->where('any', '.*');
 Route::view('/{any}', 'frontend-app')->where('any', '.*');

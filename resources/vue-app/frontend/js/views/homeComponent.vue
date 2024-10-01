@@ -1,18 +1,18 @@
 <template>
     <div>
-        <home_banner_section />
+        <home_banner_section/>
 
-        <feature_area_section />
+        <feature_area_section/>
 
-        <popular_courses />
+        <popular_courses :popular-courses="popularCourses"/>
 
-        <gap_registration_area />
+        <gap_registration_area/>
 
-        <trainer_area_section />
+        <trainer_area_section/>
 
-        <event_area_section />
+        <event_area_section/>
 
-        <testimonial_area_section />
+        <testimonial_area_section/>
     </div>
 
 </template>
@@ -36,7 +36,18 @@
             Gap_registration_area,
             Popular_courses,
             Feature_area_section,
-            Home_banner_section},
+            Home_banner_section
+        },
+        data() {
+            return {
+                popularCourses: []
+            };
+        },
+        mounted() {
+            this.fetchData(this.urlGenerate(), (result) => {
+                this.popularCourses = result['popular-courses'];
+            });
+        }
 
     }
 </script>
