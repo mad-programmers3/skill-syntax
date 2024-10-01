@@ -20,4 +20,14 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function role_modules()
+    {
+        return $this->hasMany(RoleModule::class);
+    }
+
+    public function role_permissions()
+    {
+        return $this->hasMany(RolePermission::class);
+    }
 }
