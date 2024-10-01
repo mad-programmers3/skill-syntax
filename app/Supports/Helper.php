@@ -3,6 +3,7 @@
 
 namespace App\Supports;
 
+use App\Models\MyFile;
 use Illuminate\Support\Facades\DB;
 use function Nette\Utils\isEmpty;
 
@@ -43,5 +44,23 @@ trait Helper
             ->join('role_permissions', 'permissions.id', '=', 'role_permissions.permission_id')
             ->where('role_id', auth()->user()->role_id)
             ->get()->pluck('name')->toArray();
+    }
+
+    public function getFileId($inputFile, $thumbnail_id)
+    {
+        if (isset($inputFile['id'])){
+            return $inputFile['id'];
+        }
+
+        if ($thumbnail_id){
+
+        }
+
+        $file = new MyFile();
+        $file->fill($inputFile);
+        $file->user_id = auth()->user()->id;
+        $file->save();
+
+        return $file->id;
     }
 }

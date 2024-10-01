@@ -30,18 +30,18 @@ export default {
          * Determines whether to send a POST or PUT request based on formData.id.
          */
         // Handle form submission
-        handleSubmit() {
+        handleSubmit(modelID = 'formModal') {
+            const _this = this;
             let urlSuffix = this.formData.id ?? false;
             let method = this.formData.id ? 'put' : 'post';
 
-            this.httpReq({
-                urlSuffix: urlSuffix,
-                method: method,
-                callback: (response) => {
+            this.httpReq({urlSuffix: urlSuffix, method: method, callback: (response) => {
                     if (response.data) {
-                        // Show success toast notification instead of alert
-                        this.showToast(response.data.message, "success");
-                        this.fetchData();
+                        _this.showToast(response.data.message, "success");
+                        _this.fetchData();
+                        if (modelID){
+                            _this.closeModal(modelID)
+                        }
                     }
                 }
             });
@@ -54,9 +54,11 @@ export default {
          * @param {Object} item - The item to be updated.
          */
         onClickUpdate(item) {
+            const _this = this;
             let cat = Object.assign({}, item);
-            this.setFormData(cat);
-            this.openModal();
+            this.openModal('formModal', {}, function (ret){
+                _this.$store.commit('setFormData', cat);
+            });
         },
 
         /**
@@ -94,8 +96,8 @@ export default {
          * Optionally calls a callback function after the modal is closed.
          * @param {Function} [callBack] - Optional callback to be executed after closing the modal.
          */
-        closeModal(callBack) {
-            $('#categoryModal').modal('hide'); // Hide the modal
+        closeModal(modelID, callBack) {
+            $(`#${modelID}`).modal('hide'); // Hide the modal
 
             if (typeof callBack === 'function') callBack(); // Execute callback if provided
             this.resetFormData(); // Reset the form data
@@ -106,10 +108,5 @@ export default {
          * Optionally calls a callback function after the modal is opened.
          * @param {Function} [callBack] - Optional callback to be executed after opening the modal.
          */
-        openModal(callBack) {
-            $('#categoryModal').modal('show'); // Show the modal
-
-            if (typeof callBack === 'function') callBack(); // Execute callback if provided
-        }
     }
 }

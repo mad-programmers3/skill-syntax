@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends DatabaseCrudController
 {
@@ -106,27 +107,18 @@ class CourseController extends DatabaseCrudController
      */
     public function update(Request $request, $id, $callBackBefore = false, $callBackAfter = false)
     {
-        return parent::update($request, $id, function ($req) {
-            if ($req->uploadFile) {
-                // store the file firs
-                $fileReq = new Request();
-                foreach ($req->uploadFile as $key => $value) {
-                    $fileReq->merge([$key => $value]); // Merge each key-value pair into fileReq
-                }
+        $course  = Course::where('id', $id)->first();
 
-                if ($req->thumbnail_id) // keep the thumbnail_id as it is, update the file
-                    $this->fileCon->update($fileReq, $req->thumbnail_id);
-                else { // store a new file => get id => set this id merge thumbnail_id
-                    $thumbnail_id = null;
-                    // store the file and get the id on callBackAfter
-                    $this->fileCon->store($fileReq, false, function ($record) use (&$thumbnail_id) {
-                        if ($record) $thumbnail_id = $record->id;
-                    });
+        if ($course){
+            $course->fill($request->all());
+            $course->user_id = Auth::user()->id;
+            $course->thumbnail_id = $this->getFileId($request->input('thumbnail'), $course->thumbnail_id);
+            $course->save();
 
-                    $req->merge(['thumbnail_id' => $thumbnail_id]);
-                }
-            }
-        });
+            return response()->json(['success' => true, 'message' =>' updated successfully.', 'status' => 2000]);
+        }
+
+        return response()->json(['success' => true, 'message' =>' updated successfully.', 'status' => 2000]);
     }
 
     public function destroy($id, $callBack = false)

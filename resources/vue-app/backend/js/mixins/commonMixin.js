@@ -98,6 +98,27 @@ export default {
          */
         getConfig() {
             return this.$store.getters.Config;
+        },
+
+        storageImage : function (image){
+            if (image === undefined || !image === null){
+                return `${baseUrl}/images/course-def-thumbnail.jpg`;
+            }
+            if (typeof image === "object"){
+                return `${this.generateFileUrl(image.path)}`;
+            }else{
+                return `${this.generateFileUrl(image)}`;
+            }
+        },
+        openModal(modelId = 'formModal', defaultObject = {}, callBack = false) {
+            const _this = this;
+            $(`#${modelId}`).modal('show'); // Show the modal
+
+            $.each(defaultObject, function (index, value){
+                _this.$set(_this.formData, index, value);
+            });
+
+            if (typeof callBack === 'function') callBack(); // Execute callback if provided
         }
     }
 }

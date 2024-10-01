@@ -33,9 +33,36 @@ export default {
          * Calls the file processing method with the selected file.
          * @param {Event} event - The file input change event.
          */
-        handleFileChange(event) {
+        handleFileChange(event, formData = false, dataModel = false, callback = false, isOnlyPath = false) {
+            const _this = this;
             const file = event.target.files[0];  // Get the selected file
-            this.handleFileUpload(file);         // Process the file
+            if (!file || !file.type.startsWith("image/")) {  // Check if the file is an image
+                alert("Please upload a valid image file.");  // Show an alert if the file is not valid
+                return;
+            }
+
+            // Create a URL for the image preview
+            this.uploadFileUrl = URL.createObjectURL(file);
+
+            const imgFormData = new FormData();
+            imgFormData.append('file', file);  // Append the image file to the FormData
+
+            this.httpReq({customUrl: 'api/files/upload', method: 'post',
+                callback: (res) => {
+                    if (res.data.success) {
+                        if (formData){
+                            _this.$set(formData, dataModel, isOnlyPath ? res.data.path : res.data);
+                        }
+
+                        if (typeof  callback === 'function'){
+                            callback(res.data);
+                        }
+                    }
+
+                    console.log(formData);
+                },
+                data: imgFormData
+            });     // Process the file
         },
 
         /**

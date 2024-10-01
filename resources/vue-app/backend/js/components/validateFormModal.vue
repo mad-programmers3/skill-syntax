@@ -1,6 +1,6 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal fade" :id="modalId" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
         <div class="modal-dialog" :style="{maxWidth: windowWidth >= 700 ? this.width : '90%', /*90% for small screens*/}">
             <div class="modal-content">
                 <div class="modal-header">
@@ -38,6 +38,10 @@
             width: {
                 type: String,
                 default: '500px',
+            },
+            modalId: {
+                type: String,
+                default: 'formModal',
             }
         },
 

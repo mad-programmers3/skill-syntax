@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" @open-modal="openModalAndResetUploadFileInfos">
+        <data-table :default-object="{category_id:'',sub_category_id:''}" :table-heading="tableHeading">
             <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
                 <td>
@@ -30,8 +30,7 @@
                 </td>
             </tr>
         </data-table>
-        <validate-form-modal @handle-submit="submit" @close-modal="closeModalAndResetUploadFileInfos" title="Course"
-                             width="700px">
+        <validate-form-modal  @handle-submit="handleSubmit()" title="Course" width="700px">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
@@ -176,20 +175,10 @@
 
             <!--    Upload image        -->
             <div>
-                <div
-                        class="upload-area d-block m-auto"
-                        @click="triggerFileInput"
-                >
-                    <img :src="uploadFileUrl ? uploadFileUrl : formData.thumbnail && formData.thumbnail.path ? generateFileUrl(formData.thumbnail.path) : baseUrl + '/backend/assets/images/upload.png'"
-                         alt="Preview" class="preview-img"/>
+                <div class="upload-area d-block m-auto" @click="triggerFileInput">
+                    <img style="max-width: 100%" :src="storageImage(formData.thumbnail)">
                 </div>
-                <input
-                        type="file"
-                        ref="fileInput"
-                        @change="handleFileChange"
-                        class="file-input"
-                        accept="image/*"
-                />
+                <input type="file" ref="fileInput"  @change="handleFileChange($event, formData, 'thumbnail', false)" class="file-input" accept="image/*"/>
             </div>
 
         </validate-form-modal>
@@ -217,14 +206,10 @@
         },
         mounted() {
             const _this = this;
-
             this.fetchData(_this.urlGenerate('api/categories'), (result) => {_this.categories = result});
             this.fetchData(_this.urlGenerate('api/sub-categories'), (result) => {_this.subCategories = result});
         },
         methods: {
-            submit(e) {
-                this.handleSubmitWithFile(e, this.handleSubmit);
-            },
 
             closeModalAndResetUploadFileInfos() {
                 this.closeModal(this.resetUploadFileInfos);

@@ -3,7 +3,7 @@
         <!-- Form to Add Roles Only -->
         <form @submit.prevent="addRole" class="role-permission-form row d-flex align-items-center px-4 py-3">
             <div class="col-4">
-                <select v-model="formData.role_id" name="role_id" required class="role-select">
+                <select @change="getRolePermissions(formData.role_id)" v-model="formData.role_id" name="role_id" required class="role-select">
                     <option disabled value="" selected>Select a Role</option>
                     <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
                 </select>
@@ -13,9 +13,6 @@
                 <button type="submit" class="add-button">Add Role</button>
             </div>
         </form>
-
-
-        <!-- Table to Display Permissions -->
         <div class="overflow-auto my-3">
             <table class="role-permission-table">
                 <thead>
@@ -28,18 +25,20 @@
                 <tr v-for="module in modules" :key="module.id">
                     <td>
                         <label class="font-weight-bold">
-                            <input type="checkbox"/>
+                            <input @change="addPermission($event, crrRole.role_modules, module.id)" :checked="crrRole.role_modules.includes(module.id)" type="checkbox"/>
+<!--                            <input :checked="parseInt(module.checked) === 1" type="checkbox"/>-->
                             {{ module.name }}
                         </label>
                     </td>
-
-
-                    <!--                    <td v-for="permission in module.permissions" :key="permission.id">-->
-                    <td v-for="i in colsN" :key="i">
-                        <label v-if="module.permissions[i-1]" class="text-capitalize">
-                            <input type="checkbox" :checked="hasParmission(module.permissions[i-1].id)"/>
-                            {{ getRawPermName(module.permissions[i-1].name) }}
-                        </label>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-3"  v-for="(permission, pIndex) in module.permissions" :key="pIndex">
+                                <label class="text-capitalize">
+                                    <input type="checkbox" @change="addPermission($event, crrRole.role_permissions,permission.id)" :checked="crrRole.role_permissions.includes(permission.id)"/>
+                                    {{ permission.name }}
+                                </label>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -53,7 +52,10 @@
     export default {
         data() {
             return {
-                crrRole: {},
+                crrRole: {
+                    role_modules : [],
+                    role_permissions : [],
+                },
                 roles: [],
                 modules: [],
             };
@@ -83,18 +85,29 @@
                 _this.roles = result;
             });
 
-            // get current role with users, modules, permission
-            let auth = _this.getAuth();
-            if (auth && auth.role_id) {
-                _this.setFormData({role_id: auth.role_id});
+            _this.getRolePermissions();
 
-                _this.fetchData(_this.urlGenerate('api/config/roles', auth.role_id), (role) => {
-                    _this.crrRole = role;
-                });
-            }
+            // get current role with users, modules, permission
 
         },
         methods: {
+            addPermission : function (event, objectName, id){
+                if (event.target.checked){
+                    objectName.push(id);
+                }else{
+                    var index = objectName.findIndex(a => a.id === id);
+                    objectName.splice(index , 1)
+                }
+            },
+            getRolePermissions : function (role = false){
+                const _this = this;
+                let role_id = role ? role : _this.getAuth().role_id;
+                _this.setFormData({role_id: role_id});
+
+                _this.fetchData(_this.urlGenerate('api/config/roles', role_id), (role) => {
+                    _this.crrRole = role;
+                });
+            },
             getRawPermName(str) {
                 let arr = str.split('_');
                 return arr[arr.length - 1];
@@ -118,7 +131,7 @@
                 });
 
                 return false;
-            }
+            },
         },
     };
 </script>
