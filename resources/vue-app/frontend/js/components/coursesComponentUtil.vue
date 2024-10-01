@@ -20,23 +20,23 @@
                             <span class="d-inline-block ml-2">Cameron</span>
                         </div>
                         <div class="mt-lg-0 mt-3">
-                                    <span class="meta_info mr-4">
-                                        <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                                    </span>
+                            <span class="meta_info mr-4">
+                                <a href="#"> <i class="ti-user mr-2"></i>25 </a>
+                            </span>
                             <span class="meta_info">
-                                        <a href="#"> <i class="ti-heart mr-2"></i>35 </a>
-                                    </span>
+                                <a href="#"> <i class="ti-heart mr-2"></i>35 </a>
+                            </span>
                         </div>
                     </div>
                     <!-- See Details Button -->
                     <div class="mt-4">
                         <router-link
-                                class="btn btn-outline-warning btn-lg btn-block flex items-center justify-center"
+                                class="btn see-details-button btn-lg btn-block flex items-center justify-center"
                                 :to="{ name: 'courseDetails', params: { id: course.id } }"
                         >
                             SEE DETAILS
                             <img
-                                    class="transition-all duration-200 w-6 h-6 min-w-[24px] ml-2"
+                                    class="transition-all duration-200 w-6 h-6 min-w-[24px] ml-2 arrow-icon"
                                     src="https://cdn.ostad.app/public/icons/arrow-right-line.svg"
                                     alt="Arrow Right"
                             >
@@ -61,7 +61,7 @@
 </script>
 
 <style scoped>
-    /* Add your styles here */
+
 
     .single_course {
         border: 1px solid #ddd;
@@ -69,7 +69,7 @@
         overflow: hidden;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease;
-        height: 100%; /* Ensure equal height for all cards */
+        height: 100%;
     }
 
     .single_course:hover {
@@ -85,16 +85,16 @@
     .price {
         font-size: 1.2rem;
         font-weight: bold;
-        color: #ff5e14; /* Change color as needed */
+        color: #ff5e14;
     }
 
     .course-description {
         display: -webkit-box;
-        -webkit-line-clamp: 2; /* Limit to 2 lines */
+        -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-bottom: 20px; /* Space below the description */
+        margin-bottom: 20px;
     }
 
     .authr_meta img {
@@ -127,11 +127,37 @@
         font-size: 16px;
     }
 
-    /* Button Styling */
-    .btn-outline-warning {
-        width: 100%;
+    .see-details-button {
+        background-color: white;
+        color: #ff5e14;
         font-size: 1.2rem;
         padding: 10px;
         border-radius: 4px;
+        border: 2px solid #ff5e14;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .see-details-button:hover {
+        background-color: #ff5e14;
+        color: white;
+    }
+
+    .see-details-button img {
+        width: 24px;
+        height: 24px;
+        transition: all 0.3s ease;
+    }
+
+    /* Ensure arrow icon color matches the button text color */
+    .see-details-button .arrow-icon {
+        filter: invert(27%) sepia(81%) saturate(2603%) hue-rotate(3deg) brightness(95%) contrast(97%); /* Matches the #ff5e14 color */
+    }
+
+    .see-details-button:hover .arrow-icon {
+        filter: invert(100%) sepia(0%) saturate(7487%) hue-rotate(205deg) brightness(106%) contrast(107%); /* Matches white color */
+    }
+
+    .see-details-button:hover img {
+        transform: translateX(5px);
     }
 </style>
