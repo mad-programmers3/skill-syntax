@@ -33,6 +33,7 @@ export default {
          * @param {Function|Boolean} callback - Optional callback to process the fetched data. Defaults to false.
          */
         fetchData(url = false, callback = false) {
+            console.log(999);
             // Make the HTTP request using httpReq with the provided URL and callback
             const _this = this;
             this.httpReq({

@@ -8,7 +8,7 @@
                         <div class="main_image">
                             <!-- Display the course thumbnail or a default image if it's not available -->
                             <img class="img-fluid"
-                                 :src="course && course.thumbnail && course.thumbnail.path ? generateFileUrl(course.thumbnail.path) : baseUrl + '/images/course-def-thumbnail.jpg'"
+                                 :src="course ? generateFileUrl(course.thumbnail.path) : baseUrl + '/images/course-def-thumbnail.jpg'"
                                  alt="Course Thumbnail"
                                  style=" padding: 10px;">
                         </div>

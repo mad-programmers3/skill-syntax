@@ -33,22 +33,16 @@ export default {
         }
     },
     methods: {
-        /**
-         * Generates a URL to access a file in the storage folder.
-         * @param {String} path - The path of the file in the storage.
-         * @returns {String} The full URL to the file.
-         */
-        generateFileUrl(path) {
-            return this.baseUrl + '/storage/' + path;
+        asset(path) {
+            return baseUrl + '/' + path;
+        },
+        generateFileUrl(file, def = this.asset('images/course-def-thumbnail.jpg')) {
+            if (!file || !file.path)
+                return def;
+
+            return this.baseUrl + '/storage/' + file.path;
         },
 
-        /**
-         * Trims the provided text to a specified maximum length.
-         * Appends "..." to indicate the text was shortened.
-         * @param {String} text - The text to be truncated.
-         * @param {Number} [maxLength=70] - The maximum allowed length before truncation.
-         * @returns {String} The truncated text.
-         */
         limitText(text, maxLength = 70) {
             if (text && text.length > maxLength) {
                 return text.substring(0, maxLength) + '...';
@@ -56,36 +50,83 @@ export default {
             return text;
         },
 
-        /**
-         * Formats a decimal number.
-         * If the number is a whole number, it returns the integer.
-         * If it's a decimal, it returns the number with two decimal places.
-         * @param {String|Number} value - The number to format.
-         * @returns {String|Number} The formatted number.
-         */
+
         formatDecimal(value) {
             if (value % 1 === 0) return parseInt(value);
             return parseFloat(value).toFixed(2);
         },
 
-        /**
-         * Returns the parsed authenticated user information from the window object.
-         * @returns {Object} The authenticated user information.
-         */
+
         getAuth() {
             let decodedJson = window.authUser.replace(/&quot;/g, '"');
             return JSON.parse(decodedJson);
         },
 
         // Authentication-related methods
-        /**
-         * Checks if the user has permission to perform a specific task.
-         * @param {String} task - The task to check permission for.
-         * @returns {Boolean} `true` if the user has permission; otherwise `false`.
-         */
+
         can(task) {
             // Permission check logic (currently returns true for all tasks)
             return true;
+        },
+
+
+        /**
+         * Display a toast notification with a custom message and type.
+         * @param {String} message - The message to display in the toast.
+         * @param {String} [type="success"] - The type of toast (e.g., 'success', 'error').
+         */
+        showToast(message, type = "success") {
+            this.$toast(message, {
+                type: type,
+                timeout: 3000,        // 3 seconds timeout
+                position: "top-right", // Toast position at top-right
+            });
+        },
+
+        // close the modal and reset the form data.
+        closeModal(modalId = '#backendModal', callBack = false, defVal = {status: 1}) {
+            $(modalId).modal('hide'); // Hide the modal
+
+            if (typeof callBack === 'function') callBack(); // Execute callback if provided
+            this.$store.commit('setFormData', defVal); // Reset the form data
+        },
+
+        // open the modal for adding or updating list.
+        openModal(modalId = '#backendModal', callBack = false) {
+            $(modalId).modal('show'); // Show the modal
+
+            if (typeof callBack === 'function') callBack(); // Execute callback if provided
+        },
+
+
+        // file upload
+        handleFileChange(event) {
+            const file = event.target.files[0];  // Get the selected file
+            this.handleFileUpload(file);         // Process the file
+        },
+        // upload the file on storage and set it's infos on form data
+        handleFileUpload(file, key = 'thumbnail') {
+            if (!file || !file.type.startsWith("image/")) {  // Check if the file is an image
+                alert("Please upload a valid image file.");  // Show an alert if the file is not valid
+                return;
+            }
+
+            const imgFormData = new FormData();
+            imgFormData.append('file', file);  // Append the image file to the FormData
+
+            // Send the image to the server
+            const _this = this;
+            this.httpReq({
+                customUrl: 'api/files/upload',
+                method: 'post',
+                callback: (res) => {
+                    if (res.data.success) {
+                        _this.$set(res.data, 'user_id', _this.getAuth().id);
+                        _this.$set(_this.formData, key, res.data);
+                    }
+                },
+                data: imgFormData
+            });
         },
     }
 }

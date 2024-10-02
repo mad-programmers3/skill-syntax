@@ -72,10 +72,10 @@ class CourseController extends DatabaseCrudController
     public function store(Request $request, $callBackBefore = false, $callBackAfter = false)
     {
         return parent::store($request, function ($req) {
-            if ($req->uploadFile) {
+            if ($req->thumbnail) {
                 // store the file firs
                 $fileReq = new Request();
-                foreach ($req->uploadFile as $key => $value) {
+                foreach ($req->thumbnail as $key => $value) {
                     $fileReq->merge([$key => $value]); // Merge each key-value pair into fileReq
                 }
 
@@ -107,10 +107,10 @@ class CourseController extends DatabaseCrudController
     public function update(Request $request, $id, $callBackBefore = false, $callBackAfter = false)
     {
         return parent::update($request, $id, function ($req) {
-            if ($req->uploadFile) {
+            if ($req->thumbnail) {
                 // store the file firs
                 $fileReq = new Request();
-                foreach ($req->uploadFile as $key => $value) {
+                foreach ($req->thumbnail as $key => $value) {
                     $fileReq->merge([$key => $value]); // Merge each key-value pair into fileReq
                 }
 

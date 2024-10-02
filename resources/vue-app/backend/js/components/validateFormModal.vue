@@ -1,11 +1,11 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+    <div class="modal fade" id="backendModal" tabindex="-1" aria-labelledby="backendModalLabel" aria-hidden="true">
         <div class="modal-dialog" :style="{maxWidth: windowWidth >= 700 ? this.width : '90%', /*90% for small screens*/}">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="categoryModalLabel">{{ title }}</h1>
-                    <a type="button" class="font-weight-bold" @click="closeModal" aria-label="Close">X</a>
+                    <h1 class="modal-title fs-5" id="backendModalLabel">{{ title }}</h1>
+                    <a type="button" class="font-weight-bold" @click="closeModal('#backendModal', dismissValidate)" aria-label="Close">X</a>
                 </div>
 
                 <form role="form" @submit.prevent="handleSubmit" enctype="multipart/form-data">
@@ -13,7 +13,7 @@
                         <slot/>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
+                        <button type="button" class="btn btn-secondary" @click="closeModal('#backendModal', dismissValidate)">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
@@ -45,7 +45,25 @@
             // Watches for changes in validation errors and triggers custom handler
             '$validator.errors.items': {
                 handler(newErrors) {
-                    this.validatorHandler(newErrors);
+                    // Remove any previously added error spans from the UI
+                    this.clearSpanErrors();
+
+                    // Show the newErrors on the UI
+                    newErrors.forEach(item => {
+                        const element = document.querySelector(`[name="${item.field}"]`);
+                        element.classList.add('is-invalid');  // Highlight the field as invalid
+
+                        // Create a new span element for the error message
+                        const errorSpan = document.createElement('span');
+                        errorSpan.className = 'text-danger';
+                        errorSpan.textContent = item.msg;
+
+                        // Append the new error message to the parent node of the input field
+                        element.parentNode.appendChild(errorSpan);
+
+                        // Store the input element and its corresponding error span for later removal
+                        this.errorFields.push({ 'input': element, 'span': errorSpan });
+                    });
                 },
                 deep: true // Ensure deep watching for nested changes
             }
@@ -62,15 +80,35 @@
              */
             handleSubmit() {
                 const _this = this;
-                _this.validatorSubmit({callBack: ()=> {_this.$emit('handle-submit');}})
-            },
 
-            /**
-             * Handles the modal close event, clears validation errors, and emits 'close-modal' event.
-             */
-            closeModal() {
-                this.dismissValidate();
-                this.$emit('close-modal');
+                try {
+                    let items = this.$validator.errors.items;
+                    if (Object.keys(items).length > 0) {
+                        alert('Please fix the errors before submitting.');
+                        return
+                    }
+
+                    // Handle form submission
+                    let urlSuffix = this.formData.id ?? false;
+                    let method = this.formData.id ? 'put' : 'post';
+
+                    this.httpReq({
+                        urlSuffix: urlSuffix,
+                        method: method,
+                        callback: (response) => {
+                            if (response.data) {
+                                // Show success toast notification instead of alert
+                                _this.showToast(response.data.message, "success");
+                                _this.fetchData();
+                            }
+                        }
+                    });
+
+                    this.closeModal();
+
+                } catch (e) {
+                    console.error(e);  // Log any errors encountered during validation
+                }
             },
         }
     };
