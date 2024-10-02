@@ -10,6 +10,19 @@
                         </div>
                         <div class="content_wrapper">
                             <h4 class="title">{{ lesson.title }}</h4>
+                            <div class="d-flex justify-content-between mt-lg-0 my-3">
+                                <div>
+                                    <h4>Course title</h4>
+                                </div>
+                                <div>
+                                    <span class="meta_info mr-4">
+                                        <a type="button" @click="doLike"><i class="ti-thumb-up"></i> 25 </a>
+                                    </span>
+                                    <span class="meta_info">
+                                         <a href="#"><i class="ti-comment"></i> 35 </a>
+                                    </span>
+                                </div>
+                            </div>
                             <div class="content">
                                 {{ lesson.description }}
                                 <br>
@@ -54,11 +67,9 @@
                     <div class="col-lg-4 right-contents" v-if="lesson && lesson.course">
                         <h4 class="title mt-5">Lessons</h4>
                         <div class="playlist">
-                            <div v-for="less in lesson.course.lessons"
-                                    :key="less.id"
-                                    :class="['card mb-3', { 'highlight-card': lesson.id === less.id }]">
+                            <div v-for="less in lesson.course.lessons" :key="less.id" :class="['card mb-3', { 'highlight-card': lesson.id === less.id }]">
+                                <router-link :to="{ name: 'lesson', params: { id: less.id } }" class="row no-gutters">
 
-                                <div class="row no-gutters">
                                     <div class="col-md-4">
                                         <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'"
                                                 alt="Course Image"
@@ -67,22 +78,10 @@
 
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <router-link :to="{ name: 'lesson', params: { id: less.id } }"
-                                                    class=" ">
-                                                <h5 class="card-title">{{ less.title }}</h5>
-                                            </router-link>
-
-                                            <div class="mt-lg-0 mt-3">
-                                                <span class="meta_info mr-4">
-                                                    <a href="#"><i class="ti-thumb-up"></i> 25 </a>
-                                                </span>
-                                                <span class="meta_info">
-                                                     <a href="#"><i class="ti-comment"></i> 35 </a>
-                                                </span>
-                                            </div>
+                                            <h5 class="card-title">{{ less.title }}</h5>
                                         </div>
                                     </div>
-                                </div>
+                                </router-link>
                             </div>
 
                         </div>
@@ -124,6 +123,11 @@
                 return this.$route.params.id; // Get the current lesson ID from the route
             }
         },
+        methods: {
+            doLike() {
+                console.log(888);
+            }
+        }
     }
 </script>
 
