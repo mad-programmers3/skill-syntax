@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="backendModalLabel">{{ title }}</h1>
-                    <a type="button" class="font-weight-bold" @click="closeModal('#backendModal', dismissValidate)" aria-label="Close">X</a>
+                    <a type="button" class="font-weight-bold" @click="closeModal('#backendModal', clearSpanErrors)" aria-label="Close">X</a>
                 </div>
 
                 <form role="form" @submit.prevent="handleSubmit" enctype="multipart/form-data">
@@ -13,7 +13,7 @@
                         <slot/>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="closeModal('#backendModal', dismissValidate)">Close</button>
+                        <button type="button" class="btn btn-secondary" @click="closeModal('#backendModal', clearSpanErrors)">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
@@ -23,14 +23,12 @@
 </template>
 
 <script>
-    import validatorMixin from "../mixins/InputValidatorMixin";
-
     export default {
         name: "validateFormModal",
-        mixins: [validatorMixin],
         data() {
             return {
                 windowWidth: window.innerWidth,
+                errorFields: [], // Will store error elements for removal after validation
             };
         },
         props: {
@@ -109,6 +107,16 @@
                 } catch (e) {
                     console.error(e);  // Log any errors encountered during validation
                 }
+            },
+
+            // clears all error messages and invalid styles from the UI.
+            clearSpanErrors() {
+                const _this = this;
+                _this.errorFields.forEach(({ input, span }, index) => {
+                    input.classList.remove('is-invalid');  // Remove the invalid class
+                    span.remove();  // Remove the error message span from the DOM
+                    _this.errorFields.splice(index, 1);  // Remove the span from the stored array
+                });
             },
         }
     };
