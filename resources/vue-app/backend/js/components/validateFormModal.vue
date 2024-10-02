@@ -94,9 +94,10 @@
                         urlSuffix: urlSuffix,
                         method: method,
                         callback: (response) => {
+                            console.log(response);
                             if (response.data) {
                                 // Show success toast notification instead of alert
-                                _this.showToast(response.data.message, "success");
+                                _this.showToast(response.data.message, response.data.status === 2000 ? 'success' : 'error');
                                 _this.fetchData();
                             }
                         }

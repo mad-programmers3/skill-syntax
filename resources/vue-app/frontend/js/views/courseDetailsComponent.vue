@@ -7,10 +7,7 @@
                     <div class="col-lg-8 course_details_left">
                         <div class="main_image">
                             <!-- Display the course thumbnail or a default image if it's not available -->
-                            <img class="img-fluid"
-                                 :src="course ? generateFileUrl(course.thumbnail.path) : baseUrl + '/images/course-def-thumbnail.jpg'"
-                                 alt="Course Thumbnail"
-                                 style=" padding: 10px;">
+                            <img class="img-fluid" :src="course ? generateFileUrl(course.thumbnail) : baseUrl + '/images/course-def-thumbnail.jpg'" alt="Course Thumbnail" style=" padding: 10px;">
                         </div>
 
                         <div class="content_wrapper">
