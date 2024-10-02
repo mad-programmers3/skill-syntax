@@ -28,7 +28,7 @@
                 roles: [],
                 modules: [],
                 roleModules: [],
-                selectedRole: null,
+                selRoleId: null,
                 selectedModule: null,
             };
         },
@@ -65,7 +65,7 @@
             async createRoleModule() {
                 try {
                     await axios.post('/api/role-modules', {
-                        role_id: this.selectedRole,
+                        role_id: this.selRoleId,
                         module_id: this.selectedModule
                     });
                     this.selectedRole = null;

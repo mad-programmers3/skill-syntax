@@ -21,7 +21,7 @@ class Module extends Model
         return $this->hasMany(Module::class, 'parent_id', 'id');
     }
 
-    public function permission() {
+    public function permissions() {
         return$this->hasMany(Permission::class);
     }
 }
