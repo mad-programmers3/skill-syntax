@@ -55,7 +55,7 @@ export default {
          */
         onClickUpdate(item) {
             let cat = Object.assign({}, item);
-            this.setFormData(cat);
+            this.$store.commit('setFormData', cat)
             this.openModal();
         },
 
@@ -98,7 +98,7 @@ export default {
             $('#categoryModal').modal('hide'); // Hide the modal
 
             if (typeof callBack === 'function') callBack(); // Execute callback if provided
-            this.resetFormData(); // Reset the form data
+            this.$store.commit('setFormData', { status: 1 }); // Reset the form data
         },
 
         /**

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import commonMixin from "./mixins/commonMixin";
-import httpMixin from "./mixins/httpMixin";
+import commonMixin from "../../utils/mixins/commonMixin";
+import httpMixin from "../../utils/mixins/httpMixin";
 
 Vue.use(VueRouter);
 import App from './App.vue'

@@ -53,8 +53,7 @@
 
         mounted() {
             // Fetches authenticated user info on mount
-            this.fetchAuth();
-            this.formData.user_id = this.auth.id;
+            this.formData.user_id = this.getAuth().id;
         },
 
         methods: {

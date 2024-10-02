@@ -17,8 +17,8 @@ import VueAxios from 'vue-axios'
 
 Vue.use(VueAxios, axios);
 
-import httpMixin from "./mixins/httpMixin";
-import commonMixin from "./mixins/commonMixin";
+import httpMixin from "../../utils/mixins/httpMixin";
+import commonMixin from "../../utils/mixins/commonMixin";
 Vue.mixin(httpMixin);
 Vue.mixin(commonMixin);
 

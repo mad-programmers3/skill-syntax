@@ -13,7 +13,8 @@ export default {
          */
         validatorSubmit({ callBack = false }) {
             try {
-                if (this.objLen(this.$validator.errors.items) === 0) {
+                let items = this.$validator.errors.items;
+                if (Object.keys(items).length === 0) {
                     if (typeof callBack === 'function') callBack();  // Execute the callback if no validation errors
                 } else {
                     alert('Please fix the errors before submitting.');

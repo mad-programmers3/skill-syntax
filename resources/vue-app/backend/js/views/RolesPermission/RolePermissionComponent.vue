@@ -86,7 +86,7 @@
             // get current role with users, modules, permission
             let auth = _this.getAuth();
             if (auth && auth.role_id) {
-                _this.setFormData({role_id: auth.role_id});
+                _this.this.$store.commit('setFormData', {role_id: auth.role_id});
 
                 _this.fetchData(_this.urlGenerate('api/config/roles', auth.role_id), (role) => {
                     _this.crrRole = role;

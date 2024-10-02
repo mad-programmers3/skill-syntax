@@ -7,6 +7,31 @@ export default {
             auth: {},                   // Parsed authentication data
         };
     },
+    computed: {
+        /**
+         * Retrieve the list of data from the Vuex store.
+         * This is a computed property to automatically react to changes in the store.
+         */
+        dataList() {
+            return this.$store.getters.dataList
+        },
+
+        /**
+         * Retrieve form data from the Vuex store.
+         * This is a computed property to automatically react to changes in the store.
+         */
+        formData() {
+            return this.$store.getters.formData;
+        },
+
+        /**
+         * Retrieve configuration data from the Vuex store.
+         * This is a computed property to automatically react to changes in the store.
+         */
+        Config() {
+            return this.$store.getters.Config;
+        }
+    },
     methods: {
         /**
          * Generates a URL to access a file in the storage folder.
@@ -15,24 +40,6 @@ export default {
          */
         generateFileUrl(path) {
             return this.baseUrl + '/storage/' + path;
-        },
-
-        /**
-         * Returns the number of keys in an object.
-         * If the passed argument is not an object, it returns `null`.
-         * @param {Object} obj - The object to count keys from.
-         * @returns {Number|null} The number of keys in the object or `null` if not an object.
-         */
-        objLen(obj) {
-            if (typeof obj === 'object')
-                return Object.keys(obj).length;
-            return null;
-        },
-
-
-        // find a obj by id from a array
-        findById(arrOfObjs, id) {
-            return arrOfObjs.find(obj => obj.id === id);
         },
 
         /**
@@ -61,18 +68,6 @@ export default {
             return parseFloat(value).toFixed(2);
         },
 
-        // Authentication-related methods
-
-
-        /**
-         * Fetches and parses the authenticated user information from the window object.
-         * Updates the `auth` data property with the parsed information.
-         */
-        fetchAuth() {
-            let decodedJson = window.authUser.replace(/&quot;/g, '"');
-            this.auth = JSON.parse(decodedJson);
-        },
-
         /**
          * Returns the parsed authenticated user information from the window object.
          * @returns {Object} The authenticated user information.
@@ -80,6 +75,17 @@ export default {
         getAuth() {
             let decodedJson = window.authUser.replace(/&quot;/g, '"');
             return JSON.parse(decodedJson);
+        },
+
+        // Authentication-related methods
+        /**
+         * Checks if the user has permission to perform a specific task.
+         * @param {String} task - The task to check permission for.
+         * @returns {Boolean} `true` if the user has permission; otherwise `false`.
+         */
+        can(task) {
+            // Permission check logic (currently returns true for all tasks)
+            return true;
         },
     }
 }

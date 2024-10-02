@@ -32,14 +32,17 @@ export default {
          * @param {String|Boolean} url - The URL to fetch data from. Defaults to false.
          * @param {Function|Boolean} callback - Optional callback to process the fetched data. Defaults to false.
          */
-        fetchDataUtil(url = false, callback = false) {
+        fetchData(url = false, callback = false) {
             // Make the HTTP request using httpReq with the provided URL and callback
+            const _this = this;
             this.httpReq({
                 url,
                 callback: (response) => {
                     if (response.data) {
                         // If a callback is provided, use it to handle the data
                         if (typeof callback === 'function') callback(response.data.result);
+                        // Otherwise, update the local data list with the fetched data
+                        else _this.$store.commit('setDataList', response.data.result);
                     }
                 }
             });
@@ -58,7 +61,7 @@ export default {
          * @param {Function|Boolean} [options.callback=false] - A function to handle the response. Defaults to false.
          * @param {Object} [options.data=this.getFormData()] - Data to send with the request (usually for POST or PUT). Defaults to the form data.
          */
-        httpReqUtil({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = {} }) {
+        httpReq({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = this.$store.getters.formData }) {
             const _this = this;
 
             Axios({
