@@ -25,7 +25,7 @@
             </tr>
         </data-table>
 
-        <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Lessons">
+        <validate-form-modal title="Lessons">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title

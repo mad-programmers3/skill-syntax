@@ -25,7 +25,7 @@
                 </td>
             </tr>
         </data-table>
-        <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Category">
+        <validate-form-modal title="Category">
 
             <div class="mb-3">
                 <div class="custom-control custom-switch">

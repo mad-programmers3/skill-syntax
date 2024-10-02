@@ -23,7 +23,7 @@
             </tr>
         </data-table>
 
-        <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="Course Review">
+        <validate-form-modal  title="Course Review">
             <div v-if="formData.review" class="mb-3">
                 <div class="custom-control custom-switch">
                     <input

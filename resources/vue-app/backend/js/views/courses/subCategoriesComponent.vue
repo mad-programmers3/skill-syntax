@@ -22,7 +22,7 @@
                 </td>
             </tr>
         </data-table>
-        <validate-form-modal @handle-submit="handleSubmit" @close-modal="closeModal" title="SubCategory">
+        <validate-form-modal title="SubCategory">
 
             <div class="mb-3">
                 <label class="form-label w-100">
