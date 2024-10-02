@@ -9,8 +9,10 @@
                             <!-- Display the course thumbnail or a default image if it's not available -->
                             <img class="img-fluid"
                                  :src="course && course.thumbnail && course.thumbnail.path ? generateFileUrl(course.thumbnail.path) : baseUrl + '/images/course-def-thumbnail.jpg'"
-                                 alt="Course Thumbnail">
+                                 alt="Course Thumbnail"
+                                 style=" padding: 10px;">
                         </div>
+
                         <div class="content_wrapper">
                             <br/>
                             <h4 class="yellow-text">{{ course ? course.title : '' }}</h4>
@@ -88,23 +90,23 @@
                             <div v-for="lesson in course.lessons" :key="lesson.id" class="card mb-3">
                                 <div class="row no-gutters">
                                     <div class="col-md-4">
-                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="">
+                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="" style="margin: 10px; padding: 5px;">
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <router-link :to="{ name: 'lesson' , params: {id: lesson.id}}">
+                                            <router-link :to="{ name: 'lesson' , params: {id: lesson.id}}"
+                                                         :class="{ 'font-weight-bold': lesson.id === lesson_id }">
                                                 <h5 class="card-title">{{lesson.title}}</h5>
                                             </router-link>
 
                                             <div class="mt-lg-0 mt-3">
-                                      <span class="meta_info mr-4">
-                                        <a href="#"> <i class="ti-thumb-up"></i>25 </a>
-                                      </span>
-                                                <span class="meta_info">
-                                            <a href="#"> <i class="ti-comment"></i>35 </a>
-                                        </span>
+                                                <span class="meta_info mr-4">
+                                                    <a href="#"> <i class="ti-thumb-up"> </i> 25 </a>
+                                                </span>
+                                                <span class="meta_info padded-info">
+                                                     <a href="#"> <i class="ti-comment"> </i> 35 </a>
+                                                </span>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -140,6 +142,9 @@
         computed: {
             course_id() {
                 return this.$route.params.id;
+            },
+            lesson_id() {
+                return this.$route.params.id;
             }
         },
     }
@@ -158,6 +163,22 @@
         font-size: 1.2rem;
         padding-bottom: 0.5rem;
         border-bottom: 1px solid #e0e0e0; /* Separator lines */
+    }
+
+    .meta_info i {
+        color: #ff5e14;
+    }
+
+    .meta_info a {
+        color: #ff5e14;
+    }
+
+    .review-footer i {
+        color: #ff5e14;
+    }
+
+    .review-footer a {
+        color: #ff5e14;
     }
 
 
