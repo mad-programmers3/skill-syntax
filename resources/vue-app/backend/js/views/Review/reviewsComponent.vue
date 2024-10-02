@@ -51,13 +51,12 @@
 <script>
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
-    import validatorMixin from "../../mixins/validatorMixin";
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
 
     export default {
         name: "reviewsComponent",
         components: {ValidateFormModal, DataTable},
-        mixins: [validatorMixin, validatorListComponentMixin],
+        mixins: [validatorListComponentMixin],
         data() {
             return {
                 tableHeading: ['SL', 'Users','Comment','Rating', 'Status', 'Actions'],

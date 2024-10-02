@@ -10,10 +10,8 @@
                     <span class="price">{{ course.price }}</span>
                     <span class="tag mb-4 d-inline-block">{{ course.category.title }}</span>
                     <h4 class="mb-3">
-                        <router-link to="/courses">{{ course.title }}</router-link>
+                        <router-link to="/courses">{{ limitText(course.title, 25)}}</router-link>
                     </h4>
-                    <!-- Truncated description -->
-                    <p class="course-description" v-html="truncateDescription(course.description)"></p>
                     <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
                         <div class="authr_meta">
                             <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">

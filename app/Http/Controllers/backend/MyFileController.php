@@ -13,11 +13,6 @@ class MyFileController extends DatabaseCrudController
         parent::__construct(new MyFile());
     }
 
-    public function index($with = ['user:id,name'], $callBackBefore = false, $callBackAfter = false)
-    {
-        return parent::index($with, $callBackBefore, $callBackAfter);
-    }
-
     public function update(Request $request, $id, $callBackBefore = false, $callBackAfter = false)
     {
         return parent::update(

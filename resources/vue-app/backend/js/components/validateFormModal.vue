@@ -23,7 +23,7 @@
 </template>
 
 <script>
-    import validatorMixin from "../mixins/validatorMixin";
+    import validatorMixin from "../mixins/InputValidatorMixin";
 
     export default {
         name: "validateFormModal",

@@ -1,4 +1,4 @@
-import validatorMixin from "./validatorMixin";
+import validatorMixin from "./InputValidatorMixin";
 
 export default {
     mixins: [validatorMixin],

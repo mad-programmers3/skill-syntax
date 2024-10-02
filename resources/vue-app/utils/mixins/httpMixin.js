@@ -61,7 +61,7 @@ export default {
          * @param {Function|Boolean} [options.callback=false] - A function to handle the response. Defaults to false.
          * @param {Object} [options.data=this.getFormData()] - Data to send with the request (usually for POST or PUT). Defaults to the form data.
          */
-        httpReq({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = this.$store.getters.formData }) {
+        httpReq({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = this.$store && this.$store.getters ? this.$store.getters.formData : {}}) {
             const _this = this;
 
             Axios({
