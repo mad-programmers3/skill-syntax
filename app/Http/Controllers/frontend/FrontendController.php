@@ -61,6 +61,8 @@ class FrontendController extends Controller
             function ($query) {
                 $query->with('course', function ($course) {
                     $course->with('lessons');
+                })->with('lesson_reviews', function ($lesson_review) {
+                    $lesson_review->with('review');
                 });
             },
             function ($record) use (&$data) {

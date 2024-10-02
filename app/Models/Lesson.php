@@ -28,7 +28,7 @@ class Lesson extends Model
         return $this->hasMany(LessonLike::class);
     }
     // Relationship with LessonReview
-    public function reviews()
+    public function lesson_reviews()
     {
         return $this->hasMany(LessonReview::class);
     }
