@@ -4,21 +4,24 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Module;
-use Illuminate\Http\Request;
+use App\Supports\BaseCrudHelper;
 
-class ModuleController extends DatabaseCrudController
+class ModuleController extends Controller
 {
+
+    use BaseCrudHelper;
 
     public function __construct()
     {
-        parent::__construct(new Module());
-
+        $this->model = new Module();
+        $this->with = ['permissions:id,module_id,name,status'];
     }
 
-    public function index($with = ['permissions:id,module_id,name,status'], $callBackBefore = false, $callBackAfter = false)
-    {
-        return parent::index($with, $callBackBefore, $callBackAfter);
-    }
+//    public function index()
+//    {
+//        $module = Module::with('permissions:id,module_id,name,status')->get();
+//        return $this->retRes('Successfully fetched data', $module, 200);
+//    }
 
 //    public function store(Request $request)
 //    {

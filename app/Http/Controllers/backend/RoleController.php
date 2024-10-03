@@ -23,7 +23,7 @@ class RoleController extends Controller
     {
         try {
             // Fetch the record with optional relationships
-            $record = Role::findOrFail($id);
+            $record = Role::with('users:id,role_id,name')->findOrFail($id);
 
             $record->setAttribute('modules', RoleModule::where('role_id', $id)->pluck('module_id')->toArray());
             $record->setAttribute('permissions', RolePermission::where('role_id', $id)->pluck('permission_id')->toArray());

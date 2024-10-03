@@ -2,7 +2,6 @@
 
 namespace App\Supports;
 
-use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -14,7 +13,7 @@ trait BaseCrudHelper
     public function index()
     {
         try {
-            $data = Role::all(); // Fetch all records with optional relationships
+            $data = $this->model->with($this->with)->get(); // Fetch all records with optional relationships
             return $this->retRes('Successfully fetched all records', $data, 2000);
         } catch (\Exception $e) {
             return $this->retRes('Failed to fetch records', null, 500);
