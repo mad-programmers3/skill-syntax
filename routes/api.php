@@ -16,7 +16,6 @@ use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\frontend\FrontendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\backend\RoleModuleController;
 use App\Http\Controllers\backend\ModuleController;
 use App\Http\Controllers\backend\PermissionController;
 
@@ -43,7 +42,7 @@ Route::group(['prefix' => 'pages'], function () {
     Route::get('lessons/{id}', [FrontendController::class, 'showLesson']);
 });
 
-Route::resource('/tests', RoleController::class);
+Route::resource('/tests', PermissionController::class);
 
 // Role routes
 Route::middleware('auth:api')->group(function () {
@@ -64,8 +63,11 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::group(['prefix' => 'config'], function () {
-        Route::resource('/roles', RoleController::class);
+        Route::resource('roles', RoleController::class);
+        Route::post('roles/add-permission', [RoleController::class, 'addPermission']);
+        Route::post('roles/remove-permission', [RoleController::class, 'removePermission']);
         Route::resource('modules', ModuleController::class);
+        Route::resource('permissions', PermissionController::class);
     });
     // Roles
 //    Route::get('/roles', [RoleController::class, 'index']);
@@ -96,12 +98,6 @@ Route::middleware('auth:api')->group(function () {
 //    Route::get('/role-permissions', [RolePermissionController::class, 'index']);
 //    Route::post('/role-permissions', [RolePermissionController::class, 'store']);
 //    Route::delete('/role-permissions/{roleId}/{moduleId}/{action}', [RolePermissionController::class, 'destroy']);
-
-
-    // Role Modules
-    Route::get('/role-modules', [RoleModuleController::class, 'index']);
-    Route::post('/role-modules', [RoleModuleController::class, 'store']);
-    Route::delete('/role-modules/{id}', [RoleModuleController::class, 'destroy']);
 });
 
 

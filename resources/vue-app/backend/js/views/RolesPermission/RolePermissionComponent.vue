@@ -28,7 +28,7 @@
                 <tr v-for="module in modules" :key="module.id">
                     <td>
                         <label class="font-weight-bold">
-                            <input @change="addPermission($event, crrRole.modules, module.id)" :checked="crrRole.modules && crrRole.modules.includes(module.id)" type="checkbox"/>
+                            <input @change="addPermission($event, crrRole.modules, module.id, ADD_MODULE)" :checked="crrRole.modules && crrRole.modules.includes(module.id)" type="checkbox"/>
                             {{ module.name }}
                         </label>
                     </td>
@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-md-3"  v-for="(permission, pIndex) in module.permissions" :key="pIndex">
                                 <label class="text-capitalize">
-                                    <input type="checkbox" @change="addPermission($event, crrRole.permissions, permission.id)" :checked="crrRole.permissions && crrRole.permissions.includes(permission.id)"/>
+                                    <input type="checkbox" @change="addPermission($event, crrRole.permissions, permission.id, ADD_PERMISSION)" :checked="crrRole.permissions && crrRole.permissions.includes(permission.id)"/>
                                     {{ getRawPermName(permission.name) }}
                                 </label>
                             </div>
@@ -53,6 +53,8 @@
     export default {
         data() {
             return {
+                ADD_MODULE: 1,
+                ADD_PERMISSION: 2,
                 crrRole: {},
                 roles: [],
                 modules: [],
@@ -79,12 +81,29 @@
 
         },
         methods: {
-            addPermission : function (event, objectName, id){
-                if (event.target.checked){
-                    objectName.push(id);
-                }else{
-                    let index = objectName.findIndex(a => a.id === id);
-                    objectName.splice(index , 1)
+            addPermission : function (event, objectName, perm_id, type){
+                let data = {'role_id' : this.crrRole.id};
+
+                if (type === this.ADD_MODULE) data.module_id = perm_id;
+                else if (type === this.ADD_PERMISSION) data.permission_id = perm_id;
+
+                if (event.target.checked) {
+                    // add permission
+                    this.httpReq({
+                        customUrl: 'api/config/roles/add-permission', method: 'post', data, callback: (response) => {
+                            if(response.data.result) objectName.push(perm_id);
+                        }
+                    });
+                } else {
+                    // remove permission
+                    this.httpReq({
+                        customUrl: 'api/config/roles/remove-permission', method: 'post', data, callback: (response) => {
+                            if(response.data.result) {
+                                let index = objectName.indexOf(perm_id);
+                                objectName.splice(index , 1)
+                            }
+                        }
+                    });
                 }
             },
             getRolePermissions(role_id) {
