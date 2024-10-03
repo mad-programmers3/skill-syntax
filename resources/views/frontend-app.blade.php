@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{asset('frontend/css/themify-icons.css')}}" />
     <link rel="stylesheet" href="{{asset('frontend/vendors/owl-carousel/owl.carousel.min.css')}}" />
     <link rel="stylesheet" href="{{asset('frontend/vendors/nice-select/css/nice-select.css')}}" />
+
     <!-- main css -->
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}" />
 </head>
@@ -34,6 +35,7 @@
 <script src="{{asset('frontend/js/owl-carousel-thumb.min.js')}}"></script>
 <script src="{{asset('frontend/js/jquery.ajaxchimp.min.js')}}"></script>
 <script src="{{asset('frontend/js/mail-script.js')}}"></script>
+
 <!--gmaps Js-->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 <script src="{{asset('frontend/js/gmaps.min.js')}}"></script>

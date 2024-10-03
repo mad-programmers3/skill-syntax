@@ -1,35 +1,25 @@
 <template>
     <div class="row">
-        <div v-for="course in courses" :key="course.id" class="col-md-4 mb-3">
-            <div class="single_course card">
+        <div v-for="course in courses" :key="course.id" class="col-md-3 mb-4"> <!-- Updated spacing -->
+            <div class="single_course card h-80 w-100 "> <!-- Added shadow, removed border, rounded corners -->
                 <div class="course_head">
                     <!-- Display the dynamic thumbnail image -->
-                    <img class="img-fluid" :src="course.thumbnail && course.thumbnail.path ? generateFileUrl(course.thumbnail) :  baseUrl + '/images/course-def-thumbnail.jpg'" alt="">
+                    <img class="img-fluid rounded-top" :src="course.thumbnail && course.thumbnail.path ? generateFileUrl(course.thumbnail) : baseUrl + '/images/course-def-thumbnail.jpg'" alt="" style="object-fit: cover; height: 100%; width: 100%;">
                 </div>
+
                 <div class="course_content card-body">
-                    <span class="price">{{ course.price }}</span>
-                    <span class="tag mb-4 d-inline-block">{{ course.category.title }}</span>
-                    <h4 class="mb-3">
-                        <router-link to="/courses">{{ limitText(course.title, 25)}}</router-link>
-                    </h4>
-                    <div class="course_meta d-flex justify-content-lg-between align-items-lg-center flex-lg-row flex-column mt-4">
-                        <div class="authr_meta">
-                            <img :src="baseUrl + '/frontend/img/courses/author3.png'" alt="">
-                            <span class="d-inline-block ml-2">Cameron</span>
-                        </div>
-                        <div class="mt-lg-0 mt-3">
-                            <span class="meta_info mr-4">
-                                <a href="#"> <i class="ti-user mr-2"></i>25 </a>
-                            </span>
-                            <span class="meta_info">
-                                <a href="#"> <i class="ti-heart mr-2"></i>35 </a>
-                            </span>
-                        </div>
+                    <span class="price badge badge-success p-1">${{ course.price }}</span>
+                    <div style="padding-right: 15px">
+                        <span class="tag mb-3 d-inline-block text-sm badge badge-secondary p-1 " style="font-size: 10px" >{{course.category.title}}</span>
                     </div>
+                    <h4 class="mb-3">
+                        <router-link to="/courses" class="text-dark" style="font-size: 17px">{{ limitText(course.title, 35)}}</router-link> <!-- Adjusted link color -->
+                    </h4>
+
                     <!-- See Details Button -->
                     <div class="mt-4">
                         <router-link
-                                class="btn see-details-button btn-lg btn-block flex items-center justify-center"
+                                class="btn btn-primary btn-block btn-lg see-details-button d-flex justify-content-center align-items-center"
                                 :to="{ name: 'courseDetails', params: { id: course.id } }"
                         >
                             SEE DETAILS
@@ -44,6 +34,8 @@
             </div>
         </div>
     </div>
+
+
 </template>
 
 <script>
@@ -61,74 +53,26 @@
 <style scoped>
 
 
-    .single_course {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-        height: 100%;
-    }
-
-    .single_course:hover {
-        transform: translateY(-5px);
-    }
 
     .course_head img {
-        height: 200px;
         object-fit: cover;
         width: 100%;
     }
 
     .price {
-        font-size: 1.2rem;
+        font-size: 1rem;
         font-weight: bold;
         color: #ff5e14;
+      ;
     }
 
-    .course-description {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-bottom: 20px;
-    }
 
-    .authr_meta img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        object-fit: cover;
-    }
 
-    .meta_info i {
-        color: #ff5e14;
-    }
-
-    .meta_info a {
-        font-size: 14px;
-        color: #333;
-        text-decoration: none;
-    }
-
-    .main_title h2 {
-        font-size: 36px;
-        font-weight: bold;
-        color: #333;
-        text-align: center;
-    }
-
-    .main_title p {
-        color: #666;
-        text-align: center;
-        font-size: 16px;
-    }
 
     .see-details-button {
         background-color: white;
         color: #ff5e14;
-        font-size: 1.2rem;
+        font-size: 1rem;
         padding: 10px;
         border-radius: 4px;
         border: 2px solid #ff5e14;
@@ -141,21 +85,36 @@
     }
 
     .see-details-button img {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
         transition: all 0.3s ease;
     }
+    .single_course .price {
+        top: -30px;
+        right: 15px;
+        height: 50px;
+        line-height: 50px;
+        width: 50px;
+        font-size: 12px;
 
-    /* Ensure arrow icon color matches the button text color */
-    .see-details-button .arrow-icon {
-        filter: invert(27%) sepia(81%) saturate(2603%) hue-rotate(3deg) brightness(95%) contrast(97%); /* Matches the #ff5e14 color */
+    }
+    .single_course {
+        border: 1px solid #ddd; /* Default border color */
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Default shadow */
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
     }
 
-    .see-details-button:hover .arrow-icon {
-        filter: invert(100%) sepia(0%) saturate(7487%) hue-rotate(205deg) brightness(106%) contrast(107%); /* Matches white color */
+    .single_course:hover {
+        transform: translateY(-5px); /* Slight lift on hover */
+        border-color: #ff5e14; /* Change border color on hover */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+    }
+    .single_course .course_content{
+        padding: 10px;
     }
 
-    .see-details-button:hover img {
-        transform: translateX(5px);
-    }
+
 </style>
