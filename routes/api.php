@@ -9,12 +9,16 @@ use App\Http\Controllers\backend\LessonLikeController;
 use App\Http\Controllers\backend\LessonReviewController;
 use App\Http\Controllers\backend\MyFileController;
 use App\Http\Controllers\backend\ReviewController;
+use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\backend\TestimonialController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\frontend\FrontendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\backend\RoleModuleController;
+use App\Http\Controllers\backend\ModuleController;
+use App\Http\Controllers\backend\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,19 +36,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-use App\Http\Controllers\backend\RoleController;
-use App\Http\Controllers\backend\RolePermissionController;
-use App\Http\Controllers\backend\RoleModuleController;
-use App\Http\Controllers\backend\ModuleController;
-use App\Http\Controllers\backend\PermissionController;
-
-
 Route::group(['prefix' => 'pages'], function () {
     Route::get('index', [FrontendController::class, 'index']);
     Route::get('courses', [FrontendController::class, 'courses']);
     Route::get('courses/{id}', [FrontendController::class, 'showCurse']);
     Route::get('lessons/{id}', [FrontendController::class, 'showLesson']);
 });
+
+Route::resource('/tests', RoleController::class);
 
 // Role routes
 Route::middleware('auth:api')->group(function () {
@@ -65,7 +64,7 @@ Route::middleware('auth:api')->group(function () {
 
 
     Route::group(['prefix' => 'config'], function () {
-        Route::resource('roles', RoleController::class);
+        Route::resource('/roles', RoleController::class);
         Route::resource('modules', ModuleController::class);
     });
     // Roles

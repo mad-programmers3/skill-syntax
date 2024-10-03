@@ -4,7 +4,6 @@
 namespace App\Supports;
 
 use Illuminate\Support\Facades\DB;
-use function Nette\Utils\isEmpty;
 
 trait Helper
 {
