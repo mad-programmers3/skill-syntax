@@ -9,19 +9,19 @@
                             <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/course-details.jpg'" alt="">
                         </div>
                         <div class="content_wrapper">
-                            <h4 class="title">{{ lesson.title }}</h4>
-                            <div class="d-flex justify-content-between mt-lg-0 my-3">
+                            <div class="title d-flex justify-content-between align-items-center">
+                                <h4 class="mb-0">{{ lesson.title }}</h4> <!-- Added mb-0 to remove margin from the heading -->
                                 <div>
-                                    <h4>Course title</h4>
-                                </div>
-                                <div>
-                                    <span class="meta_info mr-4">
-                                        <a type="button" @click="doLike"><i class="ti-thumb-up"></i> 25 </a>
+                                    <span class="meta_info mr-3">
+                                        <i class="ti-thumb-up"> 25</i>
                                     </span>
                                     <span class="meta_info">
-                                         <a href="#"><i class="ti-comment"></i> 35 </a>
+                                        <i class="ti-comment"> 150</i>
                                     </span>
                                 </div>
+                            </div>
+                            <div>
+                                <h4>Course title</h4>
                             </div>
                             <div class="content">
                                 {{ lesson.description }}
@@ -83,7 +83,6 @@
                                     </div>
                                 </router-link>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -147,15 +146,16 @@
     .review-footer a {
         color: #ff5e14;
     }
-     .card {
+    .card {
 
-         border-radius: 8px;
-     }
+        border-radius: 8px;
+    }
 
     .highlight-card {
         border: 2px solid #ff5e14; /* Blue border for highlighted card */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
+
 
 </style>
 

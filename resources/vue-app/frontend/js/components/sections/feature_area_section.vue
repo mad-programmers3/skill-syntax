@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="single_feature">
                         <div class="icon"><span class="flaticon-student"></span></div>
                         <div class="desc">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
                     <div class="single_feature">
                         <div class="icon"><span class="flaticon-book"></span></div>
                         <div class="desc">
@@ -37,8 +37,19 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-3 col-md-6">
+                    <div class="single_feature">
+                        <div class="icon"><span class="flaticon-book"></span></div>
+                        <div class="desc">
+                            <h4 class="mt-3 mb-2">Sell Online Course</h4>
+                            <p>
+                                One make creepeth, man bearing theira firmament won't great
+                                heaven
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
                     <div class="single_feature">
                         <div class="icon"><span class="flaticon-earth"></span></div>
                         <div class="desc">
