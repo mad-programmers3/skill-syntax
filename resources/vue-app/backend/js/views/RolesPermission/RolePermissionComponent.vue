@@ -46,6 +46,7 @@
                 </tbody>
             </table>
         </div>
+        <pre>{{crrRole}}</pre>
     </div>
 </template>
 
@@ -95,12 +96,19 @@
                         }
                     });
                 } else {
+                    const _this = this;
                     // remove permission
                     this.httpReq({
                         customUrl: 'api/config/roles/remove-permission', method: 'post', data, callback: (response) => {
-                            if(response.data.result) {
-                                let index = objectName.indexOf(perm_id);
-                                objectName.splice(index , 1)
+                            if (response.data.result) {
+                                console.log(response.data.result);
+                                let {modules, permissions} = response.data.result;
+                                modules.forEach((id) => {
+                                    _this.removeArrItem(_this.crrRole.modules, id)
+                                });
+                                permissions.forEach((id) => {
+                                    _this.removeArrItem(_this.crrRole.permissions, id)
+                                });
                             }
                         }
                     });

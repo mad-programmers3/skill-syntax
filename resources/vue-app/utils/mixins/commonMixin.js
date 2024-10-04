@@ -50,6 +50,11 @@ export default {
             return text;
         },
 
+        removeArrItem(array, item) {
+            let index = array.indexOf(item);
+            array.splice(index , 1)
+        },
+
 
         formatDecimal(value) {
             if (value % 1 === 0) return parseInt(value);

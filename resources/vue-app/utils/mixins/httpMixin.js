@@ -33,7 +33,11 @@ export default {
          * @param {Function|Boolean} callback - Optional callback to process the fetched data. Defaults to false.
          */
         fetchData(url = false, callback = false) {
-            // Make the HTTP request using httpReq with the provided URL and callback
+            if (!callback && this) {
+                // reset data to empty
+                this.$store.commit('setDataList', {});
+            }
+
             const _this = this;
             this.httpReq({
                 url,

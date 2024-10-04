@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
 use App\Models\Role;
 use App\Models\RoleModule;
 use App\Models\RolePermission;
 use App\Supports\BaseCrudHelper;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use function League\Flysystem\delete;
 
 class RoleController extends Controller
 {
@@ -58,23 +60,44 @@ class RoleController extends Controller
     public function removePermission(Request $request)
     {
         try {
-            if ($request->module_id) {
-                $record = RoleModule::where('role_id', $request->role_id)->where('module_id', $request->module_id)->first();
-            } else if ($request->permission_id) {
-                $record = RolePermission::where('role_id', $request->role_id)->where('permission_id', $request->permission_id)->first();
-            } else {
-                return $this->retRes('Invalid data provided', null, 400); // Handle invalid data error
+            $data = ['modules' => [], 'permissions' => []];
+            $roleId = $request->role_id;
+
+            // Check if module_id is provided
+            if ($moduleId = $request->module_id) {
+                $record = RoleModule::where('role_id', $roleId)->where('module_id', $moduleId)->first();
+
+                if ($record) {
+                    // Remove all permissions related to the module in a single query
+                    $permissionIds = Permission::where('module_id', $moduleId)->pluck('id')->toArray();
+                    RolePermission::where('role_id', $roleId)->whereIn('permission_id', $permissionIds)->delete();
+
+                    $data['modules'][] = $moduleId;
+                    $data['permissions'] = array_merge($data['permissions'], $permissionIds);
+                }
+            }
+            // Check if permission_id is provided
+            else if ($permissionId = $request->permission_id) {
+                $record = RolePermission::where('role_id', $roleId)->where('permission_id', $permissionId)->first();
+
+                if ($record) {
+                    $data['permissions'][] = $permissionId;
+                }
+            }
+            // Handle invalid data
+            else {
+                return $this->retRes('Invalid data provided', null, 400);
             }
 
-            // If the record is found, delete it
-            if ($record) {
-                return $this->retRes('Permission deleted successfully', $record->delete()); // Success response
+            // If the record is found, delete it and return success response
+            if (isset($record) && $record) {
+                $record->delete();
+                return $this->retRes('Permission deleted successfully', $data);
             }
 
-            return $this->retRes('Record not found', null, 404); // Handle record not found
+            return $this->retRes('Record not found', null, 404);
         } catch (\Exception $e) {
-            return $this->retRes('Something went wrong with removing the permission', null, 500); // Handle exception
+            return $this->retRes('Something went wrong with removing the permission', null, 500);
         }
     }
-
 }
