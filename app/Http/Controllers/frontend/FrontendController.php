@@ -2,79 +2,60 @@
 
 namespace App\Http\Controllers\frontend;
 
-use App\Http\Controllers\backend\CourseController;
-use App\Http\Controllers\backend\LessonController;
 use App\Http\Controllers\Controller;
+use App\Models\Course;
+use App\Models\Lesson;
+use Exception;
 
 class FrontendController extends Controller
 {
     // for home page
     public function index()
     {
-        $data = [];
-        (new CourseController())->index(
-            ['thumbnail:id,path', 'category:id,title', 'likes'],
-            false,
-            function ($courses) use (&$data) {
-                $data['popular-courses'] = $courses;
-            }
-        );
-
-        return $this->retData($data);
+        try {
+            $data = [];
+            $data['popular-courses'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->take(8)->get();;
+            return retRes('Fetched all data for home page', $data);
+        } catch (Exception $e) {
+            return retRes('Something went wrong', null, 500);
+        }
     }
 
     // for courses page
     public function courses()
     {
-        $data = [];
-        (new CourseController())->index(
-            ['thumbnail:id,path', 'category:id,title', 'likes'],
-            false,
-            function ($courses) use (&$data) {
-                $data['courses'] = $courses;
-            }
-        );
-
-        return $this->retData($data);
+        try {
+            $data = [];
+            $data['courses'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->get();;
+            return retRes('Fetched all data for courses page', $data);
+        } catch (Exception $e) {
+            return retRes('Something went wrong', null, 500);
+        }
     }
 
     // for course details page
     public function showCurse($id)
     {
-        $data = [];
-        (new CourseController())->show($id,
-            ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons'],
-            false,
-            function ($record) use (&$data) {
-                $data['course'] = $record;
-            });
-
-        return $this->retData($data);
+        try {
+            $data = [];
+            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons'])->findOrFail($id);
+            return retRes('Fetched course data for course page', $data);
+        } catch (Exception $e) {
+            return retRes('Something went wrong', null, 500);
+        }
     }
 
     public function showLesson($id)
     {
-        $data = [];
-        (new LessonController())->show(
-            $id,
-            ['likes'],
-            function ($query) {
-                $query->with('course', function ($course) {
-                    $course->with('lessons');
-                })->with('lesson_reviews', function ($lesson_review) {
-                    $lesson_review->with('review');
-                });
-            },
-            function ($record) use (&$data) {
-                $data['lesson'] = $record;
-            });
 
-        return $this->retData($data);
-    }
-
-
-    private function retData($data)
-    {
-        return response()->json(['result' => $data, 'status' => 2000], 200);
+        try {
+            $data = [];
+            $data['lesson'] = Lesson::with(['likes', 'course.lessons', 'lesson_reviews.review.user'])->findOrFail($id);
+            $data['reviews'] = $data['lesson']->lesson_reviews->pluck('review');
+            $data['likes'] = $data['lesson']->likes->pluck('user_id');
+            return retRes('Fetched course data for lesson page', $data);
+        } catch (Exception $e) {
+            return retRes('Something went wrong', null, 500);
+        }
     }
 }

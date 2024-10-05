@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\MyFile;
 use App\Supports\BaseCrudHelper;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-class CourseController extends DatabaseCrudController
+class CourseController extends Controller
 {
     use BaseCrudHelper;
 
@@ -14,81 +18,112 @@ class CourseController extends DatabaseCrudController
 
     public function __construct()
     {
-        parent::__construct(new Course());
-
+        $this->model = new Course();
         $this->fileCon = new MyFileController();
+        $this->with = ['thumbnail:id,path', 'category:id,title', 'likes'];
+        $this->showWith = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'reviews.review.user'];
+
+//        $this->beforeStore = function ($request) {
+//            $thumbData = $request->thumbnail;
+//            if ($thumbData) {
+//                $fileReq = new Request();
+//                mergeAuth($fileReq);
+//                // merge all file infos on fileReq from $request->thumbnail
+//                mergeAll($fileReq, $thumbData);
+//
+//                //store the file and get the id
+//                $storedFile = MyFile::create($thumbData); // thumbnail is an object
+//                if ($storedFile) $request->merge(['thumbnail_id' => $storedFile->id]);
+//            }
+//        };
+//
+//        $this->beforeUpdate = function ($request) {
+//            if ($request->thumbnail) {
+//                // merge all file infos on fileReq from $request->thumbnail
+//                $fileReq = new Request();
+//                mergeAll($fileReq, $request->thumbnail);
+//
+//                if ($request->thumbnail_id)
+//                    // keep the thumbnail_id as it is, update the file
+//                    $this->fileCon->update($fileReq, $request->thumbnail_id);
+//                else {
+//                    // store a new file => get id => set this id merge thumbnail_id
+//                    $storedFile = MyFile::create($request->thumbnail); // thumbnail is an object
+//                    if ($storedFile) $request->merge(['thumbnail_id' => $storedFile->id]);
+//                }
+//            }
+//        };
+//
+//        $this->afterDelete = function ($record) {
+//            if ($record && $record->thumbnail_id) // delete also file
+//                $this->fileCon->destroy($record->thumbnail_id);
+//        };
     }
 
-    public function index($with = ['thumbnail:id,path', 'category:id,title', 'likes'], $callBackBefore = false, $callBackAfter = false)
+    public function store(Request $request)
     {
-        return parent::index($with, $callBackBefore, $callBackAfter);
-    }
+        try {
+            mergeAuth($request);
 
-
-    public function show($id, $with = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons'], $callBackBefore = false, $callBackAfter = false)
-    {
-        return parent::show($id, $with, $callBackBefore ? $callBackBefore : function ($query) {
-            $query->with(['reviews'=>function ($reviews){
-                $reviews->with(['review' => function ($review) {
-                    $review->with('user');
-                }]);
-            }]);
-        }, $callBackAfter);
-    }
-
-
-    public function store(Request $request, $callBackBefore = false, $callBackAfter = false)
-    {
-        $request->merge(['user_id' => auth()->id()]);
-        return parent::store($request, function ($req) {
-            if ($req->thumbnail) {
-                // store the file firs
-                $fileReq = new Request();
-                foreach ($req->thumbnail as $key => $value) {
-                    $fileReq->merge([$key => $value]); // Merge each key-value pair into fileReq
-                }
-
-                $thumbnail_id = null;
-                // store the file and get the id on callBackAfter
-                $this->fileCon->store($fileReq, false, function ($record) use (&$thumbnail_id) {
-                    if ($record) $thumbnail_id = $record->id;
-                });
-
-                $req->merge(['thumbnail_id' => $thumbnail_id]);
+            // store the file first
+            if ($request->thumbnail) {
+                //store the file and get the id
+                $storedFile = MyFile::create($request->thumbnail); // thumbnail is an object
+                if ($storedFile) $request->merge(['thumbnail_id' => $storedFile->id]);
             }
-        });
+
+            $record = Course::create($request->all()); // Create a new record
+            return retRes('Successfully created course', $record);
+        } catch (Exception $e) {
+            return retRes('Failed to create record', null, 500);
+        }
     }
 
-    public function update(Request $request, $id, $callBackBefore = false, $callBackAfter = false)
+    // Update an existing record
+    public function update(Request $request, $id)
     {
-        return parent::update($request, $id, function ($req) {
-            if ($req->thumbnail) {
-                // store the file firs
+        try {
+            // update the file/thumbnail first
+            if ($request->thumbnail) {
+                // merge all file infos on fileReq from $request->thumbnail
                 $fileReq = new Request();
-                foreach ($req->thumbnail as $key => $value) {
-                    $fileReq->merge([$key => $value]); // Merge each key-value pair into fileReq
-                }
+                mergeAll($fileReq, $request->thumbnail);
 
-                if ($req->thumbnail_id) // keep the thumbnail_id as it is, update the file
-                    $this->fileCon->update($fileReq, $req->thumbnail_id);
-                else { // store a new file => get id => set this id merge thumbnail_id
-                    $thumbnail_id = null;
-                    // store the file and get the id on callBackAfter
-                    $this->fileCon->store($fileReq, false, function ($record) use (&$thumbnail_id) {
-                        if ($record) $thumbnail_id = $record->id;
-                    });
-
-                    $req->merge(['thumbnail_id' => $thumbnail_id]);
+                if ($request->thumbnail_id)
+                    // keep the thumbnail_id as it is, update the file
+                    $this->fileCon->update($fileReq, $request->thumbnail_id);
+                else {
+                    // store a new file => get id => set this id merge thumbnail_id
+                    $storedFile = MyFile::create($request->thumbnail); // thumbnail is an object
+                    if ($storedFile) $request->merge(['thumbnail_id' => $storedFile->id]);
                 }
             }
-        });
+
+
+            // update the course
+            $record = Course::findOrFail($id); // Find the record by ID
+            $record->update($request->all()); // Update the record
+            return retRes('Successfully updated record', $record);
+        } catch (ModelNotFoundException $e) {
+            return retRes('Record not found', null, 404);
+        } catch (Exception $e) {
+            return retRes('Failed to update record', null, 500);
+        }
     }
 
-    public function destroy($id, $callBack = false)
+    public function destroy($id)
     {
-        return parent::destroy($id, function ($record) {
+        try {
+            $record = Course::findOrFail($id); // Find the record by ID
             if ($record && $record->thumbnail_id) // delete also file
                 $this->fileCon->destroy($record->thumbnail_id);
-        });
+
+            $record->delete(); // Delete the record
+            return retRes('Successfully deleted the course', $record, CODE_DANGER);
+        } catch (ModelNotFoundException $e) {
+            return retRes("The course isn't found", null, 404);
+        } catch (Exception $e) {
+            return retRes('Failed to delete the course', null, 500);
+        }
     }
 }

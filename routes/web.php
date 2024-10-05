@@ -1,16 +1,5 @@
 <?php
 
-use App\Http\Controllers\backend\CategoryController;
-use App\Http\Controllers\backend\CourseController;
-use App\Http\Controllers\backend\CourseLikeController;
-use App\Http\Controllers\backend\CourseReviewController;
-use App\Http\Controllers\backend\LessonController;
-use App\Http\Controllers\backend\LessonLikeController;
-use App\Http\Controllers\backend\LessonReviewController;
-use App\Http\Controllers\backend\MyFileController;
-use App\Http\Controllers\backend\ReviewController;
-use App\Http\Controllers\backend\SubCategoryController;
-use App\Http\Controllers\backend\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\RegisterController;

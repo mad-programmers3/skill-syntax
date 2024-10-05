@@ -5,6 +5,9 @@ export default {
             baseUrl: window.baseUrl,    // Base URL for the application
             authUser: window.authUser,  // Authenticated user information from the window object
             auth: {},                   // Parsed authentication data
+            CODE_SUCCESS: 2000,
+            CODE_WARNING: 2020,
+            CODE_DANGER: 3000,
         };
     },
     computed: {

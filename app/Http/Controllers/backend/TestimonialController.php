@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\backend;
 
 
+use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
+use App\Supports\BaseCrudHelper;
 
-class TestimonialController extends ItemReviewCrudController
+class TestimonialController extends Controller
 {
-    public function __construct() {
-        parent::__construct(new Testimonial());
-    }
+    use BaseCrudHelper;
 
-    public function index($with = ['review'], $callBackBefore = false, $callBackAfter = false)
-    {
-        return parent::index($with, $callBackBefore, $callBackAfter);
+    public function __construct() {
+        $this->model = new Testimonial();
+        $this->with = ['review'];
     }
 }

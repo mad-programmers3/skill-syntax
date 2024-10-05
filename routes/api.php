@@ -2,10 +2,8 @@
 
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\CourseController;
-use App\Http\Controllers\backend\CourseLikeController;
 use App\Http\Controllers\backend\CourseReviewController;
 use App\Http\Controllers\backend\LessonController;
-use App\Http\Controllers\backend\LessonLikeController;
 use App\Http\Controllers\backend\LessonReviewController;
 use App\Http\Controllers\backend\MyFileController;
 use App\Http\Controllers\backend\ReviewController;
@@ -42,7 +40,7 @@ Route::group(['prefix' => 'pages'], function () {
     Route::get('lessons/{id}', [FrontendController::class, 'showLesson']);
 });
 
-Route::resource('/tests', PermissionController::class);
+Route::resource('/tests', CourseController::class);
 
 // Role routes
 Route::middleware('auth:api')->group(function () {
@@ -51,9 +49,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('sub-categories', SubCategoryController::class);
     Route::resource('courses', CourseController::class);
-    Route::resource('course/likes', CourseLikeController::class);
     Route::resource('lessons', LessonController::class);
-    Route::resource('lesson/likes', LessonLikeController::class);
     Route::resource('reviews', ReviewController::class);
     Route::resource('review/course-reviews', CourseReviewController::class);
     Route::resource('review/lesson-reviews', LessonReviewController::class);

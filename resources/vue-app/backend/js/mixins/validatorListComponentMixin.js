@@ -33,7 +33,7 @@ export default {
                         callback: (response) => {
                             if (response.data) {
                                 // Show success toast notification for deletion
-                                this.showToast(response.data.message, "success");
+                                this.showToast(response.data.message, "error");
                                 this.fetchData();
                             }
                         }

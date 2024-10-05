@@ -3,16 +3,16 @@
 namespace App\Http\Controllers\backend;
 
 
+use App\Http\Controllers\Controller;
 use App\Models\Lesson;
+use App\Supports\BaseCrudHelper;
 
-class LessonController extends DatabaseCrudController
+class LessonController extends Controller
 {
-    public function __construct() {
-        parent::__construct(new Lesson());
-    }
+    use BaseCrudHelper;
 
-    public function index($with = ['course:id,title', 'likes'], $callBackBefore = false, $callBackAfter = false)
-    {
-        return parent::index($with, $callBackBefore, $callBackAfter);
+    public function __construct() {
+        $this->model = new Lesson();
+        $this->with = ['course:id,title', 'likes'];
     }
 }

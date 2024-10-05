@@ -13,10 +13,10 @@
                                 <h4 class="mb-0">{{ lesson.title }}</h4> <!-- Added mb-0 to remove margin from the heading -->
                                 <div>
                                     <span class="meta_info mr-3">
-                                        <i class="ti-thumb-up"> 25</i>
+                                        <i class="ti-thumb-up"> {{ likes.length }}</i>
                                     </span>
                                     <span class="meta_info">
-                                        <i class="ti-comment"> 150</i>
+                                        <i class="ti-comment"> {{ reviews.length }}</i>
                                     </span>
                                 </div>
                             </div>
@@ -32,23 +32,21 @@
                             <h4 class="title">Comments</h4>
                             <div class="reviews-list">
                                 <h6 class="mb-3">Recent Comments</h6>
-                                <div v-if="lesson.lesson_reviews && lesson.lesson_reviews.length > 0">
-                                    <div v-for="review in lesson.lesson_reviews" :key="review.id" class="review-item mb-3">
-                                        <div class="user-info d-flex align-items-start justify-content-between">
-                                            <div class="user-thumb mr-3">
-                                                <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="User Image">
-                                            </div>
-                                            <div class="user-details flex-grow-1">
-                                                <h6 class="mb-1">{{ review.review.user_id }}</h6> <!-- Replace with actual user info if available -->
-                                                <p class="comment mb-2">{{ review.review.comment }}</p>
-                                                <div class="review-footer mt-2">
-                                                    <a href="#" class="mr-3">
-                                                        <i class="ti-thumb-up"></i> 25 <!-- This can be dynamic if likes data is available -->
-                                                    </a>
-                                                    <a href="#">
-                                                        <i class="ti-reply"></i> Reply
-                                                    </a>
-                                                </div>
+                                <div v-for="review in reviews" :key="review.id" class="review-item mb-3">
+                                    <div class="user-info d-flex align-items-start justify-content-between">
+                                        <div class="user-thumb mr-3">
+                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="User Image">
+                                        </div>
+                                        <div class="user-details flex-grow-1">
+                                            <h6 class="mb-1">{{ review.user.name  }}</h6> <!-- Replace with actual user info if available -->
+                                            <p class="comment mb-2">{{ review.comment }}</p>
+                                            <div class="review-footer mt-2">
+                                                <a href="#" class="mr-3">
+                                                    <i class="ti-thumb-up"></i> 25 <!-- This can be dynamic if likes data is available -->
+                                                </a>
+                                                <a href="#">
+                                                    <i class="ti-reply"></i> Reply
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -99,6 +97,8 @@
         data() {
             return {
                 lesson: null,
+                reviews: null,
+                likes: null,
             };
         },
         watch: {
@@ -106,16 +106,12 @@
             lesson_id(newId, oldId) {
                 // Refetch data when the lesson_id changes
                 if (newId !== oldId) {
-                    this.fetchData(this.urlGenerate(false, newId), (result) => {
-                        this.lesson = result['lesson'];
-                    });
+                    this.fetchLesson(newId);
                 }
             }
         },
         mounted() {
-            this.fetchData(this.urlGenerate(false, this.lesson_id), (result) => {
-                this.lesson = result['lesson'];
-            });
+            this.fetchLesson(this.lesson_id);
         },
         computed: {
             lesson_id() {
@@ -123,6 +119,14 @@
             }
         },
         methods: {
+            fetchLesson(id) {
+                const _this = this;
+                this.fetchData(this.urlGenerate(false, id), (result) => {
+                    _this.lesson = result['lesson'];
+                    _this.reviews = result['reviews'];
+                    _this.likes = result['likes'];
+                });
+            },
             doLike() {
                 console.log(888);
             }

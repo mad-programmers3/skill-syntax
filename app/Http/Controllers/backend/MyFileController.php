@@ -2,39 +2,29 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Http\Controllers\Controller;
 use App\Models\MyFile;
+use App\Supports\BaseCrudHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class MyFileController extends DatabaseCrudController
+class MyFileController extends Controller
 {
+    use BaseCrudHelper;
+
     public function __construct()
     {
-        parent::__construct(new MyFile());
-    }
+        $this->model = new MyFile();
 
-    public function update(Request $request, $id, $callBackBefore = false, $callBackAfter = false)
-    {
-        return parent::update(
-            $request,
-            $id,
-            $callBackBefore,
-            $callBackAfter ? $callBackAfter : function ($newRecord, $oldRecord) {
-                // delete old file from storage
-                $this->deleteFile($oldRecord);
-            }
-        );
-    }
+        // Delete the old file from storage after update record from db
+        $this->afterUpdate = function ($newRecord, $oldRecord) {
+            $this->deleteFile($oldRecord);
+        };
 
-    public function destroy($id, $callBack = false)
-    {
-        return parent::destroy(
-            $id,
-            $callBack ? $callBack : function ($record) {
-                // delete the file from storage also
-                $this->deleteFile($record);
-            }
-        );
+        // After destroy record delete the file from storage also
+        $this->afterDelete = function ($record) {
+            $this->deleteFile($record);
+        };
     }
 
     public function upload(Request $request)
