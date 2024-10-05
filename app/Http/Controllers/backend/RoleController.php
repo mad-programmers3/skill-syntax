@@ -31,11 +31,11 @@ class RoleController extends Controller
             $record->setAttribute('modules', RoleModule::where('role_id', $id)->pluck('module_id')->toArray());
             $record->setAttribute('permissions', RolePermission::where('role_id', $id)->pluck('permission_id')->toArray());
 
-            return $this->retRes('Successfully found record', $record, 200); // Use the standard 200 status code
+            return retRes('Successfully found record', $record, 200); // Use the standard 200 status code
         } catch (ModelNotFoundException $e) {
-            return $this->retRes('Record not found', null, 404);
+            return retRes('Record not found', null, 404);
         } catch (\Exception $e) {
-            return $this->retRes('Something went wrong with fetching the record', null, 500);
+            return retRes('Something went wrong with fetching the record', null, 500);
         }
     }
 
@@ -48,12 +48,12 @@ class RoleController extends Controller
             } else if ($request->permission_id) {
                 $record = RolePermission::create($request->all());
             } else {
-                return $this->retRes('Invalid data provided', $record, 400); // Handle invalid type error
+                return retRes('Invalid data provided', $record, 400); // Handle invalid type error
             }
 
-            return $this->retRes('Permission added successfully', $record); // Success response
+            return retRes('Permission added successfully', $record); // Success response
         } catch (\Exception $e) {
-            return $this->retRes('Something went wrong with adding new permission', $record, 500);
+            return retRes('Something went wrong with adding new permission', $record, 500);
         }
     }
 
@@ -86,18 +86,18 @@ class RoleController extends Controller
             }
             // Handle invalid data
             else {
-                return $this->retRes('Invalid data provided', null, 400);
+                return retRes('Invalid data provided', null, 400);
             }
 
             // If the record is found, delete it and return success response
             if (isset($record) && $record) {
                 $record->delete();
-                return $this->retRes('Permission deleted successfully', $data);
+                return retRes('Permission deleted successfully', $data);
             }
 
-            return $this->retRes('Record not found', null, 404);
+            return retRes('Record not found', null, 404);
         } catch (\Exception $e) {
-            return $this->retRes('Something went wrong with removing the permission', null, 500);
+            return retRes('Something went wrong with removing the permission', null, 500);
         }
     }
 }

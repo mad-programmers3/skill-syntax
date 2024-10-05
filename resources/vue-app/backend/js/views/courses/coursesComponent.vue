@@ -111,7 +111,7 @@
                 <div class="upload-area d-block m-auto" @click="() => {$refs.fileInput.click()}">
                     <img :src="generateFileUrl(formData.thumbnail)" alt="Preview" class="preview-img"/>
                 </div>
-                <input type="file" ref="fileInput" @change="handleFileChange" class="file-input" accept="image/*"/>
+                <input type="file" ref="fileInput" @change="handleFileUpload" class="file-input" accept="image/*"/>
             </div>
 
         </validate-form-modal>
