@@ -23,9 +23,9 @@
                         <i class="fa fa-trash text-white"></i>
                     </button>
                     <!-- Mange button -->
-                    <button v-if="can('role_manage')" @click="deleteItem(role.id)" class="btn btn-warning btn-sm" :title="`Manage ${role.name}`" type="button">
+                    <router-link :to="{ name: 'manageRoles', params: { role_id: role.id } }" v-if="can('role_manage')" @click="deleteItem(role.id)" class="btn btn-warning btn-sm" :title="`Manage ${role.name}`" type="button">
                         <i class="fa fa-cogs text-white"></i>
-                    </button>
+                    </router-link>
                 </td>
             </tr>
         </data-table>

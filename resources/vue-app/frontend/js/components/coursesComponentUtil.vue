@@ -18,16 +18,9 @@
 
                     <!-- See Details Button -->
                     <div class="mt-4">
-                        <router-link
-                                class="btn btn-primary btn-block btn-lg see-details-button d-flex justify-content-center align-items-center"
-                                :to="{ name: 'courseDetails', params: { id: course.id } }"
-                        >
+                        <router-link :to="{ name: 'courseDetails', params: { id: course.id } }" class="btn btn-primary btn-block btn-lg see-details-button d-flex justify-content-center align-items-center">
                             SEE DETAILS
-                            <img
-                                    class="transition-all duration-200 w-6 h-6 min-w-[24px] ml-2 arrow-icon"
-                                    src="https://cdn.ostad.app/public/icons/arrow-right-line.svg"
-                                    alt="Arrow Right"
-                            >
+                            <img class="transition-all duration-200 w-6 h-6 min-w-[24px] ml-2 arrow-icon" src="https://cdn.ostad.app/public/icons/arrow-right-line.svg" alt="Arrow Right">
                         </router-link>
                     </div>
                 </div>

@@ -8,43 +8,49 @@
                     <option v-for="role in roles" :key="role.id" :value="role.id">{{ role.name }}</option>
                 </select>
             </div>
-            <h1 class="col-4">Role-Permission</h1>
+            <h1 class="col-4">Role Configuration</h1>
             <div class="col-4 d-flex justify-content-end">
-                <button type="submit" class="add-button">Add Role</button>
+                <button type="submit" class="add-button">All Roles</button>
             </div>
         </form>
 
 
         <!-- Table to Display Permissions -->
-        <div class="overflow-auto my-3">
-            <table class="role-permission-table">
-                <thead>
-                <tr>
-                    <th>Modules</th>
-                    <th colspan="4">Permissions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="module in modules" :key="module.id">
-                    <td>
-                        <label class="font-weight-bold">
-                            <input @change="addPermission($event, crrRole.modules, module.id, ADD_MODULE)" :checked="crrRole.modules && crrRole.modules.includes(module.id)" type="checkbox"/>
-                            {{ module.name }}
-                        </label>
-                    </td>
-                    <td>
-                        <div class="row">
-                            <div class="col-md-3"  v-for="(permission, pIndex) in module.permissions" :key="pIndex">
-                                <label class="text-capitalize">
-                                    <input type="checkbox" @change="addPermission($event, crrRole.permissions, permission.id, ADD_PERMISSION)" :checked="crrRole.permissions && crrRole.permissions.includes(permission.id)"/>
-                                    {{ getRawPermName(permission.name) }}
-                                </label>
+        <div class="container my-3">
+            <div class="overflow-auto mb-4">
+                <h4 class="mb-1">Permissions:</h4>
+                <table class="role-permission-table">
+                    <thead>
+                    <tr>
+                        <th>Modules</th>
+                        <th colspan="4">Permissions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="module in modules" :key="module.id">
+                        <td>
+                            <label class="font-weight-bold">
+                                <input @change="addPermission($event, crrRole.modules, module.id, ADD_MODULE)" :checked="crrRole.modules && crrRole.modules.includes(module.id)" type="checkbox"/>
+                                {{ module.name }}
+                            </label>
+                        </td>
+                        <td>
+                            <div class="row">
+                                <div class="col-md-3"  v-for="(permission, pIndex) in module.permissions" :key="pIndex">
+                                    <label class="text-capitalize">
+                                        <input type="checkbox" @change="addPermission($event, crrRole.permissions, permission.id, ADD_PERMISSION)" :checked="crrRole.permissions && crrRole.permissions.includes(permission.id)"/>
+                                        {{ getRawPermName(permission.name) }}
+                                    </label>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h4 class="mb-1">Users:</h4>
+            </div>
         </div>
 <!--        <pre>{{crrRole}}</pre>-->
     </div>
@@ -75,10 +81,7 @@
             });
 
             // get current role with users, modules, permission
-            let auth = _this.getAuth();
-            if (auth && auth.role_id) {
-                this.getRolePermissions(auth.role_id);
-            }
+            this.getRolePermissions();
 
         },
         methods: {
@@ -114,14 +117,19 @@
                     });
                 }
             },
-            getRolePermissions(role_id) {
-                const _this = this;
+            getRolePermissions(id = this.$route.params.role_id) {
+                if (!id) {
+                    let auth = this.getAuth();
+                    id = auth ? auth.role_id : undefined;
+                }
+                if (id) {
+                    this.$store.commit('setFormData', {role_id: id});
 
-                this.$store.commit('setFormData', {role_id});
-
-                this.fetchData(_this.urlGenerate('api/config/roles', role_id), (role) => {
-                    _this.crrRole = role;
-                });
+                    const _this = this;
+                    this.fetchData(_this.urlGenerate('api/config/roles', this.formData.role_id), (role) => {
+                        _this.crrRole = role;
+                    });
+                }
             },
             getRawPermName(str) {
                 let arr = str.split('_');

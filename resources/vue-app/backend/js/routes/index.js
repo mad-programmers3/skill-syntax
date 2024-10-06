@@ -7,7 +7,7 @@ import reviewsComponent from "../views/Review/reviewsComponent";
 import courseReviewComponent from "../views/Review/courseReviewComponent";
 import lessonReviewComponent from "../views/Review/lessonReviewComponent";
 import TestimonialComponent from "../views/Review/testimonialComponent";
-import RolesComponent from "../views/RolesPermission/RoleComponent";
+import RolesComponent from "../views/RolesPermission/RolesComponent";
 import ModulesComponent from "../views/RolesPermission/ModulesComponent";
 import RoleConfigsComponent from "../views/RolesPermission/RoleConfigsComponent";
 
@@ -86,10 +86,10 @@ const routes =[
         component: ModulesComponent
     },
     {
-        path: '/admin/config/manage-role',
-        name: 'rolePermissions',
+        path: '/admin/config/manage-roles',
+        name: 'manageRoles',
         component: RoleConfigsComponent,
-        meta : {'pageTitle' : 'Role Permission'},
+        meta : {'pageTitle' : 'Manage Roles'},
     }
 
 

@@ -100,7 +100,7 @@
                             <router-link class="nav-link" to="/admin/config/modules">Modules</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/config/manage-role">Role Configs</router-link>
+                            <router-link class="nav-link" to="/admin/config/manage-roles">Role Configs</router-link>
                         </li>
                     </ul>
                 </div>
