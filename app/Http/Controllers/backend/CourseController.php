@@ -60,6 +60,16 @@ class CourseController extends Controller
 //        };
     }
 
+//    public function index()
+//    {
+//        try {
+//            $data = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->get();
+//            return retRes('Fetched courses successfully', $data);
+//        } catch (Exception $e) {
+//            return retRes('Something went wrong', null, CODE_DANGER);
+//        }
+//    }
+
     public function store(Request $request)
     {
         try {

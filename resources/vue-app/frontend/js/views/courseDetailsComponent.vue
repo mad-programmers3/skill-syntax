@@ -41,15 +41,15 @@
                             <h4 class="title">Reviews</h4>
                             <div class="reviews-list">
                                 <h6 class="mb-3">Recent Reviews</h6>
-                                <div v-for="review in course.reviews" :key="review.id" class="review-item mb-3">
+                                <div v-for="review in reviews" :key="review.id" class="review-item mb-3">
                                     <div class="user-info d-flex align-items-start justify-content-between">
                                         <div class="user-thumb mr-3">
                                             <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="User Avatar">
                                         </div>
                                         <div class="user-details flex-grow-1">
-                                            <h6 class="mb-1">{{ review.review.user.name }}</h6>
+                                            <h6 class="mb-1">{{ review.user.name }}</h6>
 
-                                            <p class="comment mb-2">{{ review.review.comment }}</p>
+                                            <p class="comment mb-2">{{ review.comment }}</p>
 
                                             <div class="review-footer mt-2">
                                                 <a href="#" class="mr-3">
@@ -70,15 +70,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="feedback mb-4">
-                                <h6>Your Feedback</h6>
-                                <textarea class="form-control" rows="4"
-                                          placeholder="Share your experience..."></textarea>
-                                <div class="text-right mt-3">
-                                    <button class="btn btn-primary text-uppercase">Submit</button>
+                            <div>
+                                <div class="feedback mb-4">
+                                    <h6>Your Feedback</h6>
+                                    <textarea v-model="form.comment" class="form-control" rows="4" placeholder="Share your experience..."></textarea>
+                                    <div class="text-right mt-3">
+                                        <button @click="submitReview" class="btn btn-primary text-uppercase">Submit</button>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="col-lg-4 right-contents">
@@ -91,8 +91,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <router-link :to="{ name: 'lesson' , params: {id: lesson.id}}"
-                                                         :class="{ 'font-weight-bold': lesson.id === lesson_id }">
+                                            <router-link :to="{ name: 'lesson' , params: {id: lesson.id}}" :class="{ 'font-weight-bold': lesson.id === lesson_id }">
                                                 <h5 class="card-title">{{lesson.title}}</h5>
                                             </router-link>
 
@@ -128,12 +127,33 @@
         data() {
             return {
                 course: [],
+                reviews: [],
+                likes: [],
+                form: {},
             };
         },
         mounted() {
+            const _this = this;
             this.fetchData(this.urlGenerate(false, this.course_id), (result) => {
-                this.course = result['course']
+                _this.course = result['course'];
+                _this.reviews = result['reviews'];
+                _this.likes = result['likes'];
+
+                _this.form = {'user_id': 2, 'course_id': this.course.id, 'comment': ''};
             });
+        },
+
+        methods: {
+            submitReview() {
+                this.httpReq({
+                    customUrl: 'api/review/course-reviews',
+                    method: 'post',
+                    data: this.form,
+                    callback(res) {
+                        console.log(res);
+                    }
+                })
+            }
         },
 
         computed: {

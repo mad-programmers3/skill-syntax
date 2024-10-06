@@ -14,7 +14,7 @@ class FrontendController extends Controller
     {
         try {
             $data = [];
-            $data['popular-courses'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->take(8)->get();;
+            $data['popular-courses'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->take(8)->get();
             return retRes('Fetched all data for home page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
@@ -26,7 +26,7 @@ class FrontendController extends Controller
     {
         try {
             $data = [];
-            $data['courses'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->get();;
+            $data['courses'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->get();
             return retRes('Fetched all data for courses page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
@@ -38,7 +38,9 @@ class FrontendController extends Controller
     {
         try {
             $data = [];
-            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons'])->findOrFail($id);
+            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'course_reviews.review.user'])->findOrFail($id);
+            $data['reviews'] = $data['course']->course_reviews->pluck('review');
+            $data['likes'] = $data['course']->likes->pluck('user_id');
             return retRes('Fetched course data for course page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);

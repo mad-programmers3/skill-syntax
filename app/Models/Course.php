@@ -41,7 +41,7 @@ class Course extends Model
         return $this->hasMany(CourseLike::class, 'course_id');
     }
     // Relationship with CourseReview
-    public function reviews()
+    public function course_reviews()
     {
         return $this->hasMany(CourseReview::class);
     }
