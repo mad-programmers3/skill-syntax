@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <!-- Form to Add Roles Only -->
-        <form @submit.prevent="addRole" class="role-permission-form row d-flex align-items-center px-4 py-3">
+        <div class="role-permission-form row d-flex align-items-center px-4 py-3">
             <div class="col-4">
                 <select @change="getRolePermissions(formData.role_id)" v-model="formData.role_id" name="role_id" required class="role-select">
                     <option disabled value="" selected>Select a Role</option>
@@ -10,9 +10,9 @@
             </div>
             <h1 class="col-4">Role Configuration</h1>
             <div class="col-4 d-flex justify-content-end">
-                <button type="submit" class="add-button">All Roles</button>
+                <router-link to="/admin/config/roles" class="add-button">All Roles</router-link>
             </div>
-        </form>
+        </div>
 
 
         <!-- Table to Display Permissions -->
@@ -48,11 +48,26 @@
                     </tbody>
                 </table>
             </div>
-            <div>
-                <h4 class="mb-1">Users:</h4>
+            <div class="my-5">
+                <div class="mb-1 d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">Users:</h4>
+                    <div class="d-flex">
+                        <select class="form-select role-select p-2" aria-label="Default select example">
+                            <option selected>Add User</option>
+                                <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div v-for="user in crrRole.users" class="col-4 text-center border" :style="{backgroundColor: '#f2f2f2'}">
+                        <li style="font-size: 14px">{{ user.name }}</li>
+                    </div>
+                </div>
             </div>
         </div>
-<!--        <pre>{{crrRole}}</pre>-->
     </div>
 </template>
 
@@ -236,7 +251,7 @@
         margin-right: 5px;
         transform: scale(0.9);
         cursor: pointer;
-        accent-color: #423a8e;
+        accent-color: #3f50f6;
     }
 
 

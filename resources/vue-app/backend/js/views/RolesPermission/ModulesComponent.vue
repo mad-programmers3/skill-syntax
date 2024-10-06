@@ -1,140 +1,66 @@
 <template>
-    <div class="modules-container">
-        <h1>Modules</h1>
-        <form @submit.prevent="createModule" class="module-form">
-            <input
-                    v-model="newModule"
-                    placeholder="Module Name"
-                    required
-                    class="module-input"
-            />
-            <button type="submit" class="add-button">Add Module</button>
-        </form>
-        <ul class="modules-list">
-            <li v-for="module in modules" :key="module.id" class="module-item">
-                {{ module.name }}
-                <button @click="deleteModule(module.id)" class="delete-button">Delete</button>
-            </li>
-        </ul>
+    <div>
+        <data-table :table-heading="tableHeading" @open-modal="openModal">
+            <tr v-for="(module, index) in dataList" :key="module.id" style="font-size: 0.8rem">
+                <td>{{ index + 1 }}</td>
+                <td>{{ limitText(module.name) }}</td>
+                <td>{{ module.roles ? module.roles.length : 'NA' }}</td>
+                <td>{{ module.permissions ? module.permissions.length : 'NA' }}</td>
+                <td>
+                    <span :class="module.status ? 'badge badge-success' : 'badge badge-danger'">
+                        {{ module.status ? 'Active' : 'Inactive' }}
+                    </span>
+                </td>
+
+                <td>
+                    <!-- Edit button -->
+                    <button v-if="can('role_edit')" @click="onClickUpdate(module)" class="btn btn-primary btn-sm" :title="`Edit ${module.name}`" type="button">
+                        <i class="fa fa-edit"></i>
+                    </button>
+                    <!-- Delete button -->
+                    <button v-if="can('role_delete')" @click="deleteItem(module.id)" class="btn btn-danger btn-sm" :title="`Delete ${module.name}`" type="button">
+                        <i class="fa fa-trash text-white"></i>
+                    </button>
+                    <!-- Mange button -->
+                    <router-link :to="{ name: 'manageRoles' }" v-if="can('role_manage')" @click="deleteItem(module.id)" class="btn btn-warning btn-sm" :title="`Manage ${module.name}`" type="button">
+                        <i class="fa fa-cogs text-white"></i>
+                    </router-link>
+                </td>
+            </tr>
+        </data-table>
+
+        <validate-form-modal  title="Module">
+            <div class="mb-3">
+                <label class="form-label w-100">
+                    Name
+                    <input type="text" class="form-control" v-model="formData.name" v-validate="'required|min:3|max:255'" name="name" @input="validateField"/>
+                </label>
+            </div>
+            <div class="mb-3">
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0" v-validate="'required'" name="status"/>
+                    <label class="custom-control-label" for="customSwitch">
+                        {{ formData.status ? 'Active' : 'Inactive' }}
+                    </label>
+                </div>
+            </div>
+        </validate-form-modal>
     </div>
 </template>
 
 <script>
-    import axios from 'axios';
+    import DataTable from "../../components/dataTable";
+    import ValidateFormModal from "../../components/validateFormModal";
+    import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
 
     export default {
+        name: "RolesComponent",
+        components: {ValidateFormModal, DataTable},
+        mixins: [validatorListComponentMixin],
         data() {
             return {
-                modules: [],
-                newModule: ''
-            };
-        },
-        created() {
-            this.fetchModules();
-        },
-        methods: {
-            async fetchModules() {
-                try {
-                    const response = await axios.get('/api/modules');
-                    this.modules = response.data;
-                } catch (error) {
-                    console.error("Error fetching modules:", error);
-                }
-            },
-            async createModule() {
-                try {
-                    await axios.post('/api/modules', { name: this.newModule });
-                    this.newModule = '';
-                    this.fetchModules();
-                } catch (error) {
-                    console.error("Error creating module:", error);
-                }
-            },
-            async deleteModule(id) {
-                try {
-                    await axios.delete(`/api/modules/${id}`);
-                    this.fetchModules();
-                } catch (error) {
-                    console.error("Error deleting module:", error);
-                }
+                tableHeading: ['SL', 'Role', 'Roles', 'Permissions', 'Status', 'Action'],
             }
         }
-    };
+    }
 </script>
-
-<style scoped>
-    .modules-container {
-        max-width: 800px;
-        margin: auto;
-        padding: 20px;
-        background-color: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    }
-
-    h1 {
-        text-align: center;
-        color: #333;
-        margin-bottom: 20px;
-        font-family: 'Arial', sans-serif;
-    }
-
-    .module-form {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-    }
-
-    .module-input {
-        flex: 1;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-right: 10px;
-    }
-
-    .add-button {
-        padding: 10px 15px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background-color 0.3s;
-    }
-
-    .add-button:hover {
-        background-color: #0056b3;
-    }
-
-    .modules-list {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    .module-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px;
-        border: 1px solid #eee;
-        border-radius: 4px;
-        margin-bottom: 10px;
-        background-color: #f9f9f9;
-    }
-
-    .delete-button {
-        padding: 5px 10px;
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    .delete-button:hover {
-        background-color: #c82333;
-    }
-</style>

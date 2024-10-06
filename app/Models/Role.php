@@ -18,7 +18,7 @@ class Role extends Model
 
     public function modules()
     {
-        return $this->belongsToMany(Module::class, 'role_modules'); // Assuming 'role_permissions' is the pivot table
+        return $this->belongsToMany(Module::class, 'role_modules'); // Assuming 'role_modules' is the pivot table
     }
 
     public function users()

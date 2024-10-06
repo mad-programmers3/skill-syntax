@@ -55,7 +55,7 @@
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
 
     export default {
-        name: "lessonReviewComponent",
+        name: "RolesComponent",
         components: {ValidateFormModal, DataTable},
         mixins: [validatorListComponentMixin],
         data() {
@@ -65,7 +65,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

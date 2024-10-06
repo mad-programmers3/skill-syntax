@@ -83,7 +83,8 @@ const routes =[
     {
         path: '/admin/config/modules',
         name: 'modules',
-        component: ModulesComponent
+        component: ModulesComponent,
+        meta : {'pageTitle' : 'Modules', dataUrl : 'api/config/modules'},
     },
     {
         path: '/admin/config/manage-roles',

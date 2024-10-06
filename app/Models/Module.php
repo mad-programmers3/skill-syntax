@@ -24,4 +24,9 @@ class Module extends Model
     public function permissions() {
         return$this->hasMany(Permission::class);
     }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_modules'); // Assuming 'role_modules' is the pivot table
+    }
 }
