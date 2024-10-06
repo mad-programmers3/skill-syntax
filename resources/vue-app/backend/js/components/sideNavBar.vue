@@ -34,7 +34,7 @@
                 </router-link>
             </li>
 
-            <!-- Course Section -->
+            <!-- Courses -->
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
                     <i class="fa fa-book menu-icon"></i>
@@ -59,11 +59,11 @@
                 </div>
             </li>
 
-            <!-- Review Section -->
+            <!-- Reviews -->
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#review-basic" aria-expanded="false" aria-controls="review-basic">
                     <i class="fa fa-star menu-icon"></i>
-                    <span class="menu-title">Review</span>
+                    <span class="menu-title">Reviews</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="review-basic">
@@ -72,10 +72,10 @@
                             <router-link class="nav-link" to="/admin/review/reviews">Reviews</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/review/course-review">CourseReviews</router-link>
+                            <router-link class="nav-link" to="/admin/review/course-review">Course Reviews</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/review/lesson-review">LessonReviews</router-link>
+                            <router-link class="nav-link" to="/admin/review/lesson-review">Lesson Reviews</router-link>
                         </li>
                         <li class="nav-item">
                             <router-link class="nav-link" to="/admin/review/testimonials">Testimonials</router-link>
@@ -87,26 +87,20 @@
             <!-- RolePermission Section -->
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#role-basic" aria-expanded="false" aria-controls="role-basic">
-                    <i class="fa fa-star menu-icon"></i>
-                    <span class="menu-title">RolePermission</span>
+                    <i class="fa fa-cogs menu-icon"></i>
+                    <span class="menu-title">Configs</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="role-basic">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/roles">Roles</router-link>
+                            <router-link class="nav-link" to="/admin/config/roles">Roles</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/permissions">Permissions</router-link>
+                            <router-link class="nav-link" to="/admin/config/modules">Modules</router-link>
                         </li>
                         <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/modules">Modules</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/RoleModules">RoleModules</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/RolePermissions">RolePermissions</router-link>
+                            <router-link class="nav-link" to="/admin/config/manage-role">Role Configs</router-link>
                         </li>
                     </ul>
                 </div>
@@ -117,12 +111,7 @@
 
 <script>
     export default {
-        name: 'Sidebar',
-        data() {
-            return {
-                baseUrl: window.location.origin,
-            };
-        },
+        name: 'Sidebar'
     };
 </script>
 

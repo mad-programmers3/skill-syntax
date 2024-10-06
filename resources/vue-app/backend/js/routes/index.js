@@ -6,12 +6,10 @@ import lessonsComponent from "../views/courses/lessonsComponent";
 import reviewsComponent from "../views/Review/reviewsComponent";
 import courseReviewComponent from "../views/Review/courseReviewComponent";
 import lessonReviewComponent from "../views/Review/lessonReviewComponent";
-import testimonialComponent from "../views/Review/testimonialComponent";
-import RoleComponent from "../views/RolesPermission/RoleComponent";
-import PermissionComponent from "../views/RolesPermission/PermissionComponent";
-import ModuleComponent from "../views/RolesPermission/ModuleComponent";
-import RoleModuleComponent from "../views/RolesPermission/RoleModuleComponent";
-import RolePermissionComponent from "../views/RolesPermission/RolePermissionComponent";
+import TestimonialComponent from "../views/Review/testimonialComponent";
+import RolesComponent from "../views/RolesPermission/RoleComponent";
+import ModulesComponent from "../views/RolesPermission/ModulesComponent";
+import RoleConfigsComponent from "../views/RolesPermission/RoleConfigsComponent";
 
 
 const routes =[
@@ -20,6 +18,7 @@ const routes =[
         name:'home',
         component: DashboardComponent
     },
+
     //Courses
     {
         path: '/admin/course/courses',
@@ -47,8 +46,7 @@ const routes =[
     },
 
 
-//    Review
-
+   // Reviews
     {
         path: '/admin/review/reviews',
         name:'reviews',
@@ -70,36 +68,27 @@ const routes =[
     {
         path: '/admin/review/testimonials',
         name:'testimonials',
-        component:testimonialComponent,
+        component:TestimonialComponent,
         meta : {'pageTitle' : 'testimonials List', dataUrl : 'api/review/testimonials'},
     },
 
 
-    //Roles And Permissions
+    // Configs
     {
-        path: '/admin/roles',
+        path: '/admin/config/roles',
         name: 'roles',
-        component:RoleComponent
+        component:RolesComponent,
+        meta : {'pageTitle' : 'Roles', dataUrl : 'api/config/roles'},
     },
     {
-        path: '/admin/permissions',
-        name: 'permission',
-        component:PermissionComponent
+        path: '/admin/config/modules',
+        name: 'modules',
+        component: ModulesComponent
     },
     {
-        path: '/admin/modules',
-        name: 'module',
-        component: ModuleComponent
-    },
-    {
-        path: '/admin/roleModules',
-        name: 'roleModule',
-        component: RoleModuleComponent
-    },
-    {
-        path: '/admin/rolePermissions',
+        path: '/admin/config/manage-role',
         name: 'rolePermissions',
-        component: RolePermissionComponent,
+        component: RoleConfigsComponent,
         meta : {'pageTitle' : 'Role Permission'},
     }
 
