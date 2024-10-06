@@ -96,9 +96,9 @@
         props: ['lessonId'],
         data() {
             return {
-                lesson: null,
-                reviews: null,
-                likes: null,
+                lesson: [],
+                reviews: [],
+                likes: [],
             };
         },
         watch: {

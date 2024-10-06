@@ -4,7 +4,7 @@
             <tr v-for="(data, index) in dataList" :key="data.id" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
                 <td>{{ limitText(data.review ? data.review.comment : '' )}}</td>
-                <td>{{ limitText(data.review ? data.review.user : '')}}</td>
+                <td>{{ limitText(data.review ? data.review.user_id : '')}}</td>
                 <td>{{ data.review ? data.review.rating : ''}}</td>
                 <td>
                     <span :class="data.review && data.review.status ? 'badge badge-success' : 'badge badge-danger'">
@@ -17,7 +17,7 @@
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" type="button">
+                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" :title="`Edit ${data.review.comment}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>

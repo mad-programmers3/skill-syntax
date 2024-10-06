@@ -13,13 +13,11 @@
                 </td>
                 <td>
                     <!--    edit btn    -->
-                    <button v-if="can('category_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm"
-                            type="button">
+                    <button v-if="can('category_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!--    delete btn    -->
-                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm"
-                            type="button">
+                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" :title="`Delete ${data.user.name}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>

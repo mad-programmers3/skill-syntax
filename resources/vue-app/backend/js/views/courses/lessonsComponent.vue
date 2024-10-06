@@ -156,10 +156,12 @@
                     </span>
                 </td>
                 <td>
-                    <button v-if="can('lesson_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" type="button">
+                    <!--    edit btn    -->
+                    <button v-if="can('category_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" :title="`Edit ${data.title}`" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
-                    <button v-if="can('lesson_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" type="button">
+                    <!--    delete btn    -->
+                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" :title="`Delete ${data.title}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>
