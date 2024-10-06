@@ -33,6 +33,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+
+
+
 Route::group(['prefix' => 'pages'], function () {
     Route::get('index', [FrontendController::class, 'index']);
     Route::get('courses', [FrontendController::class, 'courses']);

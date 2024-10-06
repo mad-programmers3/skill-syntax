@@ -1,8 +1,9 @@
+
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
-                <td>{{ index + 1 }}</td>
+            <tr v-for="(data, index) in dataList" v-if="data" style="font-size: 0.8rem" :key="data.id">
+                <td>{{ (currentPage - 1) * itemsPerPage + index + 1 }}</td>
                 <td>
                     <img :src="generateFileUrl(data.thumbnail)" style="width: 50px; height: 50px; border-radius: 0%" alt="">
                 </td>
@@ -16,17 +17,23 @@
                     </span>
                 </td>
                 <td>
-                    <!--    edit btn    -->
                     <button v-if="can('category_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
-                    <!--    delete btn    -->
                     <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>
             </tr>
         </data-table>
+
+        <!-- Pagination Control -->
+        <Pagination
+                :currentPage="currentPage"
+                :lastPage="lastPage"
+                @change-page="fetchCourses"
+        />
+
         <validate-form-modal title="Course" width="700px">
             <div class="mb-3">
                 <label class="form-label w-100">
@@ -106,7 +113,6 @@
                 </div>
             </div>
 
-            <!--    Upload image        -->
             <div>
                 <div class="upload-area d-block m-auto" @click="() => {$refs.fileInput.click()}">
                     <img :src="generateFileUrl(formData.thumbnail)" alt="Preview" class="preview-img"/>
@@ -122,25 +128,54 @@
     import QuillEditor from "../../components/quillEditor"; // Text editor
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
+    import Pagination from "../../components/Pagination"; // Import your Pagination component
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
 
     export default {
-        name: "categoriesComponent",
-        components: {ValidateFormModal, DataTable, QuillEditor}, // Register QuillEditor component
+        name: "coursesComponent",
+        components: { ValidateFormModal, DataTable, QuillEditor, Pagination }, // Register Pagination component
         mixins: [validatorListComponentMixin],
         data() {
             return {
                 tableHeading: ['SL', 'Images', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
-            }
+                currentPage: 1, // Current page for pagination
+                lastPage: 1, // Last page for pagination
+                itemsPerPage: 1, // Set to the same number used in backend pagination
+            };
         },
-        mounted() {
-            const _this = this;
 
-            this.fetchData(_this.urlGenerate('api/categories'), (result) => {_this.categories = result});
-            this.fetchData(_this.urlGenerate('api/sub-categories'), (result) => {_this.subCategories = result});
+        methods: {
+            async fetchCourses(page = 1) {
+                try {
+                    const _this = this;
+                    this.fetchData(this.urlGenerate(false, false, page), (result) => {
+                        console.log(result.data);
+                        _this.$store.commit('setDataList', result.data);
+                        _this.currentPage = result.current_page;
+                        _this.lastPage = result.last_page;
+                    });
+                } catch (error) {
+                    console.error("Failed to fetch courses", error);
+                }
+            },
+            // ... rest of your methods
         },
+
+        mounted() {
+            // Fetch the first page of courses when the component mounts
+            this.fetchCourses(this.currentPage); // Ensure this fetches the initial course data
+
+            // Fetch categories and sub-categories
+            this.fetchData(this.urlGenerate('api/categories'), (result) => {
+                this.categories = result;
+            });
+            this.fetchData(this.urlGenerate('api/sub-categories'), (result) => {
+                this.subCategories = result;
+            });
+        },
+
     };
 </script>
 
@@ -164,4 +199,3 @@
         display: none;
     }
 </style>
-

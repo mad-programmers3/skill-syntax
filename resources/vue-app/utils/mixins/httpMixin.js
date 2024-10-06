@@ -6,11 +6,8 @@ export default {
          * Generates a URL using the base URL, custom URL, and optional suffix.
          * If a `customUrl` is passed, it will append it to the base URL; otherwise, it will use the `dataUrl` from the current route.
          * A `suffix` can also be appended to the generated URL.
-         * @param {String|Boolean} [customUrl=false] - Optional custom URL to append to the base URL.
-         * @param {String|Boolean} [suffix=false] - Optional suffix to append to the generated URL.
-         * @returns {String} The full generated URL.
          */
-        urlGenerate(customUrl = false, suffix = false) {
+        urlGenerate(customUrl = false, suffix = false, page = false) {
             let url = window.baseUrl;
 
             if (customUrl)
@@ -21,6 +18,9 @@ export default {
             if (suffix)
                 url += '/' + suffix;
 
+            if (page)
+                    url += `?page=${page}`;
+
             return url;
         },
 
@@ -28,9 +28,6 @@ export default {
          * Fetches data from the server using a given URL.
          * If a callback is provided, it will handle the response.
          * Otherwise, the fetched data is used to update the local data list.
-         *
-         * @param {String|Boolean} url - The URL to fetch data from. Defaults to false.
-         * @param {Function|Boolean} callback - Optional callback to process the fetched data. Defaults to false.
          */
         fetchData(url = false, callback = false) {
             if (!callback && this) {
@@ -56,14 +53,6 @@ export default {
          * Sends an HTTP request using Axios with customizable parameters.
          * Supports various HTTP methods (GET, POST, PUT, DELETE) and allows for dynamic URL generation.
          * The response is handled through an optional callback function.
-         *
-         * @param {Object} options - An object containing the request parameters.
-         * @param {String|Boolean} [options.url=false] - Direct URL for the request. Defaults to false.
-         * @param {String|Boolean} [options.customUrl=false] - A custom URL to append to the base URL. Defaults to false.
-         * @param {String|Boolean} [options.urlSuffix=false] - A suffix to append to the generated URL. Defaults to false.
-         * @param {String} [options.method='get'] - The HTTP method to use (e.g., 'get', 'post', 'put', 'delete'). Defaults to 'get'.
-         * @param {Function|Boolean} [options.callback=false] - A function to handle the response. Defaults to false.
-         * @param {Object} [options.data=this.getFormData()] - Data to send with the request (usually for POST or PUT). Defaults to the form data.
          */
         httpReq({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = this.$store && this.$store.getters ? this.$store.getters.formData : {}}) {
             const _this = this;

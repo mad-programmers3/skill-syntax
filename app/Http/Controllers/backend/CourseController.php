@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
+
 {
     use BaseCrudHelper;
 
@@ -22,6 +23,8 @@ class CourseController extends Controller
         $this->fileCon = new MyFileController();
         $this->with = ['thumbnail:id,path', 'category:id,title', 'likes'];
         $this->showWith = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'reviews.review.user'];
+
+
 
 //        $this->beforeStore = function ($request) {
 //            $thumbData = $request->thumbnail;
@@ -58,6 +61,17 @@ class CourseController extends Controller
 //            if ($record && $record->thumbnail_id) // delete also file
 //                $this->fileCon->destroy($record->thumbnail_id);
 //        };
+    }
+
+    public function index(Request $request)
+    {
+        try {
+            $courses = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])
+                ->paginate(3); // Change the number to adjust items per page
+            return retRes('Courses fetched successfully', $courses);
+        } catch (Exception $e) {
+            return retRes('Something went wrong', null, CODE_DANGER);
+        }
     }
 
     public function store(Request $request)
