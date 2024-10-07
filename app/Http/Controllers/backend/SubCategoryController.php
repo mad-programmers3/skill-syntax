@@ -13,5 +13,6 @@ class SubCategoryController extends Controller
     public function __construct() {
         $this->model = new SubCategory();
         $this->with = ['category:id,title'];
+        $this->page=4;
     }
 }

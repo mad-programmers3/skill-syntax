@@ -14,5 +14,6 @@ class TestimonialController extends Controller
     public function __construct() {
         $this->model = new Testimonial();
         $this->with = ['review'];
+        $this->page = 4;
     }
 }

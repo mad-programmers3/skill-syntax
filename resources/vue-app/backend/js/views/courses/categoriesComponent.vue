@@ -1,8 +1,8 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(data, index) in dataList" :key="index" style="font-size: 0.8rem">
-                <td>{{ index + 1 }}</td>
+            <tr v-for="(data, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="data.id">
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * itemPerPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(data.title) }}</td>
                 <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
@@ -21,6 +21,10 @@
                 </td>
             </tr>
         </data-table>
+
+<!-- pagination Control-->
+        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
+
 
         <validate-form-modal title="Category">
             <div class="mb-3">
@@ -76,15 +80,17 @@
 <script>
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
+    import Pagination from "../../components/Pagination"; // Import your Pagination component
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
 
     export default {
         name: "categoriesComponent",
-        components: {ValidateFormModal, DataTable},
+        components: {ValidateFormModal, DataTable,Pagination},
         mixins: [validatorListComponentMixin],
         data() {
             return {
                 tableHeading: ['SL', 'Title', 'Status', 'Actions'],
+                itemPerPage:4
             }
         },
     }

@@ -17,6 +17,7 @@ class CourseReviewController extends Controller
     public function __construct() {
         $this->model = new CourseReview();
         $this->with = ['course:id,title', 'review'];
+        $this->page = 4;
     }
 
     public function store(Request $request)

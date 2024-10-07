@@ -1,8 +1,8 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(data, index) in dataList" :key="data.id" style="font-size: 0.8rem">
-                <td>{{ index + 1 }}</td>
+            <tr v-for="(data, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="data.id">
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * itemPerPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(data.review ? data.review.comment : '' )}}</td>
                 <td>{{ limitText(data.lesson ? data.lesson.title : '' )}}</td>
                 <td>
@@ -22,6 +22,8 @@
                 </td>
             </tr>
         </data-table>
+
+        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
 
         <validate-form-modal  title="Course Review">
             <div v-if="formData.review" class="mb-3">
@@ -46,15 +48,18 @@
 <script>
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
+    import Pagination from "../../components/Pagination"
+
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
 
     export default {
         name: "lessonReviewComponent",
-        components: {ValidateFormModal, DataTable},
+        components: {ValidateFormModal, DataTable,Pagination},
         mixins: [validatorListComponentMixin],
         data() {
             return {
                 tableHeading: ['SL', 'Review','Lesson', 'Status', 'Actions'],
+                itemPerPage:4,
             }
         }
     }
