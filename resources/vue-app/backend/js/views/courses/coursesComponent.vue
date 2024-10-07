@@ -3,7 +3,7 @@
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
             <tr v-for="(course, index) in ( dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="course.id">
-                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * itemPerPage : 0) + index + 1 }}</td>
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>
                     <img :src="generateFileUrl(course.thumbnail)" style="width: 50px; height: 50px; border-radius: 0%" alt="">
                 </td>
@@ -30,7 +30,7 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
+        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
         <!--  Modal  -->
         <validate-form-modal title="Course" width="700px">
@@ -139,14 +139,13 @@
                 tableHeading: ['SL', 'Images', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
-                itemPerPage: 4,
+                perPage: 4,
             };
         },
 
         mounted() {
-            // this.formData = {itemPerPage: this.itemPerPage};
-            // Fetch the first page of courses when the component mounts
-            // this.fetchCourses(this.currentPage); // Ensure this fetches the initial course data
+            // Fetch all courses with paginated
+            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
 
             // Fetch categories and sub-categories
             this.fetchData(this.urlGenerate('api/categories'), (result) => {

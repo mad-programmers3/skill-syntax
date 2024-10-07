@@ -23,7 +23,6 @@ class CourseController extends Controller
         $this->model = new Course();
         $this->fileCon = new MyFileController();
         $this->with = ['thumbnail:id,path', 'category:id,title', 'likes'];
-        $this->page = 4;
         $this->showWith = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'reviews.review.user'];
 
 
@@ -65,15 +64,16 @@ class CourseController extends Controller
 //        };
     }
 
-    public function index()
-    {
-        try {
-            $courses = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->paginate(4);
-            return retRes('Courses fetched successfully', $courses);
-        } catch (Exception $e) {
-            return retRes('Something went wrong', null, CODE_DANGER);
-        }
-    }
+//    public function index(Request $request)
+//    {
+//        $perPage = $request->query('perPage');
+//        try {
+//            $courses = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->paginate($perPage);
+//            return retRes('Courses fetched successfully', $courses);
+//        } catch (Exception $e) {
+//            return retRes('Something went wrong', null, CODE_DANGER);
+//        }
+//    }
 
     public function store(Request $request)
     {

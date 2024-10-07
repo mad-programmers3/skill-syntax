@@ -2,7 +2,7 @@
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
             <tr v-for="(data, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="data.id">
-                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * itemPerPage : 0) + index + 1 }}</td>
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(data.title) }}</td>
                 <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
@@ -23,7 +23,7 @@
         </data-table>
 
 <!-- pagination Control-->
-        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
+        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
 
         <validate-form-modal title="Category">
@@ -90,9 +90,13 @@
         data() {
             return {
                 tableHeading: ['SL', 'Title', 'Status', 'Actions'],
-                itemPerPage:4
+                perPage:4
             }
         },
+        mounted() {
+            // Fetch datalist with paginate
+            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
+        }
     }
 </script>
 

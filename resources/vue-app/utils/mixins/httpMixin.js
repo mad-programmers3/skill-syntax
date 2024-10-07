@@ -7,7 +7,7 @@ export default {
          * If a `customUrl` is passed, it will append it to the base URL; otherwise, it will use the `dataUrl` from the current route.
          * A `suffix` can also be appended to the generated URL.
          */
-        urlGenerate(customUrl = false, suffix = false, page = false) {
+        urlGenerate(customUrl = false, suffix = false, params = {}) {
             let url = window.baseUrl;
 
             if (customUrl)
@@ -18,8 +18,14 @@ export default {
             if (suffix)
                 url += '/' + suffix;
 
-            if (page)
-                    url += `?page=${page}`;
+            if (Object.keys(params).length > 0) {
+                // Add query parameters
+                const queryParams = Object.entries(params)
+                    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+                    .join('&');
+
+                url += `?${queryParams}`;
+            }
 
             return url;
         },

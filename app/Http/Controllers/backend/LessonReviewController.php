@@ -14,6 +14,5 @@ class LessonReviewController extends Controller
     public function __construct() {
         $this->model = new LessonReview();
         $this->with = ['lesson:id,title', 'review'];
-        $this->page = 4;
     }
 }

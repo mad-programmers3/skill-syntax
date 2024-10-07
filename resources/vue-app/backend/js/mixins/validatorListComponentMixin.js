@@ -1,12 +1,8 @@
 export default {
     data() {
         return {
-            fetches: [], // hold all fetch infos / {} for fetch default datalist
+            // fetches: [], // hold all fetch infos / {} for fetch default datalist
         };
-    },
-    mounted() {
-        this.fetchData();
-        // add other fetches and call fetch in main list component again :)
     },
     methods: {
         // prepare the form for updating an existing item.

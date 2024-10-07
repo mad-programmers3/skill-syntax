@@ -13,6 +13,5 @@ class CategoryController extends Controller
 
     public function __construct() {
         $this->model = new Category();
-        $this->page = 4;
     }
 }

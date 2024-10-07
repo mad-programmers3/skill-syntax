@@ -1,9 +1,8 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(module, index) in (dataList.module ? dataList.module : dataList)" style="font-size: 0.8rem" :key="module.id">
-                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * itemPerPage : 0) + index + 1 }}</td>
-                <td>{{ limitText(data.review ? data.review.comment : '' )}}</td>
+            <tr v-for="(module, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="module.id">
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(module.name) }}</td>
                 <td>
                     {{ module.roles ? module.roles.length : 'NA' }}
@@ -50,7 +49,7 @@
             </tr>
         </data-table>
 
-        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
+        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
 
         <validate-form-modal  title="Module">
@@ -85,9 +84,14 @@
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Role', 'Roles', 'Permissions', 'Status', 'Action'],
-                itemPerPage:4,
+                tableHeading: ['SL', 'Module', 'Roles', 'Permissions', 'Status', 'Action'],
+                perPage: 4,
             }
+        },
+
+        mounted() {
+            // Fetch datalist with paginate
+            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
         }
     }
 </script>

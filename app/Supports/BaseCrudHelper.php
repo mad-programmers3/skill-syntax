@@ -10,18 +10,19 @@ use function Symfony\Component\HttpKernel\Log\record;
 trait BaseCrudHelper
 {
     // Define these in the main controller
-    protected $model, $with = [], $showWith = [], $page = false,
+    protected $model, $with = [], $showWith = [],
         $beforeStore = false, $afterStore = false,
         $beforeUpdate = false, $afterUpdate = false,
         $afterDelete = false;
 
     // Fetch all records
-    public function index()
+    public function index(Request $request)
     {
         try {
             $data = null;
+            $perPage = $request->query('perPage');
             $query = $this->model->with($this->with); // Fetch all records with optional relationships
-            if ($this->page) $data = $query->paginate($this->page);
+            if ($perPage) $data = $query->paginate($perPage);
             else $data = $query->get();
 
             return retRes('Successfully fetched all records', $data);

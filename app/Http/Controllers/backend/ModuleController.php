@@ -15,7 +15,6 @@ class ModuleController extends Controller
     {
         $this->model = new Module();
         $this->with = ['permissions:id,module_id,name,status', 'roles'];
-        $this->page = 4;
     }
 
 //    public function index()

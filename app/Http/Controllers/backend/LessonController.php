@@ -15,7 +15,6 @@ class LessonController extends Controller
     public function __construct() {
         $this->model = new Lesson();
         $this->with = ['course:id,title', 'likes'];
-        $this->page = 4;
     }
 
 

@@ -1,7 +1,7 @@
 <template>
     <div class="pagination d-flex justify-content-center my-4">
         <button
-                @click="fetchData(urlGenerate(false, false, currentPage - 1))"
+                @click="fetchData(urlGenerate(false, false, {page: currentPage-1, perPage}))"
                 :disabled="currentPage === 1"
                 class="btn btn-outline-primary mx-2"
         >
@@ -12,7 +12,7 @@
         <button
                 v-for="page in lastPage"
                 :key="page"
-                @click="fetchData(urlGenerate(false, false, page))"
+                @click="fetchData(urlGenerate(false, false, {page, perPage}))"
                 :disabled="currentPage === page"
                 :class="['btn', 'mx-1', { 'btn-active': currentPage === page, 'btn-inactive': currentPage !== page }]"
         >
@@ -20,7 +20,7 @@
         </button>
 
         <button
-                @click="fetchData(urlGenerate(false, false, currentPage + 1))"
+                @click="fetchData(urlGenerate(false, false, {page: currentPage+1, perPage}))"
                 :disabled="currentPage === lastPage"
                 class="btn btn-outline-primary mx-2"
         >
@@ -32,13 +32,17 @@
 <script>
     export default {
         props: {
+            perPage: {
+                type: Number,
+                required: true
+            },
             currentPage: {
                 type: Number,
-                required: true,
+                required: true
             },
             lastPage: {
                 type: Number,
-                required: true,
+                required: true
             },
         },
     };

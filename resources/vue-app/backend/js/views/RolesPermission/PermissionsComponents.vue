@@ -1,8 +1,8 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(permission, index) in dataList" :key="permission.id" style="font-size: 0.8rem">
-                <td>{{ index + 1 }}</td>
+            <tr v-for="(permission, index) in (dataList.data ? dataList.data : dataList)" :key="permission.id" style="font-size: 0.8rem">
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(permission.name) }}</td>
                 <td>{{ permission.module ? permission.module.name : 'NA' }}</td>
                 <td>
@@ -39,6 +39,8 @@
                 </td>
             </tr>
         </data-table>
+
+        <pagination v-if="dataList.current_page" :current-page="dataList.current_page" :last-page="dataList.last_page" :per-page="perPage"/>
 
         <validate-form-modal  title="Module">
             <div class="mb-3">
@@ -77,21 +79,26 @@
     import ValidateFormModal from "../../components/validateFormModal";
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
     import ShowDetailsModal from "../../components/showDetailsModal";
+    import Pagination from "../../components/Pagination";
 
     export default {
         name: "PermissionsComponents",
-        components: {ShowDetailsModal, ValidateFormModal, DataTable},
+        components: {Pagination, ShowDetailsModal, ValidateFormModal, DataTable},
         mixins: [validatorListComponentMixin],
         data() {
             return {
                 tableHeading: ['SL', 'Name', 'Module', 'Roles', 'Status', 'Action'],
-                modules: []
+                modules: [],
+                perPage: 10,
             }
         },
         mounted() {
+            // Fetch datalist with paginate
+            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
+
             const _this = this;
             this.fetchData(_this.urlGenerate('api/config/modules'), (result) => {_this.modules = result});
 
-        }
+        },
     }
 </script>
