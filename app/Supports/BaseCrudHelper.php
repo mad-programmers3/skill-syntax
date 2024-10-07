@@ -10,7 +10,7 @@ use function Symfony\Component\HttpKernel\Log\record;
 trait BaseCrudHelper
 {
     // Define these in the main controller
-    protected $model, $with = [], $showWith = [],
+    protected $model, $with = [], $showWith = [], $page = false,
         $beforeStore = false, $afterStore = false,
         $beforeUpdate = false, $afterUpdate = false,
         $afterDelete = false;
@@ -19,8 +19,12 @@ trait BaseCrudHelper
     public function index()
     {
         try {
-            $data = $this->model->with($this->with)->get(); // Fetch all records with optional relationships
-            return retRes('Successfully fetched all records', $data, 2000);
+            $data = null;
+            $query = $this->model->with($this->with); // Fetch all records with optional relationships
+            if ($this->page) $data = $query->paginate($this->page);
+            else $data = $query->get();
+
+            return retRes('Successfully fetched all records', $data);
         } catch (Exception $e) {
             return retRes('Failed to fetch records', null, 500);
         }

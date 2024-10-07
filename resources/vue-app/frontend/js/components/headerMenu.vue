@@ -77,7 +77,8 @@
                                 </li>
                             </ul>
                             <div class="ml-auto">
-                                <a class="primary-btn" href="/login">Log In</a>
+                                <a v-if="getAuth()" class="primary-btn" href="/login">Log Out</a>
+                                <a v-else class="primary-btn" href="/login">Log In</a>
                             </div>
                         </div>
                     </div>

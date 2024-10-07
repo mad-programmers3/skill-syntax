@@ -139,25 +139,8 @@
                 tableHeading: ['SL', 'Images', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
-                itemPerPage: 1,
+                itemPerPage: 4,
             };
-        },
-
-        methods: {
-            // async fetchCourses(page = 1) {
-            //     try {
-            //         const _this = this;
-            //         this.fetchData(this.urlGenerate(false, false, page), (result) => {
-            //             console.log(result.data);
-            //             _this.$store.commit('setDataList', result.data);
-            //             _this.currentPage = result.current_page;
-            //             _this.lastPage = result.last_page;
-            //         });
-            //     } catch (error) {
-            //         console.error("Failed to fetch courses", error);
-            //     }
-            // },
-            // ... rest of your methods
         },
 
         mounted() {

@@ -23,6 +23,7 @@ class CourseController extends Controller
         $this->model = new Course();
         $this->fileCon = new MyFileController();
         $this->with = ['thumbnail:id,path', 'category:id,title', 'likes'];
+        $this->page = 4;
         $this->showWith = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'reviews.review.user'];
 
 
@@ -64,13 +65,10 @@ class CourseController extends Controller
 //        };
     }
 
-    public function index(Request $request)
+    public function index()
     {
-
-//        dd($request);
         try {
-            $courses = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])
-                ->paginate(1); // Change the number to adjust items per page
+            $courses = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->paginate(4);
             return retRes('Courses fetched successfully', $courses);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, CODE_DANGER);
