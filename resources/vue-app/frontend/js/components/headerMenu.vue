@@ -76,9 +76,21 @@
                                     </a>
                                 </li>
                             </ul>
-                            <div class="ml-auto">
-                                <a v-if="getAuth()" class="primary-btn" href="/login">Log Out</a>
-                                <a v-else class="primary-btn" href="/login">Log In</a>
+                            <div>
+                                <li class="nav-item nav-profile dropdown border-0">
+                                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
+                                        <img class="nav-profile-img " alt="" :src="baseUrl + '/backend/assets/images/faces/face1.jpg'" />
+                                        <span class="profile-name">{{ userName }}</span>
+                                    </a>
+                                    <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+                                        <a v-if="getAuth()" class="dropdown-item" href="#" @click.prevent="confirmLogout">
+                                            <i class="mdi mdi-logout mr-2 text-primary"></i> Logout
+                                        </a>
+                                        <a v-else class="dropdown-item" href="/login">
+                                            <i class="mdi mdi-login mr-2 text-primary"></i> LogIn
+                                        </a>
+                                    </div>
+                                </li>
                             </div>
                         </div>
                     </div>
@@ -91,11 +103,62 @@
 
 </template>
 <script>
-   export default {
-       name:'headerMenu'
-   }
+    import axios from 'axios';
+    import Swal from 'sweetalert2';
+    export default {
+        name: 'HeaderMenu',
+        computed: {
+            userName() {
+                const user = this.getAuth();
+                return user ? user.name : 'Guest';
+            }
+        },
+        methods: {
+            confirmLogout() {
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Do you really want to log out?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#28a745',
+                    confirmButtonText: 'Yes, log out!',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        this.logout();
+                    }
+                });
+            },
+            async logout() {
+                try {
+                    await axios.post('/logout');
+                    this.$store.commit('logout');
+                    window.location.href = '/login';
+                } catch (error) {
+                    console.error('Logout failed:', error);
+                }
+            }
+        }
+
+    }
 
 </script>
 <style scoped>
+
+    .nav-profile-img {
+        width: 40px; /* Set the desired width */
+        height: 40px; /* Set the desired height */
+        border-radius: 50%; /* Make it circular */
+        border: 2px solid #fff; /* Add a white border */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        object-fit: cover; /* Ensure the image covers the element without distortion */
+    }
+
+    .profile-name {
+        font-weight: bold;
+        color: #333;
+        margin-left: 5px;
+    }
 
 </style>

@@ -24,7 +24,7 @@ class CourseReviewController extends Controller
         try{
             // store the review
             mergeAuth($request);
-            $review = Review::create($request->only(['comment', 'user_id']));
+            $review = Review::create($request->only(['comment', 'user_id','rating']));
 
             //store course review
             $request->merge(['review_id' => $review->id]);

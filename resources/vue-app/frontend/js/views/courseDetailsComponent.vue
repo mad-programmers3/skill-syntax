@@ -38,44 +38,54 @@
                                     </ul>
                                 </div>
                             </div>
-                            <h4 class="title">Reviews</h4>
-                            <div class="reviews-list">
-                                <h6 class="mb-3">Recent Reviews</h6>
-                                <div v-for="review in reviews" :key="review.id" class="review-item mb-3">
-                                    <div class="user-info d-flex align-items-start justify-content-between">
-                                        <div class="user-thumb mr-3">
-                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="User Avatar">
-                                        </div>
-                                        <div class="user-details flex-grow-1">
-                                            <h6 class="mb-1">{{ review.user.name }}</h6>
-
-                                            <p class="comment mb-2">{{ review.comment }}</p>
-
-                                            <div class="review-footer mt-2">
-                                                <a href="#" class="mr-3">
-                                                    <i class="ti-thumb-up"></i> 25
-                                                </a>
-                                                <a href="#">
-                                                    <i class="ti-reply"></i> Reply
-                                                </a>
+                            <h4 class="title">Reviews ({{ reviews.length }})</h4>
+                            <div>
+                                <div class="reviews-list">
+                                    <h6 class="mb-3">Recent Reviews</h6>
+                                    <div v-for="review in reviews" :key="review.id" class="review-item mb-3">
+                                        <div class="user-info d-flex align-items-start justify-content-between">
+                                            <div class="user-thumb mr-3">
+                                                <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="User Avatar">
                                             </div>
-                                        </div>
-                                        <div class="star-rating d-flex align-items-center">
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star checked"></i>
-                                            <i class="ti-star"></i>
-                                            <i class="ti-star"></i>
+                                            <div class="user-details flex-grow-1">
+                                                <h6 class="mb-1">{{ review.user.name }}</h6>
+
+                                                <p class="comment mb-2">{{ review.comment }}</p>
+
+                                                <div class="review-footer mt-2">
+                                                    <a href="#" class="mr-3">
+                                                        <i class="ti-thumb-up"></i> 25
+                                                    </a>
+                                                    <a href="#">
+                                                        <i class="ti-reply"></i> Reply
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                            <!-- Star Rating Display -->
+                                            <div class="star-rating d-flex align-items-center">
+                                                <template v-for="star in 5">
+                                                    <i :class="['ti-star', star <= review.rating ? 'checked' : '']"></i>
+                                                </template>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div>
-                                <div class="feedback mb-4">
-                                    <h6>Your Feedback</h6>
-                                    <textarea v-model="form.comment" class="form-control" rows="4" placeholder="Share your experience..."></textarea>
-                                    <div class="text-right mt-3">
-                                        <button @click="submitReview" class="btn btn-primary text-uppercase">Submit</button>
+
+                                <div>
+                                    <div class="feedback mb-4">
+                                        <h6>Your Feedback</h6>
+                                        <div class="star-rating d-flex mb-2">
+                                            <template v-for="star in 5">
+                                                <i :class="['ti-star', star <= form.rating ? 'checked' : '']"
+                                                   @click="setRating(star)"
+                                                   style="cursor: pointer;"></i>
+                                            </template>
+                                        </div>
+                                        <textarea v-model="form.comment" class="form-control" rows="4" placeholder="Share your experience..."></textarea>
+                                        <div class="text-right mt-3">
+                                            <button @click="submitReview" class="btn btn-primary text-uppercase">Submit</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +139,12 @@
                 course: [],
                 reviews: [],
                 likes: [],
-                form: {},
+                form: {
+                    user_id: 2,
+                    course_id: null,
+                    comment: '',
+                    rating: 0
+                },
             };
         },
         mounted() {
@@ -150,10 +165,18 @@
                     method: 'post',
                     data: this.form,
                     callback(res) {
+                        // Clear the form after successful submission
+                        this.form.comment = '';
+                        this.form.rating = 0; // Reset the rating
                         console.log(res);
-                    }
-                })
+                    } // Ensure 'this' refers to the Vue instance
+                });
+            },
+            setRating(star) {
+                console.log('Rating set to:', star); // Log selected rating
+                this.form.rating = star;
             }
+
         },
 
         computed: {
@@ -197,6 +220,19 @@
     .review-footer a {
         color: #ff5e14;
     }
+
+    .star-rating .ti-star {
+        color: #e0e0e0; /* Color for empty stars */
+        font-size: 20px; /* Adjust the size as needed */
+    }
+
+    .star-rating .ti-star.checked {
+        color: #ff5e14; /* Color for filled stars */
+    }
+
+
+
+
 
 
 </style>
