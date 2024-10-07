@@ -13,5 +13,6 @@ class ReviewController extends Controller
     public function __construct() {
         $this->model = new Review();
         $this->with = ['user'];
+        $this->page = 4;
     }
 }

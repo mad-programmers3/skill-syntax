@@ -144,7 +144,7 @@
         },
 
         mounted() {
-            this.formData = {itemPerPage: this.itemPerPage};
+            // this.formData = {itemPerPage: this.itemPerPage};
             // Fetch the first page of courses when the component mounts
             // this.fetchCourses(this.currentPage); // Ensure this fetches the initial course data
 

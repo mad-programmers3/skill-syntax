@@ -20,6 +20,7 @@ class RoleController extends Controller
     {
         $this->model = new Role(); // Inject the Role model // Example: eager load 'permissions' and 'users' for show
         $this->with = ['users', 'permissions', 'modules:id,name'];
+        $this->page = 4;
     }
 
 

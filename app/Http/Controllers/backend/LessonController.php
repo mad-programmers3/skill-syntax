@@ -15,13 +15,19 @@ class LessonController extends Controller
     public function __construct() {
         $this->model = new Lesson();
         $this->with = ['course:id,title', 'likes'];
+        $this->page = 4;
     }
 
 
-    public function index(Request $request)
-    {
-        $lessons = Lesson::paginate(5); // Adjust the number of items per page as needed
-        return response()->json($lessons);
-    }
+//    public function index()
+//    {
+//        try {
+//            $lessons = Lesson::with(['course:id,title', 'likes'])->paginate(4);
+//            return retRes('Fetched data successfully', $lessons);
+//        } catch (\Exception $e) {
+//            return retRes('Something went wrong', $e, CODE_DANGER);        }
+//    }
+
+
 
 }

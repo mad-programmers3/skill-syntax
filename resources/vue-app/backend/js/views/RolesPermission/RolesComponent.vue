@@ -1,8 +1,8 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(role, index) in dataList" :key="role.id" style="font-size: 0.8rem">
-                <td>{{ index + 1 }}</td>
+            <tr v-for="(role, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="role.id">
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * itemPerPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(role.name) }}</td>
                 <td>
                     {{ role.users ? role.users.length : 'NA' }}
@@ -63,6 +63,10 @@
             </tr>
         </data-table>
 
+
+        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
+
+
         <validate-form-modal  title="Role">
             <div class="mb-3">
                 <label class="form-label w-100">
@@ -85,16 +89,18 @@
 <script>
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
+    import Pagination from "../../components/Pagination"
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
     import ShowDetailsModal from "../../components/showDetailsModal";
 
     export default {
         name: "RolesComponent",
-        components: {ShowDetailsModal, ValidateFormModal, DataTable},
+        components: {ShowDetailsModal, ValidateFormModal, DataTable,Pagination},
         mixins: [validatorListComponentMixin],
         data() {
             return {
                 tableHeading: ['SL', 'Role','Users', 'Modules', 'Permissions', 'Status', 'Action'],
+                itemPerPage:4,
             }
         }
     }
