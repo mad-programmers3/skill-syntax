@@ -63,7 +63,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#review-basic" aria-expanded="false" aria-controls="review-basic">
                     <i class="fa fa-star menu-icon"></i>
-                    <span class="menu-title">Reviews</span>
+                    <span class="menu-title">Review</span>
                     <i class="menu-arrow"></i>
                 </a>
                 <div class="collapse" id="review-basic">
@@ -84,6 +84,25 @@
                 </div>
             </li>
 
+            <!-- Users -->
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#user-basic" aria-expanded="false" aria-controls="user-basic">
+                    <i class="fa fa-user menu-icon"></i>
+                    <span class="menu-title">User</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="user-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/user/users">Users</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/user/profile">Course Reviews</router-link>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+
             <!-- RolePermission Section -->
             <li class="nav-item">
                 <a class="nav-link" data-toggle="collapse" href="#role-basic" aria-expanded="false" aria-controls="role-basic">
@@ -98,6 +117,9 @@
                         </li>
                         <li class="nav-item">
                             <router-link class="nav-link" to="/admin/config/modules">Modules</router-link>
+                        </li>
+                        <li class="nav-item">
+                            <router-link class="nav-link" to="/admin/config/permissions">Permissions</router-link>
                         </li>
                         <li class="nav-item">
                             <router-link class="nav-link" to="/admin/config/manage-roles">Role Configs</router-link>

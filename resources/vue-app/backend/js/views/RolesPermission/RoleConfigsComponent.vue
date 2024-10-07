@@ -16,57 +16,36 @@
 
 
         <!-- Table to Display Permissions -->
-        <div class="container my-3">
-            <div class="overflow-auto mb-4">
-                <h4 class="mb-1">Permissions:</h4>
-                <table class="role-permission-table">
-                    <thead>
-                    <tr>
-                        <th>Modules</th>
-                        <th colspan="4">Permissions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="module in modules" :key="module.id">
-                        <td>
-                            <label class="font-weight-bold">
-                                <input @change="addPermission($event, crrRole.modules, module.id, ADD_MODULE)" :checked="crrRole.modules && crrRole.modules.includes(module.id)" type="checkbox"/>
-                                {{ module.name }}
-                            </label>
-                        </td>
-                        <td>
-                            <div class="row">
-                                <div class="col-md-3"  v-for="(permission, pIndex) in module.permissions" :key="pIndex">
-                                    <label class="text-capitalize">
-                                        <input type="checkbox" @change="addPermission($event, crrRole.permissions, permission.id, ADD_PERMISSION)" :checked="crrRole.permissions && crrRole.permissions.includes(permission.id)"/>
-                                        {{ getRawPermName(permission.name) }}
-                                    </label>
-                                </div>
+        <div class="m-4 overflow-hidden">
+            <h4 class="mb-1">Permissions:</h4>
+            <table class="role-permission-table">
+                <thead>
+                <tr>
+                    <th>Modules</th>
+                    <th colspan="4">Permissions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="module in modules" :key="module.id">
+                    <td>
+                        <label class="font-weight-bold">
+                            <input @change="addPermission($event, crrRole.modules, module.id, ADD_MODULE)" :checked="crrRole.modules && crrRole.modules.includes(module.id)" type="checkbox"/>
+                            {{ module.name }}
+                        </label>
+                    </td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-3"  v-for="(permission, pIndex) in module.permissions" :key="pIndex">
+                                <label>
+                                    <input type="checkbox" @change="addPermission($event, crrRole.permissions, permission.id, ADD_PERMISSION)" :checked="crrRole.permissions && crrRole.permissions.includes(permission.id)"/>
+                                    {{ permission.name }}
+                                </label>
                             </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="my-5">
-                <div class="mb-1 d-flex justify-content-between align-items-center">
-                    <h4 class="mb-0">Users:</h4>
-                    <div class="d-flex">
-                        <select class="form-select role-select p-2" aria-label="Default select example">
-                            <option selected>Add User</option>
-                                <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div v-for="user in crrRole.users" class="col-4 text-center border" :style="{backgroundColor: '#f2f2f2'}">
-                        <li style="font-size: 14px">{{ user.name }}</li>
-                    </div>
-                </div>
-            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>

@@ -1,48 +1,39 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(module, index) in dataList" :key="module.id" style="font-size: 0.8rem">
+            <tr v-for="(permission, index) in dataList" :key="permission.id" style="font-size: 0.8rem">
                 <td>{{ index + 1 }}</td>
-                <td>{{ limitText(module.name) }}</td>
+                <td>{{ limitText(permission.name) }}</td>
+                <td>{{ permission.module ? permission.module.name : 'NA' }}</td>
                 <td>
-                    {{ module.roles ? module.roles.length : 'NA' }}
-                    <i class="ml-1 fa fa-eye" data-toggle="modal" :data-target="`#moduleRolesModal${module.id}`" style="cursor: pointer"></i>
-                    <show-details-modal :id="`moduleRolesModal${module.id}`" :title="`${module.name} => Roles`">
+                    {{ permission.roles ? permission.roles.length : 'NA' }}
+
+                    <i class="ml-1 fa fa-eye" data-toggle="modal" :data-target="`#permissionRolesModal${permission.id}`" style="cursor: pointer"></i>
+                    <show-details-modal :id="`permissionRolesModal${permission.id}`" :title="`${permission.name} => Roles`">
                         <div class="row">
-                            <li class="col-md-6 my-1" v-for="role in module.roles">
+                            <li class="col-md-6 my-1" v-for="role in permission.roles">
                                 {{ role.name }}
                             </li>
                         </div>
                     </show-details-modal>
                 </td>
                 <td>
-                    {{ module.permissions ? module.permissions.length : 'NA' }}
-                    <i class="ml-1 fa fa-eye" data-toggle="modal" :data-target="`#modulePermsModal${module.id}`" style="cursor: pointer"></i>
-                    <show-details-modal :id="`modulePermsModal${module.id}`" :title="`${module.name} => Permissions`">
-                        <div class="row">
-                            <li class="col-md-6 my-1" v-for="permission in module.permissions">
-                                {{ permission.name }}
-                            </li>
-                        </div>
-                    </show-details-modal>
-                </td>
-                <td>
-                    <span :class="module.status ? 'badge badge-success' : 'badge badge-danger'">
-                        {{ module.status ? 'Active' : 'Inactive' }}
+                    <span :class="permission.status ? 'badge badge-success' : 'badge badge-danger'">
+                        {{ permission.status ? 'Active' : 'Inactive' }}
                     </span>
                 </td>
 
                 <td>
                     <!-- Edit button -->
-                    <button v-if="can('module_edit')" @click="onClickUpdate(module)" class="btn btn-primary btn-sm" :title="`Edit ${module.name}`" type="button">
+                    <button v-if="can('module_edit')" @click="onClickUpdate(permission)" class="btn btn-primary btn-sm" :title="`Edit ${permission.name}`" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('module_delete')" @click="deleteItem(module.id)" class="btn btn-danger btn-sm" :title="`Delete ${module.name}`" type="button">
+                    <button v-if="can('module_delete')" @click="deleteItem(permission.id)" class="btn btn-danger btn-sm" :title="`Delete ${permission.name}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                     <!-- Mange button -->
-                    <router-link :to="{ name: 'manageRoles' }" v-if="can('role_manage')" @click="deleteItem(module.id)" class="btn btn-warning btn-sm" :title="`Manage ${module.name}`" type="button">
+                    <router-link :to="{ name: 'manageRoles' }" v-if="can('role_manage')" @click="deleteItem(permission.id)" class="btn btn-warning btn-sm" :title="`Manage ${permission.name}`" type="button">
                         <i class="fa fa-cogs text-white"></i>
                     </router-link>
                 </td>
@@ -56,6 +47,19 @@
                     <input type="text" class="form-control" v-model="formData.name" v-validate="'required|min:3|max:255'" name="name" @input="validateField"/>
                 </label>
             </div>
+
+            <div class="mb-3">
+                <label class="form-label w-100">
+                    Module
+                    <select class="form-select form-control" v-model="formData.module_id" v-validate="'required'" name="module">
+                        <option value="" disabled>Select a module</option>
+                        <option v-for="module in modules" :key="module.id" :value="module.id">
+                            {{ module.name }}
+                        </option>
+                    </select>
+                </label>
+            </div>
+
             <div class="mb-3">
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0" v-validate="'required'" name="status"/>
@@ -75,13 +79,19 @@
     import ShowDetailsModal from "../../components/showDetailsModal";
 
     export default {
-        name: "RolesComponent",
+        name: "PermissionsComponents",
         components: {ShowDetailsModal, ValidateFormModal, DataTable},
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Role', 'Roles', 'Permissions', 'Status', 'Action'],
+                tableHeading: ['SL', 'Name', 'Module', 'Roles', 'Status', 'Action'],
+                modules: []
             }
+        },
+        mounted() {
+            const _this = this;
+            this.fetchData(_this.urlGenerate('api/config/modules'), (result) => {_this.modules = result});
+
         }
     }
 </script>
