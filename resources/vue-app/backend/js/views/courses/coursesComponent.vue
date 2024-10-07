@@ -2,27 +2,27 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(data, index) in dataList" v-if="data" style="font-size: 0.8rem" :key="data.id">
-                <td>{{ (currentPage - 1) * itemsPerPage + index + 1 }}</td>
+            <tr v-for="(course, index) in ( dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="course.id">
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * itemPerPage : 0) + index + 1 }}</td>
                 <td>
-                    <img :src="generateFileUrl(data.thumbnail)" style="width: 50px; height: 50px; border-radius: 0%" alt="">
+                    <img :src="generateFileUrl(course.thumbnail)" style="width: 50px; height: 50px; border-radius: 0%" alt="">
                 </td>
-                <td>{{ limitText(data.title) }}</td>
-                <td>{{ limitText(data.category ? data.category.title : '' )}}</td>
-                <td>{{ formatDecimal(data.price) }}</td>
-                <td>{{ data.sits }}</td>
+                <td>{{ limitText(course.title) }}</td>
+                <td>{{ limitText(course.category ? course.category.title : '' )}}</td>
+                <td>{{ formatDecimal(course.price) }}</td>
+                <td>{{ course.sits }}</td>
                 <td>
-                    <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
-                        {{ data.status ? 'Active' : 'Inactive' }}
+                    <span :class="course.status ? 'badge badge-success' : 'badge badge-danger'">
+                        {{ course.status ? 'Active' : 'Inactive' }}
                     </span>
                 </td>
                 <td>
                     <!--    edit btn    -->
-                    <button v-if="can('category_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" :title="`Edit ${data.title}`" type="button">
+                    <button v-if="can('category_edit')" @click="onClickUpdate(course)" class="btn btn-primary btn-sm" :title="`Edit ${course.title}`" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!--    delete btn    -->
-                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" :title="`Delete ${data.title}`" type="button">
+                    <button v-if="can('category_delete')" @click="deleteItem(course.id)" class="btn btn-danger btn-sm" :title="`Delete ${course.title}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>
@@ -30,12 +30,9 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination
-                :currentPage="currentPage"
-                :lastPage="lastPage"
-                @change-page="fetchCourses"
-        />
+        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
 
+        <!--  Modal  -->
         <validate-form-modal title="Course" width="700px">
             <div class="mb-3">
                 <label class="form-label w-100">
@@ -142,32 +139,31 @@
                 tableHeading: ['SL', 'Images', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
-                currentPage: 1, // Current page for pagination
-                lastPage: 1, // Last page for pagination
-                itemsPerPage: 1, // Set to the same number used in backend pagination
+                itemPerPage: 1,
             };
         },
 
         methods: {
-            async fetchCourses(page = 1) {
-                try {
-                    const _this = this;
-                    this.fetchData(this.urlGenerate(false, false, page), (result) => {
-                        console.log(result.data);
-                        _this.$store.commit('setDataList', result.data);
-                        _this.currentPage = result.current_page;
-                        _this.lastPage = result.last_page;
-                    });
-                } catch (error) {
-                    console.error("Failed to fetch courses", error);
-                }
-            },
+            // async fetchCourses(page = 1) {
+            //     try {
+            //         const _this = this;
+            //         this.fetchData(this.urlGenerate(false, false, page), (result) => {
+            //             console.log(result.data);
+            //             _this.$store.commit('setDataList', result.data);
+            //             _this.currentPage = result.current_page;
+            //             _this.lastPage = result.last_page;
+            //         });
+            //     } catch (error) {
+            //         console.error("Failed to fetch courses", error);
+            //     }
+            // },
             // ... rest of your methods
         },
 
         mounted() {
+            this.formData = {itemPerPage: this.itemPerPage};
             // Fetch the first page of courses when the component mounts
-            this.fetchCourses(this.currentPage); // Ensure this fetches the initial course data
+            // this.fetchCourses(this.currentPage); // Ensure this fetches the initial course data
 
             // Fetch categories and sub-categories
             this.fetchData(this.urlGenerate('api/categories'), (result) => {

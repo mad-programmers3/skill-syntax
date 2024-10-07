@@ -54,7 +54,7 @@ export default {
          * Supports various HTTP methods (GET, POST, PUT, DELETE) and allows for dynamic URL generation.
          * The response is handled through an optional callback function.
          */
-        httpReq({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = this.$store && this.$store.getters ? this.$store.getters.formData : {}}) {
+        httpReq({ url = false, customUrl = false, urlSuffix = false, method = 'get', callback = false, data = this.$store ? this.$store.getters.formData : {}}) {
             const _this = this;
 
             Axios({

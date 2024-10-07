@@ -9,6 +9,7 @@ use App\Supports\BaseCrudHelper;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use function Symfony\Component\HttpKernel\Log\record;
 
 class CourseController extends Controller
 
@@ -65,9 +66,11 @@ class CourseController extends Controller
 
     public function index(Request $request)
     {
+
+//        dd($request);
         try {
             $courses = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])
-                ->paginate(3); // Change the number to adjust items per page
+                ->paginate(1); // Change the number to adjust items per page
             return retRes('Courses fetched successfully', $courses);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, CODE_DANGER);
