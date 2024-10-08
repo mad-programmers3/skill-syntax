@@ -53,7 +53,7 @@
                                 </li>
                             </ul>
                             <ul class="mb-0">
-                                <li v-if="getAuth()" class="nav-item nav-profile dropdown border-0">
+                                <li v-if="isAuthenticated" class="nav-item nav-profile dropdown border-0">
                                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
                                         <img class="nav-profile-img " alt="" :src="baseUrl + '/backend/assets/images/faces/face1.jpg'" />
                                         <span class="profile-name">{{ userName }}</span>
@@ -73,14 +73,18 @@
         </header>
         <!--================ End Header Menu Area =================-->
     </div>
-
-
 </template>
+
 <script>
     import axios from 'axios';
     import Swal from 'sweetalert2';
     export default {
         name: 'HeaderMenu',
+        data() {
+            return {
+                isAuthenticated: this.getAuth(), // Initialize auth status from your auth logic
+            };
+        },
         computed: {
             userName() {
                 const user = this.getAuth();
@@ -107,26 +111,24 @@
             async logout() {
                 try {
                     await axios.post('/logout');
-                    this.$store.commit('logout');
-                    window.location.href = '/login';
+                    this.isAuthenticated = false;  // Set isAuthenticated to false after logout
+                    this.$store.commit('logout'); // Or update the Vuex state if you're using Vuex
                 } catch (error) {
                     console.error('Logout failed:', error);
                 }
             }
         }
-
     }
-
 </script>
-<style scoped>
 
+<style scoped>
     .nav-profile-img {
-        width: 40px; /* Set the desired width */
-        height: 40px; /* Set the desired height */
-        border-radius: 50%; /* Make it circular */
-        border: 2px solid #fff; /* Add a white border */
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
-        object-fit: cover; /* Ensure the image covers the element without distortion */
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        object-fit: cover;
     }
 
     .profile-name {
@@ -134,5 +136,6 @@
         color: #333;
         margin-left: 5px;
     }
-
 </style>
+
+
