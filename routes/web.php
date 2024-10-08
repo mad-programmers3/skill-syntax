@@ -6,8 +6,11 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 
 //User Register Route
-Route::get('/register', function () {
-    return view('auth.register');
+Route::get('/register', function (\Illuminate\Http\Request $request) {
+    $url = $request->query('url');
+    $decodedUrl = urldecode($url);
+
+    return view('auth.register', ['url' => $decodedUrl]);
 })->name('register');
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 

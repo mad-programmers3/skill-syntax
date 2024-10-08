@@ -3,28 +3,40 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function login(){
+    public function login(Request $request){
 
-        return view('auth.login');
+        $url = $request->query('url');
+
+        return view('auth.login', ['url' => $url]);
     }
 
     public function doLogin(Request $request){
+        // Get login credentials, except for the CSRF token and the 'url' parameter
+        $credentials = $request->except('_token', 'url');
 
-        $credentialls = $request->except('_token');
+        // Attempt to log the user in
+        if (Auth::attempt($credentials)) {
+            $url = $request->input('url');
+            $decodedUrl = urldecode($url);
 
-        $auth = Auth::attempt($credentialls);
+            $adminIDs = Role::whereIn('name', ['Super Admin', 'Admin', 'Instructor'])->pluck('id')->toArray();
 
-        if($auth){
+            if ($decodedUrl)
+                return redirect($decodedUrl);
+            if (in_array(Auth::user()->role_id, $adminIDs))
+                return redirect('/admin/dashboard');
 
-            return redirect('/admin/Dashboard');
+            return redirect('/');
         }
 
-        return redirect('/login')->with('error', 'UserName or Password Invalid');
+        // If authentication fails, redirect back to login with an error message
+        return redirect()->back()->with('error', 'Username or Password Invalid');
     }
 
 

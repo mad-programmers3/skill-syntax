@@ -24,13 +24,13 @@ class CourseReviewController extends Controller
         try{
             // store the review
             mergeAuth($request);
-            $review = Review::create($request->only(['comment', 'user_id','rating']));
+            $review = Review::create($request->only(['comment', 'user_id','rating','likes']));
 
             //store course review
             $request->merge(['review_id' => $review->id]);
             $record = CourseReview::create($request->all());
 
-            return retRes('Review created successfully', $record);
+            return retRes('Review created successfully', $review);
         } catch (\Exception $e) {
             return retRes('Something went wrong', null, CODE_DANGER);
         }

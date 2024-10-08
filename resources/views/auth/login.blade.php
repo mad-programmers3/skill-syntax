@@ -143,6 +143,7 @@
             <div class="card-body">
                 <form action="{{ route('login') }}" method="POST">
                     @csrf
+                    <input type="hidden" name="url" value="{{$url}}">
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -162,7 +163,7 @@
                         <button type="submit" class="btn login_btn">
                             <i class="fas fa-sign-in-alt"></i> Sign in
                         </button>
-                        <a href="{{ route('register') }}" class="btn signup_btn">
+                        <a href="{{ route('register', ['url' => $url])}}" class="btn signup_btn">
                             <i class="fas fa-user-plus"></i> Sign Up New Account
                         </a>
                     </div>

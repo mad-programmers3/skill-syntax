@@ -4,6 +4,7 @@ export default {
         return {
             baseUrl: window.baseUrl,    // Base URL for the application
             authUser: window.authUser,  // Authenticated user information from the window object
+            currentUrl: window.location.href,
             auth: {},                   // Parsed authentication data
             CODE_SUCCESS: 2000,
             CODE_WARNING: 2020,

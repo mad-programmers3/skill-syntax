@@ -9,7 +9,6 @@
                             <!-- Display the course thumbnail or a default image if it's not available -->
                             <img class="img-fluid" :src="course ? generateFileUrl(course.thumbnail) : baseUrl + '/images/course-def-thumbnail.jpg'" alt="Course Thumbnail" style=" padding: 10px;">
                         </div>
-
                         <div class="content_wrapper">
                             <br/>
                             <h4 class="yellow-text">{{ course ? course.title : '' }}</h4>
@@ -38,6 +37,9 @@
                                     </ul>
                                 </div>
                             </div>
+
+                            <!--Course Review Section-->
+
                             <h4 class="title">Reviews ({{ reviews.length }})</h4>
                             <div>
                                 <div class="reviews-list">
@@ -61,8 +63,6 @@
                                                     </a>
                                                 </div>
                                             </div>
-
-                                            <!-- Star Rating Display -->
                                             <div class="star-rating d-flex align-items-center">
                                                 <template v-for="star in 5">
                                                     <i :class="['ti-star', star <= review.rating ? 'checked' : '']"></i>
@@ -71,26 +71,35 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <div>
-                                    <div class="feedback mb-4">
-                                        <h6>Your Feedback</h6>
-                                        <div class="star-rating d-flex mb-2">
-                                            <template v-for="star in 5">
-                                                <i :class="['ti-star', star <= form.rating ? 'checked' : '']"
-                                                   @click="setRating(star)"
-                                                   style="cursor: pointer;"></i>
-                                            </template>
-                                        </div>
-                                        <textarea v-model="form.comment" class="form-control" rows="4" placeholder="Share your experience..."></textarea>
-                                        <div class="text-right mt-3">
-                                            <button @click="submitReview" class="btn btn-primary text-uppercase">Submit</button>
+                                <div id="review-area">
+                                    <div v-if="!getAuth()" class="text-center">
+                                        <h5>You need to be logged in to provide feedback</h5>
+                                        <a  class="primary-btn" :href="urlGenerate('login', false, {url: currentUrl+'#review-area'})">Log In</a>
+                                    </div>
+                                    <div v-else>
+                                        <div class="feedback mb-4">
+                                            <h6>Your Feedback</h6>
+                                            <div class="star-rating d-flex mb-2">
+                                                <template v-for="rate in 5" >
+                                                    <i :class="['ti-star', rate <= form.rating ? 'checked' : '']"
+                                                       @click="setRating(rate)"
+                                                       style="cursor: pointer;">
+                                                    </i>
+                                                </template>
+                                            </div>
+                                            <div>
+                                                <textarea v-model="form.comment" class="form-control" rows="4" placeholder="Share your experience..."></textarea>
+                                                <div class="text-right mt-3">
+                                                    <button @click="submitReview" class="btn btn-primary text-uppercase">Submit</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!--Course Lessons Section-->
                     <div class="col-lg-4 right-contents">
                         <h4 class="title mt-5">Lessons</h4>
                         <div class="playlist">
@@ -104,13 +113,12 @@
                                             <router-link :to="{ name: 'lesson' , params: {id: lesson.id}}" :class="{ 'font-weight-bold': lesson.id === lesson_id }">
                                                 <h5 class="card-title">{{lesson.title}}</h5>
                                             </router-link>
-
                                             <div class="mt-lg-0 mt-3">
                                                 <span class="meta_info mr-4">
-                                                    <a href="#"> <i class="ti-thumb-up"> </i> 25 </a>
+                                                    <a href="#"> <i class="ti-thumb-up"> </i> {{ likes.length }} </a>
                                                 </span>
                                                 <span class="meta_info padded-info">
-                                                     <a href="#"> <i class="ti-comment"> </i> 35 </a>
+                                                     <a href="#"> <i class="ti-comment"> </i> {{ reviews.length }} </a>
                                                 </span>
                                             </div>
                                         </div>
@@ -139,12 +147,7 @@
                 course: [],
                 reviews: [],
                 likes: [],
-                form: {
-                    user_id: 2,
-                    course_id: null,
-                    comment: '',
-                    rating: 0
-                },
+                form: {},
             };
         },
         mounted() {
@@ -154,22 +157,33 @@
                 _this.reviews = result['reviews'];
                 _this.likes = result['likes'];
 
-                _this.form = {'user_id': 2, 'course_id': this.course.id, 'comment': ''};
+                _this.form = {'user_id': 2, 'course_id': this.course.id, 'comment': '', 'rating': 0};
             });
         },
 
         methods: {
             submitReview() {
+                const _this = this;
+
                 this.httpReq({
                     customUrl: 'api/review/course-reviews',
                     method: 'post',
-                    data: this.form,
-                    callback(res) {
-                        // Clear the form after successful submission
-                        this.form.comment = '';
-                        this.form.rating = 0; // Reset the rating
-                        console.log(res);
-                    } // Ensure 'this' refers to the Vue instance
+                    data: _this.form,
+
+
+                    callback(response)
+                    {
+                        if (response.data) {
+                            // update the review list
+                            response.data.result.user = _this.getAuth();
+                            _this.reviews.push(response.data.result);
+
+                            // reset
+                            _this.form.rating = 0;
+                            _this.form.comment = '';
+                        }
+                    }
+
                 });
             },
             setRating(star) {
@@ -192,7 +206,7 @@
 
 <style scoped>
     .yellow-text {
-        color: #002347; /* Refined yellow color */
+        color: #002347;
         font-weight: bold;
     }
 
@@ -202,7 +216,7 @@
         align-items: center;
         font-size: 1.2rem;
         padding-bottom: 0.5rem;
-        border-bottom: 1px solid #e0e0e0; /* Separator lines */
+        border-bottom: 1px solid #e0e0e0;
     }
 
     .meta_info i {

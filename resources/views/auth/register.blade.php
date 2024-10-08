@@ -100,6 +100,7 @@
                 @endif
                 <form method="POST" action="{{ route('register.store') }}">
                     @csrf
+                    <input type="hidden" name="url" value="{{$url}}">
                     <div class="input-group form-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-user"></i></span>

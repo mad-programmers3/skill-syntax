@@ -5,18 +5,10 @@
             <div class="main_menu">
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container" style="background-color: white">
-                        <!-- Brand and toggle get grouped for better mobile display -->
                         <router-link class="navbar-brand logo_h" to="/">
                             <img :src="baseUrl + '/frontend/img/logo.png'" alt=""/>
                         </router-link>
-                        <button
-                                class="navbar-toggler"
-                                type="button"
-                                data-toggle="collapse"
-                                data-target="#navbarSupportedContent"
-                                aria-controls="navbarSupportedContent"
-                                aria-expanded="false"
-                                aria-label="Toggle navigation">
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="icon-bar"></span> <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
@@ -30,15 +22,7 @@
                                     <router-link class="nav-link" to="/about">About</router-link>
                                 </li>
                                 <li class="nav-item submenu dropdown">
-                                    <a
-                                            href="#"
-                                            class="nav-link dropdown-toggle"
-                                            data-toggle="dropdown"
-                                            role="button"
-                                            aria-haspopup="true"
-                                            aria-expanded="false"
-                                    >Pages</a
-                                    >
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <router-link class="nav-link" to="/courses">Courses</router-link>
@@ -49,15 +33,7 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item submenu dropdown">
-                                    <a
-                                            href="#"
-                                            class="nav-link dropdown-toggle"
-                                            data-toggle="dropdown"
-                                            role="button"
-                                            aria-haspopup="true"
-                                            aria-expanded="false"
-                                    >Blog</a
-                                    >
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <router-link class="nav-link" to="/blog">Blog</router-link>
@@ -76,22 +52,20 @@
                                     </a>
                                 </li>
                             </ul>
-                            <div>
-                                <li class="nav-item nav-profile dropdown border-0">
+                            <ul class="mb-0">
+                                <li v-if="getAuth()" class="nav-item nav-profile dropdown border-0">
                                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
                                         <img class="nav-profile-img " alt="" :src="baseUrl + '/backend/assets/images/faces/face1.jpg'" />
                                         <span class="profile-name">{{ userName }}</span>
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
-                                        <a v-if="getAuth()" class="dropdown-item" href="#" @click.prevent="confirmLogout">
+                                        <a class="dropdown-item" href="#" @click.prevent="confirmLogout">
                                             <i class="mdi mdi-logout mr-2 text-primary"></i> Logout
-                                        </a>
-                                        <a v-else class="dropdown-item" href="/login">
-                                            <i class="mdi mdi-login mr-2 text-primary"></i> LogIn
                                         </a>
                                     </div>
                                 </li>
-                            </div>
+                                <a v-else class="primary-btn mb-0" href="/login">Log In</a>
+                            </ul>
                         </div>
                     </div>
                 </nav>
