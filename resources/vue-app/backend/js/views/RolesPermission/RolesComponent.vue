@@ -100,7 +100,7 @@
         data() {
             return {
                 tableHeading: ['SL', 'Role','Users', 'Modules', 'Permissions', 'Status', 'Action'],
-                perPage:4,
+                perPage:5,
             }
         },
 

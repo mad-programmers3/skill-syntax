@@ -77,7 +77,7 @@
             return {
                 tableHeading: ['SL','Title', 'Category', 'Status', 'Actions'], // Table headings
                 categories: [], // Array to hold categories data
-                perPage: 4,
+                perPage: 5,
             }
         },
         mounted() {

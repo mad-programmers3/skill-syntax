@@ -53,7 +53,7 @@
         data() {
             return {
                 tableHeading: ['SL', 'Users','Comment','Rating', 'Status', 'Actions'],
-                perPage: 20,
+                perPage: 4,
             }
         },
         mounted() {

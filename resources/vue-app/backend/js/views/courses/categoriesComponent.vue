@@ -90,7 +90,7 @@
         data() {
             return {
                 tableHeading: ['SL', 'Title', 'Status', 'Actions'],
-                perPage:4
+                perPage:5
             }
         },
         mounted() {

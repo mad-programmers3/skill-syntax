@@ -15,13 +15,20 @@
                             </button>
                         </div>
 
-                        <!-- Table that displays headings passed as props -->
-                        <div class="table-responsive">
+                        <!-- Conditional rendering: Show spinner if loading, else show the table -->
+                        <div v-if="Object.keys(dataList).length === 0" class="text-center my-3">
+<!--                            {{ dataList }}-->
+                            <div class="spinner-border" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+
+                        <div v-else class="table-responsive">
                             <table class="table user-table no-wrap">
                                 <thead>
                                 <tr>
                                     <!-- Loop through tableHeading array/object and display headings -->
-                                    <th class="border-top-0" v-for="heading in tableHeading">{{ heading }}</th>
+                                    <th class="border-top-0" v-for="heading in tableHeading" :key="heading">{{ heading }}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -39,22 +46,20 @@
 
 <script>
     export default {
-        name: "dataTable", // Name of the component
+        name: "dataTable",
 
         // Props allow passing table headings from the parent component
         props: {
             tableHeading: {
                 type: [Array, Object], // Can be either an array or object
-                default() {
-                    return [];
-                }
+                default: []
             }
         },
 
         // Computed property for the table title based on route meta data
         computed: {
             tableTitle() {
-                return this.$route.meta.pageTitle; // Dynamically sets title from the route meta field
+                return this.$route.meta.pageTitle;
             }
         },
 
@@ -70,5 +75,20 @@
 </script>
 
 <style scoped>
-    /* Scoped styles specific to this component can go here */
+    /* Spinner styles */
+    .spinner-border {
+        width: 3rem;
+        height: 3rem;
+        border-width: 0.25rem;
+    }
+
+    /* Optional: Spinner positioning and centering */
+    .text-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50vh;
+    }
+
+    /* Additional scoped styles specific to this component */
 </style>

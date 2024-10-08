@@ -1,30 +1,33 @@
+
 <template>
     <div class="pagination d-flex justify-content-center my-4">
+        <!-- Previous button with arrow symbol -->
         <button
-                @click="fetchData(urlGenerate(false, false, {page: currentPage-1, perPage}))"
+                @click="onPreviousClick"
                 :disabled="currentPage === 1"
-                class="btn btn-outline-primary mx-2"
+                class="btn pagination-btn mx-2"
         >
-            Previous
+            &lt;  <!-- Left arrow symbol -->
         </button>
 
-        <!-- Page number buttons -->
+        <!-- Page number buttons with ellipsis -->
         <button
-                v-for="page in lastPage"
+                v-for="page in paginationRange"
                 :key="page"
-                @click="fetchData(urlGenerate(false, false, {page, perPage}))"
+                @click="onPageClick(page)"
                 :disabled="currentPage === page"
-                :class="['btn', 'mx-1', { 'btn-active': currentPage === page, 'btn-inactive': currentPage !== page }]"
+                :class="['btn', 'pagination-btn', 'mx-1', { 'btn-active': currentPage === page, 'btn-inactive': currentPage !== page }]"
         >
             {{ page }}
         </button>
 
+        <!-- Next button with arrow symbol -->
         <button
-                @click="fetchData(urlGenerate(false, false, {page: currentPage+1, perPage}))"
+                @click="onNextClick"
                 :disabled="currentPage === lastPage"
-                class="btn btn-outline-primary mx-2"
+                class="btn pagination-btn mx-2"
         >
-            Next
+            &gt;  <!-- Right arrow symbol -->
         </button>
     </div>
 </template>
@@ -45,6 +48,62 @@
                 required: true
             },
         },
+        computed: {
+            paginationRange() {
+                const totalNumbers = 5;  // Number of page buttons to display
+                const totalBlocks = totalNumbers + 2;  // Including "Back" and "Next"
+
+                if (this.lastPage <= totalBlocks) {
+                    console.log("Pagination range includes all pages:", Array.from({ length: this.lastPage }, (_, i) => i + 1));
+                    return Array.from({ length: this.lastPage }, (_, i) => i + 1);
+                }
+
+                const pages = [];
+                const left = Math.max(1, this.currentPage - 2);
+                const right = Math.min(this.lastPage, this.currentPage + 2);
+
+                for (let i = left; i <= right; i++) {
+                    pages.push(i);
+                }
+
+                if (left > 1) {
+                    pages.unshift(1);  // Add the first page
+                    if (left > 2) {
+                        pages.splice(1, 0, "...");  // Add ellipsis
+                    }
+                }
+
+                if (right < this.lastPage) {
+                    pages.push(this.lastPage);  // Add the last page
+                    if (right < this.lastPage - 1) {
+                        pages.splice(-1, 0, "...");  // Add ellipsis
+                    }
+                }
+
+                console.log("Computed pagination range:", pages);
+                return pages;
+            }
+        },
+        methods: {
+            onPreviousClick() {
+                if (this.currentPage > 1) {
+                    console.log(`Navigating to the previous page: ${this.currentPage - 1}`);
+                    this.fetchData(this.urlGenerate(false, false, { page: this.currentPage - 1, perPage: this.perPage }));
+                }
+            },
+            onNextClick() {
+                if (this.currentPage < this.lastPage) {
+                    console.log(`Navigating to the next page: ${this.currentPage + 1}`);
+                    this.fetchData(this.urlGenerate(false, false, { page: this.currentPage + 1, perPage: this.perPage }));
+                }
+            },
+            onPageClick(page) {
+                if (this.currentPage !== page) {
+                    console.log(`Navigating to the clicked page: ${page}`);
+                    this.fetchData(this.urlGenerate(false, false, { page, perPage: this.perPage }));
+                }
+            }
+        }
     };
 </script>
 
@@ -53,25 +112,41 @@
         margin-top: 20px;
     }
 
-    .pagination button {
-        background-color: #423a8e; /* Default button color */
+    .pagination-btn {
+        background-color: #423a8e;
         color: white;
+        border: 1px solid #423a8e;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
     }
 
-    .pagination button:disabled {
-        background-color: #ccc; /* Disabled button color */
+    .pagination-btn:disabled {
+        background-color: #ccc;
         color: #666;
+        border: 1px solid #ccc;
     }
 
-    .pagination button.btn-active {
-        background-color: #423a8e; /* Active button color */
-        color: white; /* Text color for active button */
-        border: none; /* Optional: remove border */
+    .pagination-btn.btn-active {
+        background-color: black;
+        color: white;
+        border: none;
     }
 
-    .pagination button.btn-inactive {
-        background-color: #666; /* Inactive button color */
-        color: white; /* Text color for inactive buttons */
+    .pagination-btn.btn-inactive {
+        background-color: white;
+        color: black;
+        border: 1px solid #423a8e;
+    }
+
+    .pagination-btn:hover:not(:disabled) {
+        background-color: #6656d3;
+        color: white;
     }
 
     .pagination span {
@@ -79,4 +154,3 @@
         color: #423a8e;
     }
 </style>
-

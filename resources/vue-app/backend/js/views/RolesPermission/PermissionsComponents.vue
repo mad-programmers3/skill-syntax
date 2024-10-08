@@ -89,7 +89,7 @@
             return {
                 tableHeading: ['SL', 'Name', 'Module', 'Roles', 'Status', 'Action'],
                 modules: [],
-                perPage: 10,
+                perPage: 5,
             }
         },
         mounted() {

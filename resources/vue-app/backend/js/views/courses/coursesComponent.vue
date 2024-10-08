@@ -139,7 +139,7 @@
                 tableHeading: ['SL', 'Images', 'Title', 'Category', 'Price', 'Sits', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
-                perPage: 4,
+                perPage: 5,
             };
         },
 

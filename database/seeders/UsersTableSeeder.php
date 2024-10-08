@@ -40,6 +40,12 @@ class UsersTableSeeder extends Seeder
                 'email' => 'shihab@gmail.com',
                 'password' => Hash::make('123456'),
             ],
+            [
+                'role_id' => $supAdminRoleID,
+                'name' => 'Super Admin',
+                'email' => 'mailto:superadmin@gmail.com',
+                'password' => Hash::make('123456'),
+            ],
 
 
             [
