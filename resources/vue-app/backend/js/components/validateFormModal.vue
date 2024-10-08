@@ -5,7 +5,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="backendModalLabel">{{ title }}</h1>
-                    <a type="button" class="font-weight-bold" @click="closeModal('#backendModal', clearSpanErrors)" aria-label="Close">X</a>
+                    <button type="button" class="close" @click="closeModal('#backendModal', clearSpanErrors)" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
 
                 <form role="form" @submit.prevent="handleSubmit" enctype="multipart/form-data">

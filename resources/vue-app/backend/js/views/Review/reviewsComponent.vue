@@ -1,8 +1,8 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(data, index) in dataList" style="font-size: 0.8rem">
-                <td>{{ index + 1 }}</td>
+            <tr v-for="(data, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="data.id">
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ data.user ? data.user.name : '' }}</td>
                 <td>{{ limitText(data.comment) }}</td>
                 <td>{{ data.rating}}</td>
@@ -23,20 +23,14 @@
                 </td>
             </tr>
         </data-table>
+
+        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+
         <validate-form-modal title="Category">
 
             <div class="mb-3">
                 <div class="custom-control custom-switch">
-                    <input
-                            type="checkbox"
-                            class="custom-control-input"
-                            id="customSwitch"
-                            v-model="formData.status"
-                            :true-value="1"
-                            :false-value="0"
-                            v-validate="'required'"
-                            name="status"
-                    />
+                    <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0" v-validate="'required'" name="status"/>
                     <label class="custom-control-label" for="customSwitch">
                         {{ formData.status ? 'Active' : 'Inactive' }}
                     </label>
@@ -49,16 +43,22 @@
 <script>
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
+    import Pagination from "../../components/Pagination"
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
 
     export default {
         name: "reviewsComponent",
-        components: {ValidateFormModal, DataTable},
+        components: {ValidateFormModal, DataTable,Pagination},
         mixins: [validatorListComponentMixin],
         data() {
             return {
                 tableHeading: ['SL', 'Users','Comment','Rating', 'Status', 'Actions'],
+                perPage: 20,
             }
+        },
+        mounted() {
+            // Fetch datalist with paginate
+            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
         }
     }
 </script>

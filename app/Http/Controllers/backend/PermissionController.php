@@ -15,6 +15,7 @@ class PermissionController extends Controller
     public function __construct()
     {
         $this->model = new Permission();
+        $this->with = ['module', 'roles'];
     }
 
 //    public function index()

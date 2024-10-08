@@ -1,11 +1,31 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" @open-modal="openModal">
-            <tr v-for="(module, index) in dataList" :key="module.id" style="font-size: 0.8rem">
-                <td>{{ index + 1 }}</td>
+            <tr v-for="(module, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="module.id">
+                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(module.name) }}</td>
-                <td>{{ module.roles ? module.roles.length : 'NA' }}</td>
-                <td>{{ module.permissions ? module.permissions.length : 'NA' }}</td>
+                <td>
+                    {{ module.roles ? module.roles.length : 'NA' }}
+                    <i class="ml-1 fa fa-eye" data-toggle="modal" :data-target="`#moduleRolesModal${module.id}`" style="cursor: pointer"></i>
+                    <show-details-modal :id="`moduleRolesModal${module.id}`" :title="`${module.name} => Roles`">
+                        <div class="row">
+                            <li class="col-md-6 my-1" v-for="role in module.roles">
+                                {{ role.name }}
+                            </li>
+                        </div>
+                    </show-details-modal>
+                </td>
+                <td>
+                    {{ module.permissions ? module.permissions.length : 'NA' }}
+                    <i class="ml-1 fa fa-eye" data-toggle="modal" :data-target="`#modulePermsModal${module.id}`" style="cursor: pointer"></i>
+                    <show-details-modal :id="`modulePermsModal${module.id}`" :title="`${module.name} => Permissions`">
+                        <div class="row">
+                            <li class="col-md-6 my-1" v-for="permission in module.permissions">
+                                {{ permission.name }}
+                            </li>
+                        </div>
+                    </show-details-modal>
+                </td>
                 <td>
                     <span :class="module.status ? 'badge badge-success' : 'badge badge-danger'">
                         {{ module.status ? 'Active' : 'Inactive' }}
@@ -14,11 +34,11 @@
 
                 <td>
                     <!-- Edit button -->
-                    <button v-if="can('role_edit')" @click="onClickUpdate(module)" class="btn btn-primary btn-sm" :title="`Edit ${module.name}`" type="button">
+                    <button v-if="can('module_edit')" @click="onClickUpdate(module)" class="btn btn-primary btn-sm" :title="`Edit ${module.name}`" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('role_delete')" @click="deleteItem(module.id)" class="btn btn-danger btn-sm" :title="`Delete ${module.name}`" type="button">
+                    <button v-if="can('module_delete')" @click="deleteItem(module.id)" class="btn btn-danger btn-sm" :title="`Delete ${module.name}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                     <!-- Mange button -->
@@ -28,6 +48,9 @@
                 </td>
             </tr>
         </data-table>
+
+        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+
 
         <validate-form-modal  title="Module">
             <div class="mb-3">
@@ -51,16 +74,24 @@
 <script>
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
+    import Pagination from "../../components/Pagination"
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
+    import ShowDetailsModal from "../../components/showDetailsModal";
 
     export default {
         name: "RolesComponent",
-        components: {ValidateFormModal, DataTable},
+        components: {ShowDetailsModal, ValidateFormModal, DataTable,Pagination},
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Role', 'Roles', 'Permissions', 'Status', 'Action'],
+                tableHeading: ['SL', 'Module', 'Roles', 'Permissions', 'Status', 'Action'],
+                perPage: 4,
             }
+        },
+
+        mounted() {
+            // Fetch datalist with paginate
+            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
         }
     }
 </script>
