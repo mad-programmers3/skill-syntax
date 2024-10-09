@@ -81,13 +81,14 @@
             }
         },
         mounted() {
-            // Fetch datalist with paginate
-            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
-
             const _this = this;
-            this.fetchData(_this.urlGenerate('api/categories'), (result) => {
-                _this.categories = result
-            });
+            // Fetch datalist with paginate
+            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: _this.perPage}));
+
+            // Fetch categories
+            this.fetchData(this.urlGenerate('api/required-data', false, {'categories': true}), (result) => {
+                _this.categories = result.categories;
+            })
 
         }
     }

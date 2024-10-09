@@ -12,6 +12,7 @@ use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\backend\TestimonialController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\frontend\FrontendController;
+use App\Http\Controllers\SupportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backend\ModuleController;
@@ -59,6 +60,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('review/testimonials', TestimonialController::class);
     Route::resource('files', MyFileController::class);
     Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
+    Route::get('required-data', [SupportController::class, 'requiredData']);
 
 
     Route::group(['prefix' => 'config'], function () {
@@ -68,35 +70,6 @@ Route::middleware('auth:api')->group(function () {
         Route::resource('modules', ModuleController::class);
         Route::resource('permissions', PermissionController::class);
     });
-    // Roles
-//    Route::get('/roles', [RoleController::class, 'index']);
-//    Route::get('/roles/{id}', [RoleController::class, 'show']);
-//    Route::post('/roles', [RoleController::class, 'store']); // T
-//    Route::put('/roles/{id}', [RoleController::class, 'update']);
-//    Route::delete('/roles/{id}', [RoleController::class, 'destroy']);
-
-
-    // Permissions
-    Route::get('/permissions', [PermissionController::class, 'index']);
-    Route::get('/permissions/{id}', [PermissionController::class, 'show']);
-    Route::post('/permissions', [PermissionController::class, 'store']);
-    Route::put('/permissions/{id}', [PermissionController::class, 'update']);
-    Route::delete('/permissions/{id}', [PermissionController::class, 'destroy']);
-
-
-    // Modules
-
-//    Route::get('/modules', [ModuleController::class, 'index']);
-//    Route::get('/modules/{id}', [ModuleController::class, 'show']);
-//    Route::post('/modules', [ModuleController::class, 'store']);
-//    Route::put('/modules/{id}', [ModuleController::class, 'update']);
-//    Route::delete('/modules/{id}', [ModuleController::class, 'destroy']);
-
-
-    // Role Permission
-//    Route::get('/role-permissions', [RolePermissionController::class, 'index']);
-//    Route::post('/role-permissions', [RolePermissionController::class, 'store']);
-//    Route::delete('/role-permissions/{roleId}/{moduleId}/{action}', [RolePermissionController::class, 'destroy']);
 });
 
 

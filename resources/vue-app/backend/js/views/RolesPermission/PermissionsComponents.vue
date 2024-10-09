@@ -97,7 +97,10 @@
             this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
 
             const _this = this;
-            this.fetchData(_this.urlGenerate('api/config/modules'), (result) => {_this.modules = result});
+            // Fetch courses
+            this.fetchData(this.urlGenerate('api/required-data', false, {'modules': true}), (result) => {
+                _this.modules = result.modules;
+            })
 
         },
     }

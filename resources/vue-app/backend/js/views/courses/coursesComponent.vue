@@ -144,15 +144,14 @@
         },
 
         mounted() {
+            const _this = this;
             // Fetch all courses with paginated
-            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
+            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: _this.perPage}));
 
             // Fetch categories and sub-categories
-            this.fetchData(this.urlGenerate('api/categories'), (result) => {
-                this.categories = result;
-            });
-            this.fetchData(this.urlGenerate('api/sub-categories'), (result) => {
-                this.subCategories = result;
+            this.fetchData(this.urlGenerate('api/required-data', false, {'categories': true, 'sub_categories': true}), (result) => {
+                _this.categories = result.categories;
+                _this.subCategories = result.sub_categories;
             });
         },
 

@@ -64,14 +64,10 @@
         mounted() {
             const _this = this;
 
-            // get all modules with permissions
-            _this.fetchData(_this.urlGenerate('api/config/modules'), (result) => {
-                _this.modules = result;
-            });
-
-            // get all roles with users
-            _this.fetchData(_this.urlGenerate('api/config/roles', false), (result) => {
-                _this.roles = result;
+            // Fetch modules with permissions and roles
+            this.fetchData(this.urlGenerate('api/required-data', false, {'roles': true, 'modules': true, 'with_permissions': true}), (result) => {
+                _this.modules = result.modules;
+                _this.roles = result.roles;
             });
 
             // get current role with users, modules, permission

@@ -91,13 +91,16 @@
         },
 
         mounted() {
+            const _this = this;
+
             // Fetch datalist with paginate
-            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
+            this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: _this.perPage}));
 
             // Fetch courses for the dropdown
-            const _this = this;
-            this.fetchData(this.urlGenerate('api/courses'), (result) => {
-                _this.courses = result;
+
+            // Fetch courses
+            this.fetchData(this.urlGenerate('api/required-data', false, {'courses': true}), (result) => {
+                _this.courses = result.courses;
             });
         },
 
