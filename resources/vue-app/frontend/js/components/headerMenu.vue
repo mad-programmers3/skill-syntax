@@ -1,3 +1,4 @@
+
 <template>
     <div>
         <!--================ Start Header Menu Area =================-->
@@ -12,7 +13,6 @@
                             <span class="icon-bar"></span> <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                             <ul class="nav navbar-nav menu_nav ml-auto">
                                 <li class="nav-item">
@@ -46,16 +46,15 @@
                                 <li class="nav-item">
                                     <router-link class="nav-link" to="/contact">Contact</router-link>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link search" id="search">
-                                        <i class="ti-search"></i>
-                                    </a>
+<!--                                 Include the search component here-->
+                                <li class="nav-item search-container">
+                                    <search-component />
                                 </li>
                             </ul>
                             <ul class="mb-0">
                                 <li v-if="isAuthenticated" class="nav-item nav-profile dropdown border-0">
                                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
-                                        <img class="nav-profile-img " alt="" :src="baseUrl + '/backend/assets/images/faces/face1.jpg'" />
+                                        <img class="nav-profile-img" alt="" :src="baseUrl + '/backend/assets/images/faces/face1.jpg'" />
                                         <span class="profile-name">{{ userName }}</span>
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
@@ -78,8 +77,13 @@
 <script>
     import axios from 'axios';
     import Swal from 'sweetalert2';
+    import SearchComponent from './searchComponent.vue'; // Import the search component
+
     export default {
         name: 'HeaderMenu',
+        components: {
+            SearchComponent // Register the component
+        },
         data() {
             return {
                 isAuthenticated: this.getAuth(), // Initialize auth status from your auth logic
@@ -118,7 +122,7 @@
                 }
             }
         }
-    }
+    };
 </script>
 
 <style scoped>
@@ -136,6 +140,9 @@
         color: #333;
         margin-left: 5px;
     }
-</style>
 
+    .search-container {
+        /* Add any styles for the search component container here */
+    }
+</style>
 

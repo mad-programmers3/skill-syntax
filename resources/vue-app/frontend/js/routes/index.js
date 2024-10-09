@@ -8,6 +8,7 @@ import blogDetailsComponent from "../views/blogDetailsComponent";
 import contactComponent from "../views/contactComponent";
 import lessonsComponent from "../../../backend/js/views/courses/lessonsComponent";
 import lessonComponent from "../views/lessonComponent";
+import searchComponent from "../components/searchComponent";
 
 const route = [
     {
@@ -65,5 +66,10 @@ const route = [
         component:lessonComponent,
         meta : {'pageTitle' : 'LessonDetails', dataUrl : 'api/pages/lessons'},
     },
+    {
+        path:'/search',
+        name:'search',
+        component : searchComponent
+    }
 ];
 export default route;
