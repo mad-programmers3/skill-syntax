@@ -11,6 +11,7 @@ use App\Models\Role;
 use App\Models\SubCategory;
 use App\Models\User;
 use App\Supports\Helper;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SupportController extends Controller
@@ -67,13 +68,15 @@ class SupportController extends Controller
 
     public function getConfigurations()
     {
-        $permittedModuleId = DB::table('role_modules')->where('role_id', auth()->user()->role_id)->get()->pluck('module_id')->toArray();
+        $permittedModuleId = [];
+        if (auth()->user() && auth()->user()->role_id)
+            $permittedModuleId = DB::table('role_modules')->where('role_id', auth()->user()->role_id)->get()->pluck('module_id')->toArray();
 
-        $data['menus'] = Module::where('parent_id', 0)
+        $data['modules'] = Module::where('parent_id', 0)
             ->whereIn('id', $permittedModuleId)
-            ->with(['sub_modules'=>function ($subMenus) use ($permittedModuleId) {
-                $subMenus->whereIn('id', $permittedModuleId);
-                $subMenus->with('sub_modules');
+            ->with(['sub_modules'=>function ($subModules) use ($permittedModuleId) {
+                $subModules->whereIn('id', $permittedModuleId);
+                $subModules->with('sub_modules');
             }])
             ->get()->toArray();
 

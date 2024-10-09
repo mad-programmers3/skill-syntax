@@ -46,6 +46,10 @@ export default {
                 url,
                 callback: (response) => {
                     if (response.data) {
+                        // check if the user is permitted
+                        if (response.data.status === _this.CODE_DANGER)
+                            _this.showToast(response.data.message, 'error');
+
                         // If a callback is provided, use it to handle the data
                         if (typeof callback === 'function') callback(response.data.result);
                         // Otherwise, update the local data list with the fetched data

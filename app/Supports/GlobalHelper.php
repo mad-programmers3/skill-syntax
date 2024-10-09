@@ -15,6 +15,22 @@ if (!defined('CODE_DANGER')) {
     define('CODE_DANGER', 3000);
 }
 
+if (!defined('PERM_VIEW')) {
+    define('PERM_VIEW', 'view');
+}
+
+if (!defined('PERM_ADD')) {
+    define('PERM_ADD', 'add');
+}
+
+if (!defined('PERM_EDIT')) {
+    define('PERM_EDIT', 'edit');
+}
+
+if (!defined('PERM_DELETE')) {
+    define('PERM_DELETE', 'delete');
+}
+
 // Helper method for consistent response formatting
 if (!function_exists('retRes')) {
     function retRes($message, $result = null, $status = CODE_SUCCESS)

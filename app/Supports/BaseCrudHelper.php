@@ -5,10 +5,12 @@ namespace App\Supports;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use function Symfony\Component\HttpKernel\Log\record;
+use Illuminate\Support\Str;
 
 trait BaseCrudHelper
 {
+    use Helper;
+
     // Define these in the main controller
     protected $model, $with = [], $showWith = [],
         $beforeStore = false, $afterStore = false,
@@ -18,6 +20,9 @@ trait BaseCrudHelper
     // Fetch all records
     public function index(Request $request)
     {
+        if (! $this->can($this->task(PERM_VIEW)))
+            return $this->retNoPermRes(PERM_VIEW);
+
         try {
             $data = null;
             $perPage = $request->query('perPage');
@@ -34,6 +39,9 @@ trait BaseCrudHelper
     // Show a single record by ID
     public function show($id)
     {
+        if (! $this->can($this->task(PERM_VIEW)))
+            return $this->retNoPermRes(PERM_VIEW);
+
         try {
             $record = $this->model->with($this->showWith)->findOrFail($id); // Fetch the record with optional relationships
             return retRes('Successfully found record', $record, 2000);
@@ -47,6 +55,9 @@ trait BaseCrudHelper
     // Store a new record
     public function store(Request $request)
     {
+        if (! $this->can($this->task(PERM_ADD)))
+            return $this->retNoPermRes(PERM_ADD);
+
         try {
             mergeAuth($request);
             call($this->beforeStore, $request);
@@ -61,6 +72,9 @@ trait BaseCrudHelper
     // Update an existing record
     public function update(Request $request, $id)
     {
+        if (! $this->can($this->task(PERM_EDIT)))
+            return $this->retNoPermRes(PERM_EDIT);
+
         try {
             call($this->beforeUpdate, $request);
             $record = $this->model->findOrFail($id); // Find the record by ID
@@ -77,6 +91,9 @@ trait BaseCrudHelper
     // Delete a record by ID
     public function destroy($id)
     {
+        if (! $this->can($this->task(PERM_DELETE)))
+            return $this->retNoPermRes(PERM_DELETE);
+
         try {
             $record = $this->model->findOrFail($id); // Find the record by ID
             $record->delete(); // Delete the record
@@ -87,5 +104,40 @@ trait BaseCrudHelper
         } catch (Exception $e) {
             return retRes('Failed to delete record', null, 500);
         }
+    }
+
+
+
+    /*
+     * raw = show, model = User => user_show
+     * raw = edit, model = Category => category_show
+     * raw = edit, model = SubCategory => sub_category_show
+     */
+    private function task($rawTask)
+    {
+        $modelName = Str::snake(Str::singular(class_basename($this->model)));
+        return $modelName.'_'.$rawTask;
+    }
+
+
+    /*
+     * Get the model name in lowercase and space-separated.
+     *
+     * Example:
+     * - model = Category => category
+     * - model = SubCategory => sub category
+     */
+    private function getModelName()
+    {
+        $modelName = class_basename($this->model);
+        $lowerCaseModel = Str::lower($modelName);
+        $formattedModelName = preg_replace('/(?<!^)(?=[A-Z])/', ' ', $lowerCaseModel);
+
+        return $formattedModelName;
+    }
+
+    private function retNoPermRes($rawTask)
+    {
+        return retRes('You have no permission to ' . $rawTask . ' ' . $this->getModelName(), [], CODE_DANGER);
     }
 }

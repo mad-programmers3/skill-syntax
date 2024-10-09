@@ -105,8 +105,10 @@
         },
 
         mounted() {
+            console.log(999);
             // Fetch datalist with paginate
             this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
+            this.fetchData(this.urlGenerate('api/configurations'), (result) => {console.log(result)});
         }
     }
 </script>
