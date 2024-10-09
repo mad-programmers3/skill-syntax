@@ -1,5 +1,5 @@
 <template>
-    <div class="">
+    <div v-if="can(`${permPrefix}_${PERM_VIEW}`)">
         <!-- Form to Add Roles Only -->
         <div class="role-permission-form row d-flex align-items-center px-4 py-3">
             <div class="col-4">
@@ -54,6 +54,7 @@
     export default {
         data() {
             return {
+                permPrefix: 'role_config',
                 ADD_MODULE: 1,
                 ADD_PERMISSION: 2,
                 crrRole: {},

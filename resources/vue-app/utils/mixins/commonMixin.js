@@ -9,6 +9,11 @@ export default {
             CODE_SUCCESS: 2000,
             CODE_WARNING: 2020,
             CODE_DANGER: 3000,
+            PERM_VIEW: 'view',
+            PERM_ADD: 'add',
+            PERM_EDIT: 'edit',
+            PERM_DELETE: 'delete',
+            PERM_MANAGE: 'manage',
         };
     },
     computed: {
@@ -74,8 +79,7 @@ export default {
         // Authentication-related methods
 
         can(task) {
-            // Permission check logic (currently returns true for all tasks)
-            return true;
+            return this.Config && this.Config.permissions && this.Config.permissions.includes(task);
         },
 
 

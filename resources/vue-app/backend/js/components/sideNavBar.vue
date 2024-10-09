@@ -57,7 +57,6 @@
         mounted() {
             const _this = this;
             this.fetchData(this.urlGenerate('api/configurations'), (result) => {
-                console.log(result);
                 _this.$store.commit('setConfig', result);
             });
         }

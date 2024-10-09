@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" @open-modal="openModal">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('module_add')">
             <tr v-for="(module, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="module.id">
                 <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(module.name) }}</td>
@@ -42,7 +42,7 @@
                         <i class="fa fa-trash text-white"></i>
                     </button>
                     <!-- Mange button -->
-                    <router-link :to="{ name: 'manageRoles' }" v-if="can('role_manage')" @click="deleteItem(module.id)" class="btn btn-warning btn-sm" :title="`Manage ${module.name}`" type="button">
+                    <router-link v-if="can('module_manage')" :to="{ name: 'manageRoles' }" class="btn btn-warning btn-sm" :title="`Manage ${module.name}`" type="button">
                         <i class="fa fa-cogs text-white"></i>
                     </router-link>
                 </td>

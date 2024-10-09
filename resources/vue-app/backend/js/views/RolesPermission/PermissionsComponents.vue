@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" @open-modal="openModal">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('permission_add')">
             <tr v-for="(permission, index) in (dataList.data ? dataList.data : dataList)" :key="permission.id" style="font-size: 0.8rem">
                 <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(permission.name) }}</td>
@@ -25,15 +25,15 @@
 
                 <td>
                     <!-- Edit button -->
-                    <button v-if="can('module_edit')" @click="onClickUpdate(permission)" class="btn btn-primary btn-sm" :title="`Edit ${permission.name}`" type="button">
+                    <button v-if="can('permission_edit')" @click="onClickUpdate(permission)" class="btn btn-primary btn-sm" :title="`Edit ${permission.name}`" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('module_delete')" @click="deleteItem(permission.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${permission.name}`" type="button">
+                    <button v-if="can('permission_delete')" @click="deleteItem(permission.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${permission.name}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                     <!-- Mange button -->
-                    <router-link :to="{ name: 'manageRoles' }" v-if="can('role_manage')" @click="deleteItem(permission.id)" class="btn btn-warning btn-sm" :title="`Manage ${permission.name}`" type="button">
+                    <router-link v-if="can('permission_manage')" :to="{ name: 'manageRoles' }" class="btn btn-warning btn-sm" :title="`Manage ${permission.name}`" type="button">
                         <i class="fa fa-cogs text-white"></i>
                     </router-link>
                 </td>

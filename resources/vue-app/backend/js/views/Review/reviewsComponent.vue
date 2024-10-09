@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" @open-modal="openModal">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('review_add')">
             <tr v-for="(data, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="data.id">
                 <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ data.user ? data.user.name : '' }}</td>
@@ -13,11 +13,11 @@
                 </td>
                 <td>
                     <!--    edit btn    -->
-                    <button v-if="can('category_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" type="button">
+                    <button v-if="can('review_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!--    delete btn    -->
-                    <button v-if="can('category_delete')" @click="deleteItem(data.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${data.user.name}`" type="button">
+                    <button v-if="can('review_delete')" @click="deleteItem(data.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${data.user.name}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>

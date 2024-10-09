@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" @open-modal="openModal">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('category_add')">
             <tr v-for="(data, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="data.id">
                 <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(data.title) }}</td>
@@ -65,7 +65,8 @@
         data() {
             return {
                 tableHeading: ['SL', 'Title', 'Status', 'Actions'],
-                perPage:5
+                perPage:5,
+                permPrefix: 'category'
             }
         },
         mounted() {

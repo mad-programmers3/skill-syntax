@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <data-table :table-heading="tableHeading" @open-modal="openModal">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('lesson_add')">
             <tr v-for="(lesson, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="lesson.id">
                 <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(lesson.title) }}</td>
@@ -13,11 +13,11 @@
                 </td>
                 <td>
                     <!--    edit btn    -->
-                    <button v-if="can('category_edit')" @click="onClickUpdate(lesson)" class="btn btn-primary btn-sm" :title="`Edit ${lesson.title}`" type="button">
+                    <button v-if="can('lesson_edit')" @click="onClickUpdate(lesson)" class="btn btn-primary btn-sm" :title="`Edit ${lesson.title}`" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!--    delete btn    -->
-                    <button v-if="can('category_delete')" @click="deleteItem(lesson.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${lesson.title}`" type="button">
+                    <button v-if="can('lesson_delete')" @click="deleteItem(lesson.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${lesson.title}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>

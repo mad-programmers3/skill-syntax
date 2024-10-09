@@ -10,7 +10,7 @@
                             <h4 class="card-title mb-0">{{ tableTitle }}</h4>
 
                             <!-- Button to trigger the modal, emits the 'open-modal' event -->
-                            <button @click="openModal" class="btn btn-primary">
+                            <button v-if="showAddBtn" @click="openModal" class="btn btn-primary">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -53,7 +53,8 @@
             tableHeading: {
                 type: [Array, Object], // Can be either an array or object
                 default: []
-            }
+            },
+            showAddBtn: Boolean,
         },
 
         // Computed property for the table title based on route meta data
@@ -62,15 +63,6 @@
                 return this.$route.meta.pageTitle;
             }
         },
-
-        methods: {
-            /**
-             * Emits an 'open-modal' event to the parent component when the button is clicked.
-             */
-            openModal() {
-                this.$emit('open-modal'); // Triggers the parent component's modal opening method
-            }
-        }
     }
 </script>
 

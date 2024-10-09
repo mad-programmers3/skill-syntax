@@ -94,17 +94,17 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 'nodes' => [
                     [
                         'module' => ['name' => 'Roles', 'link' => '/admin/config/roles'],
-                        'permissions' => $rawPermissions,
+                        'permissions' => array_merge($rawPermissions, ['manage']),
                         'nodes' => []
                     ],
                     [
                         'module' => ['name' => 'Modules', 'link' => '/admin/config/modules'],
-                        'permissions' => $rawPermissions,
+                        'permissions' => array_merge($rawPermissions, ['manage']),
                         'nodes' => []
                     ],
                     [
                         'module' => ['name' => 'Permissions', 'link' => '/admin/config/permissions'],
-                        'permissions' => $rawPermissions,
+                        'permissions' => array_merge($rawPermissions, ['manage']),
                         'nodes' => []
                     ],
                     [

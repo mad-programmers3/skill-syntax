@@ -53,7 +53,7 @@
                         <h3>LESSONS</h3>
                         <ul>
                             <li v-for="lesson in results.lessons" :key="lesson.id" class="result-item">
-                                <router-link :to="`/lessons/${lesson.id}`" @click.native="handleResultClick">
+                                <router-link :to="`/lesson/${lesson.id}`" @click.native="handleResultClick">
                                     {{ lesson.title.toLowerCase() }}
                                 </router-link>
                             </li>

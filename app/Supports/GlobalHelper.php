@@ -31,6 +31,10 @@ if (!defined('PERM_DELETE')) {
     define('PERM_DELETE', 'delete');
 }
 
+if (!defined('PERM_MANAGE')) {
+    define('PERM_MANAGE', 'manage');
+}
+
 // Helper method for consistent response formatting
 if (!function_exists('retRes')) {
     function retRes($message, $result = null, $status = CODE_SUCCESS)

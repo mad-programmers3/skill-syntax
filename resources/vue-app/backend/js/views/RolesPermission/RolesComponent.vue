@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" @open-modal="openModal">
+        <data-table :table-heading="tableHeading" :show-add-btn="can(permPrefix +'_'+PERM_ADD)">
             <tr v-for="(role, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="role.id">
                 <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>{{ limitText(role.name) }}</td>
@@ -48,15 +48,15 @@
 
                 <td>
                     <!-- Edit button -->
-                    <button v-if="can('role_edit')" @click="onClickUpdate(role)" class="btn btn-primary btn-sm" :title="`Edit ${role.name}`" type="button">
+                    <button v-if="can(permPrefix +'_'+PERM_EDIT)" @click="onClickUpdate(role)" class="btn btn-primary btn-sm" :title="`Edit ${role.name}`" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('role_delete')" @click="deleteItem(role.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${role.name}`" type="button">
+                    <button v-if="can(permPrefix +'_'+PERM_DELETE)" @click="deleteItem(role.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${role.name}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                     <!-- Mange button -->
-                    <router-link :to="{ name: 'manageRoles', params: { role_id: role.id } }" v-if="can('role_manage')" @click="deleteItem(role.id)" class="btn btn-warning btn-sm" :title="`Manage ${role.name}`" type="button">
+                    <router-link v-if="can(permPrefix +'_'+PERM_MANAGE)" :to="{ name: 'manageRoles', params: { role_id: role.id } }" class="btn btn-warning btn-sm" :title="`Manage ${role.name}`" type="button">
                         <i class="fa fa-cogs text-white"></i>
                     </router-link>
                 </td>
@@ -99,6 +99,7 @@
         mixins: [validatorListComponentMixin],
         data() {
             return {
+                permPrefix: 'role',
                 tableHeading: ['SL', 'Role','Users', 'Modules', 'Permissions', 'Status', 'Action'],
                 perPage:5,
             }
