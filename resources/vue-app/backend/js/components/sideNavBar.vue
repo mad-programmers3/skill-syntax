@@ -26,106 +26,26 @@
                 </a>
             </li>
 
-            <!-- Dashboard -->
-            <li class="nav-item">
-                <router-link class="nav-link" to="/admin/dashboard">
-                    <i class="mdi mdi-home menu-icon"></i>
-                    <span class="menu-title">Dashboard</span>
+            <!-- Modules -->
+            <li v-for="module in Config.modules" class="nav-item">
+                <template v-if="module.sub_modules && module.sub_modules.length > 0">
+                    <a class="nav-link" data-toggle="collapse" :href="'#module-collapse-'+module.id" aria-expanded="false" :aria-controls="'module-collapse-'+module.id">
+                        <i :class="module.icon + ' menu-icon'"></i>
+                        <span class="menu-title">{{ module.name }}</span>
+                        <i class="menu-arrow"></i>
+                    </a>
+                    <div class="collapse" :id="'module-collapse-'+module.id">
+                        <ul class="nav flex-column sub-menu">
+                            <li v-for="subModule in module.sub_modules" class="nav-item">
+                                <router-link class="nav-link" :to="subModule.link">{{ subModule.name }}</router-link>
+                            </li>
+                        </ul>
+                    </div>
+                </template>
+                <router-link v-else class="nav-link" :to="module.link">
+                    <i :class="module.icon + ' menu-icon'"></i>
+                    <span class="menu-title">{{ module.name }}</span>
                 </router-link>
-            </li>
-
-            <!-- Courses -->
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-                    <i class="fa fa-book menu-icon"></i>
-                    <span class="menu-title">Course</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="ui-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/course/courses">Courses</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/course/lessons">Lessons</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/course/categories">Categories</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/course/subcategories">SubCategories</router-link>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Reviews -->
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#review-basic" aria-expanded="false" aria-controls="review-basic">
-                    <i class="fa fa-star menu-icon"></i>
-                    <span class="menu-title">Review</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="review-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/review/reviews">Reviews</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/review/course-review">Course Reviews</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/review/lesson-review">Lesson Reviews</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/review/testimonials">Testimonials</router-link>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- Users -->
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#user-basic" aria-expanded="false" aria-controls="user-basic">
-                    <i class="fa fa-user menu-icon"></i>
-                    <span class="menu-title">User</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="user-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/user/users">Users</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/user/profile">Course Reviews</router-link>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-
-            <!-- RolePermission Section -->
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#role-basic" aria-expanded="false" aria-controls="role-basic">
-                    <i class="fa fa-cogs menu-icon"></i>
-                    <span class="menu-title">Configs</span>
-                    <i class="menu-arrow"></i>
-                </a>
-                <div class="collapse" id="role-basic">
-                    <ul class="nav flex-column sub-menu">
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/config/roles">Roles</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/config/modules">Modules</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/config/permissions">Permissions</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" to="/admin/config/manage-roles">Role Configs</router-link>
-                        </li>
-                    </ul>
-                </div>
             </li>
         </ul>
     </nav>
@@ -133,7 +53,14 @@
 
 <script>
     export default {
-        name: 'Sidebar'
+        name: 'Sidebar',
+        mounted() {
+            const _this = this;
+            this.fetchData(this.urlGenerate('api/configurations'), (result) => {
+                console.log(result);
+                _this.$store.commit('setConfig', result);
+            });
+        }
     };
 </script>
 

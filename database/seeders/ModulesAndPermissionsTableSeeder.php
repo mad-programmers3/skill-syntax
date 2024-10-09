@@ -20,55 +20,55 @@ class ModulesAndPermissionsTableSeeder extends Seeder
 
         $modulesNodes = [
             [
-                'module' => ['name' => 'Dashboard', 'link' => '/admin/dashboard', 'icon' => 'far fa-clock fa-fw'],
+                'module' => ['name' => 'Dashboard', 'link' => '/admin/dashboard', 'icon' => 'mdi mdi-home'],
                 'permissions' => $rawPermissions,
                 'nodes' => []
             ],
             [
-                'module' => ['name' => 'Course', 'icon' => 'fa fa-boxes'],
+                'module' => ['name' => 'Course', 'icon' => 'fa fa-book'],
                 'nodes' => [
                     [
-                        'module' => ['name' => 'Courses', 'link' => '/admin/course/courses', 'icon' => 'fa fa-box'],
+                        'module' => ['name' => 'Courses', 'link' => '/admin/course/courses'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                     [
-                        'module' => ['name' => 'Lessons', 'link' => '/admin/course/lessons', 'icon' => 'fa fa-box'],
+                        'module' => ['name' => 'Lessons', 'link' => '/admin/course/lessons'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                     [
-                        'module' => ['name' => 'Categories', 'link' => '/admin/course/categories', 'icon' => 'fa fa-tags'],
+                        'module' => ['name' => 'Categories', 'link' => '/admin/course/categories'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                     [
-                        'module' => ['name' => 'Sub Categories', 'link' => '/admin/course/sub-categories', 'icon' => 'fa fa-tag'],
+                        'module' => ['name' => 'Sub Categories', 'link' => '/admin/course/sub-categories'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                 ]
             ],
             [
-                'module' => ['name' => 'Review', 'icon' => 'fa fa-boxes'],
+                'module' => ['name' => 'Review', 'icon' => 'fa fa-star'],
                 'nodes' => [
                     [
-                        'module' => ['name' => 'Reviews', 'link' => '/admin/review/reviews', 'icon' => 'fa fa-box'],
+                        'module' => ['name' => 'Reviews', 'link' => '/admin/review/reviews'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                     [
-                        'module' => ['name' => 'Course Reviews', 'link' => '/admin/review/course-review', 'icon' => 'fa fa-box'],
+                        'module' => ['name' => 'Course Reviews', 'link' => '/admin/review/course-review'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                     [
-                        'module' => ['name' => 'Lessons Reviews', 'link' => '/admin/review/lesson-review', 'icon' => 'fa fa-tags'],
+                        'module' => ['name' => 'Lesson Reviews', 'link' => '/admin/review/lesson-review'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                     [
-                        'module' => ['name' => 'Testimonials', 'link' => '/admin/review/testimonials', 'icon' => 'fa fa-tag'],
+                        'module' => ['name' => 'Testimonials', 'link' => '/admin/review/testimonials'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
@@ -78,25 +78,42 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 'module' => ['name' => 'User', 'icon' => 'fa fa-user'],
                 'nodes' => [
                     [
-                        'module' => ['name' => 'Profile', 'link' => '/admin/user/profile', 'icon' => 'fa fa-id-card'],
+                        'module' => ['name' => 'Profile', 'link' => '/admin/user/profile'],
                         'permissions' => ['show', 'edit', 'delete'],
                         'nodes' => []
                     ],
                     [
-                        'module' => ['name' => 'Users', 'link' => '/admin/user/users', 'icon' => 'fa fa-users'],
+                        'module' => ['name' => 'Users', 'link' => '/admin/user/users'],
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                 ]
             ],
             [
-                'module' => ['name' => 'Table', 'link' => '/admin/table-basic', 'icon' => 'fa fa-table'],
-                'nodes' => []
+                'module' => ['name' => 'Configuration', 'icon' => 'fa fa-cogs'],
+                'nodes' => [
+                    [
+                        'module' => ['name' => 'Roles', 'link' => '/admin/config/roles'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                    [
+                        'module' => ['name' => 'Modules', 'link' => '/admin/config/modules'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                    [
+                        'module' => ['name' => 'Permissions', 'link' => '/admin/config/permissions'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                    [
+                        'module' => ['name' => 'Role Configs', 'link' => '/admin/config/manage-roles'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                ]
             ],
-            [
-                'module' => ['name' => 'Root Module 4', 'link' => '/api/module4', 'icon' => 'fa fa-chart-line'],
-                'nodes' => []
-            ]
         ];
 
         $this->insertModules($modulesNodes);
@@ -113,13 +130,13 @@ class ModulesAndPermissionsTableSeeder extends Seeder
     {
         foreach ($nodes as $n) {
             $moduleData = $n['module'];
-            $permissions = $n['permissions'] ?? null;
+            $permissions = $n['permissions'] ?? [];
             $moduleData['parent_id'] = $parentId;
 
             $module = Module::create($moduleData);
             $moduleId = $module->id;
 
-            if ($permissions) {
+            if (!empty($permissions)) {
                 foreach ($permissions as $permission) {
                     Permission::create([
                         'module_id' => $module->id,
@@ -132,6 +149,7 @@ class ModulesAndPermissionsTableSeeder extends Seeder
             $this->insertModules($n['nodes'], $moduleId);
         }
     }
+
 
 
 

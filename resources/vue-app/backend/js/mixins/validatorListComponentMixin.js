@@ -26,7 +26,7 @@ export default {
                             callback: (response) => {
                                 if (response.data) {
                                     // Show success toast notification for deletion
-                                    _this.showToast(response.data.message, "success");
+                                    _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? "success" : "error");
                                     _this.fetchData(this.urlGenerate(false, false, {page: currentPage, perPage}));
                                 }
                             }

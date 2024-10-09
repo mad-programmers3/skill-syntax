@@ -40,8 +40,8 @@ const routes =[
         meta : {'pageTitle' : 'Category List', dataUrl : 'api/categories'},
     },
     {
-        path: '/admin/course/subcategories',
-        name:'subcategories',
+        path: '/admin/course/sub-categories',
+        name:'subCategories',
         component:subCategoriesComponent,
         meta : {'pageTitle' : 'subCategory List', dataUrl : 'api/sub-categories'},
     },
