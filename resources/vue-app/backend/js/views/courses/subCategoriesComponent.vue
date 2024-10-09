@@ -16,7 +16,7 @@
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" :title="`Delete ${data.title}`" type="button">
+                    <button v-if="can('category_delete')" @click="deleteItem(data.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${data.title}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>
@@ -25,7 +25,7 @@
 
         <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
-        <validate-form-modal title="SubCategory">
+        <validate-form-modal title="SubCategory" :current-page="dataList.current_page" :per-page="perPage">
 
             <div class="mb-3">
                 <label class="form-label w-100">

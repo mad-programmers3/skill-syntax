@@ -29,7 +29,7 @@
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('module_delete')" @click="deleteItem(permission.id)" class="btn btn-danger btn-sm" :title="`Delete ${permission.name}`" type="button">
+                    <button v-if="can('module_delete')" @click="deleteItem(permission.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${permission.name}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                     <!-- Mange button -->
@@ -42,7 +42,7 @@
 
         <pagination v-if="dataList.current_page" :current-page="dataList.current_page" :last-page="dataList.last_page" :per-page="perPage"/>
 
-        <validate-form-modal  title="Module">
+        <validate-form-modal  title="Module" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Name

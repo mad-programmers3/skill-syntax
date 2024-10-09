@@ -39,14 +39,8 @@
                 type: String,
                 default: '500px',
             },
-            perPage: {
-                type: Number,
-                required: true
-            },
-            currentPage: {
-                type: Number,
-                required: true
-            },
+            perPage: Number,
+            currentPage: Number,
         },
 
         watch: {

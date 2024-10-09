@@ -52,7 +52,7 @@
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('role_delete')" @click="deleteItem(role.id)" class="btn btn-danger btn-sm" :title="`Delete ${role.name}`" type="button">
+                    <button v-if="can('role_delete')" @click="deleteItem(role.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${role.name}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                     <!-- Mange button -->
@@ -67,7 +67,7 @@
         <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
 
-        <validate-form-modal  title="Role">
+        <validate-form-modal  title="Role" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Name

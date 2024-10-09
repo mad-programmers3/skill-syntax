@@ -27,7 +27,7 @@ trait BaseCrudHelper
             $data = null;
             $perPage = $request->query('perPage');
             $query = $this->model->with($this->with); // Fetch all records with optional relationships
-            if ($perPage) $data = $query->paginate($perPage);
+            if ($perPage && is_numeric($perPage) && $perPage > 0) $data = $query->paginate($perPage);
             else $data = $query->get();
 
             return retRes('Successfully fetched all records', $data);

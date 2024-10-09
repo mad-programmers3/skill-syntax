@@ -17,7 +17,7 @@
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" :title="`Delete ${data.review.comment}`" type="button">
+                    <button v-if="can('category_delete')" @click="deleteItem(data.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${data.review.comment}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>
@@ -27,7 +27,7 @@
         <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
 
-        <validate-form-modal title="Course Review">
+        <validate-form-modal title="Course Review" :current-page="dataList.current_page" :per-page="perPage">
             <div v-if="formData.review" class="mb-3">
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.review.status" :true-value="1" :false-value="0"/>

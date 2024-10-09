@@ -22,7 +22,7 @@
                         <i class="fa fa-edit"></i>
                     </button>
                     <!--    delete btn    -->
-                    <button v-if="can('category_delete')" @click="deleteItem(course.id)" class="btn btn-danger btn-sm" :title="`Delete ${course.title}`" type="button">
+                    <button v-if="can('category_delete')" @click="deleteItem(course.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${course.title}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>
@@ -33,7 +33,7 @@
         <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
         <!--  Modal  -->
-        <validate-form-modal title="Course" width="700px">
+        <validate-form-modal title="Course" width="700px" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
