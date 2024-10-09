@@ -38,7 +38,15 @@
             width: {
                 type: String,
                 default: '500px',
-            }
+            },
+            perPage: {
+                type: Number,
+                required: true
+            },
+            currentPage: {
+                type: Number,
+                required: true
+            },
         },
 
         watch: {
@@ -100,7 +108,7 @@
                             if (response.data) {
                                 // Show success toast notification instead of alert
                                 _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error');
-                                _this.fetchData();
+                                _this.fetchData(this.urlGenerate(false, false, {page: _this.currentPage, perPage: _this.perPage}));
                             }
                         }
                     });

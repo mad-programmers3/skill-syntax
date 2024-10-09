@@ -92,6 +92,24 @@ export default {
             });
         },
 
+
+        showSweetAlert({
+                           title = 'Are you sure?',
+                           text = "You won't be able to revert this!",
+                           icon = 'warning',
+                           showCancelButton = true,
+                           confirmButtonText = 'Yes',
+                           cancelButtonText = 'No',
+                           confirmButtonColor= '#dc3545',
+                           cancelButtonColor = '#28a745',
+                           callback = false
+        }) {
+            this.$swal({title, text, icon, showCancelButton, confirmButtonText, cancelButtonText, confirmButtonColor, cancelButtonColor}).then((result) => {
+
+                if (typeof callback === 'function') callback(result.isConfirmed);
+            });
+        },
+
         // close the modal and reset the form data.
         closeModal(modalId = '#backendModal', callBack = false, defVal = {status: 1}) {
             $(modalId).modal('hide'); // Hide the modal

@@ -13,27 +13,25 @@ export default {
         },
 
         // handle the deletion of an item
-        deleteItem(id) {
-            this.$swal({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it!',
-                cancelButtonText: 'No, cancel!',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.httpReq({
-                        urlSuffix: id,
-                        method: 'delete',
-                        callback: (response) => {
-                            if (response.data) {
-                                // Show success toast notification for deletion
-                                this.showToast(response.data.message, "error");
-                                this.fetchData();
+        deleteItem(id, currentPage, perPage) {
+            const _this = this;
+            this.showSweetAlert({
+                confirmButtonText: 'Yes, Delete it',
+                cancelButtonText: 'No, Cancel it',
+                callback: (conform) => {
+                    if (conform) {
+                        _this.httpReq({
+                            urlSuffix: id,
+                            method: 'delete',
+                            callback: (response) => {
+                                if (response.data) {
+                                    // Show success toast notification for deletion
+                                    _this.showToast(response.data.message, "error");
+                                    _this.fetchData(this.urlGenerate(false, false, {page: currentPage, perPage}));
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             });
         },

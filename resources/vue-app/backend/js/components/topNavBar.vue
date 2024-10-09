@@ -65,18 +65,13 @@
         },
         methods: {
             confirmLogout() {
-                Swal.fire({
-                    title: 'Are you sure?',
+                const _this = this;
+                this.showSweetAlert({
                     text: "Do you really want to log out?",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#28a745',
                     confirmButtonText: 'Yes, log me out!',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.logout();
+                    cancelButtonText: 'Cancel',
+                    callback: (conform) => {
+                        if (conform) _this.logout();
                     }
                 });
             },

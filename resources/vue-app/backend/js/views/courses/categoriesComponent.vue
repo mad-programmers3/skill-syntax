@@ -15,7 +15,7 @@
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('category_delete')" @click="deleteItem(data.id)" class="btn btn-danger btn-sm" :title="`Delete ${data.title}`" type="button">
+                    <button v-if="can('category_delete')" @click="deleteItem(data.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${data.title}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>
@@ -26,47 +26,22 @@
         <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
 
-        <validate-form-modal title="Category">
+        <validate-form-modal title="Category" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
-                    <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Category title here"
-                            v-model="formData.title"
-                            v-validate="'required|min:3|max:255'"
-                            name="title"
-                            @input="validateField"
-                    />
+                    <input type="text" class="form-control" placeholder="Category title here" v-model="formData.title" v-validate="'required|min:3|max:255'" name="title" @input="validateField"/>
                 </label>
             </div>
             <div class="mb-3">
                 <label class="form-label w-100">
                     Details
-                    <textarea
-                            type="text"
-                            class="form-control"
-                            placeholder="Category details here"
-                            v-model="formData.details"
-                            v-validate="'max:500'"
-                            name="details"
-                            @input="validateField"
-                    ></textarea>
+                    <textarea type="text" class="form-control" placeholder="Category details here" v-model="formData.details" v-validate="'max:500'" name="details" @input="validateField"></textarea>
                 </label>
             </div>
             <div class="mb-3">
                 <div class="custom-control custom-switch">
-                    <input
-                            type="checkbox"
-                            class="custom-control-input"
-                            id="customSwitch"
-                            v-model="formData.status"
-                            :true-value="1"
-                            :false-value="0"
-                            v-validate="'required'"
-                            name="status"
-                    />
+                    <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0" v-validate="'required'" name="status"/>
                     <label class="custom-control-label" for="customSwitch">
                         {{ formData.status ? 'Active' : 'Inactive' }}
                     </label>
