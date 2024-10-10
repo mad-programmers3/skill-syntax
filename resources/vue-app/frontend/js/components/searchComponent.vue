@@ -91,6 +91,7 @@
 </template>
 <script>
     import axios from 'axios';
+    import Swal from 'sweetalert2'; // Ensure SweetAlert2 is installed and imported
 
     export default {
         data() {
@@ -130,8 +131,33 @@
                             params: { query: this.searchQuery }
                         });
                         this.results = response.data; // Store results
+
+                        // Check if all result arrays are empty
+                        if (
+                            !this.results.users.length &&
+                            !this.results.courses.length &&
+                            !this.results.lessons.length &&
+                            !this.results.categories.length &&
+                            !this.results.subcategories.length
+                        ) {
+                            // Show a simplified SweetAlert message if no results found
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'No Results Found',
+                                text: 'Please try again with different keywords.',
+                                confirmButtonText: 'OK',
+                                confirmButtonColor: '#423a8e', // Button color
+                            });
+                        }
                     } catch (error) {
                         console.error('Search request failed:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Something went wrong. Please try again later.',
+                            confirmButtonText: 'OK',
+                            confirmButtonColor: '#d33',
+                        });
                     }
                 }
             },
@@ -141,6 +167,7 @@
         }
     };
 </script>
+
 <style scoped>
     /* Hide scrolling for the body when the modal is open */
     .search-input-container {
