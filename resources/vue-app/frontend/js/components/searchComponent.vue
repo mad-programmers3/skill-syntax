@@ -15,7 +15,7 @@
                 <div class="search-input-container">
                     <input
                             v-model="searchQuery"
-                            @keyup.enter="performSearch"
+                            @input="debouncedSearch"
                             placeholder="Search for users, courses, lessons, categories..."
                             class="search-input"
                     />
@@ -74,7 +74,7 @@
 
                     <!-- SUBCATEGORIES -->
                     <div v-if="results.subcategories.length">
-                        <h3>SUB_CATEGORIES</h3>
+                        <h3>SUBCATEGORIES</h3>
                         <ul>
                             <li v-for="subcategory in results.subcategories" :key="subcategory.id" class="result-item">
                                 <router-link :to="`/subcategories/${subcategory.id}`" @click.native="handleResultClick">
@@ -83,15 +83,16 @@
                             </li>
                         </ul>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 <script>
     import axios from 'axios';
-    import Swal from 'sweetalert2'; // Ensure SweetAlert2 is installed and imported
+    import Swal from 'sweetalert2';
+    import debounce from 'lodash/debounce';
 
     export default {
         data() {
@@ -106,6 +107,26 @@
                     subcategories: [], // Store search results for subcategories
                 }
             };
+        },
+        computed: {
+            suggestionsAvailable() {
+                // Check if any category has results to show suggestions
+                return this.results.users.length ||
+                    this.results.courses.length ||
+                    this.results.lessons.length ||
+                    this.results.categories.length ||
+                    this.results.subcategories.length;
+            },
+            combinedResults() {
+                // Flatten and combine all result types into a single array for display
+                return [
+                    ...this.results.users.map(user => ({ title: user.name, link: `/users/${user.id}` })),
+                    ...this.results.courses.map(course => ({ title: course.title, link: `/courses/${course.id}` })),
+                    ...this.results.lessons.map(lesson => ({ title: lesson.title, link: `/lesson/${lesson.id}` })),
+                    ...this.results.categories.map(category => ({ title: category.title, link: `/categories/${category.id}` })),
+                    ...this.results.subcategories.map(subcategory => ({ title: subcategory.title, link: `/subcategories/${subcategory.id}` })),
+                ];
+            }
         },
         methods: {
             openSearchModal() {
@@ -161,19 +182,33 @@
                     }
                 }
             },
+            async search() {
+                if (this.searchQuery.trim()) {
+                    try {
+                        const response = await axios.get('/search', {
+                            params: { query: this.searchQuery }
+                        });
+                        this.results = response.data;
+                    } catch (error) {
+                        console.error('Error fetching search results:', error);
+                    }
+                }
+            },
             handleResultClick() {
-                this.closeSearchModal();
+                this.closeSearchModal(); // Close modal when a result is clicked
             }
+        },
+        created() {
+            this.debouncedSearch = debounce(this.search); // Debounce search to reduce API requests
         }
     };
 </script>
 
 <style scoped>
-    /* Hide scrolling for the body when the modal is open */
     .search-input-container {
         display: flex;
-        align-items: center; /* Center items vertically */
-        margin-bottom: 20px; /* Space between input and results */
+        align-items: center;
+        margin-bottom: 20px;
     }
 
     .search-input {
@@ -182,12 +217,12 @@
         border-radius: 5px;
         width: 100%;
         font-size: 16px;
-        margin-right: 10px; /* Space between input and button */
+        margin-right: 10px;
     }
 
     .search-button {
         padding: 10px 15px;
-        background-color: #007bff; /* Primary button color */
+        background-color: #007bff;
         color: white;
         border: none;
         border-radius: 5px;
@@ -197,7 +232,7 @@
     }
 
     .search-button:hover {
-        background-color: #0056b3; /* Darker shade on hover */
+        background-color: #0056b3;
     }
 
     .modal-overlay {
@@ -210,57 +245,47 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        z-index: 1000; /* Higher z-index to cover other elements */
-        overflow: hidden; /* Prevent scrolling on the modal overlay */
+        z-index: 1000;
+        overflow: hidden;
     }
 
     .modal-content {
         background-color: #fff;
-        padding: 30px;
+        padding: 20px;
         border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        width: 60%;
         max-width: 800px;
-        width: 100%;
-        max-height: 100vh;
-        overflow-y: auto; /* Scroll inside the modal if content overflows */
-        position: relative;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        max-height: 80%;
+        overflow-y: auto;
+    }
+
+    .modal-title {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
     }
 
     .results-section {
-        max-height: 60vh;
+        max-height: 400px;
         overflow-y: auto;
-        padding-right: 10px;
-        margin-top: 20px;
-    }
-
-    h2.modal-title {
-        margin-bottom: 20px;
-        font-size: 24px;
-        color: #444;
-        font-weight: 600;
     }
 
     h3 {
-        margin-top: 20px;
-        font-size: 18px;
-        color: #555;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 5px;
-        text-transform: uppercase; /* Uppercase for headings */
+        margin-bottom: 10px;
     }
 
     .result-item {
         padding: 10px 0;
-        border-bottom: 1px solid #f0f0f0;
-        text-transform: lowercase; /* Lowercase for results */
+        border-bottom: 1px solid #ddd;
     }
 
-    .result-item:last-child {
-        border-bottom: none;
+    .result-item a {
+        color: #007bff; /* Link color */
+        text-decoration: none;
     }
 
-    .no-results {
-        color: #999;
-        font-style: italic;
+    .result-item a:hover {
+        text-decoration: underline;
     }
 </style>
