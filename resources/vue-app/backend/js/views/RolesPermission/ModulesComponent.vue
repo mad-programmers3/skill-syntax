@@ -3,7 +3,10 @@
         <data-table :table-heading="tableHeading" :show-add-btn="can('module_add')">
             <tr v-for="(module, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="module.id">
                 <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
+                <td><i :class="module.icon"></i></td>
                 <td>{{ limitText(module.name) }}</td>
+                <td>{{ limitText(module.parent ? module.parent.name : 'Root') }}</td>
+                <td>{{ module.link }}</td>
                 <td>
                     {{ module.roles ? module.roles.length : 'NA' }}
                     <i class="ml-1 fa fa-eye" data-toggle="modal" :data-target="`#moduleRolesModal${module.id}`" style="cursor: pointer"></i>
@@ -60,6 +63,29 @@
                 </label>
             </div>
             <div class="mb-3">
+                <label class="form-label w-100">
+                    Link
+                    <input type="text" class="form-control" v-model="formData.link" v-validate="'required|min:3|max:255'" name="link" @input="validateField"/>
+                </label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label w-100">
+                    Icon
+                    <input type="text" class="form-control" v-model="formData.icon" v-validate="'required|min:3|max:255'" name="icon" @input="validateField"/>
+                </label>
+            </div>
+            <div class="mb-3">
+                <label class="form-label d-block">
+                    Parent
+                    <select class="form-control" v-model="formData.parent_id" v-validate="'required'" name="parent_id" @change="validateField">
+                        <option :value="0">Parent it self</option>
+                        <option v-for="module in modules" :key="module.id" :value="module.id">
+                            {{ module.name }}
+                        </option>
+                    </select>
+                </label>
+            </div>
+            <div class="mb-3">
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0" v-validate="'required'" name="status"/>
                     <label class="custom-control-label" for="customSwitch">
@@ -84,14 +110,24 @@
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Module', 'Roles', 'Permissions', 'Status', 'Action'],
-                perPage: 5,
+                tableHeading: ['SL', 'Icon', 'Module', 'Parent', 'Links', 'Roles', 'Perms', 'Status', 'Action'],
+                modules: [],
+                perPage: 15,
             }
         },
 
         mounted() {
+            this.$store.commit('setFormData', {parent_id: 0, status: 1});
             // Fetch datalist with paginate
             this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: this.perPage}));
+
+            const _this = this;
+            this.fetchData(
+                this.urlGenerate('api/required-data', false, {'modules': true, 'parents_only': true}),
+                (result) => {
+                    _this.modules = result.modules
+                }
+            );
         }
     }
 </script>

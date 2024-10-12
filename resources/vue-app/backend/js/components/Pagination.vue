@@ -54,7 +54,7 @@
                 const totalBlocks = totalNumbers + 2;  // Including "Back" and "Next"
 
                 if (this.lastPage <= totalBlocks) {
-                    console.log("Pagination range includes all pages:", Array.from({ length: this.lastPage }, (_, i) => i + 1));
+                    //console.log("Pagination range includes all pages:", Array.from({ length: this.lastPage }, (_, i) => i + 1));
                     return Array.from({ length: this.lastPage }, (_, i) => i + 1);
                 }
 

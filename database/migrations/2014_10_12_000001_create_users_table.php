@@ -16,8 +16,13 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('set null');
+            $table->foreignId('avatar_id')->nullable();
             $table->string('name');
             $table->string('email')->unique(); // Ensures email uniqueness
+            $table->text('bio')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('location')->nullable();
+            $table->tinyInteger('status')->default(1); // 0 => inactive, 1 => active, 2 => request pending
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

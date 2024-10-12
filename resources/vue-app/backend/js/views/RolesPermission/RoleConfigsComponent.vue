@@ -21,12 +21,16 @@
             <table class="role-permission-table">
                 <thead>
                 <tr>
+                    <th class="p-1" style="white-space: nowrap; width: 0">PID</th>
+                    <th class="p-1" style="white-space: nowrap; width: 0">ID</th>
                     <th>Modules</th>
                     <th colspan="4">Permissions</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="module in modules" :key="module.id">
+                <tr v-for="module in modules" :key="module.id" :style="{ backgroundColor: getDynamicColor(module.parent_id !== 0 ? module.parent_id : module.id, 0.07) }">
+                    <td :style="{ backgroundColor: getDynamicColor(module.parent_id) }">{{ module.parent_id }}</td>
+                    <td :style="{ backgroundColor: getDynamicColor(module.id) }">{{ module.id }}</td>
                     <td>
                         <label class="font-weight-bold">
                             <input @change="addPermission($event, crrRole.modules, module.id, ADD_MODULE)" :checked="crrRole.modules && crrRole.modules.includes(module.id)" type="checkbox"/>
@@ -126,6 +130,15 @@
                 let arr = str.split('_');
                 return arr[arr.length - 1];
             },
+            getDynamicColor(parentId, a = 0.2) {
+                // Adjust the multipliers to spread out the RGB values
+                const r = (55 * parentId) % 256;  // Red component based on parentId
+                const g = (113 * parentId) % 256; // Green component with a different multiplier
+                const b = (176 * parentId) % 256; // Blue component to create unique progression
+
+                // Return the RGBA color string
+                return `rgba(${r}, ${g}, ${b}, ${a})`;
+            }
         },
     };
 </script>
@@ -208,13 +221,11 @@
     }
 
     .role-permission-table td {
-        /*display: flex;*/
-        background-color: #f9f9f9;
         color: #555555;
     }
 
     .role-permission-table tr:hover {
-        background-color: #f1f1f1;
+        background-color: rgba(0, 0, 0, 0.07) !important;
     }
 
     label {

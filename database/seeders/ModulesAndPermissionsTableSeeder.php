@@ -47,6 +47,11 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                         'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
+                    [
+                        'module' => ['name' => 'Pending', 'link' => '/admin/course/pending'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
                 ]
             ],
             [
@@ -78,13 +83,13 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 'module' => ['name' => 'User', 'icon' => 'fa fa-user'],
                 'nodes' => [
                     [
-                        'module' => ['name' => 'Profile', 'link' => '/admin/user/profile'],
-                        'permissions' => ['show', 'edit', 'delete'],
+                        'module' => ['name' => 'Users', 'link' => '/admin/user/users'],
+                        'permissions' => $rawPermissions,
                         'nodes' => []
                     ],
                     [
-                        'module' => ['name' => 'Users', 'link' => '/admin/user/users'],
-                        'permissions' => $rawPermissions,
+                        'module' => ['name' => 'Profile', 'link' => '/admin/user/profile'],
+                        'permissions' => ['show', 'edit', 'delete'],
                         'nodes' => []
                     ],
                 ]

@@ -14,7 +14,7 @@ class ModuleController extends Controller
     public function __construct()
     {
         $this->model = new Module();
-        $this->with = ['permissions:id,module_id,name,status', 'roles'];
+        $this->with = ['permissions:id,module_id,name,status', 'roles', 'parent:id,name'];
     }
 
 //    public function index()

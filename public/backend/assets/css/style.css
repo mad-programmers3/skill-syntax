@@ -13302,7 +13302,7 @@ select.tt-hint {
       border-bottom-width: 1px;
       font-family: "Rubik", sans-serif;
       font-weight: 500;
-      padding-left: 25px; }
+      padding-left: 10px; }
       .rtl .table thead th {
         padding-left: 0;
         padding-right: 25px; }
@@ -13314,7 +13314,7 @@ select.tt-hint {
     font-size: 0.875rem;
     line-height: 1;
     white-space: nowrap;
-    padding: 14px 0 14px 25px; }
+    padding: 7px 0 7px 10px; }
     .table th img,
     .table td img {
       width: 30px;

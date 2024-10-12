@@ -41,22 +41,24 @@ class SupportController extends Controller
             $data['my_files'] = MyFile::all();
 
         if (request()->has('modules')) {
-            // Check if relationships (like 'permissions' and 'roles') are requested
-            $withRelations = [];
-            if (request()->has('with_permissions')) {
-                $withRelations[] = 'permissions:id,module_id,name,status';
-            }
-            if (request()->has('with_roles')) {
-                $withRelations[] = 'roles';
-            }
+            $query = Module::query();
 
-            // Fetch modules with or without relationships
-            if (!empty($withRelations)) {
-                $data['modules'] = Module::with($withRelations)->get();
-            } else {
-                $data['modules'] = Module::all();
-            }
+            $withRelations = [];
+            if (request()->has('with_permissions'))
+                $withRelations[] = 'permissions:id,module_id,name,status';
+
+            if (request()->has('with_roles'))
+                $withRelations[] = 'roles';
+
+            if (request()->has('parents_only'))
+                $query->where('parent_id', 0);
+
+            if (!empty($withRelations))
+                $data['modules'] = $query->with($withRelations)->get();
+            else
+                $data['modules'] = $query->get();
         }
+
 
         if (request()->has('roles'))
             $data['roles'] = Role::all();
@@ -76,7 +78,6 @@ class SupportController extends Controller
             ->whereIn('id', $permittedModuleId)
             ->with(['sub_modules'=>function ($subModules) use ($permittedModuleId) {
                 $subModules->whereIn('id', $permittedModuleId);
-                $subModules->with('sub_modules');
             }])
             ->get()->toArray();
 

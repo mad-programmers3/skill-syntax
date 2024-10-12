@@ -42,6 +42,9 @@ export default {
         }
     },
     methods: {
+        dd(data) {
+            console.log(data);
+        },
         asset(path) {
             return baseUrl + '/' + path;
         },

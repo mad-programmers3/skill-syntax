@@ -5,7 +5,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="backendModalLabel">{{ title }}</h1>
-                    <button type="button" class="close" @click="closeModal('#backendModal', clearSpanErrors)" data-dismiss="modal" aria-label="Close">
+                    <button type="button" class="close" @click="closeModal('#backendModal', clearSpanErrors, initVal)" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -15,7 +15,7 @@
                         <slot/>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" @click="closeModal('#backendModal', clearSpanErrors)">Close</button>
+                        <button type="button" class="btn btn-secondary" @click="closeModal('#backendModal', clearSpanErrors, initVal)">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>
@@ -38,6 +38,10 @@
             width: {
                 type: String,
                 default: '500px',
+            },
+            initVal: {
+                type: Object,
+                default: {status: 1},
             },
             perPage: Number,
             currentPage: Number,
@@ -72,8 +76,9 @@
         },
 
         mounted() {
-            // Fetches authenticated user info on mount
-            this.formData.user_id = this.getAuth().id;
+            $('#backendModal').on('hidden.bs.modal', () => {
+                this.closeModal('#backendModal', this.clearSpanErrors, this.initVal);
+            });
         },
 
         methods: {

@@ -12,7 +12,7 @@ trait BaseCrudHelper
     use Helper;
 
     // Define these in the main controller
-    protected $model, $with = [], $showWith = [],
+    protected $model, $with = [], $showWith = [], $orderBy,
         $beforeStore = false, $afterStore = false,
         $beforeUpdate = false, $afterUpdate = false,
         $afterDelete = false;
@@ -26,7 +26,8 @@ trait BaseCrudHelper
         try {
             $data = null;
             $perPage = $request->query('perPage');
-            $query = $this->model->with($this->with); // Fetch all records with optional relationships
+            $query = $this->model->with($this->with);
+            if ($this->orderBy) $query->orderBy($this->orderBy);
             if ($perPage && is_numeric($perPage) && $perPage > 0) $data = $query->paginate($perPage);
             else $data = $query->get();
 
@@ -80,7 +81,7 @@ trait BaseCrudHelper
             $record = $this->model->findOrFail($id); // Find the record by ID
             $newRecord = $record->update($request->all()); // Update the record
             call($this->afterUpdate, $record, $newRecord);
-            return retRes('Successfully updated record', $record);
+            return retRes('Successfully updated record', $newRecord);
         } catch (ModelNotFoundException $e) {
             return retRes('Record not found', null, 404);
         } catch (Exception $e) {

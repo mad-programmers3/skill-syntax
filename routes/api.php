@@ -44,7 +44,7 @@ Route::group(['prefix' => 'pages'], function () {
     Route::get('lessons/{id}', [FrontendController::class, 'showLesson']);
 });
 
-Route::get('tests', [SupportController::class, 'getConfigurations']);
+Route::resource('tests', UserController::class);
 
 // Role routes
 Route::middleware('auth:api')->group(function () {

@@ -11,6 +11,7 @@ import RolesComponent from "../views/RolesPermission/RolesComponent";
 import ModulesComponent from "../views/RolesPermission/ModulesComponent";
 import RoleConfigsComponent from "../views/RolesPermission/RoleConfigsComponent";
 import PermissionsComponents from "../views/RolesPermission/PermissionsComponents";
+import UsersComponent from "../views/user/UsersComponent";
 
 
 const routes =[
@@ -71,6 +72,21 @@ const routes =[
         name:'testimonials',
         component:TestimonialComponent,
         meta : {'pageTitle' : 'testimonials List', dataUrl : 'api/review/testimonials'},
+    },
+
+
+   // User
+    {
+        path: '/admin/user/users',
+        name:'reviews',
+        component:UsersComponent,
+        meta : {'pageTitle' : 'User List', dataUrl : 'api/users'},
+    },
+    {
+        path: '/admin/user/profile',
+        name:'course-review',
+        component:UsersComponent,
+        meta : {'pageTitle' : 'course-review List', dataUrl : 'api/review/course-reviews'},
     },
 
 
