@@ -1,4 +1,3 @@
-
 <template>
     <div class="search-component">
         <li class="nav-item">
@@ -27,61 +26,55 @@
                     <!-- USERS -->
                     <div v-if="results.users.length">
                         <h3>USERS</h3>
-                        <ul>
-                            <li v-for="user in results.users" :key="user.id" class="result-item">
-                                <router-link :to="`/users/${user.id}`" @click.native="handleResultClick">
-                                    {{ user.name.toLowerCase() }} - {{ user.email.toLowerCase() }}
-                                </router-link>
-                            </li>
-                        </ul>
+                        <div v-for="user in results.users" :key="user.id" class="result-item">
+                            <router-link :to="`/users/${user.id}`" @click.native="handleResultClick">
+                                {{ user.name.toLowerCase() }} - {{ user.email.toLowerCase() }}
+                            </router-link>
+                        </div>
                     </div>
 
                     <!-- COURSES -->
                     <div v-if="results.courses.length">
                         <h3>COURSES</h3>
-                        <ul>
-                            <li v-for="course in results.courses" :key="course.id" class="result-item">
-                                <router-link :to="`/courses/${course.id}`" @click.native="handleResultClick">
-                                    {{ course.title.toLowerCase() }}
-                                </router-link>
-                            </li>
-                        </ul>
+                        <div v-for="course in results.courses" :key="course.id" class="result-item">
+                            <router-link :to="`/courses/${course.id}`" @click.native="handleResultClick" class="d-flex">
+                                <img :src="generateFileUrl(course.thumbnail, baseUrl + '/images/course-def-thumbnail.jpg')" height="70px" width="100px">
+                                <div>
+                                    <h3>{{ course.title }}</h3>
+                                    <span>{{course.category.title}}</span>
+                                </div>
+                            </router-link>
+                        </div>
                     </div>
 
                     <!-- LESSONS -->
                     <div v-if="results.lessons.length">
                         <h3>LESSONS</h3>
-                        <ul>
-                            <li v-for="lesson in results.lessons" :key="lesson.id" class="result-item">
-                                <router-link :to="`/lesson/${lesson.id}`" @click.native="handleResultClick">
-                                    {{ lesson.title.toLowerCase() }}
-                                </router-link>
-                            </li>
-                        </ul>
+                        <div v-for="lesson in results.lessons" :key="lesson.id" class="result-item">
+                            <router-link :to="`/lesson/${lesson.id}`" @click.native="handleResultClick">
+                                {{ lesson.title.toLowerCase() }}
+                            </router-link>
+                        </div>
                     </div>
 
                     <!-- CATEGORIES -->
                     <div v-if="results.categories.length">
                         <h3>CATEGORIES</h3>
-                        <ul>
-                            <li v-for="category in results.categories" :key="category.id" class="result-item">
-                                <router-link :to="`/categories/${category.id}`" @click.native="handleResultClick">
-                                    {{ category.title.toLowerCase() }}
-                                </router-link>
-                            </li>
-                        </ul>
+                        <div v-for="category in results.categories" :key="category.id" class="result-item">
+                            <router-link :to="`/categories/${category.id}`" @click.native="handleResultClick">
+                                {{ category.title.toLowerCase() }}
+                            </router-link>
+                        </div>
                     </div>
 
                     <!-- SUBCATEGORIES -->
                     <div v-if="results.subcategories.length">
                         <h3>SUBCATEGORIES</h3>
-                        <ul>
-                            <li v-for="subcategory in results.subcategories" :key="subcategory.id" class="result-item">
-                                <router-link :to="`/subcategories/${subcategory.id}`" @click.native="handleResultClick">
-                                    {{ subcategory.title.toLowerCase() }}
-                                </router-link>
-                            </li>
-                        </ul>
+                        <div v-for="subcategory in results.subcategories" :key="subcategory.id" class="result-item">
+                            <router-link :to="`/subcategories/${subcategory.id}`" @click.native="handleResultClick">
+                                {{ subcategory.title.toLowerCase() }}
+                            </router-link>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -280,12 +273,16 @@
         border-bottom: 1px solid #ddd;
     }
 
-    .result-item a {
-        color: #007bff; /* Link color */
-        text-decoration: none;
+    .result-item:hover {
+        background-color: #f5f5f5;
     }
 
-    .result-item a:hover {
-        text-decoration: underline;
+    .result-item a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    .result-item img {
+        margin-right: 10px;
     }
 </style>
