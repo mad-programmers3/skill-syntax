@@ -9,6 +9,8 @@ import contactComponent from "../views/contactComponent";
 import lessonsComponent from "../../../backend/js/views/courses/lessonsComponent";
 import lessonComponent from "../views/lessonComponent";
 import searchComponent from "../components/searchComponent";
+import userProfile from "../../user/userProfile";
+
 
 const route = [
     {
@@ -70,6 +72,12 @@ const route = [
         path:'/search',
         name:'search',
         component : searchComponent
+    },
+    {
+        path:'/profile',
+        name:'profile',
+        component:userProfile
     }
+
 ];
 export default route;

@@ -7,10 +7,12 @@
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container" style="background-color: white">
                         <router-link class="navbar-brand logo_h" to="/">
-                            <img :src="baseUrl + '/frontend/img/logo.png'" alt=""/>
+                            <img :src="baseUrl + '/frontend/img/logo.png'" alt="" />
                         </router-link>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="icon-bar"></span> <span class="icon-bar"></span>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
                         <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
@@ -22,7 +24,8 @@
                                     <router-link class="nav-link" to="/about">About</router-link>
                                 </li>
                                 <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">Pages</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <router-link class="nav-link" to="/courses">Courses</router-link>
@@ -33,7 +36,8 @@
                                     </ul>
                                 </li>
                                 <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                                       aria-expanded="false">Blog</a>
                                     <ul class="dropdown-menu">
                                         <li class="nav-item">
                                             <router-link class="nav-link" to="/blog">Blog</router-link>
@@ -46,7 +50,7 @@
                                 <li class="nav-item">
                                     <router-link class="nav-link" to="/contact">Contact</router-link>
                                 </li>
-<!--                                 Include the search component here-->
+                                <!-- Include the search component here-->
                                 <li class="nav-item search-container">
                                     <search-component />
                                 </li>
@@ -58,10 +62,15 @@
                                         <span class="profile-name">{{ userName }}</span>
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+                                        <a class="dropdown-item" href="#" @click.prevent="goToProfile">
+                                            <i class="mdi mdi-account mr-2 text-primary"></i> Profile
+                                        </a>
+                                        <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#" @click.prevent="confirmLogout">
-                                            <i class="mdi mdi-logout mr-2 text-primary"></i> Logout
+                                            <i class="mdi mdi-logout mr-2 text-danger"></i> Logout
                                         </a>
                                     </div>
+
                                 </li>
                                 <a v-else class="primary-btn mb-0" href="/login">Log In</a>
                             </ul>
@@ -96,6 +105,10 @@
             }
         },
         methods: {
+            goToProfile() {
+                // Navigate to the profile page or handle the profile action
+                this.$router.push('/profile'); // Assuming you have a route for profile
+            },
             confirmLogout() {
                 Swal.fire({
                     title: 'Are you sure?',
@@ -117,6 +130,7 @@
                     await axios.post('/logout');
                     this.isAuthenticated = false;  // Set isAuthenticated to false after logout
                     this.$store.commit('logout'); // Or update the Vuex state if you're using Vuex
+                    this.$router.push('/login'); // Redirect to login page after logout
                 } catch (error) {
                     console.error('Logout failed:', error);
                 }
@@ -142,7 +156,36 @@
     }
 
     .search-container {
-        /* Add any styles for the search component container here */
-    }
-</style>
 
+    }
+
+    .dropdown-menu {
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        transition: all 0.2s ease;
+        padding: 0.5rem 0;
+    }
+
+    .dropdown-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        color: #333;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: #007bff;
+    }
+
+    /* Divider style */
+    .dropdown-divider {
+        height: 1px;
+        margin: 0.5rem 0;
+        background-color: #e9ecef;
+    }
+
+</style>
