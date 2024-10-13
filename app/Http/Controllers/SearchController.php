@@ -24,6 +24,7 @@ class SearchController extends Controller
         $courses = Course::where('title', 'LIKE', "%{$query}%")
             ->orWhere('description', 'LIKE', "%{$query}%")
             ->with('thumbnail')
+            ->with('category')
             ->get();
 
         // Search in Lessons
