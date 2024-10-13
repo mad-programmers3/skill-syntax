@@ -1,173 +1,164 @@
 <template>
-    <div class="content-wrapper pb-0">
-        <div class="page-header flex-wrap">
-            <h3 class="mb-0"> Hi, welcome back! <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block">Your web analytics dashboard template.</span>
-            </h3>
-            <div class="d-flex">
-                <button type="button" class="btn btn-sm bg-white btn-icon-text border">
-                    <i class="mdi mdi-email btn-icon-prepend"></i> Email </button>
-                <button type="button" class="btn btn-sm bg-white btn-icon-text border ml-3">
-                    <i class="mdi mdi-printer btn-icon-prepend"></i> Print </button>
-                <button type="button" class="btn btn-sm ml-3 btn-success"> Add User </button>
-            </div>
-        </div>
+    <div>
+        <h3 class="mb-4">Dashboard Overview</h3>
         <div class="row">
-            <div class="col-xl-3 col-lg-12 stretch-card grid-margin">
-                <div class="row">
-                    <div class="col-xl-12 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-3">
-                        <div class="card bg-warning">
-                            <div class="card-body px-3 py-4">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <div class="color-card">
-                                        <p class="mb-0 color-card-head">Sales</p>
-                                        <h2 class="text-white"> $8,753.<span class="h5">00</span>
-                                        </h2>
-                                    </div>
-                                    <i class="card-icon-indicator mdi mdi-basket bg-inverse-icon-warning"></i>
+            <!-- Courses Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow-sm border-left-primary h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Courses
                                 </div>
-                                <h6 class="text-white">18.33% Since last month</h6>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">13</div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-3">
-                        <div class="card bg-danger">
-                            <div class="card-body px-3 py-4">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <div class="color-card">
-                                        <p class="mb-0 color-card-head">Margin</p>
-                                        <h2 class="text-white"> $5,300.<span class="h5">00</span>
-                                        </h2>
-                                    </div>
-                                    <i class="card-icon-indicator mdi mdi-cube-outline bg-inverse-icon-danger"></i>
-                                </div>
-                                <h6 class="text-white">13.21% Since last month</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-md-6 stretch-card grid-margin grid-margin-sm-0 pb-sm-3 pb-lg-0 pb-xl-3">
-                        <div class="card bg-primary">
-                            <div class="card-body px-3 py-4">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <div class="color-card">
-                                        <p class="mb-0 color-card-head">Orders</p>
-                                        <h2 class="text-white"> $1,753.<span class="h5">00</span>
-                                        </h2>
-                                    </div>
-                                    <i class="card-icon-indicator mdi mdi-briefcase-outline bg-inverse-icon-primary"></i>
-                                </div>
-                                <h6 class="text-white">67.98% Since last month</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-md-6 stretch-card pb-sm-3 pb-lg-0">
-                        <div class="card bg-success">
-                            <div class="card-body px-3 py-4">
-                                <div class="d-flex justify-content-between align-items-start">
-                                    <div class="color-card">
-                                        <p class="mb-0 color-card-head">Affiliate</p>
-                                        <h2 class="text-white">2368</h2>
-                                    </div>
-                                    <i class="card-icon-indicator mdi mdi-account-circle bg-inverse-icon-success"></i>
-                                </div>
-                                <h6 class="text-white">20.32% Since last month</h6>
+                            <div class="col-auto">
+                                <i class="fas fa-graduation-cap fa-2x text-primary"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-xl-9 stretch-card grid-margin">
-                <div class="card">
+
+            <!-- Students Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow-sm border-left-success h-100 py-2">
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <h5>Business Survey</h5>
-                                <p class="text-muted"> Show overview jan 2018 - Dec 2019 <a class="text-muted font-weight-medium pl-2" href="#"><u>See Details</u></a>
-                                </p>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Students
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
                             </div>
-                            <div class="col-sm-5 text-md-right">
-                                <button type="button" class="btn btn-icon-text mb-3 mb-sm-0 btn-inverse-primary font-weight-normal">
-                                    <i class="mdi mdi-email btn-icon-prepend"></i>Download Report </button>
+                            <div class="col-auto">
+                                <i class="fas fa-user-graduate fa-2x text-success"></i>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="card mb-3 mb-sm-0">
-                                    <div class="card-body py-3 px-4">
-                                        <p class="m-0 survey-head">Today Earnings</p>
-                                        <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
-                                            <div>
-                                                <h3 class="m-0 survey-value">$5,300</h3>
-                                                <p class="text-success m-0">-310 avg. sales</p>
-                                            </div>
-                                            <div id="earningChart" class="flot-chart"></div>
-                                        </div>
-                                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructors Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow-sm border-left-info h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Instructors
                                 </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
                             </div>
-                            <div class="col-sm-4">
-                                <div class="card mb-3 mb-sm-0">
-                                    <div class="card-body py-3 px-4">
-                                        <p class="m-0 survey-head">Product Sold</p>
-                                        <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
-                                            <div>
-                                                <h3 class="m-0 survey-value">$9,100</h3>
-                                                <p class="text-danger m-0">-310 avg. sales</p>
-                                            </div>
-                                            <div id="productChart" class="flot-chart"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="card">
-                                    <div class="card-body py-3 px-4">
-                                        <p class="m-0 survey-head">Today Orders</p>
-                                        <div class="d-flex justify-content-between align-items-end flot-bar-wrapper">
-                                            <div>
-                                                <h3 class="m-0 survey-value">$4,354</h3>
-                                                <p class="text-success m-0">-310 avg. sales</p>
-                                            </div>
-                                            <div id="orderChart" class="flot-chart"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user-tie fa-2x text-info"></i>
                             </div>
                         </div>
-                        <div class="row my-3">
-                            <div class="col-sm-12">
-                                <div class="flot-chart-wrapper">
-                                    <div id="flotChart" class="flot-chart">
-                                        <canvas class="flot-base"></canvas>
-                                    </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posts Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow-sm border-left-warning h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Posts
                                 </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-warning"></i>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-8">
-                                <p class="text-muted mb-0"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore. <b>Learn More</b>
-                                </p>
-                            </div>
-                            <div class="col-sm-4">
-                                <p class="mb-0 text-muted">Sales Revenue</p>
-                                <h5 class="d-inline-block survey-value mb-0"> $2,45,500 </h5>
-                                <p class="d-inline-block text-danger mb-0"> last 8 months </p>
-                            </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Area Chart -->
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Total Sales in Last 30 Days</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-area">
+                            <canvas id="lineChart" width="985" height="362"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 </template>
 
 <script>
     export default {
         name: "DashboardComponent",
-        mounted() {}
+        mounted() {
+            // Chart initialization
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                    datasets: [{
+                        label: 'Sales',
+                        data: [12, 19, 3, 5, 2, 3, 10, 15, 13, 7],
+                        borderColor: '#4e73df',
+                        backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
     }
 </script>
 
 <style scoped>
+    .card {
+        border-radius: 10px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    }
 
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        background-color: #f8f9fc;
+    }
+
+    .shadow-sm {
+        box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+    }
+
+    .text-primary, .text-success, .text-info, .text-warning {
+        font-weight: bold;
+    }
+
+    .text-gray-800 {
+        color: #5a5c69 !important;
+    }
+
+    .chart-area {
+        position: relative;
+        height: 40vh;
+    }
+
+    .chart-area canvas {
+        max-height: 400px;
+        max-width: 100%;
+    }
 </style>
