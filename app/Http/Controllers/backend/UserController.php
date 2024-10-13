@@ -6,18 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Models\MyFile;
 use App\Models\User;
 use App\Supports\BaseCrudHelper;
+use App\Supports\MyFileHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    use BaseCrudHelper;
+    use BaseCrudHelper, MyFileHelper;
 
-    private $fileCon = null;
     public function __construct()
     {
         $this->model = new User();
-        $this->fileCon = new MyFileController();
         $this->with = ['role:id,name', 'avatar'];
         $this->showWith = ['role:id,name'];
 
@@ -50,9 +49,10 @@ class UserController extends Controller
                 $fileReq = new Request();
                 mergeAll($fileReq, $request->avatar);
 
-                if ($request->avatar_id)
+                if ($request->avatar_id) {
                     // keep the avatar_id as it is, update the file
-                    $this->fileCon->update($fileReq, $request->avatar_id);
+                    $this->updateFile($fileReq, $request->avatar_id);
+                }
                 else {
                     // store a new file => get id => set this id merge avatar_id
                     $storedFile = MyFile::create($request->avatar); // avatar is an object
@@ -64,8 +64,9 @@ class UserController extends Controller
 
         // after delete the record also delete the avatar
         $this->afterDelete = function ($record) {
-            if ($record && $record->avatar_id) // delete also file
-                $this->fileCon->destroy($record->avatar_id);
+            if ($record && $record->avatar_id) { // delete also file
+                $this->deleteFile($record->avatar_id);
+            }
         };
     }
 }

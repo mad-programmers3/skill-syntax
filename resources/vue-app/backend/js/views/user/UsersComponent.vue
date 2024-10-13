@@ -12,7 +12,7 @@
                 <td>{{ user.role ? user.role.name : ''}}</td>
                 <td>
                     <span :class="user.status === 1 ? 'badge badge-success' : user.status === 2 ? 'badge badge-warning' : 'badge badge-danger'">
-                        {{ user.status ? 'Active' : 'Inactive' }}
+                        {{ user.status === 2 ? 'Requested' : user.status ? 'Active' : 'Inactive' }}
                     </span>
                 </td>
                 <td>

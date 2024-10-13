@@ -86,7 +86,7 @@ const routes =[
         path: '/admin/user/profile',
         name:'user-profile',
         component:UsersComponent,
-        meta : {'pageTitle' : 'course-review List', dataUrl : 'api/review/course-reviews'},
+        meta : {'pageTitle' : 'Profile', dataUrl : 'api/users'},
     },
 
 

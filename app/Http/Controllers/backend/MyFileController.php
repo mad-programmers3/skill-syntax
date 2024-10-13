@@ -5,27 +5,14 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\Models\MyFile;
 use App\Supports\BaseCrudHelper;
+use App\Supports\MyFileHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class MyFileController extends Controller
 {
-    use BaseCrudHelper;
+    use MyFileHelper;
 
-    public function __construct()
-    {
-        $this->model = new MyFile();
-
-        // Delete the old file from storage after update record from db
-        $this->afterUpdate = function ($newRecord, $oldRecord) {
-            $this->deleteFile($oldRecord);
-        };
-
-        // After destroy record delete the file from storage also
-        $this->afterDelete = function ($record) {
-            $this->deleteFile($record);
-        };
-    }
 
     public function upload(Request $request)
     {
@@ -55,13 +42,5 @@ class MyFileController extends Controller
         }
 
         return response()->json(['success' => false, 'message' => 'File upload failed.'], 500);
-    }
-
-
-    private function deleteFile($record)
-    {
-        if ($record && $record->path && Storage::exists('public/' . $record->path)) {
-            Storage::delete('public/' . $record->path);
-        }
     }
 }

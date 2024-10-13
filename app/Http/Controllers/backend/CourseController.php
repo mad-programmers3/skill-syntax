@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\MyFile;
 use App\Supports\BaseCrudHelper;
+use App\Supports\MyFileHelper;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -14,14 +15,11 @@ use function Symfony\Component\HttpKernel\Log\record;
 class CourseController extends Controller
 
 {
-    use BaseCrudHelper;
-
-    private $fileCon = null;
+    use BaseCrudHelper, MyFileHelper;
 
     public function __construct()
     {
         $this->model = new Course();
-        $this->fileCon = new MyFileController();
         $this->with = ['thumbnail:id,path', 'category:id,title', 'likes'];
         $this->showWith = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'reviews.review.user'];
 
@@ -47,9 +45,10 @@ class CourseController extends Controller
                 $fileReq = new Request();
                 mergeAll($fileReq, $request->thumbnail);
 
-                if ($request->thumbnail_id)
+                if ($request->thumbnail_id) {
                     // keep the thumbnail_id as it is, update the file
-                    $this->fileCon->update($fileReq, $request->thumbnail_id);
+                    $this->updateFile($fileReq, $request->thumbnail_id);
+                }
                 else {
                     // store a new file => get id => set this id merge thumbnail_id
                     $storedFile = MyFile::create($request->thumbnail); // thumbnail is an object
@@ -59,8 +58,9 @@ class CourseController extends Controller
         };
 
         $this->afterDelete = function ($record) {
-            if ($record && $record->thumbnail_id) // delete also file
-                $this->fileCon->destroy($record->thumbnail_id);
+            if ($record && $record->thumbnail_id) { // delete also file
+                $this->deleteFile($record->thumbnail_id);
+            }
         };
     }
 
