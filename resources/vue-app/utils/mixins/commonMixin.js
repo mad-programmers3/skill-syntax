@@ -14,6 +14,8 @@ export default {
             PERM_EDIT: 'edit',
             PERM_DELETE: 'delete',
             PERM_MANAGE: 'manage',
+            DEF_AVATAR_B: 'backend/assets/images/def-user-avatar.svg',
+            DEF_COURSE_THUMB: 'images/course-def-thumbnail.jpg',
         };
     },
     computed: {
@@ -48,11 +50,11 @@ export default {
         asset(path) {
             return baseUrl + '/' + path;
         },
-        generateFileUrl(file, def = this.asset('images/course-def-thumbnail.jpg')) {
-            if (!file || !file.path)
-                return def;
+        generateFileUrl(file, def = this.DEF_COURSE_THUMB) {
+            if (file && file.path)
+                def = 'storage/' + file.path;
 
-            return this.baseUrl + '/storage/' + file.path;
+            return this.baseUrl + '/' + def;
         },
 
         limitText(text, maxLength = 70) {

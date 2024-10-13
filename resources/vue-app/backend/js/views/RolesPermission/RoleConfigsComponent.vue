@@ -61,6 +61,7 @@
                 permPrefix: 'role_config',
                 ADD_MODULE: 1,
                 ADD_PERMISSION: 2,
+                auth: null,
                 crrRole: {},
                 roles: [],
                 modules: [],
@@ -70,13 +71,15 @@
             const _this = this;
 
             // Fetch modules with permissions and roles
-            this.fetchData(this.urlGenerate('api/required-data', false, {'roles': true, 'modules': true, 'with_permissions': true}), (result) => {
+            this.fetchData(this.urlGenerate('api/required-data', false, {roles: true, modules: true, with_permissions: true, auth: true}), (result) => {
                 _this.modules = result.modules;
                 _this.roles = result.roles;
+                _this.auth = result.auth;
+
+                // get current role with users, modules, permission
+                _this.getRolePermissions();
             });
 
-            // get current role with users, modules, permission
-            this.getRolePermissions();
 
         },
         methods: {
@@ -114,8 +117,7 @@
             },
             getRolePermissions(id = this.$route.params.role_id) {
                 if (!id) {
-                    let auth = this.getAuth();
-                    id = auth ? auth.role_id : undefined;
+                    id = this.auth ? this.auth.role_id : undefined;
                 }
                 if (id) {
                     this.$store.commit('setFormData', {role_id: id});

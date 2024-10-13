@@ -22,6 +22,10 @@ class SupportController extends Controller
     {
         $data = [];
 
+        if (request()->has('auth'))
+            $data['auth'] = Auth::user()->load('avatar')->load('role');
+
+
         if (request()->has('users'))
             $data['users'] = User::all();
 
@@ -82,6 +86,10 @@ class SupportController extends Controller
             ->get()->toArray();
 
         $data['permissions'] = $this->authPermissions();
+
+        $auth = Auth::user();
+        if ($auth) $auth->load('avatar')->load('role');
+        $data['auth'] = $auth;
 
         return retRes('Successfully fetched all records', $data);
     }
