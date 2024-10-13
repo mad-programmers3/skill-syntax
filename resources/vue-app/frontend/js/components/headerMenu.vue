@@ -7,7 +7,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container" style="background-color: white">
                         <router-link class="navbar-brand logo_h" to="/">
-                            <img :src="baseUrl + '/frontend/img/logo.png'" alt="" />
+                            <img :src="baseUrl + '/frontend/img/logo.png'" alt="Logo" width="150px" />
                         </router-link>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,7 +58,7 @@
                             <ul class="mb-0">
                                 <li v-if="isAuthenticated" class="nav-item nav-profile dropdown border-0">
                                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
-                                        <img class="nav-profile-img" alt="" :src="baseUrl + '/backend/assets/images/faces/face1.jpg'" />
+                                        <img class="nav-profile-img" alt="" :src="generateFileUrl(getAuth() ? getAuth.avatar : null, DEF_AVATAR_B)" />
                                         <span class="profile-name">{{ userName }}</span>
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">

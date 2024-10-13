@@ -3,10 +3,10 @@
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <div class="text-center sidebar-brand-wrapper d-flex align-items-center" title="Visit website">
             <a class="sidebar-brand brand-logo" :href="baseUrl">
-                <img :src="asset('backend/assets/images/logo.svg')" alt="logo" />
+                <img :src="asset('backend/assets/images/logo-backend.png')" alt="logo" />
             </a>
             <a class="sidebar-brand brand-logo-mini pl-4 pt-3" :href="baseUrl">
-                <img :src="asset('backend/assets/images/logo-mini.svg')" alt="logo" />
+                <img :src="asset('backend/assets/images/logo-backend-mini.png')" alt="logo" />
             </a>
         </div>
 
