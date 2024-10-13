@@ -3,6 +3,9 @@
         <data-table :table-heading="tableHeading" :show-add-btn="can('user_add')">
             <tr v-for="(user, index) in dataList.data" style="font-size: 0.8rem" :key="user.id">
                 <td>{{ (dataList.current_page - 1) * perPage + index + 1 }}</td>
+                <td>
+                    <img :src="generateFileUrl(user.avatar, DEF_AVATAR_B)" style="width: 35px; height: 35px" alt="Avatar">
+                </td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
                 <td>{{ user.mobile }}</td>
@@ -121,7 +124,7 @@
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Name', 'Email', 'Mobile', 'Role', 'Status', 'Actions'],
+                tableHeading: ['SL', 'Avatar', 'Name', 'Email', 'Mobile', 'Role', 'Status', 'Actions'],
                 roles: [],
                 initVal: {role_id: '', password: 'ss guest', status: 2},
                 perPage:10,

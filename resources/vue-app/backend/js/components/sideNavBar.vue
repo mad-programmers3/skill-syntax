@@ -1,12 +1,12 @@
 
 <template>
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
-        <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
-            <a class="sidebar-brand brand-logo" href="index.html">
-                <img :src="baseUrl + '/backend/assets/images/logo.svg'" alt="logo" />
+        <div class="text-center sidebar-brand-wrapper d-flex align-items-center" title="Visit website">
+            <a class="sidebar-brand brand-logo" :href="baseUrl">
+                <img :src="asset('backend/assets/images/logo-backend.png')" alt="logo" />
             </a>
-            <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="index.html">
-                <img src="assets/images/logo-mini.svg" alt="logo" />
+            <a class="sidebar-brand brand-logo-mini pl-4 pt-3" :href="baseUrl">
+                <img :src="asset('backend/assets/images/logo-backend-mini.png')" alt="logo" />
             </a>
         </div>
 
@@ -15,12 +15,12 @@
             <li class="nav-item nav-profile">
                 <a href="#" class="nav-link">
                     <div class="nav-profile-image">
-                        <img :src="baseUrl + '/backend/assets/images/faces/face1.jpg'" alt="profile" />
+                        <img :src="generateFileUrl(Config.auth ? Config.auth.avatar : null, DEF_AVATAR_B)" alt="profile" />
                         <span class="login-status online"></span>
                     </div>
                     <div class="nav-profile-text d-flex flex-column pr-3">
-                        <span class="font-weight-medium mb-2">Henry Klein</span>
-                        <span class="font-weight-normal">$8,753.00</span>
+                        <span class="font-weight-medium mb-2">{{ Config.auth ? Config.auth.name : 'No User' }}</span>
+                        <span class="font-weight-normal">{{ Config.auth && Config.auth.role ? Config.auth.role.name : 'NA' }}</span>
                     </div>
                     <span class="badge badge-danger text-white ml-3 rounded">3</span>
                 </a>
@@ -54,6 +54,11 @@
 <script>
     export default {
         name: 'Sidebar',
+        data() {
+          return {
+              auth: null,
+          }
+        },
         mounted() {
             const _this = this;
             this.fetchData(this.urlGenerate('api/configurations'), (result) => {

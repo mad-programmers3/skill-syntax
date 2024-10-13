@@ -14898,13 +14898,12 @@ dl {
     width: auto;
     height: 70px; }
     .sidebar .sidebar-brand-wrapper .sidebar-brand {
-      padding: 2.25rem 0 0.25rem 40px; }
+      padding: 2.25rem 0 0.25rem 30px; }
       .rtl .sidebar .sidebar-brand-wrapper .sidebar-brand {
         padding: 20px 61px 10px 0; }
       .sidebar .sidebar-brand-wrapper .sidebar-brand img {
-        width: calc(260px - 130px);
+        width: calc(300px - 130px);
         max-width: 100%;
-        height: 48px;
         margin: auto;
         vertical-align: middle; }
     .sidebar .sidebar-brand-wrapper .brand-logo-mini {
@@ -14912,7 +14911,6 @@ dl {
       .sidebar .sidebar-brand-wrapper .brand-logo-mini img {
         width: calc(70px - 50px);
         max-width: 100%;
-        height: 35px;
         margin: auto; }
   .sidebar .nav {
     overflow: hidden;

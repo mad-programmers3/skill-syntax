@@ -11,9 +11,4 @@ class MyFile extends Model
 
     protected $fillable = ['user_id', 'name', 'path', 'extension', 'size', ];
 
-    // Relationship with User
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 }
