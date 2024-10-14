@@ -53,10 +53,10 @@
                                                         <i class="pointer far fa-heart"></i>{{ likes.length }}
                                                     </a>
                                                     <a class="mr-3 primary-text2">
-                                                        <i class="pointer fa fa-reply"></i>
+                                                        <i class="pointer fas fa-reply"></i>
                                                     </a>
                                                     <a v-if="review.user.id === getAuth().id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <i class="pointer fa fa-ellipsis-v"></i>
+                                                        <i class="pointer fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         <a @click="handleDropDown('edit', review)" class="dropdown-item pointer">Edit</a>
@@ -64,22 +64,11 @@
                                                         <a @click="handleDropDown('hide', review)" class="dropdown-item pointer">Hide</a>
                                                     </div>
                                                 </div>
-                                                <div v-if="isUpdating(review)" >
+                                                <div v-if="isUpdating(review)">
                                                     <button @click="cancelUpdate" class="genric-btn danger circle">Cancel</button>
                                                     <button @click="submitReview" class="genric-btn info circle arrow">Update<span class="ti-arrow-right"></span></button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div v-if="isUpdating(review)" class="star-rating d-flex mb-2">
-                                            <i v-for="rate in 5" :class="'primary-text ' + getStarClass(rate)"
-                                               @mouseover="setHoverRating(rate)"
-                                               @mouseleave="setHoverRating(0)"
-                                               @click="setRating(rate)"
-                                               style="cursor: pointer; font-size: 25px">
-                                            </i>
-                                        </div>
-                                        <div v-else class="star-rating primary-text d-flex mb-2">
-                                            <i v-for="rate in 5" :class="['fa', rate <= review.rating ? 'fa-star' : 'fa-star-o']"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -90,15 +79,6 @@
                                     <div class="feedback mb-4">
                                         <div class="d-flex justify-content-between">
                                             <h4>Give your opinion</h4>
-                                            <!-- Star Rating for new review -->
-                                            <div class="star-rating d-flex mb-2">
-                                                <i v-for="rate in 5" :class="'primary-text ' + getStarClass(rate)"
-                                                   @mouseover="setHoverRating(rate)"
-                                                   @mouseleave="setHoverRating(0)"
-                                                   @click="setRating(rate)"
-                                                   style="cursor: pointer; font-size: 25px">
-                                                </i>
-                                            </div>
                                         </div>
                                         <div>
                                             <textarea v-model="form.comment" class="form-control" rows="4" placeholder="Share your experience..."></textarea>
@@ -150,11 +130,9 @@
                 reviews: [],
                 likes: [],
                 form: {
-                    rating: 0,
                     comment: '',
                 },
-                hoverRating: 0,
-                hasReviewed: false,
+
             };
         },
         watch: {
@@ -224,7 +202,6 @@
 
                             // Reset the form
                             _this.form = {
-                                rating: 0,
                                 comment: '',
                             };
                         } else {
@@ -252,20 +229,6 @@
                     rating: 0,
                     comment: '',
                 };
-            },
-            // Set rating for new review
-            setRating(rate) {
-                this.form.rating = rate;
-            },
-
-            // Set hover rating
-            setHoverRating(rate) {
-                this.hoverRating = rate;
-            },
-
-            // Get star class for new review rating
-            getStarClass(rate) {
-                return this.hoverRating >= rate || this.form.rating >= rate ? 'fa fa-star': 'fa fa-star-o';
             },
 
             isUpdating(review) {

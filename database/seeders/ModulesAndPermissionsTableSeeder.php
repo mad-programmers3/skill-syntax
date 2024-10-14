@@ -55,7 +55,7 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 ]
             ],
             [
-                'module' => ['name' => 'Review', 'icon' => 'fa fa-star'],
+                'module' => ['name' => 'Review', 'icon' => 'fas fa-star'],
                 'nodes' => [
                     [
                         'module' => ['name' => 'Reviews', 'link' => '/admin/review/reviews'],
@@ -80,7 +80,7 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 ]
             ],
             [
-                'module' => ['name' => 'User', 'icon' => 'fa fa-user'],
+                'module' => ['name' => 'User', 'icon' => 'fas fa-user'],
                 'nodes' => [
                     [
                         'module' => ['name' => 'Users', 'link' => '/admin/user/users'],
@@ -95,7 +95,7 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 ]
             ],
             [
-                'module' => ['name' => 'Configuration', 'icon' => 'fa fa-cogs'],
+                'module' => ['name' => 'Configuration', 'icon' => 'fas fa-cogs'],
                 'nodes' => [
                     [
                         'module' => ['name' => 'Roles', 'link' => '/admin/config/roles'],

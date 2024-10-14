@@ -66,7 +66,7 @@
                                                             <i class="pointer fas fa-reply"></i>
                                                         </a>
                                                         <a v-if="review.user.id === getAuth().id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <i class="pointer fa fa-ellipsis-v"></i>
+                                                            <i class="pointer fas fa-ellipsis-v"></i>
                                                         </a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                             <a @click="handleDropDown('edit', review)" class="dropdown-item pointer">Edit</a>
@@ -295,7 +295,7 @@
 
             // Get star class for new review rating
             getStarClass(rate) {
-                return this.hoverRating >= rate || this.form.rating >= rate ? 'fa fa-star': 'fa fa-star-o';
+                return this.hoverRating >= rate || this.form.rating >= rate ? 'fas fa-star': 'far fa-star';
             },
 
             isUpdating(review) {
