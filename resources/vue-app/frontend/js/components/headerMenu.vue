@@ -7,7 +7,7 @@
                 <nav class="navbar navbar-expand-lg navbar-light">
                     <div class="container" style="background-color: white">
                         <router-link class="navbar-brand logo_h" to="/">
-                            <img :src="baseUrl + '/frontend/img/logo.png'" alt="Logo" width="150px" />
+                            <img :src="asset('frontend/img/logo.png')" alt="Logo" width="150px" />
                         </router-link>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

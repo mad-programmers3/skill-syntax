@@ -3362,3 +3362,37 @@ h6 {
 /*---------------------------------------------------- */
 
 /*# sourceMappingURL=style.css.map */
+
+
+
+
+
+
+.primary-text {
+  color: #f8b600 !important;
+}
+
+.primary-text2 {
+  color: #002347 !important;
+}
+
+.primary-text3 {
+  color: #ff5e14 !important;
+}
+
+.primary-bg {
+  background-color: #f8b600 !important;
+}
+
+.primary-bg2 {
+  background-color: #002347 !important;
+}
+
+.primary-bg3 {
+  background-color: #ff5e14 !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+

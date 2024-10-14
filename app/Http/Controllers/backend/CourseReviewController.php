@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\CourseReview;
 use App\Models\Review;
 use App\Supports\BaseCrudHelper;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use function Symfony\Component\HttpKernel\Log\record;
 
@@ -19,38 +21,23 @@ class CourseReviewController extends Controller
         $this->with = ['course:id,title', 'review'];
     }
 
+    // Store a new record
     public function store(Request $request)
     {
-        try{
+        if (! $this->can($this->task(PERM_ADD)))
+            return $this->retNoPermRes(PERM_ADD);
+
+        try {
             // store the review
             mergeAuth($request);
             $review = Review::create($request->only(['comment', 'user_id','rating','likes']));
 
             //store course review
             $request->merge(['review_id' => $review->id]);
-            $record = CourseReview::create($request->all());
-
-            return retRes('Review created successfully', $review);
-        } catch (\Exception $e) {
-            return retRes('Something went wrong', null, CODE_DANGER);
+            CourseReview::create($request->all());
+            return retRes('Successfully created record', $review);
+        } catch (Exception $e) {
+            return retRes('Failed to create record', null, 500);
         }
     }
-
-    public function update(Request $request, $id)
-    {
-        try {
-            $review = Review::findOrFail($id); // Use findOrFail to get the review
-
-// Update the review fields
-            $review->update($request->only(['comment', 'rating']));
-
-            return retRes('Review updated successfully', $review);
-        } catch (ModelNotFoundException $e) {
-            return retRes('Review not found', null, CODE_DANGER);
-        } catch (\Exception $e) {
-            return retRes('Something went wrong', null, CODE_DANGER);
-        }
-    }
-
-
 }
