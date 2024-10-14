@@ -9,10 +9,15 @@
     />
     <link rel="icon" href="img/favicon.png" type="image/png" />
     <title>Edustage Education</title>
+
+    <!-- Font Awesome 5 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{asset('frontend/css/bootstrap.css')}}" />
     <link rel="stylesheet" href="{{asset('frontend/css/flaticon.css')}}" />
     <link rel="stylesheet" href="{{asset('frontend/css/themify-icons.css')}}" />
+    <link rel="stylesheet" href="{{asset('vendors/font-awesome/css/font-awesome.min.css')}}" />
     <link rel="stylesheet" href="{{asset('frontend/vendors/owl-carousel/owl.carousel.min.css')}}" />
     <link rel="stylesheet" href="{{asset('frontend/vendors/nice-select/css/nice-select.css')}}" />
 

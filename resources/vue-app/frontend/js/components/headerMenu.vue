@@ -63,11 +63,11 @@
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
                                         <a class="dropdown-item" href="#" @click.prevent="goToProfile">
-                                            <i class="mdi mdi-account mr-2 text-primary"></i> Profile
+                                            <i class="fa fa-user mr-2 text-primary"></i> Dashboard
                                         </a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#" @click.prevent="confirmLogout">
-                                            <i class="mdi mdi-logout mr-2 text-danger"></i> Logout
+                                            <i class="fas fa-sign-out-alt mr-2 text-danger"></i> Logout
                                         </a>
                                     </div>
 
