@@ -36,4 +36,21 @@ class CourseReviewController extends Controller
         }
     }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $review = Review::findOrFail($id); // Use findOrFail to get the review
+
+// Update the review fields
+            $review->update($request->only(['comment', 'rating']));
+
+            return retRes('Review updated successfully', $review);
+        } catch (ModelNotFoundException $e) {
+            return retRes('Review not found', null, CODE_DANGER);
+        } catch (\Exception $e) {
+            return retRes('Something went wrong', null, CODE_DANGER);
+        }
+    }
+
+
 }

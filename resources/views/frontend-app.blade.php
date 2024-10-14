@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{asset('frontend/css/themify-icons.css')}}" />
     <link rel="stylesheet" href="{{asset('frontend/vendors/owl-carousel/owl.carousel.min.css')}}" />
     <link rel="stylesheet" href="{{asset('frontend/vendors/nice-select/css/nice-select.css')}}" />
+    <link rel="stylesheet" href="{{asset('vendors/font-awesome/css/font-awesome.min.css')}}" />
 
     <!-- main css -->
     <link rel="stylesheet" href="{{asset('frontend/css/style.css')}}" />
