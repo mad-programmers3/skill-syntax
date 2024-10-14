@@ -32,30 +32,6 @@ class CategoriesTableSeeder extends Seeder
                 'title' => 'Digital Marketing',
                 'details' => 'Courses covering SEO, social media, and online advertising.',
             ],
-            [
-                'title' => 'Business Management',
-                'details' => 'Courses on management, entrepreneurship, and business strategy.',
-            ],
-            [
-                'title' => 'Personal Development',
-                'details' => 'Courses aimed at improving personal skills and growth.',
-            ],
-            [
-                'title' => 'Mobile Development',
-                'details' => 'Courses on developing applications for mobile platforms.',
-            ],
-            [
-                'title' => 'Photography',
-                'details' => 'Courses on photography techniques and editing.',
-            ],
-            [
-                'title' => 'Music Production',
-                'details' => 'Courses on producing and mixing music.',
-            ],
-            [
-                'title' => 'Language Learning',
-                'details' => 'Courses for learning new languages.',
-            ],
         ];
 
         foreach ($categories as $category) {

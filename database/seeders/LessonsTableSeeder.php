@@ -16,9 +16,9 @@ class LessonsTableSeeder extends Seeder
      */
     public function run()
     {
-        $courses = Course::all();
+        $course = Course::findOrFail(1);
 
-        foreach ($courses as $course) {
+        if($course) {
             for ($i = 1; $i <= 5; $i++) {
                 Lesson::create([
                     'course_id' => $course->id,
@@ -30,5 +30,6 @@ class LessonsTableSeeder extends Seeder
                 ]);
             }
         }
+
     }
 }

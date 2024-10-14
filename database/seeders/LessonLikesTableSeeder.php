@@ -17,10 +17,10 @@ class LessonLikesTableSeeder extends Seeder
     public function run()
     {
         $users = User::all();
-        $lessons = Lesson::all();
+        $lesson = Lesson::findOrFail(1);
 
         // each user likes all lesson
-        foreach ($lessons as $lesson) {
+        if ($lesson) {
             foreach ($users as $user) {
                 LessonLike::create([
                     'user_id' => $user->id,

@@ -19,11 +19,11 @@ class LessonReviewsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker::create(); // Instantiate Faker
-        $lessons = Lesson::all();
+        $lesson = Lesson::findOrFail(1);
         $users = User::all();
 
         // Link each lesson to some reviews
-        foreach ($lessons as $lesson) {
+        if ($lesson) {
             for ($i = 1; $i <= 2; $i++) {
 
                 // Create a review for the lesson
