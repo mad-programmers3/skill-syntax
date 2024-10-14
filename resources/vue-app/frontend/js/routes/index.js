@@ -6,10 +6,15 @@ import elementsComponent from "../views/elementsComponent";
 import blogComponent from "../views/blogComponent";
 import blogDetailsComponent from "../views/blogDetailsComponent";
 import contactComponent from "../views/contactComponent";
-import lessonsComponent from "../../../backend/js/views/courses/lessonsComponent";
 import lessonComponent from "../views/lessonComponent";
 import searchComponent from "../components/searchComponent";
-import userProfile from "../../user/userProfile";
+import studentComponent from "../views/student/studentComponent";
+import studentMyCoursesComponent from "../views/student/studentMyCoursesComponent";
+import studentProfileComponent from "../views/student/studentProfileComponent";
+import studentWishlistComponent from "../views/student/studentWishlistComponent";
+import studentMessagesComponent from "../views/student/studentMessagesComponent";
+import studentPurchaseHistoryComponent from "../views/student/studentPurchaseHistoryComponent";
+import studentSettingsComponent from "../views/student/studentSettingsComponent";
 
 
 const route = [
@@ -74,10 +79,42 @@ const route = [
         component : searchComponent
     },
     {
-        path:'/profile',
-        name:'profile',
-        component:userProfile
-    }
+        path:'/student',
+        component:studentComponent,
+        children: [
+            {
+                path: '/',
+                name:'student-myCourses',
+                component: studentMyCoursesComponent
+            },
+            {
+                path: 'wishlist',
+                name:'student-wishlist',
+                component: studentWishlistComponent
+            },
+            {
+                path: 'messages',
+                name:'student-messages',
+                component: studentMessagesComponent
+            },
+            {
+                path: 'purchase-history',
+                name:'student-purchaseHistory',
+                component: studentPurchaseHistoryComponent
+            },
+            {
+                path: 'profile',
+                name:'student-profile',
+                component: studentProfileComponent
+            },
+            {
+                path: 'settings',
+                name:'student-settings',
+                component: studentSettingsComponent
+            },
+        ]
+
+    },
 
 ];
 export default route;

@@ -62,9 +62,9 @@
                                         <span class="profile-name">{{ userName }}</span>
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
-                                        <a class="dropdown-item" href="#" @click.prevent="goToProfile">
-                                            <i class="fa fa-user mr-2 text-primary"></i> Dashboard
-                                        </a>
+                                        <router-link :to="{name: 'student-profile'}" class="dropdown-item">
+                                            <i class="fa fa-user mr-2 text-primary"></i> Profile
+                                        </router-link>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#" @click.prevent="confirmLogout">
                                             <i class="fas fa-sign-out-alt mr-2 text-danger"></i> Logout

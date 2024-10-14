@@ -32,7 +32,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex);
 
-import {store as storeData} from "./store";
+import {store as storeData} from "../../utils/store";
 
 const store = new Vuex.Store(storeData);
 

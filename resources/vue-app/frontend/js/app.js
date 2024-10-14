@@ -14,6 +14,11 @@ import route from './routes'
 // const store = new Vuex.Store(storeData);
 
 
+import {store as storeData} from "../../utils/store";
+import Vuex from "vuex";
+Vue.use(Vuex);
+const store = new Vuex.Store(storeData);
+
 const router = new VueRouter({
     mode : 'history',
     routes : route,
@@ -28,5 +33,5 @@ Vue.mixin(httpMixin);
 const vue = new Vue({
     el : '#app',
     components : {App},
-    router,
+    router, store
 });

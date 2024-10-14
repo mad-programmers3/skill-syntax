@@ -60,10 +60,10 @@
                                                 <div class="review-footer mt-2 d-flex justify-content-between">
                                                     <div>
                                                         <a class="mr-3 primary-text2">
-                                                            <i class="pointer fa fa-thumbs-up"></i> {{ likes.length }}
+                                                            <i class="pointer far fa-heart"></i> {{ likes.length }}
                                                         </a>
                                                         <a class="mr-3 primary-text2">
-                                                            <i class="pointer fa fa-reply"></i>
+                                                            <i class="pointer fas fa-reply"></i>
                                                         </a>
                                                         <a v-if="review.user.id === getAuth().id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="pointer fa fa-ellipsis-v"></i>
@@ -149,10 +149,10 @@
                                             </router-link>
                                             <div class="mt-lg-0 mt-3">
                                                 <span class="meta_info mr-4">
-                                                    <a href="#" class="primary-text2"> <i class="fa fa-thumbs-up"></i> {{ likes.length }} </a>
+                                                    <a href="#" class="primary-text2"> <i class="far fa-heart"></i> {{ likes.length }} </a>
                                                 </span>
                                                 <span class="meta_info padded-info">
-                                                    <a href="#" class="primary-text2"> <i class="fa fa-comment"></i> {{ reviews.length }} </a>
+                                                    <a href="#" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
                                                 </span>
                                             </div>
                                         </div>

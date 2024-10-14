@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header-menu></header-menu>
+        <header-menu v-if="showHeader === 1"></header-menu>
 
         <!--================ Start Home Banner Area =================-->
 <!--        <home-component></home-component>-->

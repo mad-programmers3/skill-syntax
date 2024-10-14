@@ -35,6 +35,10 @@ export default {
             return this.$store.getters.formData;
         },
 
+        showHeader() {
+            return this.$store.getters.showHeader;
+        },
+
         /**
          * Retrieve configuration data from the Vuex store.
          * This is a computed property to automatically react to changes in the store.
