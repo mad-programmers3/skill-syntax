@@ -13,10 +13,10 @@
                                 <h4 class="mb-0">{{ lesson.title }}</h4> <!-- Added mb-0 to remove margin from the heading -->
                                 <div>
                                     <span class="meta_info mr-3">
-                                        <i class="ti-thumb-up"> {{ likes.length }}</i>
+                                        <a href="#" class="primary-text2"> <i class="pointer far fa-heart"> {{ likes.length }}</i></a>
                                     </span>
                                     <span class="meta_info">
-                                        <i class="ti-comment"> {{ reviews.length }}</i>
+                                       <a href="#" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
                                     </span>
                                 </div>
                             </div>
@@ -35,28 +35,78 @@
                                 <div v-for="review in reviews" :key="review.id" class="review-item mb-3">
                                     <div class="user-info d-flex align-items-start justify-content-between">
                                         <div class="user-thumb mr-3">
-                                            <img :src="baseUrl + '/frontend/img/courses/author2.png'" alt="User Image">
+                                            <img :src="generateFileUrl(getAuth() ? getAuth.avatar : null, DEF_AVATAR_B)" alt="User Avatar" />
                                         </div>
                                         <div class="user-details flex-grow-1">
-                                            <h6 class="mb-1">{{ review.user.name  }}</h6> <!-- Replace with actual user info if available -->
-                                            <p class="comment mb-2">{{ review.comment }}</p>
-                                            <div class="review-footer mt-2">
-                                                <a href="#" class="mr-3">
-                                                    <i class="ti-thumb-up"></i> 25 <!-- This can be dynamic if likes data is available -->
-                                                </a>
-                                                <a href="#">
-                                                    <i class="ti-reply"></i> Reply
-                                                </a>
+                                            <h6 class="mb-1">{{ review.user ? review.user.name : ''}}</h6>
+                                            <!-- Display the comment or the textarea for editing -->
+                                            <div v-if="isUpdating(review)">
+                                                <textarea v-model="review.comment" class="form-control" rows="4" placeholder="Update your review..."></textarea>
                                             </div>
+                                            <div v-else>
+                                                <p class="comment mb-2">{{ review.comment }}</p>
+                                            </div>
+
+                                            <div class="review-footer mt-2 d-flex justify-content-between">
+                                                <div>
+                                                    <a class="mr-3 primary-text2">
+                                                        <i class="pointer far fa-heart"></i>{{ likes.length }}
+                                                    </a>
+                                                    <a class="mr-3 primary-text2">
+                                                        <i class="pointer fa fa-reply"></i>
+                                                    </a>
+                                                    <a v-if="review.user.id === getAuth().id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <i class="pointer fa fa-ellipsis-v"></i>
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                        <a @click="handleDropDown('edit', review)" class="dropdown-item pointer">Edit</a>
+                                                        <a @click="handleDropDown('delete', review)" class="dropdown-item pointer">Delete</a>
+                                                        <a @click="handleDropDown('hide', review)" class="dropdown-item pointer">Hide</a>
+                                                    </div>
+                                                </div>
+                                                <div v-if="isUpdating(review)" >
+                                                    <button @click="cancelUpdate" class="genric-btn danger circle">Cancel</button>
+                                                    <button @click="submitReview" class="genric-btn info circle arrow">Update<span class="ti-arrow-right"></span></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div v-if="isUpdating(review)" class="star-rating d-flex mb-2">
+                                            <i v-for="rate in 5" :class="'primary-text ' + getStarClass(rate)"
+                                               @mouseover="setHoverRating(rate)"
+                                               @mouseleave="setHoverRating(0)"
+                                               @click="setRating(rate)"
+                                               style="cursor: pointer; font-size: 25px">
+                                            </i>
+                                        </div>
+                                        <div v-else class="star-rating primary-text d-flex mb-2">
+                                            <i v-for="rate in 5" :class="['fa', rate <= review.rating ? 'fa-star' : 'fa-star-o']"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="feedback mb-4">
-                                <h6>Your Feedback</h6>
-                                <textarea class="form-control" rows="4" placeholder="Share your experience..."></textarea>
-                                <div class="text-right mt-3">
-                                    <button class="btn btn-primary text-uppercase">Submit</button>
+                            <div id="review-area">
+                                <!-- If the user is logged in and has not already reviewed the course -->
+                                <div>
+                                    <div class="feedback mb-4">
+                                        <div class="d-flex justify-content-between">
+                                            <h4>Give your opinion</h4>
+                                            <!-- Star Rating for new review -->
+                                            <div class="star-rating d-flex mb-2">
+                                                <i v-for="rate in 5" :class="'primary-text ' + getStarClass(rate)"
+                                                   @mouseover="setHoverRating(rate)"
+                                                   @mouseleave="setHoverRating(0)"
+                                                   @click="setRating(rate)"
+                                                   style="cursor: pointer; font-size: 25px">
+                                                </i>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <textarea v-model="form.comment" class="form-control" rows="4" placeholder="Share your experience..."></textarea>
+                                            <div class="text-right mt-3">
+                                                <button @click="submitReview" class="genric-btn primary-bg2 text-white circle arrow">Submit<span class="ti-arrow-right"></span></button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -70,8 +120,8 @@
 
                                     <div class="col-md-4">
                                         <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'"
-                                                alt="Course Image"
-                                                style="margin: 10px; padding: 5px;">
+                                             alt="Course Image"
+                                             style="margin: 10px; padding: 5px;">
                                     </div>
 
                                     <div class="col-md-8">
@@ -99,6 +149,12 @@
                 lesson: [],
                 reviews: [],
                 likes: [],
+                form: {
+                    rating: 0,
+                    comment: '',
+                },
+                hoverRating: 0,
+                hasReviewed: false,
             };
         },
         watch: {
@@ -125,8 +181,97 @@
                     _this.lesson = result['lesson'];
                     _this.reviews = result['reviews'];
                     _this.likes = result['likes'];
+                    _this.form.user_id = _this.getAuth() ? _this.getAuth().id : null; // Set user_id from auth
+                    _this.form.lesson_id = _this.lesson ? _this.lesson.id : null;
+
+                    _this.checkUserReview();
                 });
             },
+            handleDropDown(action, review) {
+                // Close the dropdown
+                this.$nextTick(() => {
+                    $('#dropdownMenuButton').dropdown('toggle'); // Close the dropdown manually
+                });
+
+                // Perform your action logic here based on the action type
+                if (action === 'edit') this.form = review;
+                if (action === 'delete') this.deleteReview(review.id);
+
+            },
+            submitReview() {
+                if (!this.form.comment.trim()) {
+                    alert('Please enter your comment before submitting.');
+                    return;
+                }
+
+                const _this = this;
+                this.httpReq({
+                    customUrl: this.form.id ? 'api/reviews' : 'api/review/lesson-reviews',
+                    method: this.form.id ? 'put' : 'post',
+                    urlSuffix: this.form.id ?? false,
+                    data: _this.form,
+                    callback(response) {
+                        if (response.data) {
+                            // Update the review list
+                            const newReview = response.data.result;
+
+                            if (!_this.form.id ) {
+                                newReview.user = _this.getAuth();
+                                _this.reviews.push(newReview);
+                                // Mark that the user has reviewed the course
+                                _this.hasReviewed = true;
+                            }
+
+                            // Reset the form
+                            _this.form = {
+                                rating: 0,
+                                comment: '',
+                            };
+                        } else {
+                            alert('Failed to submit the review. Please try again.');
+                        }
+                    },
+                });
+            },
+            deleteReview(id) {
+                this.httpReq({
+                    customUrl: 'api/reviews',
+                    urlSuffix: id,
+                    method: 'delete',
+                    callback: (response) => {
+                        if (response.data) {
+                            this.reviews = this.reviews.filter(review => review.id !== id);
+                            this.hasReviewed = false;
+                        }
+                    }
+                });
+            },
+
+            cancelUpdate() {
+                this.form = {
+                    rating: 0,
+                    comment: '',
+                };
+            },
+            // Set rating for new review
+            setRating(rate) {
+                this.form.rating = rate;
+            },
+
+            // Set hover rating
+            setHoverRating(rate) {
+                this.hoverRating = rate;
+            },
+
+            // Get star class for new review rating
+            getStarClass(rate) {
+                return this.hoverRating >= rate || this.form.rating >= rate ? 'fa fa-star': 'fa fa-star-o';
+            },
+
+            isUpdating(review) {
+                return this.form && this.form.id === review.id;
+            },
+
             doLike() {
                 console.log(888);
             }
@@ -135,21 +280,11 @@
 </script>
 
 <style scoped>
-    .meta_info i {
-        color: #ff5e14;
+    .review-item .user-thumb img {
+        width: 50px;
+        border-radius: 50%;
     }
 
-    .meta_info a {
-        color: #ff5e14;
-    }
-
-    .review-footer i {
-        color: #ff5e14;
-    }
-
-    .review-footer a {
-        color: #ff5e14;
-    }
     .card {
 
         border-radius: 8px;
@@ -159,7 +294,4 @@
         border: 2px solid #ff5e14; /* Blue border for highlighted card */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-
-
 </style>
-
