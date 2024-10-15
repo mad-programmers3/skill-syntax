@@ -1,69 +1,29 @@
 <template>
-  <div>
-    <div class="container mt-5">
-      <h2 class="mb-4 text-center">Course Purchase History</h2>
-      <div class="table-responsive">
-        <table class="table table-bordered table-striped">
-          <thead class="thead-light">
-          <tr>
-            <th>ID</th>
-            <th>Course Title</th>
-            <th>Date Purchased</th>
-            <th>Delivery Date</th>
-            <th>Total Price</th>
-            <th>Quantity</th>
-            <th>Status</th>
-            <th>Last Update</th>
-            <th>Actions</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>1</td>
-            <td>Introduction to Programming</td>
-            <td>11/03/2022 09:26</td>
-            <td>11/18/2022</td>
-            <td>$210.50</td>
-            <td>1</td>
-            <td><span class="badge badge-info">COMPLETED</span></td>
-            <td>12/13/2022 07:16</td>
-            <td>
-              <button class="btn btn-success btn-custom"><i class="fas fa-eye"></i> </button>
-              <button class="btn btn-danger btn-custom"><i class="fas fa-trash-alt"></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Advanced JavaScript</td>
-            <td>11/01/2022 12:51</td>
-            <td>12/10/2022</td>
-            <td>$65.00</td>
-            <td>1</td>
-            <td><span class="badge badge-warning">IN PROGRESS</span></td>
-            <td>11/02/2022 07:33</td>
-            <td>
-              <button class="btn btn-success btn-custom"><i class="fas fa-eye"></i> </button>
-              <button class="btn btn-danger btn-custom"><i class="fas fa-trash-alt"></i></button>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Web Development Bootcamp</td>
-            <td>11/03/2022 12:40</td>
-            <td>12/07/2022</td>
-            <td>$65.00</td>
-            <td>1</td>
-            <td><span class="badge badge-info">COMPLETED</span></td>
-            <td>12/12/2022 07:09</td>
-            <td>
-              <button class="btn btn-success"><i class="fas fa-eye"></i> </button>
-              <button class="btn btn-danger btn-custom"><i class="fas fa-trash-alt"></i></button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  <div class="container my-5">
+    <table class="table table-bordered">
+      <thead class="thead-light">
+      <tr>
+        <th>Course</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Invoice</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Course Name</td>
+        <td>11/03/2022 09:26</td>
+        <td>Bkash</td>
+        <td>118.25$</td>
+        <td>Pending</td>
+        <td class="text-center">
+          <button class="btn view-btn btn-sm">Download<i class="fas fa-download ml-1"></i></button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -74,5 +34,29 @@
 </script>
 
 <style scoped>
-
+  .badge-submitted {
+    background-color: #dfe3ea;
+    color: #2f4050;
+    border-radius: 12px;
+    padding: 5px 10px;
+  }
+  .badge-invoiced {
+    background-color: #5bc0de;
+    color: white;
+    border-radius: 12px;
+    padding: 5px 10px;
+  }
+  .reorder-btn {
+    background-color: #5cb85c;
+    color: white;
+    border-radius: 8px;
+  }
+  .view-btn {
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 8px;
+  }
+  table td, th {
+    vertical-align: middle !important;
+  }
 </style>
