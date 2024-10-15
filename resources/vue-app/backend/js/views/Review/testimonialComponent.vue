@@ -13,11 +13,11 @@
                 </td>
                 <td>
                     <!-- Edit button -->
-                    <button v-if="can('testimonial_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" type="button">
+                    <button v-if="can('testimonial_edit')" @click="onClickUpdate(data)" class="btn btn-primary btn-sm" title="Edit" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('testimonial_delete')" @click="deleteItem(data.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Edit ${data.review.comment}`" type="button">
+                    <button v-if="can('testimonial_delete')" @click="deleteItem(data.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" title="Delete" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>

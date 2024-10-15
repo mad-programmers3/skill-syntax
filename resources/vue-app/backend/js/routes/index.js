@@ -13,6 +13,7 @@ import RoleConfigsComponent from "../views/RolesPermission/RoleConfigsComponent"
 import PermissionsComponents from "../views/RolesPermission/PermissionsComponents";
 import UsersComponent from "../views/user/UsersComponent";
 import SettingsComponent from "../views/SettingsComponent";
+import UserProfileComponent from "../views/user/UserProfileComponent";
 
 
 const routes =[
@@ -86,7 +87,7 @@ const routes =[
     {
         path: '/admin/user/profile',
         name:'user-profile',
-        component:UsersComponent,
+        component:UserProfileComponent,
         meta : {'pageTitle' : 'Profile', dataUrl : 'api/users'},
     },
 
