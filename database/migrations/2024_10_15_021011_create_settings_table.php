@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->string('key')->unique();
+            $table->string('name');
             $table->string('type');
-            $table->string('group');
+            $table->string('group'); // general, salary, transfer
             $table->text('value')->nullable();
-            $table->boolean('status')->default(true);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

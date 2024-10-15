@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('sits'); // Available sits
             $table->date('start_date'); // Start date
             $table->date('end_date'); // End date
-            $table->tinyInteger('status')->default(1); // Status
+            $table->tinyInteger('status')->default(2); // 0 => inactive, 1 => active, 2 => pending
             $table->timestamps();
         });
     }

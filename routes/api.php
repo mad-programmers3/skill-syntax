@@ -8,6 +8,7 @@ use App\Http\Controllers\backend\LessonReviewController;
 use App\Http\Controllers\backend\MyFileController;
 use App\Http\Controllers\backend\ReviewController;
 use App\Http\Controllers\backend\RoleController;
+use App\Http\Controllers\backend\SettingController;
 use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\backend\TestimonialController;
 use App\Http\Controllers\backend\UserController;
@@ -59,6 +60,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('review/lesson-reviews', LessonReviewController::class);
     Route::resource('review/testimonials', TestimonialController::class);
     Route::resource('files', MyFileController::class);
+    Route::resource('settings', SettingController::class);
     Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
     Route::get('required-data', [SupportController::class, 'requiredData']);
     Route::get('configurations', [SupportController::class, 'getConfigurations']);

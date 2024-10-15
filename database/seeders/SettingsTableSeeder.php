@@ -14,12 +14,126 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        Setting::insert([
-            ['name' => 'Enable Registration', 'key' => 'is_enable_registration', 'type' => 'select', 'group' => '1', 'value' => '1', 'status' => 1],
-            ['name' => 'Enable Login', 'key' => 'is_enable_login', 'type' => 'select', 'group' => '1', 'value' => '1', 'status' => 1],
-            ['name' => 'Job Post to Futurenation Platform', 'key' => 'is_job_post_to_futurenation', 'type' => 'select', 'group' => '7', 'value' => '1', 'status' => 1],
-            ['name' => 'Futurenation API Key', 'key' => 'futurenation_api_key', 'type' => 'text', 'group' => '7', 'value' => 'your_api_key', 'status' => 1],
-            ['name' => 'Futurenation Client Secret', 'key' => 'futurenation_client_secret', 'type' => 'text', 'group' => '7', 'value' => 'your_client_secret', 'status' => 1],
-        ]);
+        $settings =[
+            // General Settings
+            [
+                'key' => 'application_name',
+                'name' => 'Application Name',
+                'type' => 'text',
+                'group' => 'general',
+                'value' => 'SkillSyntax'
+            ],
+            [
+                'key' => 'default_course_status',
+                'name' => 'Default course Status',
+                'type' => 'select',
+                'group' => 'general',
+                'value' => '2'
+            ],
+            [
+                'key' => 'default_user_role',
+                'name' => 'Default User Role',
+                'type' => 'select',
+                'group' => 'general',
+                'value' => 'Student'
+            ],
+            [
+                'key' => 'default_document_type',
+                'name' => 'Default Document Type',
+                'type' => 'select',
+                'group' => 'general',
+                'value' => 'Employee Attachment'
+            ],
+            [
+                'key' => 'default_course_duration',
+                'name' => 'Default Course Duration (Weeks)',
+                'type' => 'number',
+                'group' => 'general',
+                'value' => '26'
+            ],
+            [
+                'key' => 'application_logo',
+                'name' => 'Application Logo',
+                'type' => 'file',
+                'group' => 'general',
+                'value' => 'logo.png'
+            ],
+            [
+                'key' => 'shortlist_sms',
+                'name' => 'Shortlist SMS',
+                'type' => 'textarea',
+                'group' => 'general',
+                'value' => 'Thank you for your Application, You are shortlisted for the position.'
+            ],
+            [
+                'key' => 'selected_sms',
+                'name' => 'Selected SMS',
+                'type' => 'textarea',
+                'group' => 'general',
+                'value' => 'Congratulations, You are Selected for the position.'
+            ],
+            [
+                'key' => 'staff_transfer_service_length',
+                'name' => 'Staff Transfer Service Length',
+                'type' => 'number',
+                'group' => 'general',
+                'value' => '3'
+            ],
+            [
+                'key' => 'per_slab_increment_percent',
+                'name' => 'Per Slab Increment Percent',
+                'type' => 'number',
+                'group' => 'general',
+                'value' => '7.5'
+            ],
+
+            // Salary Settings
+            [
+                'key' => 'total_salary_slab',
+                'name' => 'Total Salary Slab',
+                'type' => 'number',
+                'group' => 'salary',
+                'value' => '12'
+            ],
+            [
+                'key' => 'salary_slab_consolidated',
+                'name' => 'Salary Slab (Consolidated)',
+                'type' => 'number',
+                'group' => 'salary',
+                'value' => '2'
+            ],
+
+            // Transfer Settings
+            [
+                'key' => 'zone_layer_name',
+                'name' => 'Zone Layer Name',
+                'type' => 'select',
+                'group' => 'transfer',
+                'value' => 'Zone'
+            ],
+            [
+                'key' => 'transferable_month_at_zone',
+                'name' => 'Transferable Month at Zone',
+                'type' => 'number',
+                'group' => 'transfer',
+                'value' => '6'
+            ],
+            [
+                'key' => 'branch_layer_name',
+                'name' => 'Branch Layer Name',
+                'type' => 'select',
+                'group' => 'transfer',
+                'value' => 'Branch'
+            ],
+        ];
+
+
+
+        foreach ($settings as $setting) {
+            Setting::create(array_merge($setting, [
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]));
+        }
     }
 }

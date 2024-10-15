@@ -8,6 +8,7 @@ use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\MyFile;
 use App\Models\Role;
+use App\Models\Setting;
 use App\Models\SubCategory;
 use App\Models\User;
 use App\Supports\Helper;
@@ -90,6 +91,8 @@ class SupportController extends Controller
         $auth = Auth::user();
         if ($auth) $auth->load('avatar')->load('role');
         $data['auth'] = $auth;
+
+        $data['settings'] = Setting::all();
 
         return retRes('Successfully fetched all records', $data);
     }
