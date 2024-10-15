@@ -12,6 +12,7 @@ import ModulesComponent from "../views/RolesPermission/ModulesComponent";
 import RoleConfigsComponent from "../views/RolesPermission/RoleConfigsComponent";
 import PermissionsComponents from "../views/RolesPermission/PermissionsComponents";
 import UsersComponent from "../views/user/UsersComponent";
+import SettingsComponent from "../views/SettingsComponent";
 
 
 const routes =[
@@ -114,9 +115,15 @@ const routes =[
         name: 'manageRoles',
         component: RoleConfigsComponent,
         meta : {'pageTitle' : 'Manage Roles'},
-    }
+    },
 
-
+    // Settings
+    {
+        path: '/admin/settings',
+        name: 'settings',
+        component:SettingsComponent,
+        meta : {'pageTitle' : 'App Settings', dataUrl : 'api/settings'},
+    },
 
 ];
 export default routes;

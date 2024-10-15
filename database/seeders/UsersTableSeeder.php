@@ -35,7 +35,7 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'role_id' => $supAdminRoleID,
-                'name' => 'Mamun',
+                'name' => 'Al Mamun',
                 'email' => 'mamun@gmail.com',
                 'password' => Hash::make('123456'),
                 'bio' => 'Super Admin at the course management system.',

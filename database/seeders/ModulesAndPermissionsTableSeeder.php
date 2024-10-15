@@ -95,7 +95,7 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 ]
             ],
             [
-                'module' => ['name' => 'Configuration', 'icon' => 'fas fa-cogs'],
+                'module' => ['name' => 'Configuration', 'icon' => 'fas fa-check-square'],
                 'nodes' => [
                     [
                         'module' => ['name' => 'Roles', 'link' => '/admin/config/roles'],
@@ -118,6 +118,11 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                         'nodes' => []
                     ],
                 ]
+            ],
+            [
+                'module' => ['name' => 'Settings', 'link' => '/admin/settings', 'icon' => 'fas fa-cog'],
+                'permissions' => $rawPermissions,
+                'nodes' => []
             ],
         ];
 
