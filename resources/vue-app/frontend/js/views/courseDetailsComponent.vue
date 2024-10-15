@@ -36,7 +36,6 @@
                                     </ul>
                                 </div>
                             </div>
-
                             <!-- Course Review Section -->
                             <h4 class="title">Reviews ({{ reviews.length }})</h4>
                             <div class="mb-30">
@@ -60,7 +59,7 @@
                                                 <div class="review-footer mt-2 d-flex justify-content-between">
                                                     <div>
                                                         <a class="mr-3 primary-text2">
-                                                            <i class="pointer far fa-heart"></i> {{ likes.length }}
+                                                            <i class="pointer far fa-heart"></i> {{likes.length}}
                                                         </a>
                                                         <a class="mr-3 primary-text2">
                                                             <i class="pointer fas fa-reply"></i>
@@ -95,7 +94,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!-- Review Area (New review) -->
                             <div id="review-area">
                                 <div v-if="!getAuth()" class="text-center">
@@ -132,7 +130,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Course Lessons Section -->
                     <div class="col-lg-4 right-contents" v-if="course && course.lessons">
                         <h4 class="title mt-5">Lessons</h4>
@@ -161,7 +158,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
