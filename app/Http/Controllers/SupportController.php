@@ -22,6 +22,7 @@ class SupportController extends Controller
     public function requiredData()
     {
         $data = [];
+        $input = request()->all();
 
         if (request()->has('auth'))
             $data['auth'] = Auth::user()->load('avatar')->load('role');
@@ -65,8 +66,11 @@ class SupportController extends Controller
         }
 
 
-        if (request()->has('roles'))
-            $data['roles'] = Role::all();
+
+        if (isset($input['roles']) || in_array('roles', $input)) {
+            $objName = isset($input['roles']['objName']) ? $input['roles']['objName'] : 'roles';
+            $data[$objName] = Role::all();
+        }
 
         return retRes('Successfully fetched all records', $data);
     }

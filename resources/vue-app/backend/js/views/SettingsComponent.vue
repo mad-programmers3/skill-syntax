@@ -8,28 +8,19 @@
             <div class="p-3 mx-0 border row">
                 <div v-for="setting in settings" class="form-group col-md-6">
                     <label>{{ setting.name }}</label>
-
                     <input v-if="setting.type === 'text'" type="text" class="form-control" :value="setting.value">
 
-                    <input v-else-if="setting.type === 'number'" type="number" class="form-control" :value="parseInt(setting.value)">
+                    <input v-if="setting.type === 'number'" type="number" class="form-control" :value="parseInt(setting.value)">
 
-                    <textarea v-else-if="setting.type === 'textarea'" class="form-control" rows="3">{{ setting.value }}</textarea>
+                    <textarea v-if="setting.type === 'textarea'" class="form-control" rows="3">{{ setting.value }}</textarea>
 
-                    <select v-else-if="setting.type === 'select'" class="form-control">
-                        <template v-if="setting.key === 'default_course_status'">
-                            <option value="0">Inactive</option>
-                            <option value="1">Active</option>
-                            <option value="2" selected>Pending</option>
-                        </template>
-                        <template v-else-if="setting.key === 'default_document_type'">
-                            <option>Course Material</option>
-                            <option>Assignment</option>
-                        </template>
-                        <template v-else-if="setting.key === 'default_user_role'">
-                            <option>Student</option>
-                            <option>Instructor</option>
-                        </template>
-                    </select>
+                    <template v-if="setting.type === 'select'">
+                        <select  class="form-control" v-model="setting.value">
+                            <template v-for="(item , index) in settingSelects[setting.key]">
+                                <option :value="item.id">{{ item.name }}</option>
+                            </template>
+                        </select>
+                    </template>
 
                     <div v-else-if="setting.type === 'file'" class="file-upload-wrapper">
                         <img :src="asset('backend/assets/images/logo-backend.png')" alt="Logo">
@@ -50,20 +41,36 @@
         data () {
             return {
                 settingsByGroup: [],
+                settingSelects : {},
             }
         },
         mounted() {
             const _this = this;
             this.fetchData(false, (settings) => {
-                // Separate settings by group
                 if (settings) {
-                    _this.settingsByGroup = settings.reduce((groups, setting) => {
-                        if (!groups[setting.group]) {
-                            groups[setting.group] = [];
-                        }
-                        groups[setting.group].push(setting);
-                        return groups;
-                    }, {});
+                    _this.settingsByGroup = settings;
+                }
+            });
+            var URl = this.urlGenerate('api/required-data-new', false);
+            this.httpReq({
+                url : URl,
+                method : 'post',
+                data : {
+                    roles : {objName : 'default_user_role'},
+                },
+                callback : function (response) {
+                    $.each(response.data.result, function (index, value){
+                        _this.$set(_this.settingSelects, index, value);
+                    });
+                    _this.$set(_this.settingSelects, 'default_document_type', [
+                        {name : 'Course Material', id : 'Course Material'},
+                        {name : 'Assignment', id : 'Assignment'}
+                    ]);
+                    _this.$set(_this.settingSelects, 'default_course_status', [
+                        {name : 'Inactive', id : '0'},
+                        {name : 'Active', id : '1'},
+                        {name : 'Pending', id : '2'}
+                    ]);
                 }
             });
         }

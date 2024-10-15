@@ -14,4 +14,10 @@ class SettingController extends Controller
     {
         $this->model = new Setting();
     }
+
+    public function index(){
+        $settings = $this->model->get()->groupBy('group');
+
+        return retRes('Successfully fetched all records', $settings);
+    }
 }

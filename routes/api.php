@@ -63,6 +63,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('settings', SettingController::class);
     Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
     Route::get('required-data', [SupportController::class, 'requiredData']);
+    Route::post('required-data-new', [SupportController::class, 'requiredData']);
     Route::get('configurations', [SupportController::class, 'getConfigurations']);
 
 
