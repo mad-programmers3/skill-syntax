@@ -13,6 +13,8 @@
         <event_area_section/>
 
         <testimonial_area_section/>
+
+        <payment_img_section/>
     </div>
 
 </template>
@@ -26,10 +28,12 @@
     import Trainer_area_section from "../components/sections/trainer_area_section";
     import Event_area_section from "../components/sections/events_area_section";
     import Testimonial_area_section from "../components/sections/testimonial_area_section";
+    import Payment_img_section from "../components/sections/payment_img_section";
 
     export default {
         name: "homeComponent",
         components: {
+            Payment_img_section,
             Testimonial_area_section,
             Event_area_section,
             Trainer_area_section,

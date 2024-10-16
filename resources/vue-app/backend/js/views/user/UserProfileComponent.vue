@@ -9,31 +9,31 @@
                     <p class="text-muted">{{ user.role ? user.role.name : '' }}</p>
                     <p>{{ user.bio }}</p>
                 </div>
-
                 <div class="card px-3">
                     <ul class="list-unstyled social-links mb-0">
                         <li class="py-2 d-flex justify-content-between border-bottom">
-                            <span><i class="fas fa-globe"></i> Website:</span>
-                            <a href="https://bootdey.com">https://bootdey.com</a>
+                            <span><i class="fas fa-globe text-primary"></i> Website:</span>
+                            <a href="https://bootdey.com" class="text-decoration-none text-dark font-weight-bold">https://bootdey.com</a>
                         </li>
                         <li class="py-2 d-flex justify-content-between border-bottom">
-                            <span><i class="fab fa-github"></i> Github:</span>
-                            <a href="#">bootdey</a>
+                            <span><i class="fab fa-github text-dark"></i> Github:</span>
+                            <a href="#" class="text-decoration-none text-dark font-weight-bold">bootdey</a>
                         </li>
                         <li class="py-2 d-flex justify-content-between border-bottom">
-                            <span><i class="fab fa-twitter"></i> Twitter:</span>
-                            <a href="#">@bootdey</a>
+                            <span><i class="fab fa-twitter text-info"></i> Twitter:</span>
+                            <a href="#" class="text-decoration-none text-dark font-weight-bold">@bootdey</a>
                         </li>
                         <li class="py-2 d-flex justify-content-between border-bottom">
-                            <span><i class="fab fa-instagram"></i> Instagram:</span>
-                            <a href="#">@bootdey</a>
+                            <span><i class="fab fa-instagram text-danger"></i> Instagram:</span>
+                            <a href="#" class="text-decoration-none text-dark font-weight-bold">@bootdey</a>
                         </li>
                         <li class="py-2 d-flex justify-content-between">
-                            <span><i class="fab fa-facebook"></i> Facebook:</span>
-                            <a href="#">bootdey</a>
+                            <span><i class="fab fa-facebook text-primary"></i> Facebook:</span>
+                            <a href="#" class="text-decoration-none text-dark font-weight-bold">bootdey</a>
                         </li>
                     </ul>
                 </div>
+
                 <div class="card px-3">
                     <div class="p-2">
                         <h4 class="text-danger">Danger Zone</h4>
@@ -171,4 +171,5 @@
     .progress-bar {
         background-color: #3f50f6;
     }
+
 </style>
