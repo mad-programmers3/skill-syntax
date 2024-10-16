@@ -62,9 +62,12 @@
                                         <span class="profile-name">{{ userName }}</span>
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
-                                        <router-link :to="{name: 'student-profile'}" class="dropdown-item">
+                                        <router-link v-if="getAuth().role_id === 4" :to="{name: 'student-profile'}" class="dropdown-item">
                                             <i class="fa fa-user mr-2 text-primary"></i> Profile
                                         </router-link>
+                                        <a v-else :href="urlGenerate('admin/user/profile')" target="blank" class="dropdown-item">
+                                            <i class="fa fa-user mr-2 text-primary"></i> Profile
+                                        </a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#" @click.prevent="confirmLogout">
                                             <i class="fas fa-sign-out-alt mr-2 text-danger"></i> Logout
