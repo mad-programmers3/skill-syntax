@@ -8,28 +8,29 @@
                     <img :src="asset('backend/assets/images/def-user-avatar.svg')" class="bg-primary p-1" alt="Profile Picture">
                     <h5>Our Student</h5>
                     <p class="text-muted">Student</p>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="text-muted">Email:</span>
-                            <span class="text-muted">student@gmail.com</span>
+                    <ul class="list-group list-group-flush shadow-sm rounded-lg">
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="font-weight-bold text-dark ">Email:</span>
+                            <span class="text-dark">student@gmail.com</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="text-muted">Date of Birth:</span>
-                            <span class="text-muted">10/12/2008</span>
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="font-weight-bold text-dark">Date of Birth:</span>
+                            <span class="text-dark">10/12/2008</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="text-muted">Courses Enrolled:</span>
-                            <span class="text-muted">Web Development</span>
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="font-weight-bold text-dark">Courses Enrolled:</span>
+                            <span class="text-dark ">Web Development</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="text-muted">Completed Assignments:</span>
-                            <span class="badge badge-light">10</span>
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="font-weight-bold text-dark">Completed Assignments:</span>
+                            <span class="badge badge-success px-3 py-2">10</span>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <span class="text-muted">Reviews Given:</span>
-                            <span class="badge badge-light">3</span>
+                        <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                            <span class="font-weight-bold text-dark">Reviews Given:</span>
+                            <span class="badge badge-warning px-3 py-2">3</span>
                         </li>
                     </ul>
+
                 </div>
             </div>
             <!-- Form Section -->
@@ -38,15 +39,20 @@
                     <form>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="firstName">First Name</label>
+                                <label for="firstName">Name</label>
                                 <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="lastName">Last Name</label>
-                                <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+                                <label for="email">Email Address</label>
+                                <input type="email" class="form-control" id="email" placeholder="Enter your Email" />
                             </div>
                         </div>
+
                         <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="bio">Bio</label>
+                                <input type="text" class="form-control" id="bio" placeholder="Enter your bio">
+                            </div>
                             <div class="form-group col-md-6">
                                 <label for="gender">Gender</label>
                                 <select id="gender" class="form-control">
@@ -56,10 +62,6 @@
                                     <option>Other</option>
                                 </select>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="birthDate">Date of Birth</label>
-                                <input type="date" class="form-control" id="birthDate" placeholder="Enter your birth date"/>
-                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -67,8 +69,8 @@
                                 <input type="text" class="form-control" id="phoneNumber" placeholder="Enter phone number"/>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="email">Email Address</label>
-                                <input type="email" class="form-control" id="email" placeholder="Enter your Email" />
+                                <label for="birthDate">Date of Birth</label>
+                                <input type="date" class="form-control" id="birthDate" placeholder="Enter your birth date"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -76,7 +78,7 @@
                             <input class="form-control" id="address" placeholder="Enter your address"/>
                         </div>
                         <div class="d-flex">
-                            <button type="submit" class="justify-content-center genric-btn primary-bg2 text-white circle arrow full-width-btn">Submit</button>
+                            <button type="submit" class="justify-content-center genric-btn primary-bg2 text-white full-width-btn">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -115,6 +117,12 @@
     }
     .full-width-btn {
         width: 100%;
+    }
+    .text-dark{
+        font-size: 12px;
+    }
+    .font-weight-bold{
+        font-size: 13px;
     }
 
 </style>
