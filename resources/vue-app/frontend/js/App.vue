@@ -2,15 +2,11 @@
     <div>
         <header-menu v-if="showHeader === 1"></header-menu>
 
-        <!--================ Start Home Banner Area =================-->
-<!--        <home-component></home-component>-->
         <router-view></router-view>
-        <!--================ End Testimonial Area =================-->
 
-
-        <!--================ Start footer Area  =================-->
-      <MyFooter></MyFooter>
-        <!--================ End footer Area  =================-->
+        <!--    1 => regular, 2 => mini    -->
+        <my-footer v-if="showFooter === UI_FOOTER_REGULAR"></my-footer>
+        <my-footer-mini v-if="showFooter === UI_FOOTER_MINI"></my-footer-mini>
     </div>
 
 
@@ -19,8 +15,9 @@
  import HeaderMenu from "./components/headerMenu";
  import MyFooter from "./components/myFooter";
  import HomeComponent from "./views/homeComponent";
+ import MyFooterMini from "./components/myFooterMini";
  export default {
-     components: {HomeComponent, MyFooter, HeaderMenu}
+     components: {MyFooterMini, HomeComponent, MyFooter, HeaderMenu}
  }
 </script>
 <style scoped>

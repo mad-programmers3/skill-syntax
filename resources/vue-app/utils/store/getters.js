@@ -10,5 +10,8 @@ export const getters = {
     },
     showHeader(state) {
         return state.showHeader;
-    }
+    },
+    showFooter(state) {
+        return state.showFooter;
+    },
 };

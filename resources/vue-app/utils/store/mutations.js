@@ -10,5 +10,8 @@ export const mutations = {
     },
     setShowHeader(state, data) {
         state.showHeader = data;
+    },
+    setShowFooter(state, data) {
+        state.showFooter = data;
     }
 };

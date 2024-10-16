@@ -3,4 +3,5 @@ export const state = {
     formData: {status: 1},
     Config: [],
     showHeader: 1,
+    showFooter: 1,
 };

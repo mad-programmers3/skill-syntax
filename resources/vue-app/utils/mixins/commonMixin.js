@@ -6,6 +6,10 @@ export default {
             authUser: window.authUser,  // Authenticated user information from the window object
             currentUrl: window.location.href,
             auth: {},                   // Parsed authentication data
+            UI_HEADER_HIDE: 0,
+            UI_HEADER_REGULAR: 1,
+            UI_FOOTER_REGULAR: 1,
+            UI_FOOTER_MINI: 2,
             CODE_SUCCESS: 2000,
             CODE_WARNING: 2020,
             CODE_DANGER: 3000,
@@ -37,6 +41,10 @@ export default {
 
         showHeader() {
             return this.$store.getters.showHeader;
+        },
+
+        showFooter() {
+            return this.$store.getters.showFooter;
         },
 
         /**
@@ -113,8 +121,8 @@ export default {
                            showCancelButton = true,
                            confirmButtonText = 'Yes',
                            cancelButtonText = 'No',
-                           confirmButtonColor= '#dc3545',
-                           cancelButtonColor = '#28a745',
+                           confirmButtonColor= '#ff1695',
+                           cancelButtonColor = '#00cccd',
                            callback = false
         }) {
             this.$swal({title, text, icon, showCancelButton, confirmButtonText, cancelButtonText, confirmButtonColor, cancelButtonColor}).then((result) => {

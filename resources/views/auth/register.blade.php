@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Register Page</title>
+    <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png" />
+    <title>Skill Syntax - Register</title>
     <!-- Bootstrap 4 CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <!-- Fontawesome CDN -->

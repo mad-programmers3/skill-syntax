@@ -113,31 +113,29 @@
                 this.$router.push('/profile'); // Assuming you have a route for profile
             },
             confirmLogout() {
+                const _this = this;
                 Swal.fire({
                     title: 'Are you sure?',
                     text: "Do you really want to log out?",
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#28a745',
+                    confirmButtonColor: '#f44a40',
+                    cancelButtonColor: '#4cd3e3',
                     confirmButtonText: 'Yes, log out!',
                     cancelButtonText: 'Cancel'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        this.logout();
+                        _this.httpReq({
+                            customUrl: 'logout',
+                            method: 'post',
+                            callback: (response) => {
+                                _this.isAuthenticated = false;
+                                window.location.href = this.urlGenerate('login');
+                            }
+                        })
                     }
                 });
             },
-            async logout() {
-                try {
-                    await axios.post('/logout');
-                    this.isAuthenticated = false;  // Set isAuthenticated to false after logout
-                    this.$store.commit('logout'); // Or update the Vuex state if you're using Vuex
-                    this.$router.push('/login'); // Redirect to login page after logout
-                } catch (error) {
-                    console.error('Logout failed:', error);
-                }
-            }
         }
     };
 </script>

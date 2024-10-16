@@ -83,7 +83,7 @@ const route = [
         component:studentComponent,
         children: [
             {
-                path: '/',
+                path: '/my-courses',
                 name:'student-myCourses',
                 component: studentMyCoursesComponent
             },
