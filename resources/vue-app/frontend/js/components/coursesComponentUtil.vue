@@ -8,7 +8,10 @@
                 </div>
 
                 <div class="course_content card-body">
-                    <span class="price badge badge-success p-1">${{ course.price }}</span>
+                    <span class="price badge badge-success p-1">
+                        <!-- Show 'Free' if price is 0.00, otherwise show the price -->
+                        {{ course.price == 0 ? 'Free' : '$' + course.price }}
+                    </span>
                     <div style="padding-right: 15px">
                         <span class="tag mb-3 d-inline-block text-sm badge badge-secondary p-1 " style="font-size: 10px" >{{course.category.title}}</span>
                     </div>
@@ -27,8 +30,6 @@
             </div>
         </div>
     </div>
-
-
 </template>
 
 <script>
@@ -44,9 +45,6 @@
 </script>
 
 <style scoped>
-
-
-
     .course_head img {
         object-fit: cover;
         width: 100%;
@@ -56,11 +54,7 @@
         font-size: 1rem;
         font-weight: bold;
         color: #ff5e14;
-      ;
     }
-
-
-
 
     .see-details-button {
         background-color: white;
@@ -82,6 +76,7 @@
         height: 20px;
         transition: all 0.3s ease;
     }
+
     .single_course .price {
         top: -30px;
         right: 15px;
@@ -89,25 +84,24 @@
         line-height: 50px;
         width: 50px;
         font-size: 12px;
-
     }
+
     .single_course {
-        border: 1px solid #ddd; /* Default border color */
+        border: 1px solid #ddd;
         border-radius: 8px;
         overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Default shadow */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         height: 100%;
     }
 
     .single_course:hover {
-        transform: translateY(-5px); /* Slight lift on hover */
-        border-color: #ff5e14; /* Change border color on hover */
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+        transform: translateY(-5px);
+        border-color: #ff5e14;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
-    .single_course .course_content{
+
+    .single_course .course_content {
         padding: 10px;
     }
-
-
 </style>

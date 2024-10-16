@@ -58,6 +58,12 @@ class User extends Authenticatable
         return $this->hasMany(Course::class, 'user_id');
     }
 
+    public function isFree()
+    {
+        return $this->price == 0.00;
+    }
+
+
     // Relationship with Reviews
 //    public function reviews()
 //    {
