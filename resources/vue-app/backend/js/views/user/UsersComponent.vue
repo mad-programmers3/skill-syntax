@@ -34,7 +34,7 @@
         <validate-form-modal title="User" width="700px" :init-val="initVal" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">
                 <div class="upload-area d-block m-auto" @click="() => {$refs.fileInput.click()}">
-                    <img :src="generateFileUrl(formData.avatar)" alt="Preview" class="preview-img"/>
+                    <img :src="generateFileUrl(formData.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="Preview" class="preview-img"/>
                 </div>
                 <input type="file" ref="fileInput" @change="handleFileUpload($event, 'avatar')" class="file-input" accept="image/*"/>
             </div>
@@ -49,7 +49,7 @@
                 <div class="w-50 pl-2">
                     <label class="form-label d-block">
                         Role
-                        <select class="form-control" v-model="formData.role_id" v-validate="'required'" name="role_id" @change="validateField">
+                        <select class="form-control" v-model="formData.role_id" >
                             <option value="">Select a role</option>
                             <option v-for="role in roles" :key="role.id" :value="role.id">
                                 {{ role.name }}
@@ -70,7 +70,7 @@
                 <div class="w-50 pl-2">
                     <label class="form-label w-100">
                         Mobile
-                        <input type="tel" class="form-control" v-model="formData.mobile" v-validate="'required|numeric|min:10|max:15'" name="mobile" @input="validateField"/>
+                        <input type="tel" class="form-control" v-model="formData.mobile" v-validate="'numeric|min:10|max:15'" name="mobile" @input="validateField"/>
                     </label>
                 </div>
             </div>

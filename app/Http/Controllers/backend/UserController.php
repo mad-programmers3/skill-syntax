@@ -8,7 +8,9 @@ use App\Models\User;
 use App\Supports\BaseCrudHelper;
 use App\Supports\MyFileHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use function PHPUnit\Framework\arrayHasKey;
 
 class UserController extends Controller
 {
@@ -44,7 +46,7 @@ class UserController extends Controller
                 $request->merge(['password' => Hash::make($request->password)]);
 
             // set the avatar id
-            if ($request->avatar) {
+            if ($request->avatar && array_key_exists('success', $request->avatar)) {
                 // merge all file infos on fileReq from $request->avatar
                 $fileReq = new Request();
                 mergeAll($fileReq, $request->avatar);
@@ -68,5 +70,27 @@ class UserController extends Controller
                 $this->deleteFile($record->avatar_id);
             }
         };
+    }
+
+
+    public function resetPassword(Request $request)
+    {
+        // Check if current password is correct
+        if (!Hash::check($request->current_password, Auth::user()->password))
+            return retRes('Current password is incorrect', null, CODE_DANGER);
+
+        if (strlen($request->new_password) < 6)
+            return retRes('Minimum password length is 6', null, CODE_DANGER);
+
+        if ($request->new_password !== $request->new_password_confirmation)
+            return retRes('Password confirmation does not match', null, CODE_DANGER);
+
+
+        // Update the user's password
+        $user = Auth::user();
+        $user->password = Hash::make($request->new_password);
+        $user->save();
+
+        return retRes('Password has been updated');
     }
 }

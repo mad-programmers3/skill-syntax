@@ -13,9 +13,9 @@
         <ul class="nav">
             <!-- Profile Section -->
             <li class="nav-item nav-profile">
-                <a href="#" class="nav-link">
+                <router-link :to="{name: 'user-profile'}" class="nav-link">
                     <div class="nav-profile-image">
-                        <img :src="generateFileUrl(Config.auth ? Config.auth.avatar : null, DEF_AVATAR_B)" alt="profile" />
+                        <img :src="generateFileUrl(Config.auth ? Config.auth.avatar : null, DEF_AVATAR_B)" class="nav-profile-img" alt="profile" />
                         <span class="login-status online"></span>
                     </div>
                     <div class="nav-profile-text d-flex flex-column pr-3">
@@ -23,7 +23,7 @@
                         <span class="font-weight-normal">{{ Config.auth && Config.auth.role ? Config.auth.role.name : 'NA' }}</span>
                     </div>
                     <span class="badge badge-danger text-white ml-3 rounded">3</span>
-                </a>
+                </router-link>
             </li>
 
             <!-- Modules -->

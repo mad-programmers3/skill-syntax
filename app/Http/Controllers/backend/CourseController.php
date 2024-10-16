@@ -40,7 +40,7 @@ class CourseController extends Controller
         };
 
         $this->beforeUpdate = function ($request) {
-            if ($request->thumbnail) {
+            if ($request->thumbnail && array_key_exists('success', $request->thumbnail)) {
                 // merge all file infos on fileReq from $request->thumbnail
                 $fileReq = new Request();
                 mergeAll($fileReq, $request->thumbnail);

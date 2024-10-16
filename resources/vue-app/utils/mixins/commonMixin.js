@@ -148,7 +148,7 @@ export default {
 
 
         // upload the file on storage and set it's infos on form data
-        handleFileUpload(event, key = 'thumbnail') {
+        handleFileUpload(event, key = 'thumbnail', dataHolder = this.formData) {
             const file = event.target.files[0];  // Get the selected file
             if (!file || !file.type.startsWith("image/")) {  // Check if the file is an image
                 alert("Please upload a valid image file.");  // Show an alert if the file is not valid
@@ -166,8 +166,7 @@ export default {
                 callback: (res) => {
                     if (res.data.success) {
                         _this.$set(res.data, 'user_id', _this.getAuth().id);
-                        _this.$set(res.data, 'ready', true);
-                        _this.$set(_this.formData, key, res.data);
+                        _this.$set(dataHolder, key, res.data);
                     }
                 },
                 data: imgFormData

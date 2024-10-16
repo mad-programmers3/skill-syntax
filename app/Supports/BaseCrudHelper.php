@@ -79,7 +79,8 @@ trait BaseCrudHelper
         try {
             call($this->beforeUpdate, $request);
             $record = $this->model->findOrFail($id); // Find the record by ID
-            $newRecord = $record->update($request->all()); // Update the record
+            $record->update($request->all()); // Update the record
+            $newRecord = $this->model->find($id);
             call($this->afterUpdate, $record, $newRecord);
             return retRes('Successfully updated record', $newRecord);
         } catch (ModelNotFoundException $e) {

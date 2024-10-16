@@ -4,7 +4,21 @@
             <!-- Profile Card -->
             <div class="col-md-4">
                 <div class="card profile-card">
-                    <img class="mx-auto mb-3 bg-primary p-1" :src="generateFileUrl(user.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="John Doe">
+                    <div class="mb-3">
+                        <div class="upload-area d-block m-auto">
+                            <div>
+                                <i @click="() => {$refs.fileInput.click()}" class="fas fa-edit text-white p-1 edit-icon" title="Upload"></i>
+                                <i class="fas fa-trash text-white p-1 delete-icon" title="Delete"></i>
+                            </div>
+                            <img :src="generateFileUrl(avatarFormData.avatar ? avatarFormData.avatar : user.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="Preview" class="preview-img mx-auto bg-primary p-1"/>
+                        </div>
+                        <input type="file" ref="fileInput" @change="handleFileUpload($event, 'avatar', avatarFormData)" class="file-input" accept="image/*"/>
+                        <div  v-if="avatarFormData.avatar && avatarFormData.avatar.success" class="mt-1">
+                            <button @click="uploadAvatar" class="btn btn-primary" title="Confirm Upload"><i class="fas fa-upload"></i></button>
+                            <button class="btn btn-danger" title="Cancel Upload">X</button>
+                        </div>
+                    </div>
+
                     <h4 class="mb-0">{{ user.name }}</h4>
                     <p class="text-muted">{{ user.role ? user.role.name : '' }}</p>
                     <p>{{ user.bio }}</p>
@@ -49,7 +63,7 @@
             <!-- User Info -->
             <div class="col-md-8">
                 <div class="card p-3">
-                    <form>
+                    <form @submit.prevent="updateUser">
                         <div class="form-group d-flex align-items-center mb-3">
                             <label for="fullName" class="mr-3" style="width: 150px;">Name</label>
                             <input type="text" v-model="formData.name" class="form-control" id="fullName">
@@ -75,12 +89,29 @@
                             <input type="text" v-model="formData.location" class="form-control" id="address">
                         </div>
 
+                        <button type="submit" class="btn btn-primary w-100" title="Update Information">Update</button>
+                    </form>
+                </div>
+
+                <div class="card p-3">
+                    <h4>Reset Password</h4>
+                    <form @submit.prevent="resetPassword">
                         <div class="form-group d-flex align-items-center mb-3">
-                            <label for="password" class="mr-3" style="width: 150px;">Set Password</label>
-                            <input type="password" v-model="formData.password" class="form-control" id="password">
+                            <label for="password" class="mr-3" style="width: 150px;">Current</label>
+                            <input type="password" v-model="resetFormData.current_password" class="form-control" id="password">
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100" title="Update informations">Update</button>
+                        <div class="form-group d-flex align-items-center mb-3">
+                            <label for="password-new" class="mr-3" style="width: 150px;">Set New</label>
+                            <input type="password" v-model="resetFormData.new_password" class="form-control" id="password-new">
+                        </div>
+
+                        <div class="form-group d-flex align-items-center mb-3">
+                            <label for="password-conform" class="mr-3" style="width: 150px;">Conform New</label>
+                            <input type="password" v-model="resetFormData.new_password_confirmation" class="form-control" id="password-conform">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100" title="Reset Password">Reset</button>
                     </form>
                 </div>
 
@@ -132,6 +163,8 @@
         data() {
             return {
                 user: {},
+                avatarFormData: {},
+                resetFormData: {},
             }
         },
 
@@ -141,7 +174,57 @@
                 _this.user = result.auth;
                 _this.$store.commit('setFormData', result.auth);
             });
-        }
+        },
+
+        methods: {
+            updateUser() {
+                const _this = this;
+                this.httpReq({
+                    urlSuffix: this.user.id,
+                    method: 'put',
+                    callback: (response) => {
+                        if (response.data)
+                            _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error')
+                    }
+                });
+            },
+            uploadAvatar() {
+                const _this = this;
+                this.httpReq({
+                    urlSuffix: this.user.id,
+                    method: 'put',
+                    data: this.avatarFormData,
+                    callback: (response) => {
+                        if (response.data) {
+                            _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error')
+                            _this.user = response.data.result;
+                        }
+
+                        _this.avatarFormData = {};
+                    }
+                });
+                },
+            resetPassword() {
+                const _this = this;
+                this.httpReq({
+                    urlSuffix: 'password-reset',
+                    method: 'post',
+                    data: this.resetFormData,
+                    callback: (response) => {
+                        let type = 'error';
+
+                        if (response.data.status === _this.CODE_SUCCESS) {
+                            type = 'success';
+                            _this.$store.commit('setFormData', {});
+                        }
+
+                        if (response.data) {
+                            _this.showToast(response.data.message, type);
+                        }
+                    }
+                });
+            }
+        },
     }
 </script>
 
@@ -170,5 +253,28 @@
     }
     .progress-bar {
         background-color: #3f50f6;
+    }
+
+
+
+    .upload-area {
+        position: relative;
+    }
+    .upload-area div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .upload-area div i {
+        background-color: rgba(0, 0, 0, 0.47);
+        cursor: pointer;
+    }
+    .preview-img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .file-input {
+        display: none;
     }
 </style>

@@ -51,6 +51,7 @@ Route::resource('tests', UserController::class);
 Route::middleware('auth:api')->group(function () {
 
     Route::resource('users', UserController::class);
+    Route::post('users/password-reset', [UserController::class, 'resetPassword']);
     Route::resource('categories', CategoryController::class);
     Route::resource('sub-categories', SubCategoryController::class);
     Route::resource('courses', CourseController::class);
