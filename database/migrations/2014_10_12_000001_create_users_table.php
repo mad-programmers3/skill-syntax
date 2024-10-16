@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('email')->unique(); // Ensures email uniqueness
             $table->text('bio')->nullable();
             $table->string('mobile')->nullable();
+            $table->string('gender')->nullable();
+            $table->date('date_of_birth')->nullable();
             $table->string('location')->nullable();
             $table->tinyInteger('status')->default(1); // 0 => inactive, 1 => active, 2 => request pending
             $table->timestamp('email_verified_at')->nullable();

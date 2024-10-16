@@ -1,12 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import Toast from 'vue-toastification';
+import 'vue-toastification/dist/index.css';
+Vue.use(Toast);
+
 import commonMixin from "../../utils/mixins/commonMixin";
 import httpMixin from "../../utils/mixins/httpMixin";
 
 Vue.use(VueRouter);
 import App from './App.vue'
 import route from './routes'
+
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+Vue.use(VueAxios, axios);
 
 
 // import {store as storeData} from './store';
@@ -33,5 +42,5 @@ Vue.mixin(httpMixin);
 const vue = new Vue({
     el : '#app',
     components : {App},
-    router, store
+    router, store,axios
 });
