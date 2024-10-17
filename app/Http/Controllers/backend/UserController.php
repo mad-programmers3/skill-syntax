@@ -97,4 +97,13 @@ class UserController extends Controller
 
         return retRes('Password has been updated');
     }
+
+
+    public function deleteAvatar(Request $request)
+    {
+        dd($request);
+        
+
+        return retRes('Password has been updated');
+    }
 }

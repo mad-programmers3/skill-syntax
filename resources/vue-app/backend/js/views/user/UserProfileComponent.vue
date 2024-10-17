@@ -14,7 +14,7 @@
                         </div>
                         <input type="file" ref="fileInput" @change="handleFileUpload($event, 'avatar', avatarFormData)" class="file-input" accept="image/*"/>
                         <div  v-if="avatarFormData.avatar && avatarFormData.avatar.success" class="mt-1">
-                            <button @click="uploadAvatar" class="btn btn-primary" title="Confirm Upload"><i class="fas fa-upload"></i></button>
+                            <button @click="updateUser(UPDATE_AVATAR)" class="btn btn-primary" title="Confirm Upload"><i class="fas fa-upload"></i></button>
                             <button class="btn btn-danger" title="Cancel Upload">X</button>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
             <!-- User Info -->
             <div class="col-md-8">
                 <div class="card p-3">
-                    <form @submit.prevent="updateUser">
+                    <form @submit.prevent="updateUser(UPDATE_INFO)">
                         <div class="form-group d-flex align-items-center mb-3">
                             <label for="fullName" class="mr-3" style="width: 150px;">Name</label>
                             <input type="text" v-model="formData.name" class="form-control" id="fullName">
@@ -95,7 +95,7 @@
 
                 <div class="card p-3">
                     <h4>Reset Password</h4>
-                    <form @submit.prevent="resetPassword">
+                    <form @submit.prevent="updateUser(RESET_PASSWORD)">
                         <div class="form-group d-flex align-items-center mb-3">
                             <label for="password" class="mr-3" style="width: 150px;">Current</label>
                             <input type="password" v-model="resetFormData.current_password" class="form-control" id="password">
@@ -165,6 +165,9 @@
                 user: {},
                 avatarFormData: {},
                 resetFormData: {},
+                UPDATE_AVATAR: 1,
+                UPDATE_INFO: 2,
+                RESET_PASSWORD: 3,
             }
         },
 
@@ -179,55 +182,33 @@
         },
 
         methods: {
-            updateUser() {
+            updateUser(type) {
+                let urlSuffix = type === this.RESET_PASSWORD ? 'password-reset' : this.user.id;
+                let method = type === this.RESET_PASSWORD ? 'post' : 'put';
+                let data = type === this.UPDATE_AVATAR ? this.avatarFormData : (type === this.RESET_PASSWORD ? this.resetFormData : false);
+
                 const _this = this;
                 this.httpReq({
-                    urlSuffix: this.user.id,
-                    method: 'put',
+                    urlSuffix,
+                    method,
+                    data,
                     callback: (response) => {
                         if (response.data) {
-                            _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error')
+                            _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error');
+                            if (type === _this.RESET_PASSWORD) {
+                                if (response.data.status === _this.CODE_SUCCESS) _this.resetFormData = {};
+                                return;
+                            }
+
                             _this.user = response.data.result;
+
+                            if (response.data.status === _this.CODE_SUCCESS && type === _this.RESET_PASSWORD) _this.resetFormData = {};
                         }
+
+                        if (type === _this.UPDATE_AVATAR) _this.avatarFormData = {};
                     }
                 });
             },
-            uploadAvatar() {
-                const _this = this;
-                this.httpReq({
-                    urlSuffix: this.user.id,
-                    method: 'put',
-                    data: this.avatarFormData,
-                    callback: (response) => {
-                        if (response.data) {
-                            _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error')
-                            _this.user = response.data.result;
-                        }
-
-                        _this.avatarFormData = {};
-                    }
-                });
-                },
-            resetPassword() {
-                const _this = this;
-                this.httpReq({
-                    urlSuffix: 'password-reset',
-                    method: 'post',
-                    data: this.resetFormData,
-                    callback: (response) => {
-                        let type = 'error';
-
-                        if (response.data.status === _this.CODE_SUCCESS) {
-                            type = 'success';
-                            _this.$store.commit('setFormData', {});
-                        }
-
-                        if (response.data) {
-                            _this.showToast(response.data.message, type);
-                        }
-                    }
-                });
-            }
         },
     }
 </script>
