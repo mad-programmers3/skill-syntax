@@ -105,7 +105,8 @@ const route = [
             {
                 path: 'profile',
                 name:'student-profile',
-                component: studentProfileComponent
+                component: studentProfileComponent,
+                meta : {'pageTitle' : 'Student Profile', dataUrl : 'api/users'},
             },
             {
                 path: 'settings',

@@ -10,11 +10,11 @@
                                 <i @click="() => {$refs.fileInput.click()}" class="fas fa-edit text-white p-1 edit-icon" title="Upload"></i>
                                 <i class="fas fa-trash text-white p-1 delete-icon" title="Delete"></i>
                             </div>
-                            <img :src="generateFileUrl(avatarFormData.avatar ? avatarFormData.avatar : user.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="Preview" class="preview-img mx-auto bg-primary p-1"/>
+                            <img :src="generateFileUrl(avatarFormData.avatar ? avatarFormData.avatar : user.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="Preview" class="preview-img mx-auto p-1" :style="{backgroundColor: btnBg}"/>
                         </div>
                         <input type="file" ref="fileInput" @change="handleFileUpload($event, 'avatar', avatarFormData)" class="file-input" accept="image/*"/>
                         <div  v-if="avatarFormData.avatar && avatarFormData.avatar.success" class="mt-1">
-                            <button @click="updateUser(UPDATE_AVATAR)" class="btn btn-primary" title="Confirm Upload"><i class="fas fa-upload"></i></button>
+                            <button @click="updateUser(UPDATE_AVATAR)" class="btn btn-primary" :style="{ backgroundColor: btnBg}" title="Confirm Upload"><i class="fas fa-upload"></i></button>
                             <button class="btn btn-danger" title="Cancel Upload">X</button>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                             <input type="text" v-model="formData.location" class="form-control" id="address">
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100" title="Update Information">Update</button>
+                        <button type="submit" class="btn btn-primary w-100" title="Update Information" :style="{ backgroundColor: btnBg}">Update</button>
                     </form>
                 </div>
 
@@ -111,46 +111,12 @@
                             <input type="password" v-model="resetFormData.new_password_confirmation" class="form-control" id="password-conform">
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100" title="Reset Password">Reset</button>
+                        <button type="submit" class="btn btn-primary w-100" title="Reset Password" :style="{ backgroundColor: btnBg}">Reset</button>
                     </form>
                 </div>
 
+                <slot />
 
-                <div class="row mt-4">
-                    <!-- Project Status 1 -->
-                    <div class="col-md-6">
-                        <div class="card p-3">
-                            <h6><em>assignment</em> Project Status</h6>
-                            <p>Web Design</p>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 80%;"></div>
-                            </div>
-                            <p>Website Markup</p>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 72%;"></div>
-                            </div>
-                            <p>One Page</p>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 89%;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project Status 2 -->
-                    <div class="col-md-6">
-                        <div class="card p-3">
-                            <h6><em>assignment</em> Project Status</h6>
-                            <p>Mobile Template</p>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 55%;"></div>
-                            </div>
-                            <p>Backend API</p>
-                            <div class="progress">
-                                <div class="progress-bar" role="progressbar" style="width: 66%;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -179,6 +145,12 @@
                 let copy = Object.assign({}, result.auth); // to avoid reference
                 this.$store.commit('setFormData', copy);
             });
+        },
+        props: {
+            btnBg: {
+                type: String,
+                default: '#3f50f6',
+            },
         },
 
         methods: {
@@ -231,13 +203,6 @@
         margin-right: 15px;
         font-size: 12px;
         color: #333;
-    }
-    .progress {
-        height: 8px;
-        margin-bottom: 10px;
-    }
-    .progress-bar {
-        background-color: #3f50f6;
     }
     
     .upload-area {

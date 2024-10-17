@@ -19,6 +19,7 @@ class RolePermissionsTableSeeder extends Seeder
         $this->giveRolePermissions('Super Admin');
         $this->giveRolePermissions('Admin', ['course_add', 'course_view', 'course_edit', 'course_delete', 'category_add', 'category_view', 'category_edit', 'category_delete']);
         $this->giveRolePermissions('Instructor', ['course_add', 'course_view', 'course_edit', 'course_delete']);
+        $this->giveRolePermissions('Student', ['user_edit', 'user_delete', 'review_add', 'review_edit', 'review_delete', 'course_review_add', 'course_review_edit', 'course_review_delete', 'lesson_review_add', 'lesson_review_edit', 'lesson_review_delete', 'testimonial_add', 'testimonial_edit', 'testimonial_']);
     }
 
     private function giveRolePermissions($roleName, array $permissions = ['all'])
