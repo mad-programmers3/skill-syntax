@@ -329,8 +329,8 @@ button:focus {
   z-index: 1;
   min-height: 900px;
   position: relative;
-  background: url(../img/banner/home-banner.jpg) no-repeat center;
-  background-size: cover; }
+  background-color: rgba(0, 0, 0, 0.3)
+}
   .home_banner_area .banner_inner {
     position: absolute;
     top: 40%;
@@ -349,7 +349,6 @@ button:focus {
       font-weight: 500; }
     .home_banner_area .banner_inner .banner_content p {
       font-size: 20px;
-      color: #002347;
       font-weight: 500; }
 
 .blog_banner {

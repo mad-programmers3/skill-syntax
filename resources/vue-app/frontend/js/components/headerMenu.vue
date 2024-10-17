@@ -5,7 +5,7 @@
         <header class="header_area yellow-header">
             <div class="main_menu">
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <div class="container" style="background-color: white">
+                    <div class="container" style="background: rgba(255,255,255,0.68);">
                         <router-link class="navbar-brand logo_h" to="/">
                             <img :src="asset('frontend/img/logo.png')" alt="Logo" width="150px" />
                         </router-link>
