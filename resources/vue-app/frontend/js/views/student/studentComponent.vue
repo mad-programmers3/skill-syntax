@@ -3,31 +3,39 @@
     <div>
         <header>
             <div class="container">
-                <!-- Horizontal Navigation with Font Awesome Icons -->
-                <div class="nav-container">
-                    <ul class="nav justify-content-center">
-                        <li class="nav-item">
-                            <span @click="goHome()" class="nav-link pointer"><i class="fas fa-home"></i>Home</span>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{name: 'student-myCourses'}" class="nav-link"><i class="fas fa-book"></i> My Courses</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{name: 'student-wishlist'}" class="nav-link"><i class="fas fa-heart"></i> Wishlist</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{name: 'student-messages'}" class="nav-link"><i class="fas fa-envelope"></i> My messages</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{name: 'student-purchaseHistory'}" class="nav-link"><i class="fas fa-history"></i> Purchase History</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{name: 'student-profile'}" class="nav-link"><i class="fas fa-user"></i> Profile</router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link :to="{name: 'student-settings'}" class="nav-link"><i class="fas fa-cog"></i> Settings</router-link> <!-- New Settings Item -->
-                        </li>
-                    </ul>
+                <div class="main_menu">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <div class="container" style="background: rgba(255,255,255,0.68);">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <div class="collapse navbar-collapse offset nav-container" id="navbarSupportedContent">
+                                <ul class="nav navbar-nav menu_nav ml-auto nav justify-content-center">
+                                    <li class="nav-item">
+                                        <span @click="goHome()" class="nav-link pointer"><i class="fas fa-home"></i>Home</span>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link :to="{name: 'student-myCourses'}" class="nav-link"><i class="fas fa-book"></i> My Courses</router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link :to="{name: 'student-wishlist'}" class="nav-link"><i class="fas fa-heart"></i> Wishlist</router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link :to="{name: 'student-messages'}" class="nav-link"><i class="fas fa-envelope"></i> My messages</router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link :to="{name: 'student-purchaseHistory'}" class="nav-link"><i class="fas fa-history"></i> Purchase History</router-link>
+                                    </li>
+                                    <li class="nav-item">
+                                        <router-link :to="{name: 'student-profile'}" class="nav-link"><i class="fas fa-user"></i> Profile</router-link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
             </div>
         </header>
