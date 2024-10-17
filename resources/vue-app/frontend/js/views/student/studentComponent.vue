@@ -12,7 +12,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <div class="collapse navbar-collapse offset nav-container" id="navbarSupportedContent">
+                            <div class="collapse navbar-collapse offset nav-container primary-bg2" id="navbarSupportedContent">
                                 <ul class="nav navbar-nav menu_nav mx-auto nav justify-content-center">
                                     <li class="nav-item">
                                         <span @click="goHome()" class="nav-link pointer"><i class="fas fa-home"></i>Home</span>
@@ -73,7 +73,6 @@
 </script>
 <style scoped>
     .nav-container {
-        background-color: #fff;
         border-radius: 0.5rem;
         padding: 10px 20px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
@@ -86,19 +85,22 @@
 
     .nav-link {
         font-weight: bold;
-        color: #333;
+        color: white !important;
         text-transform: capitalize;
     }
 
     .nav-link:hover {
-        color: #fdc632; /* Green hover effect */
+        color: #fdc632 !important; /* Green hover effect */
     }
 
     .active {
         background-color: #fdc632;
-        color: white !important;
+        color: #002347 !important;
         border-radius: 0.25rem;
         padding: 5px 15px;
+    }
+    .active:hover {
+        color: #002347 !important;
     }
 
     /* Adding space between icon and text */

@@ -55,11 +55,11 @@
                 <div class="card px-3">
                     <div class="p-2">
                         <h4 class="text-danger">Danger Zone</h4>
-                        <p class="mb-1"><strong>Delete this account? Patricio</strong></p>
+                        <p class="mb-1"><strong>Delete this account?</strong></p>
                         <p class="danger-description">
                             Once you delete an account, there is no going back. Please be certain.
                         </p>
-                        <button class="btn btn-outline-danger btn-fw">Delete my account</button>
+                        <button @click="deleteAccount" class="btn btn-outline-danger btn-fw">Delete my account</button>
                     </div>
                 </div>
             </div>
@@ -152,6 +152,7 @@
                 resetFormData: {},
                 UPDATE_AVATAR: 1,
                 DELETE_AVATAR: 11,
+                DELETE_USER : 22,
                 UPDATE_INFO: 2,
                 RESET_PASSWORD: 3,
             }
@@ -188,6 +189,10 @@
                         method = 'post';
                         data = {id: this.user.id, avatar_id: this.user.avatar_id};
                         break;
+                    case this.DELETE_USER:
+                        method = 'delete';
+                        data = {};
+                        break;
                     case this.RESET_PASSWORD:
                         urlSuffix = 'password-reset';
                         method = 'post';
@@ -218,6 +223,21 @@
                     }
                 });
             },
+
+            deleteAccount() {
+                const _this = this;
+
+                this.showSweetAlert({
+                    confirmButtonText: 'Delete Account',
+                    cancelButtonText: 'Cancel',
+                    callback: (conform) => {
+                        if (conform) {
+                            _this.updateUser(_this.DELETE_USER);
+                            window.location.href = '/';
+                        }
+                    }
+                });
+            }
         },
     }
 </script>

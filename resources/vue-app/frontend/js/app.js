@@ -38,6 +38,9 @@ const router = new VueRouter({
 Vue.mixin(commonMixin);
 Vue.mixin(httpMixin);
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+Vue.use(VueSweetalert2);
 
 const vue = new Vue({
     el : '#app',
