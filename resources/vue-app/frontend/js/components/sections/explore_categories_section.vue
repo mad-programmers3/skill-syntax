@@ -48,28 +48,28 @@
 <style scoped>
     .card {
         transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-        border-radius: 8px; /* Slightly rounded corners */
-        border: 1px solid #e0e0e0; /* Subtle border */
-        background-color: #ffffff; /* White background */
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        background-color: #ffffff;
     }
 
     .card-img-top {
-        max-height: 80px; /* Smaller image height */
-        width: auto; /* Automatic width */
-        border-radius: 8px 8px 0 0; /* Rounded top corners */
+        max-height: 80px;
+        width: auto;
+        border-radius: 8px 8px 0 0;
     }
 
     .card-img-container {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100px; /* Adjusted height */
-        overflow: hidden; /* Hide overflow */
+        height: 100px;
+        overflow: hidden;
     }
 
     .card:hover {
         transform: scale(1.05);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Softer shadow */
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
     h2 {
@@ -84,27 +84,20 @@
         font-style: italic;
     }
 
-    .custom-hr {
-        border: 1px solid green;
-        width: 80%;
-        margin: 0 auto;
-        margin-bottom: 30px;
-    }
-
     .card-title {
-        font-weight: 500; /* Medium font weight for titles */
-        color: #333; /* Darker color for contrast */
+        font-weight: 500;
+        color: #333;
     }
 
     .text-truncate {
-        white-space: nowrap; /* Prevent text wrap */
-        overflow: hidden; /* Hide overflow */
-        text-overflow: ellipsis; /* Ellipsis for long text */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     @media (max-width: 768px) {
         .card-img-top {
-            max-height: 60px; /* Smaller image for mobile */
+            max-height: 60px;
         }
     }
 </style>
