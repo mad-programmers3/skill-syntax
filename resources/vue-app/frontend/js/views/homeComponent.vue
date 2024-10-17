@@ -4,6 +4,8 @@
 
         <feature_area_section/>
 
+        <explore_categories_section/>
+
         <popular_courses :popular-courses="popularCourses"/>
 
         <gap_registration_area/>
@@ -29,10 +31,12 @@
     import Event_area_section from "../components/sections/events_area_section";
     import Testimonial_area_section from "../components/sections/testimonial_area_section";
     import Payment_img_section from "../components/sections/payment_img_section";
+    import Explore_categories_section from "../components/sections/explore_categories_section";
 
     export default {
         name: "homeComponent",
         components: {
+            Explore_categories_section,
             Payment_img_section,
             Testimonial_area_section,
             Event_area_section,
