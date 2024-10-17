@@ -1,7 +1,7 @@
 <template>
     <div>
         <template>
-            <div class="popular_courses mt-5">
+            <div class="popular_courses section_gap_top">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-5">

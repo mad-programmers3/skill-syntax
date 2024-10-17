@@ -33,7 +33,7 @@
 
         <validate-form-modal title="User" width="700px" :init-val="initVal" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">
-                <div class="upload-area d-block m-auto" @click="() => {$refs.fileInput.click()}">
+                <div class="upload-area mx-auto" @click="() => {$refs.fileInput.click()}">
                     <img :src="generateFileUrl(formData.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="Preview" class="preview-img"/>
                 </div>
                 <input type="file" ref="fileInput" @change="handleFileUpload($event, 'avatar')" class="file-input" accept="image/*"/>
@@ -78,10 +78,36 @@
             <div class="mb-3 d-flex">
                 <div class="w-50 pr-2">
                     <label class="form-label w-100">
+                        Website
+                        <input type="url" class="form-control" v-model="formData.website" v-validate="'url'" name="website" @input="validateField"/>
+                    </label>
+                </div>
+
+                <div class="w-50 pl-2">
+                    <label class="form-label w-100">
+                        Github
+                        <input type="url" class="form-control" v-model="formData.github" v-validate="'url'" name="github" @input="validateField"/>
+                    </label>
+                </div>
+            </div>
+
+            <div class="mb-3 d-flex">
+                <div class="w-50 pr-2">
+                    <label class="form-label w-100">
+                        Birth
+                        <input type="date" class="form-control" v-model="formData.date_of_birth"/>
+                    </label>
+                </div>
+
+                <div class="w-50 pl-2">
+                    <label class="form-label w-100">
                         Location
                         <input type="text" class="form-control" v-model="formData.location"/>
                     </label>
                 </div>
+            </div>
+
+            <div class="mb-3 d-flex">
                 <div class="w-50 pl-2">
                     <label class="form-label w-100">
                         Set Password
@@ -147,9 +173,11 @@
 
 <style scoped>
     .upload-area {
-        width: 300px;
+        width: 200px;
         height: 200px;
+        overflow: hidden;
         border: 2px dashed #34a9cc;
+        border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -159,6 +187,7 @@
     .preview-img {
         max-width: 100%;
         max-height: 100%;
+        margin: auto;
     }
 
     .file-input {

@@ -76,14 +76,14 @@
                 <div class="w-50 pr-2">
                     <label class="form-label w-100">
                         Start Date
-                        <input type="date" class="form-control" placeholder="Category title here" v-model="formData.start_date" v-validate="" name="title" @input="validateField"/>
+                        <input type="date" class="form-control" v-model="formData.start_date" v-validate="" name="title" @input="validateField"/>
                     </label>
                 </div>
 
                 <div class="w-50 pl-2">
                     <label class="form-label w-100">
                         End Date
-                        <input type="date" class="form-control" placeholder="Category title here" v-model="formData.end_date" v-validate="" name="title" @input="validateField"/>
+                        <input type="date" class="form-control" v-model="formData.end_date" v-validate="" name="title" @input="validateField"/>
                     </label>
                 </div>
             </div>

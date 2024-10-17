@@ -26,24 +26,28 @@
                 <div class="card px-3">
                     <ul class="list-unstyled social-links mb-0">
                         <li class="py-2 d-flex justify-content-between border-bottom">
+                            <span><i class="fas fa-envelope text-primary"></i> Email: </span>
+                            <a :href="'mailto:' + user.email" class="text-decoration-none text-dark font-weight-bold text-right">{{ user.email }}</a>
+                        </li>
+                        <li class="py-2 d-flex justify-content-between border-bottom">
+                            <span><i class="fas fa-mobile-alt text-primary"></i> Mobile:</span>
+                            <a :href="'tel:' + user.mobile" class="text-decoration-none text-dark font-weight-bold text-right">{{ user.mobile }}</a>
+                        </li>
+                        <li class="py-2 d-flex justify-content-between border-bottom">
                             <span><i class="fas fa-globe text-primary"></i> Website:</span>
-                            <a href="https://bootdey.com" class="text-decoration-none text-dark font-weight-bold">https://bootdey.com</a>
+                            <a :href="user.website" class="text-decoration-none text-dark font-weight-bold text-right">{{ user.website }}</a>
                         </li>
                         <li class="py-2 d-flex justify-content-between border-bottom">
-                            <span><i class="fab fa-github text-dark"></i> Github:</span>
-                            <a href="#" class="text-decoration-none text-dark font-weight-bold">bootdey</a>
+                            <span><i class="fab fa-github text-primary"></i> Github:</span>
+                            <a :href="user.github" class="text-decoration-none text-dark font-weight-bold text-right">{{ user.github }}</a>
                         </li>
                         <li class="py-2 d-flex justify-content-between border-bottom">
-                            <span><i class="fab fa-twitter text-info"></i> Twitter:</span>
-                            <a href="#" class="text-decoration-none text-dark font-weight-bold">@bootdey</a>
+                            <span><i class="fas fa-birthday-cake text-primary"></i> Birth:</span>
+                            <a class="text-decoration-none text-dark font-weight-bold text-right">{{ user.date_of_birth }}</a>
                         </li>
                         <li class="py-2 d-flex justify-content-between border-bottom">
-                            <span><i class="fab fa-instagram text-danger"></i> Instagram:</span>
-                            <a href="#" class="text-decoration-none text-dark font-weight-bold">@bootdey</a>
-                        </li>
-                        <li class="py-2 d-flex justify-content-between">
-                            <span><i class="fab fa-facebook text-primary"></i> Facebook:</span>
-                            <a href="#" class="text-decoration-none text-dark font-weight-bold">bootdey</a>
+                            <span><i class="fas fa-location-arrow text-primary"></i> Location:</span>
+                            <a class="text-decoration-none text-dark font-weight-bold text-right">{{ user.location }}</a>
                         </li>
                     </ul>
                 </div>
@@ -82,6 +86,21 @@
                         <div class="form-group d-flex align-items-center mb-3">
                             <label for="phone" class="mr-3" style="width: 150px;">Mobile</label>
                             <input type="tel" v-model="formData.mobile" class="form-control" id="phone">
+                        </div>
+
+                        <div class="form-group d-flex align-items-center mb-3">
+                            <label for="website" class="mr-3" style="width: 150px;">Website</label>
+                            <input type="url" v-model="formData.website" class="form-control" id="website">
+                        </div>
+
+                        <div class="form-group d-flex align-items-center mb-3">
+                            <label for="github" class="mr-3" style="width: 150px;">Github</label>
+                            <input type="url" v-model="formData.github" class="form-control" id="github">
+                        </div>
+
+                        <div class="form-group d-flex align-items-center mb-3">
+                            <label for="birth" class="mr-3" style="width: 150px;">Birth</label>
+                            <input type="date" v-model="formData.date_of_birth" class="form-control" id="birth">
                         </div>
 
                         <div class="form-group d-flex align-items-center mb-3">
@@ -198,6 +217,9 @@
         width: 120px;
         height: 120px;
         border-radius: 50%;
+    }
+    .social-links li span {
+        min-width: 100px;
     }
     .social-links a {
         margin-right: 15px;
