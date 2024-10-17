@@ -10,7 +10,6 @@ use App\Supports\MyFileHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use function PHPUnit\Framework\arrayHasKey;
 
 class UserController extends Controller
 {
@@ -20,7 +19,7 @@ class UserController extends Controller
     {
         $this->model = new User();
         $this->with = ['role:id,name', 'avatar'];
-        $this->showWith = ['role:id,name'];
+        $this->showWith = ['role:id,name', 'avatar'];
 
         // before store set hash the password and set the avatar
         $this->beforeStore = function ($request) {
@@ -61,6 +60,11 @@ class UserController extends Controller
                     if ($storedFile) $request->merge(['avatar_id' => $storedFile->id]);
                 }
             }
+        };
+
+        $this->afterUpdate = function ($old, $new) {
+            $new->load('role');
+            $new->load('avatar');
         };
 
 

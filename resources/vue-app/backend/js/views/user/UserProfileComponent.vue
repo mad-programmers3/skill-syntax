@@ -172,7 +172,9 @@
             const _this = this;
             this.fetchData(this.urlGenerate('api/required-data', false, {'auth': true}), (result) => {
                 _this.user = result.auth;
-                _this.$store.commit('setFormData', result.auth);
+
+                let copy = Object.assign({}, result.auth); // to avoid reference
+                this.$store.commit('setFormData', copy);
             });
         },
 
@@ -183,8 +185,10 @@
                     urlSuffix: this.user.id,
                     method: 'put',
                     callback: (response) => {
-                        if (response.data)
+                        if (response.data) {
                             _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error')
+                            _this.user = response.data.result;
+                        }
                     }
                 });
             },
