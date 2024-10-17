@@ -4,7 +4,7 @@
 
         <feature_area_section/>
 
-        <explore_categories_section/>
+        <explore_categories_section :categories="categories"/>
 
         <popular_courses :popular-courses="popularCourses"/>
 
@@ -52,12 +52,15 @@
         },
         data() {
             return {
-                popularCourses: []
+                popularCourses: [],
+                categories: [],
             };
         },
         mounted() {
+            const _this = this;
             this.fetchData(this.urlGenerate(), (result) => {
-                this.popularCourses = result['popular-courses'];
+                _this.popularCourses = result['popular-courses'];
+                _this.categories = result['categories'];
             });
         }
 

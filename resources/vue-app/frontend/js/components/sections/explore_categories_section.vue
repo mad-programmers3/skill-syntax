@@ -10,10 +10,11 @@
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4" v-for="(category, index) in categories" :key="index">
                 <div class="card h-100 shadow border-0 custom-card">
                     <div class="card-img-container text-center p-3">
-                        <img class="card-img-top img-fluid" :src="category.src" :alt="category.alt" />
+                        <img class="card-img-top img-fluid" :src="asset('frontend/img/explore-categories/art design.gif')" :alt="category.title" />
                     </div>
                     <div class="card-body text-center">
-                        <h5 class="card-title text-truncate">{{ category.alt }}</h5>
+                        <h5 class="card-title text-truncate">{{ category.title }}</h5>
+                        <p class="course-count">{{ category.courses ? category.courses.length : 0 }} courses available</p>
                     </div>
                 </div>
             </div>
@@ -24,24 +25,32 @@
 <script>
     export default {
         name: "explore_categories_section",
+
         data() {
             return {
-                categories: [
-                    { src: '/frontend/img/explore-categories/art design.gif', alt: 'Art Design' },
-                    { src: '/frontend/img/explore-categories/consolating.gif', alt: 'Consolating' },
-                    { src: '/frontend/img/explore-categories/content writing.gif', alt: 'Content Writing' },
-                    { src: '/frontend/img/explore-categories/development.gif', alt: 'Development' },
-                    { src: '/frontend/img/explore-categories/digital-M.gif', alt: 'Digital Marketing' },
-                    { src: '/frontend/img/explore-categories/finance.gif', alt: 'Finance' },
-                    { src: '/frontend/img/explore-categories/marketing.gif', alt: 'Marketing' },
-                    { src: '/frontend/img/explore-categories/music&audio.gif', alt: 'Music & Audio' },
-                    { src: '/frontend/img/explore-categories/networking.gif', alt: 'Networking' },
-                    { src: '/frontend/img/explore-categories/phptography.gif', alt: 'Photography' },
-                    { src: '/frontend/img/explore-categories/science.gif', alt: 'Science' },
-                    { src: '/frontend/img/explore-categories/video graphy.gif', alt: 'Videography' }
-                ]
+                // categories: [
+                //     { src: '/frontend/img/explore-categories/art design.gif', name: 'Art Design', courseCount: 10 },
+                //     { src: '/frontend/img/explore-categories/consolating.gif', name: 'Consolating', courseCount: 5 },
+                //     { src: '/frontend/img/explore-categories/content writing.gif', name: 'Content Writing', courseCount: 8 },
+                //     { src: '/frontend/img/explore-categories/development.gif', name: 'Development', courseCount: 15 },
+                //     { src: '/frontend/img/explore-categories/digital-M.gif', name: 'Digital Marketing', courseCount: 7 },
+                //     { src: '/frontend/img/explore-categories/finance.gif', name: 'Finance', courseCount: 12 },
+                //     { src: '/frontend/img/explore-categories/marketing.gif', name: 'Marketing', courseCount: 6 },
+                //     { src: '/frontend/img/explore-categories/music&audio.gif', name: 'Music & Audio', courseCount: 4 },
+                //     { src: '/frontend/img/explore-categories/networking.gif', name: 'Networking', courseCount: 9 },
+                //     { src: '/frontend/img/explore-categories/phptography.gif', name: 'Photography', courseCount: 11 },
+                //     { src: '/frontend/img/explore-categories/science.gif', name: 'Science', courseCount: 3 },
+                //     { src: '/frontend/img/explore-categories/video graphy.gif', name: 'Videography', courseCount: 2 }
+                // ]
             };
-        }
+        },
+
+        props: {
+            categories: {
+                type: [Object, Array],
+                default: () => []
+            }
+        },
     };
 </script>
 
@@ -87,6 +96,12 @@
     .card-title {
         font-weight: 500;
         color: #333;
+    }
+
+    .course-count {
+        font-weight: 400;
+        color: #666;
+        margin-top: 10px;
     }
 
     .text-truncate {

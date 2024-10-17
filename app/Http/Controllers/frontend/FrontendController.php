@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Course;
 use App\Models\Lesson;
 use Exception;
@@ -15,6 +16,7 @@ class FrontendController extends Controller
         try {
             $data = [];
             $data['popular-courses'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->take(8)->get();
+            $data['categories'] = Category::with('courses:id,category_id,title')->get();
             return retRes('Fetched all data for home page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
