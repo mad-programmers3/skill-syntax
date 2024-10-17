@@ -32,6 +32,47 @@ class CategoriesTableSeeder extends Seeder
                 'title' => 'Digital Marketing',
                 'details' => 'Courses covering SEO, social media, and online advertising.',
             ],
+            [
+                'title' => 'Art Design',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+            [
+                'title' => 'Consolating',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+            [
+                'title' => 'Content Writing',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+            [
+                'title' => 'Finance',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+            [
+                'title' => 'Marketing',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+            [
+                'title' => 'Music & Audio',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+            [
+                'title' => 'Networking',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+            [
+                'title' => 'Photography',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+            [
+                'title' => 'Science',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+            [
+                'title' => 'Videography',
+                'details' => 'Courses covering SEO, social media, and online advertising.',
+            ],
+
         ];
 
         foreach ($categories as $category) {

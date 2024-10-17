@@ -8,6 +8,8 @@
 
         <popular_courses :popular-courses="popularCourses"/>
 
+        <new_courses_section/>
+
         <gap_registration_area/>
 
         <trainer_area_section/>
@@ -32,10 +34,12 @@
     import Testimonial_area_section from "../components/sections/testimonial_area_section";
     import Payment_img_section from "../components/sections/payment_img_section";
     import Explore_categories_section from "../components/sections/explore_categories_section";
+    import New_courses_section from "../components/sections/new_courses_section";
 
     export default {
         name: "homeComponent",
         components: {
+            New_courses_section,
             Explore_categories_section,
             Payment_img_section,
             Testimonial_area_section,
