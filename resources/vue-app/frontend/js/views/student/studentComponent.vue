@@ -13,7 +13,7 @@
                                 <span class="icon-bar"></span>
                             </button>
                             <div class="collapse navbar-collapse offset nav-container" id="navbarSupportedContent">
-                                <ul class="nav navbar-nav menu_nav ml-auto nav justify-content-center">
+                                <ul class="nav navbar-nav menu_nav mx-auto nav justify-content-center">
                                     <li class="nav-item">
                                         <span @click="goHome()" class="nav-link pointer"><i class="fas fa-home"></i>Home</span>
                                     </li>

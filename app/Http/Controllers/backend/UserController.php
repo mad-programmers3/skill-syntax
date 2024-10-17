@@ -101,9 +101,15 @@ class UserController extends Controller
 
     public function deleteAvatar(Request $request)
     {
-        dd($request);
-        
+        $avatar_id = $request->input('avatar_id');
+        if (!$avatar_id || !$this->deleteFile($avatar_id))
+            return retRes('No avatar found', null, CODE_DANGER);
 
-        return retRes('Password has been updated');
+        $record = User::findOrFail($request->input('id'));
+        $record->update(['avatar_id' => null]);
+        $record->load('role');
+
+
+        return retRes('The avatar has been deleted', $record);
     }
 }

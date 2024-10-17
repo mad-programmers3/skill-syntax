@@ -27,7 +27,7 @@ trait MyFileHelper
             if ($record->path && Storage::exists('public/' . $record->path))
                 Storage::delete('public/' . $record->path);
 
-            $record->delete();
+            return $record->delete();
         }
     }
 }

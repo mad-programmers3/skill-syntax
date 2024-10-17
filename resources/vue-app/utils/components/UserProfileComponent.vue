@@ -8,7 +8,7 @@
                         <div class="upload-area d-block m-auto">
                             <div>
                                 <i @click="() => {$refs.fileInput.click()}" class="fas fa-edit text-white p-1 edit-icon" title="Upload"></i>
-                                <i class="fas fa-trash text-white p-1 delete-icon" title="Delete"></i>
+                                <i v-if="user.avatar" @click="updateUser(DELETE_AVATAR)" class="fas fa-trash text-white p-1 delete-icon" title="Delete"></i>
                             </div>
                             <img :src="generateFileUrl(avatarFormData.avatar ? avatarFormData.avatar : user.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="Preview" class="preview-img mx-auto p-1" :style="{backgroundColor: btnBg}"/>
                         </div>
@@ -151,6 +151,7 @@
                 avatarFormData: {},
                 resetFormData: {},
                 UPDATE_AVATAR: 1,
+                DELETE_AVATAR: 11,
                 UPDATE_INFO: 2,
                 RESET_PASSWORD: 3,
             }
@@ -174,9 +175,26 @@
 
         methods: {
             updateUser(type) {
-                let urlSuffix = type === this.RESET_PASSWORD ? 'password-reset' : this.user.id;
-                let method = type === this.RESET_PASSWORD ? 'post' : 'put';
-                let data = type === this.UPDATE_AVATAR ? this.avatarFormData : (type === this.RESET_PASSWORD ? this.resetFormData : false);
+                let urlSuffix = this.user.id;
+                let method = 'put';
+                let data = false;
+
+                switch (type) {
+                    case this.UPDATE_AVATAR:
+                        data = this.avatarFormData;
+                        break;
+                    case this.DELETE_AVATAR:
+                        urlSuffix = 'avatar-delete';
+                        method = 'post';
+                        data = {id: this.user.id, avatar_id: this.user.avatar_id};
+                        break;
+                    case this.RESET_PASSWORD:
+                        urlSuffix = 'password-reset';
+                        method = 'post';
+                        data = this.resetFormData;
+                        break;
+                }
+
 
                 const _this = this;
                 this.httpReq({
