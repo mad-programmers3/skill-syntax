@@ -4,7 +4,7 @@
         <hr class="custom-hr" />
         <div class="row">
             <!-- Payment Gateway Logos -->
-            <div class="col-lg-2 col-md-4 col-sm-6 mb-4" v-for="logo in logos" :key="logo.alt">
+            <div v-for="(logo, index) in logos" :key="index" class="col-lg-2 col-md-4 col-sm-6 mb-4">
                 <div class="card h-100 shadow-sm border-0">
                     <div class="card-img-container text-center p-3">
                         <img class="card-img-top img-fluid" :src="baseUrl + logo.src" :alt="logo.alt" />

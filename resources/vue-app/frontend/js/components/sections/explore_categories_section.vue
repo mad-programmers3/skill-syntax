@@ -7,7 +7,7 @@
         <hr class="custom-hr" />
         <div class="row">
             <!-- Category Images -->
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4" v-for="category in categories" :key="category.alt">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4" v-for="(category, index) in categories" :key="index">
                 <div class="card h-100 shadow border-0 custom-card">
                     <div class="card-img-container text-center p-3">
                         <img class="card-img-top img-fluid" :src="category.src" :alt="category.alt" />
@@ -23,7 +23,7 @@
 
 <script>
     export default {
-        name: "ExploreCategoriesSection",
+        name: "explore_categories_section",
         data() {
             return {
                 categories: [
