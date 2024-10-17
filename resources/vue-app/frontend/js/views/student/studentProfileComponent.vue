@@ -4,7 +4,20 @@
             <!-- Profile Sidebar -->
             <div class="col-md-4">
                 <div class="profile-card">
-                    <img :src="asset('backend/assets/images/def-user-avatar.svg')" class="bg-primary p-1" alt="Profile Picture">
+                    <div class="mb-3">
+                        <div class="upload-area d-block m-auto">
+                            <div>
+                                <i @click="() => {$refs.fileInput.click()}" class="fas fa-edit text-white p-1 edit-icon" title="Upload"></i>
+                                <i class="fas fa-trash text-white p-1 delete-icon" title="Delete"></i>
+                            </div>
+                            <img :src="generateFileUrl(avatarFormData.avatar ? avatarFormData.avatar : user.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="Preview" class="preview-img mx-auto bg-primary p-1"/>
+                        </div>
+                        <input type="file" ref="fileInput" @change="handleFileUpload($event, 'avatar', avatarFormData)" class="file-input" accept="image/*"/>
+                        <div  v-if="avatarFormData.avatar && avatarFormData.avatar.success" class="mt-1">
+                            <button @click="uploadAvatar" class="btn btn-primary" title="Confirm Upload"><i class="fas fa-upload"></i></button>
+                            <button class="btn btn-danger" title="Cancel Upload">X</button>
+                        </div>
+                    </div>
                     <h5>{{user.name}}</h5>
                     <p class="text-muted">{{user.bio}}</p>
                     <ul class="list-group list-group-flush shadow-sm rounded-lg">
@@ -34,7 +47,7 @@
             <!-- Form Section -->
             <div class="col-md-8">
                 <div class="form-container">
-                    <form @submit.prevent="submitForm">
+                    <form @submit.prevent="updateForm">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label for="firstName">Name</label>
@@ -86,12 +99,13 @@
 </template>
 
 <script>
-    import axios from 'axios';
+
     export default {
         name: "studentProfileComponent",
         data() {
             return {
                 user: {},
+                avatarFormData: {},
             }
         },
 
@@ -103,30 +117,44 @@
             });
         },
         methods: {
-            submitForm() {
-                const _this = this;
-                console.log("Form Submitted", this.formData);
 
-               axios({
-                    method: 'put',
+            uploadAvatar() {
+                const _this = this;
+                this.httpReq({
                     url: '/api/users/' + this.user.id,
-                    data: this.formData
-                })
-                    .then(response => {
-                        console.log(response.data);
-                        _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error');
-                    })
-                    .catch(error => {
-                        console.log(error.response ? error.response.data : error.message);
-                        if (error.response) {
-                            if (error.response.status === 403) {
-                                _this.showToast('Permission Denied', 'error');
-                            } else {
-                                _this.showToast(error.response.data.message || 'An error occurred', 'error');
-                            }
-                        }
-                    });
-            }
+                    method: 'put',
+                    data: this.avatarFormData,
+                    callback: (response) => {
+                        if (response.data)
+                            _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error')
+                    }
+                });
+            },
+
+            updateForm() {
+                const _this = this;
+                this.httpReq({
+                    url: '/api/users/' + this.user.id,
+                    method: 'put',
+                    data: this.formData,
+                    callback: (response) => {
+                        if (response.data)
+                            _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error')
+                    }
+                });
+            },
+            // deleteAvatar() {
+            //     const _this = this;
+            //     this.httpReq({
+            //         url: '/api/users/' + this.user.id,
+            //         method: 'delete',
+            //         data: this.avatarFormData,
+            //         callback: (response) => {
+            //             if (response.data)
+            //                 _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error')
+            //         }
+            //     });
+            // },
 
         }
     }
@@ -163,5 +191,26 @@
     }
     .font-weight-bold{
         font-size: 13px;
+    }
+
+    .upload-area {
+        position: relative;
+    }
+    .upload-area div {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .upload-area div i {
+        background-color: rgba(0, 0, 0, 0.47);
+        cursor: pointer;
+    }
+    .preview-img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .file-input {
+        display: none;
     }
 </style>
