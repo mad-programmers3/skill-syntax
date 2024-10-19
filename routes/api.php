@@ -40,13 +40,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'pages'], function () {
     Route::get('index', [FrontendController::class, 'index']);
-    Route::get('courses', [FrontendController::class, 'courses']);
+    Route::post('courses', [FrontendController::class, 'courses']);
     Route::get('courses/{id}', [FrontendController::class, 'showCurse']);
     Route::get('lessons/{id}', [FrontendController::class, 'showLesson']);
 });
 
 Route::resource('tests', UserController::class);
 
+Route::get('required-data', [SupportController::class, 'requiredData']);
 // Role routes
 Route::middleware('auth:api')->group(function () {
 
@@ -64,7 +65,6 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('files', MyFileController::class);
     Route::resource('settings', SettingController::class);
     Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
-    Route::get('required-data', [SupportController::class, 'requiredData']);
     Route::get('configurations', [SupportController::class, 'getConfigurations']);
 
 

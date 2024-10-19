@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\Lesson;
 use Exception;
+use Illuminate\Http\Request;
 
 class FrontendController extends Controller
 {
@@ -24,11 +25,19 @@ class FrontendController extends Controller
     }
 
     // for courses page
-    public function courses()
+    public function courses(Request $request)
     {
         try {
             $data = [];
-            $data['courses'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->get();
+            $categories = $request->input('categories_id');
+
+            $data['courses'] = Course::where('status', 1)
+                ->when(!empty($categories), function($query) use ($categories) {
+                    return $query->whereIn('category_id', $categories);
+                })
+                ->with(['thumbnail:id,path', 'category:id,title', 'likes'])
+                ->get();
+
             return retRes('Fetched all data for courses page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
