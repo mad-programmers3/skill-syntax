@@ -11,6 +11,7 @@ class Category extends Model
     use HasFactory;
 
     protected $fillable = [
+        'thumbnail_id',
         'title',
         'details',
         'status',
@@ -21,5 +22,10 @@ class Category extends Model
     public function courses()
     {
         return $this->hasMany(Course::class, 'category_id');
+    }
+    // Relationship with File
+    public function thumbnail()
+    {
+        return $this->belongsTo(MyFile::class, 'thumbnail_id');
     }
 }

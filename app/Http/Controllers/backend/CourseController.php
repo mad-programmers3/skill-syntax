@@ -24,37 +24,12 @@ class CourseController extends Controller
         $this->showWith = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'reviews.review.user'];
 
 
-
         $this->beforeStore = function ($request) {
-            $thumbData = $request->thumbnail;
-            if ($thumbData) {
-                $fileReq = new Request();
-                mergeAuth($fileReq);
-                // merge all file infos on fileReq from $request->thumbnail
-                mergeAll($fileReq, $thumbData);
-
-                //store the file and get the id
-                $storedFile = MyFile::create($thumbData); // thumbnail is an object
-                if ($storedFile) $request->merge(['thumbnail_id' => $storedFile->id]);
-            }
+            $this->storeFile($request, 'thumbnail');
         };
 
         $this->beforeUpdate = function ($request) {
-            if ($request->thumbnail && array_key_exists('success', $request->thumbnail)) {
-                // merge all file infos on fileReq from $request->thumbnail
-                $fileReq = new Request();
-                mergeAll($fileReq, $request->thumbnail);
-
-                if ($request->thumbnail_id) {
-                    // keep the thumbnail_id as it is, update the file
-                    $this->updateFile($fileReq, $request->thumbnail_id);
-                }
-                else {
-                    // store a new file => get id => set this id merge thumbnail_id
-                    $storedFile = MyFile::create($request->thumbnail); // thumbnail is an object
-                    if ($storedFile) $request->merge(['thumbnail_id' => $storedFile->id]);
-                }
-            }
+            $this->updateFile($request, 'thumbnail');
         };
 
         $this->afterDelete = function ($record) {

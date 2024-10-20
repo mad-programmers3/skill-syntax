@@ -23,17 +23,7 @@ class UserController extends Controller
 
         // before store set hash the password and set the avatar
         $this->beforeStore = function ($request) {
-            $avatarData = $request->avatar;
-            if ($avatarData) {
-                $fileReq = new Request();
-                mergeAuth($fileReq);
-                // merge all file infos on fileReq from $request->avatar
-                mergeAll($fileReq, $avatarData);
-
-                //store the file and get the id
-                $storedFile = MyFile::create($avatarData); // avatar is an object
-                if ($storedFile) $request->merge(['avatar_id' => $storedFile->id]);
-            }
+            $this->storeFile($request, 'avatar');
 
             $request->merge(['password' => Hash::make($request->password)]);
         };
@@ -44,22 +34,8 @@ class UserController extends Controller
             if ($request->password)
                 $request->merge(['password' => Hash::make($request->password)]);
 
-            // set the avatar id
-            if ($request->avatar && array_key_exists('success', $request->avatar)) {
-                // merge all file infos on fileReq from $request->avatar
-                $fileReq = new Request();
-                mergeAll($fileReq, $request->avatar);
-
-                if ($request->avatar_id) {
-                    // keep the avatar_id as it is, update the file
-                    $this->updateFile($fileReq, $request->avatar_id);
-                }
-                else {
-                    // store a new file => get id => set this id merge avatar_id
-                    $storedFile = MyFile::create($request->avatar); // avatar is an object
-                    if ($storedFile) $request->merge(['avatar_id' => $storedFile->id]);
-                }
-            }
+            // update the avatar
+            $this->updateFile($request, 'avatar');
         };
 
         $this->afterUpdate = function ($old, $new) {

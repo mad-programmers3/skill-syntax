@@ -157,6 +157,7 @@ export default {
 
             const imgFormData = new FormData();
             imgFormData.append('file', file);  // Append the image file to the FormData
+            imgFormData.append('key', key);
 
             // Send the image to the server
             const _this = this;
@@ -165,7 +166,6 @@ export default {
                 method: 'post',
                 callback: (res) => {
                     if (res.data.success) {
-                        _this.$set(res.data, 'user_id', _this.getAuth().id);
                         _this.$set(dataHolder, key, res.data);
                     }
                 },

@@ -182,6 +182,7 @@
 
                 switch (type) {
                     case this.UPDATE_AVATAR:
+                        this.avatarFormData.avatar_id = this.user.avatar_id;
                         data = this.avatarFormData;
                         break;
                     case this.DELETE_AVATAR:
