@@ -2,7 +2,6 @@ import homeComponent from "../views/homeComponent";
 import aboutComponent from "../views/aboutComponent";
 import coursesComponent from "../views/coursesComponent";
 import courseDetailsComponent from "../views/courseDetailsComponent";
-import elementsComponent from "../views/elementsComponent";
 import blogComponent from "../views/blogComponent";
 import blogDetailsComponent from "../views/blogDetailsComponent";
 import contactComponent from "../views/contactComponent";
@@ -43,12 +42,7 @@ const route = [
         props: true,
         meta : {'pageTitle' : 'CourseDetails', dataUrl : 'api/pages/courses'},
     },
-    {
-        path : '/elements',
-        name : 'elements',
-        component :elementsComponent,
-        meta : {'pageTitle' : 'Elements'},
-    },
+
     {
         path : '/blog',
         name : 'blog',

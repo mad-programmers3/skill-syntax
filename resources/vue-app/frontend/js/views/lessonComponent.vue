@@ -13,7 +13,10 @@
                                 <h4 class="mb-0">{{ lesson.title }}</h4> <!-- Added mb-0 to remove margin from the heading -->
                                 <div>
                                     <span class="meta_info mr-3">
-                                        <a href="#" class="primary-text2"> <i class="pointer far fa-heart"> {{ likes.length }}</i></a>
+                                        <a @click="doLike" class="primary-text2"> <!-- Call doLike without parameters -->
+                                            <i :class="`pointer ${likes.includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i>
+                                            {{ likes.length }}
+                                        </a>
                                     </span>
                                     <span class="meta_info">
                                        <a href="#" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
@@ -50,7 +53,7 @@
                                             <div class="review-footer mt-2 d-flex justify-content-between">
                                                 <div>
                                                     <a class="mr-3 primary-text2">
-                                                        <i class="pointer far fa-heart"></i>{{ likes.length }}
+                                                        <i class="pointer far fa-thumbs-up"></i>{{ likes.length }}
                                                     </a>
                                                     <a class="mr-3 primary-text2">
                                                         <i class="pointer fas fa-reply"></i>
@@ -236,9 +239,31 @@
             },
 
             doLike() {
-                console.log(888);
+                const auth = this.getAuth();
+                if (!auth) return;
+
+                const customUrl = 'api/lesson/do-like';
+                const data = { lesson_id: this.lesson.id };
+
+                this.httpReq({
+                    customUrl,
+                    method: 'post',
+                    data,
+                    callback: (response) => {
+                        const result = response.data.result;
+                        if (result === 1) {
+                            this.likes.push(auth.id);
+                        } else if (result === 0) {
+                            this.removeArrItem(this.likes, auth.id);
+                        } else {
+                            this.showToast('Failed to like the lesson. Please try again.', 'error');
+                        }
+                    }
+                });
             }
-        }
+
+
+        },
     }
 </script>
 

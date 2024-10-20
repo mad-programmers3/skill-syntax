@@ -78,9 +78,8 @@
                 </div>
                 <div class="row footer-bottom d-flex justify-content-between">
                     <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        Copyright &copy;2024 All rights reserved | This template is made with <i class="ti-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;{{ new Date().getFullYear() }} All rights reserved | Skill-Syntax
+                        <i class="ti-heart" aria-hidden="true"></i> by <a href="https://github.com/mad-programmers3/skill-syntax" target="_blank">Mad Programmer</a>
                     </p>
                     <div class="col-lg-4 col-sm-12 footer-social">
                         <a href="#"><i class="ti-facebook"></i></a>
@@ -97,10 +96,11 @@
 </template>
 <script>
     export default {
-        name:'myFooter'
+        name: 'myFooter',
     }
-
 </script>
+
+
 <style scoped>
 
 </style>

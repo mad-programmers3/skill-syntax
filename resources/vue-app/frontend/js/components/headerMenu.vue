@@ -24,16 +24,7 @@
                                     <router-link class="nav-link" to="/about">About</router-link>
                                 </li>
                                 <li class="nav-item submenu dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                                       aria-expanded="false">Pages</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <router-link class="nav-link" to="/courses">Courses</router-link>
-                                        </li>
-                                        <li class="nav-item">
-                                            <router-link class="nav-link" to="/elements">Elements</router-link>
-                                        </li>
-                                    </ul>
+                                    <router-link class="nav-link" to="/courses">Courses</router-link>
                                 </li>
                                 <li class="nav-item submenu dropdown">
                                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"

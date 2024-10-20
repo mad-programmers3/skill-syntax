@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Models\LessonLike;
+use App\Supports\LikeHelper;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -10,11 +12,15 @@ use App\Supports\BaseCrudHelper;
 
 class LessonController extends Controller
 {
-    use BaseCrudHelper;
+    use BaseCrudHelper,LikeHelper;
 
     public function __construct() {
         $this->model = new Lesson();
         $this->with = ['course:id,title', 'likes'];
+    }
+
+    public function lessonLike(Request $request) {
+        return $this->likeHelper($request, new LessonLike(), 'lesson');
     }
 
 

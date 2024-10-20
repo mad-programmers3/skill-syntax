@@ -4,18 +4,22 @@ namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseLike;
 use App\Models\MyFile;
 use App\Supports\BaseCrudHelper;
+use App\Supports\LikeHelper;
 use App\Supports\MyFileHelper;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use function League\Flysystem\delete;
 use function Symfony\Component\HttpKernel\Log\record;
 
 class CourseController extends Controller
 
 {
-    use BaseCrudHelper, MyFileHelper;
+    use BaseCrudHelper, MyFileHelper, LikeHelper;
 
     public function __construct()
     {
@@ -63,6 +67,11 @@ class CourseController extends Controller
             }
         };
     }
+
+    public function doLike(Request $request) {
+        return $this->likeHelper($request, new CourseLike(), 'course');
+    }
+
 
 //    public function index(Request $request)
 //    {
