@@ -11,6 +11,19 @@
                         </div>
                         <div class="content_wrapper">
                             <br />
+                            <div class="title d-flex justify-content-between align-items-center">
+                                <h4 class="mb-0">{{ course ? course.title : '' }}</h4> <!-- Added mb-0 to remove margin from the heading -->
+                                <div>
+                                    <span class="meta_info mr-3">
+                                        <a @click="doLike()" class="primary-text2">
+                                            <i :class="`pointer ${likes.includes(getAuth().id) ? 'fas' : 'far' } fa-heart`"></i> {{likes.length }}
+                                        </a>
+                                    </span>
+                                    <span class="meta_info">
+                                       <a href="#review-area" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
+                                    </span>
+                                </div>
+                            </div>
                             <h3 >{{ course ? course.title : '' }}</h3>
                             <div class="content">
                                 <div v-html="course ? course.description : ''" class="course-description mb-4"></div>
@@ -58,8 +71,8 @@
 
                                                 <div class="review-footer mt-2 d-flex justify-content-between">
                                                     <div>
-                                                        <a class="mr-3 primary-text2">
-                                                            <i class="pointer far fa-heart"></i> {{likes.length}}
+                                                        <a @click="doLike(TYPE_LIKE_REVIEW, review.id)" class="mr-3 primary-text2">
+                                                            <i :class="`pointer ${reviewsLikes[review.id].includes(getAuth().id) ? 'fas' : 'far' } fa-thumbs-up`"></i> {{reviewsLikes[review.id].length}}
                                                         </a>
                                                         <a class="mr-3 primary-text2">
                                                             <i class="pointer fas fa-reply"></i>
@@ -146,7 +159,7 @@
                                             </router-link>
                                             <div class="mt-lg-0 mt-3">
                                                 <span class="meta_info mr-4">
-                                                    <a href="#" class="primary-text2"> <i class="far fa-heart"></i> {{ likes.length }} </a>
+                                                    <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2"> <i :class="`${lessonsLikes[lesson.id].includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }} </a>
                                                 </span>
                                                 <span class="meta_info padded-info">
                                                     <a href="#" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
@@ -174,10 +187,15 @@
                 course: null,
                 reviews: [],
                 likes: [],
+                reviewsLikes: [],
+                lessonsLikes: [],
                 form: {
                     rating: 0,
                     comment: '',
                 },
+                TYPE_LIKE_COURSE: 11,
+                TYPE_LIKE_REVIEW: 12,
+                TYPE_LIKE_LESSON: 13,
                 hoverRating: 0,
                 hasReviewed: false,
             };
@@ -193,6 +211,8 @@
                     _this.course = result['course'];
                     _this.reviews = result['reviews'];
                     _this.likes = result['likes'];
+                    _this.reviewsLikes = result['reviews-likes'];
+                    _this.lessonsLikes = result['lessons-likes'];
                     _this.form.user_id = _this.getAuth() ? _this.getAuth().id : null; // Set user_id from auth
                     _this.form.course_id = _this.course ? _this.course.id : null;
 
@@ -296,6 +316,43 @@
 
             isUpdating(review) {
                 return this.form && this.form.id === review.id;
+            },
+            doLike(type = this.TYPE_LIKE_COURSE, id = this.course.id) {
+                const auth = this.getAuth();
+                if (!auth) return;
+
+                let customUrl = 'api/courses/do-like';
+                let likesArr = this.likes;
+                let data = {
+                    course_id: id,
+                };
+
+                if (type === this.TYPE_LIKE_REVIEW) {
+                    customUrl = 'api/reviews/do-like';
+                    likesArr = this.reviewsLikes[id];
+                    data = {review_id: id}
+                } else if (type === this.TYPE_LIKE_LESSON) {
+                    customUrl = 'api/lessons/do-like';
+                    likesArr = this.lessonsLikes[id];
+                    data = {lesson_id: id}
+                }
+
+                // api/reviews/do-like
+
+                const _this = this;
+                this.httpReq({
+                    customUrl,
+                    method: 'post',
+                    data,
+                    callback(response) {
+                        if (response.data.result === 1)
+                            likesArr.push(auth.id);
+                        else if(response.data.result === 0)
+                            _this.removeArrItem(likesArr, auth.id);
+                        else
+                            _this.showToast('Failed to like the course. Please try again.', 'error')
+                    }
+                });
             }
         },
         computed: {

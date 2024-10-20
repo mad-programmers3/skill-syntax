@@ -57,8 +57,13 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('sub-categories', SubCategoryController::class);
     Route::resource('courses', CourseController::class);
+    Route::post('courses/do-like', [CourseController::class, 'doLike']);
     Route::resource('lessons', LessonController::class);
+    Route::post('lessons/do-like', [LessonController::class, 'lessonLike']);
+
+    Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
     Route::resource('reviews', ReviewController::class);
+    Route::post('reviews/do-like', [ReviewController::class, 'reviewLike']);
     Route::resource('review/course-reviews', CourseReviewController::class);
     Route::resource('review/lesson-reviews', LessonReviewController::class);
     Route::resource('review/testimonials', TestimonialController::class);

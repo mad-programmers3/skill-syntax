@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\Review;
+use App\Models\ReviewLike;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -50,8 +52,19 @@ class FrontendController extends Controller
         try {
             $data = [];
             $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'course_reviews.review.user'])->findOrFail($id);
-            $data['reviews'] = $data['course']->course_reviews->pluck('review');
             $data['likes'] = $data['course']->likes->pluck('user_id');
+            $data['reviews'] = $data['course']->course_reviews->pluck('review');
+
+            $data['reviews-likes'] = [];
+            foreach ($data['reviews'] as $review) {
+                $data['reviews-likes'][$review->id] = ReviewLike::where('review_id', $review->id)->pluck('user_id');
+            }
+
+            $data['lessons-likes'] = [];
+            foreach ($data['course']->lessons as $lesson) {
+                $data['lessons-likes'][$lesson->id] = $lesson->likes->pluck('user_id');
+                    //ReviewLike::where('review_id', $lesson->id)->pluck('user_id');
+            }
             return retRes('Fetched course data for course page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);

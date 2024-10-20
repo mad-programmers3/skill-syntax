@@ -8,9 +8,7 @@ use App\Models\CourseReview;
 use App\Models\Review;
 use App\Supports\BaseCrudHelper;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use function Symfony\Component\HttpKernel\Log\record;
 
 class CourseReviewController extends Controller
 {
