@@ -262,6 +262,7 @@
 
                             if (!_this.form.id ) {
                                 newReview.user = _this.getAuth();
+                                _this.reviewsLikes[newReview.id] = [];
                                 _this.reviews.push(newReview);
                                 // Mark that the user has reviewed the course
                                 _this.hasReviewed = true;
