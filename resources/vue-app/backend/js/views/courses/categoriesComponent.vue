@@ -3,6 +3,9 @@
         <data-table :table-heading="tableHeading" :show-add-btn="can('category_add')">
             <tr v-for="(data, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="data.id">
                 <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
+                <td>
+                    <img :src="generateFileUrl(data.thumbnail, 'images/category-def-thumbnail.gif')" style="width: 40px; height: 35px; border-radius: 0%" alt="">
+                </td>
                 <td>{{ limitText(data.title) }}</td>
                 <td>
                     <span :class="data.status ? 'badge badge-success' : 'badge badge-danger'">
@@ -47,6 +50,12 @@
                     </label>
                 </div>
             </div>
+            <div>
+                <div class="upload-area d-block m-auto" @click="() => {$refs.fileInput.click()}">
+                    <img :src="generateFileUrl(formData.thumbnail)" alt="Preview" class="preview-img"/>
+                </div>
+                <input type="file" ref="fileInput" @change="handleFileUpload" class="file-input" accept="image/*"/>
+            </div>
         </validate-form-modal>
     </div>
 </template>
@@ -64,7 +73,7 @@
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Title', 'Status', 'Actions'],
+                tableHeading: ['SL','Thumbnail', 'Title', 'Status', 'Actions'],
                 perPage:5,
                 permPrefix: 'category'
             }
@@ -77,5 +86,22 @@
 </script>
 
 <style scoped>
+    .upload-area {
+        width: 300px;
+        height: 200px;
+        border: 2px dashed #34a9cc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
 
+    .preview-img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .file-input {
+        display: none;
+    }
 </style>

@@ -136,7 +136,7 @@
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Images', 'Title', 'Category', 'Price(TK)', 'Sits/Sold', 'Status', 'Actions'],
+                tableHeading: ['SL', 'Thumbnail', 'Title', 'Category', 'Price(TK)', 'Sits/Sold', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
                 perPage: 5,
@@ -170,8 +170,8 @@
     }
 
     .preview-img {
-        max-width: 100%;
-        max-height: 100%;
+        width: 100%;
+        height: 100%;
     }
 
     .file-input {
