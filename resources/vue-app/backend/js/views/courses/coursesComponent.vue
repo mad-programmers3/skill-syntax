@@ -14,16 +14,16 @@
                 <td>
                     {{ course.quizzes ? course.quizzes.length : 'NA' }}
 
-                    <i class="ml-1 fa fa-eye" data-toggle="modal" :data-target="`#quizzesModal${course.id}`" style="cursor: pointer"></i>
+                    <i class="ml-1 fas fa-plus" data-toggle="modal" :data-target="`#quizzesModal${course.id}`" style="cursor: pointer"></i>
                     <show-details-modal :id="`quizzesModal${course.id}`" :title="`${course.title} => Quizzes`">
-                        <li class="my-1" v-for="quiz in course.quizzes" style="list-style-type: decimal">
+                        <li class="my-2" v-for="quiz in course.quizzes" style="list-style-type: decimal">
                             {{ quiz.title }}
                         </li>
-                        <label class="form-label d-block">
+                        <label class="form-label d-block mt-3">
                             Add Quiz
-                            <select @change="addQuiz($event, course.id)" class="form-control">
+                            <select @change="addQuiz($event, course)" class="form-control">
                                 <option value="">Select a new quiz</option>
-                                <option v-for="quiz in quizzes" :key="quiz.id" :value="quiz.id">
+                                <option v-for="quiz in quizzes" v-if="!course.quizzes.map(q => q.id).includes(quiz.id)" :key="quiz.id" :value="quiz.id">
                                     {{ quiz.title }}
                                 </option>
                             </select>
@@ -178,15 +178,18 @@
         },
 
         methods: {
-            addQuiz(event, courseId) {
+            addQuiz(event, course) {
                 const selectedQuizId = event.target.value;
-                console.log('Selected Quiz ID:', selectedQuizId);
 
                 const _this = this;
                 this.httpReq({
-                    urlSuffix: 'add-quiz',
+                    customUrl: 'api/courses/quizzes',
                     method: 'post',
-                    data: {'quiz_id': selectedQuizId, course_id: courseId},
+                    data: {'quiz_id': selectedQuizId, course_id: course.id},
+                    callback: (response) => {
+                        if (response.data)
+                            course.quizzes.push(response.data.result);
+                    }
                 })
             }
         },

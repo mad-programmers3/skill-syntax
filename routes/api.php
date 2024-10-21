@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\CourseController;
+use App\Http\Controllers\backend\CourseQuizController;
 use App\Http\Controllers\backend\CourseReviewController;
 use App\Http\Controllers\backend\LessonController;
 use App\Http\Controllers\backend\LessonReviewController;
@@ -61,8 +62,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('sub-categories', SubCategoryController::class);
     Route::resource('courses', CourseController::class);
+    Route::resource('courses/quizzes', CourseQuizController::class);
     Route::post('courses/do-like', [CourseController::class, 'doLike']);
-    Route::post('courses/add-quiz', [CourseController::class, 'addQuiz']);
     Route::resource('lessons', LessonController::class);
     Route::post('lessons/do-like', [LessonController::class, 'lessonLike']);
 

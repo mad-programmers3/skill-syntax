@@ -12,7 +12,7 @@ trait BaseCrudHelper
     use Helper;
 
     // Define these in the main controller
-    protected $model, $with = [], $showWith = [], $orderBy,
+    protected $model, $with = [], $showWith = [], $orderBy, $checkAuth = true,
         $beforeFetch = false,
         $beforeStore = false, $afterStore = false,
         $beforeUpdate = false, $afterUpdate = false,
@@ -21,7 +21,7 @@ trait BaseCrudHelper
     // Fetch all records
     public function index(Request $request)
     {
-        if (! $this->can($this->task(PERM_VIEW)))
+        if ($this->checkAuth && !$this->can($this->task(PERM_VIEW)))
             return $this->retNoPermRes(PERM_VIEW);
 
         try {
@@ -42,7 +42,7 @@ trait BaseCrudHelper
     // Show a single record by ID
     public function show($id)
     {
-        if (! $this->can($this->task(PERM_VIEW)))
+        if ($this->checkAuth && !$this->can($this->task(PERM_VIEW)))
             return $this->retNoPermRes(PERM_VIEW);
 
         try {
@@ -58,7 +58,7 @@ trait BaseCrudHelper
     // Store a new record
     public function store(Request $request)
     {
-        if (! $this->can($this->task(PERM_ADD)))
+        if ($this->checkAuth && !$this->can($this->task(PERM_ADD)))
             return $this->retNoPermRes(PERM_ADD);
 
         try {
@@ -75,7 +75,7 @@ trait BaseCrudHelper
     // Update an existing record
     public function update(Request $request, $id)
     {
-        if (! $this->can($this->task(PERM_EDIT)))
+        if ($this->checkAuth && !$this->can($this->task(PERM_EDIT)))
             return $this->retNoPermRes(PERM_EDIT);
 
         try {
@@ -95,7 +95,7 @@ trait BaseCrudHelper
     // Delete a record by ID
     public function destroy($id)
     {
-        if (! $this->can($this->task(PERM_DELETE)))
+        if ($this->checkAuth && !$this->can($this->task(PERM_DELETE)))
             return $this->retNoPermRes(PERM_DELETE);
 
         try {
