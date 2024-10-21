@@ -13,6 +13,7 @@ trait BaseCrudHelper
 
     // Define these in the main controller
     protected $model, $with = [], $showWith = [], $orderBy,
+        $beforeFetch = false,
         $beforeStore = false, $afterStore = false,
         $beforeUpdate = false, $afterUpdate = false,
         $afterDelete = false;
@@ -27,6 +28,7 @@ trait BaseCrudHelper
             $data = null;
             $perPage = $request->query('perPage');
             $query = $this->model->with($this->with);
+            call($this->beforeFetch, $query);
             if ($this->orderBy) $query->orderBy($this->orderBy);
             if ($perPage && is_numeric($perPage) && $perPage > 0) $data = $query->paginate($perPage);
             else $data = $query->get();

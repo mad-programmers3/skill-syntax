@@ -3,7 +3,7 @@
     <div>
         <data-table :table-heading="tableHeading" :show-add-btn="can('lesson_add')">
             <tr v-for="(lesson, index) in dataList.data" style="font-size: 0.8rem" :key="lesson.id">
-                <td>{{ (dataList.current_page - 1) * perPage + index + 1 }}</td>
+                <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>
                     <img :src="generateFileUrl(lesson.thumbnail, TYPE_LESSON)" style="width: 50px; height: 35px; border-radius: 0%" alt="">
                 </td>
@@ -28,7 +28,7 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
         <validate-form-modal title="Lessons" width="700px" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">

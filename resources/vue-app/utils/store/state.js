@@ -1,6 +1,6 @@
 export const state = {
     dataList: {},
-    formData: {status: 1},
+    formData: {},
     Config: [],
     showHeader: 1,
     showFooter: 1,

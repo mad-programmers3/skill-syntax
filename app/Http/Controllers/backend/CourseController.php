@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseLike;
 use App\Models\MyFile;
+use App\Models\Setting;
 use App\Supports\BaseCrudHelper;
 use App\Supports\LikeHelper;
 use App\Supports\MyFileHelper;
@@ -28,7 +29,13 @@ class CourseController extends Controller
         $this->showWith = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'reviews.review.user'];
 
 
+        $this->beforeFetch = function ($query) {
+            if (request()->has('get_pending'))
+                $query->where('status', 2);
+        };
+
         $this->beforeStore = function ($request) {
+            $request->merge(['status' => getSetting('default_course_status')]);
             $this->storeFile($request, 'thumbnail');
         };
 

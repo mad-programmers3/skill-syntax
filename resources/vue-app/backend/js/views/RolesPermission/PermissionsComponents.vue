@@ -1,8 +1,8 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" :show-add-btn="can('permission_add')">
-            <tr v-for="(permission, index) in (dataList.data ? dataList.data : dataList)" :key="permission.id" style="font-size: 0.8rem">
-                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
+            <tr v-for="(permission, index) in dataList.data" style="font-size: 0.8rem" :key="permission.id">
+                <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>{{ limitText(permission.name) }}</td>
                 <td>{{ permission.module ? permission.module.name : 'NA' }}</td>
                 <td>
@@ -40,7 +40,8 @@
             </tr>
         </data-table>
 
-        <pagination v-if="dataList.current_page" :current-page="dataList.current_page" :last-page="dataList.last_page" :per-page="perPage"/>
+        <!-- Pagination Control -->
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
         <validate-form-modal  title="Module" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">

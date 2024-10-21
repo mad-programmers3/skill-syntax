@@ -18,8 +18,8 @@ class FrontendController extends Controller
     {
         try {
             $data = [];
-            $data['popular-courses'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->take(8)->get();
-            $data['categories'] = Category::with(['thumbnail', 'courses:id,category_id,title'])->get();
+            $data['popular-courses'] = Course::where('status', 1)->with(['thumbnail:id,path', 'category:id,title', 'likes'])->take(8)->get();
+            $data['categories'] = Category::where('status', 1)->with(['thumbnail', 'courses:id,category_id,title'])->get();
             return retRes('Fetched all data for home page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
