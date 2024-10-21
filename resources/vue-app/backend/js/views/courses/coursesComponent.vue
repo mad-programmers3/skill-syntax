@@ -12,6 +12,25 @@
                 <td>{{ formatDecimal(course.price) }}</td>
                 <td>{{ course.sits }}/00</td>
                 <td>
+                    {{ course.quizzes ? course.quizzes.length : 'NA' }}
+
+                    <i class="ml-1 fa fa-eye" data-toggle="modal" :data-target="`#quizzesModal${course.id}`" style="cursor: pointer"></i>
+                    <show-details-modal :id="`quizzesModal${course.id}`" :title="`${course.title} => Quizzes`">
+                        <li class="my-1" v-for="quiz in course.quizzes" style="list-style-type: decimal">
+                            {{ quiz.title }}
+                        </li>
+                        <label class="form-label d-block">
+                            Add Quiz
+                            <select @change="addQuiz($event, course.id)" class="form-control">
+                                <option value="">Select a new quiz</option>
+                                <option v-for="quiz in quizzes" :key="quiz.id" :value="quiz.id">
+                                    {{ quiz.title }}
+                                </option>
+                            </select>
+                        </label>
+                    </show-details-modal>
+                </td>
+                <td>
                     <span :class="course.status === 1 ? 'badge badge-success' : course.status === 2 ? 'badge badge-warning' : 'badge badge-danger'">
                         {{ course.status === 2 ? 'Pending' : course.status ? 'Active' : 'Inactive' }}
                     </span>
@@ -129,16 +148,18 @@
     import ValidateFormModal from "../../components/validateFormModal";
     import Pagination from "../../components/Pagination"; // Import your Pagination component
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
+    import ShowDetailsModal from "../../components/showDetailsModal";
 
     export default {
         name: "coursesComponent",
-        components: { ValidateFormModal, DataTable, QuillEditor, Pagination }, // Register Pagination component
+        components: {ShowDetailsModal, ValidateFormModal, DataTable, QuillEditor, Pagination }, // Register Pagination component
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Thumbnail', 'Title', 'Category', 'Price(TK)', 'Sits/Sold', 'Status', 'Actions'],
+                tableHeading: ['SL', 'Thumbnail', 'Title', 'Category', 'Price(TK)', 'Sits/Sold', 'Quizzes', 'Status', 'Actions'],
                 categories: {},
                 subCategories: {},
+                quizzes: {},
                 perPage: 5,
             };
         },
@@ -149,10 +170,25 @@
             this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: _this.perPage}));
 
             // Fetch categories and sub-categories
-            this.fetchData(this.urlGenerate('api/required-data', false, {'categories': true, 'sub_categories': true}), (result) => {
+            this.fetchData(this.urlGenerate('api/required-data', false, {'categories': true, 'sub_categories': true, quizzes: false}), (result) => {
                 _this.categories = result.categories;
                 _this.subCategories = result.sub_categories;
+                _this.quizzes = result.quizzes;
             });
+        },
+
+        methods: {
+            addQuiz(event, courseId) {
+                const selectedQuizId = event.target.value;
+                console.log('Selected Quiz ID:', selectedQuizId);
+
+                const _this = this;
+                this.httpReq({
+                    urlSuffix: 'add-quiz',
+                    method: 'post',
+                    data: {'quiz_id': selectedQuizId, course_id: courseId},
+                })
+            }
         },
 
     };

@@ -62,6 +62,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('sub-categories', SubCategoryController::class);
     Route::resource('courses', CourseController::class);
     Route::post('courses/do-like', [CourseController::class, 'doLike']);
+    Route::post('courses/add-quiz', [CourseController::class, 'addQuiz']);
     Route::resource('lessons', LessonController::class);
     Route::post('lessons/do-like', [LessonController::class, 'lessonLike']);
 

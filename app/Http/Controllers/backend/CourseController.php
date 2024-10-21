@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseLike;
+use App\Models\CourseQuiz;
 use App\Models\MyFile;
 use App\Models\Setting;
 use App\Supports\BaseCrudHelper;
@@ -52,6 +53,16 @@ class CourseController extends Controller
 
     public function doLike(Request $request) {
         return $this->likeHelper($request, new CourseLike(), 'course');
+    }
+
+    public function addQuiz(Request $request) {
+        try {
+            $record = CourseQuiz::create($request->all());
+
+            return retRes('Successfully added the quiz', $record->quiz);
+        } catch (Exception $e) {
+            return retRes('Something went wrong with adding this quiz', null, 500);
+        }
     }
 
 

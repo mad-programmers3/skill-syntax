@@ -51,7 +51,7 @@ class FrontendController extends Controller
     {
         try {
             $data = [];
-            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'course_reviews.review.user'])->findOrFail($id);
+            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'course_reviews.review.user', 'quizzes.questions'])->findOrFail($id);
             $data['likes'] = $data['course']->likes->pluck('user_id');
             $data['reviews'] = $data['course']->course_reviews->pluck('review');
 
