@@ -45,4 +45,9 @@ class Course extends Model
     {
         return $this->hasMany(CourseReview::class);
     }
+    // Relationship with quizzes
+    public function quizzes()
+    {
+        return $this->belongsToMany(Quiz::class, 'course_quizzes');
+    }
 }

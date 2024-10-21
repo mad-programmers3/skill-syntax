@@ -6,6 +6,8 @@ use App\Http\Controllers\backend\CourseReviewController;
 use App\Http\Controllers\backend\LessonController;
 use App\Http\Controllers\backend\LessonReviewController;
 use App\Http\Controllers\backend\MyFileController;
+use App\Http\Controllers\backend\QuestionController;
+use App\Http\Controllers\backend\QuizController;
 use App\Http\Controllers\backend\ReviewController;
 use App\Http\Controllers\backend\RoleController;
 use App\Http\Controllers\backend\SettingController;
@@ -45,7 +47,7 @@ Route::group(['prefix' => 'pages'], function () {
     Route::get('lessons/{id}', [FrontendController::class, 'showLesson']);
 });
 
-Route::resource('tests', UserController::class);
+Route::resource('tests', QuestionController::class);
 
 Route::get('required-data', [SupportController::class, 'requiredData']);
 // Role routes
@@ -54,6 +56,8 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('users', UserController::class);
     Route::post('users/password-reset', [UserController::class, 'resetPassword']);
     Route::post('users/avatar-delete', [UserController::class, 'deleteAvatar']);
+    Route::resource('quizzes', QuizController::class);
+    Route::resource('questions', QuestionController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('sub-categories', SubCategoryController::class);
     Route::resource('courses', CourseController::class);

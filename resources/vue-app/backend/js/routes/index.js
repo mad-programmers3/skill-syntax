@@ -15,6 +15,8 @@ import UsersComponent from "../views/user/UsersComponent";
 import SettingsComponent from "../views/SettingsComponent";
 import AdminProfileComponent from "../views/user/AdminProfileComponent";
 import pendingCoursesComponent from "../views/courses/pendingCoursesComponent";
+import quizzesComponent from "../views/quiz/quizzesComponent";
+import questionsComponent from "../views/quiz/questionsComponent";
 
 
 const routes =[
@@ -47,13 +49,28 @@ const routes =[
         path: '/admin/course/sub-categories',
         name:'subCategories',
         component:subCategoriesComponent,
-        meta : {'pageTitle' : 'subCategory List', dataUrl : 'api/sub-categories'},
+        meta : {'pageTitle' : 'Sub Category List', dataUrl : 'api/sub-categories'},
     },
     {
         path: '/admin/course/pending',
         name:'pending-courses',
         component: pendingCoursesComponent,
-        meta : {'pageTitle' : 'Course List', dataUrl : 'api/courses'},
+        meta : {'pageTitle' : 'Pending Course List', dataUrl : 'api/courses'},
+    },
+
+
+    // Quizzes
+    {
+        path: '/admin/quiz/quizzes',
+        name:'quizzes',
+        component: quizzesComponent,
+        meta : {'pageTitle' : 'Quiz List', dataUrl : 'api/quizzes'},
+    },
+    {
+        path: '/admin/quiz/questions',
+        name:'questions',
+        component: questionsComponent,
+        meta : {'pageTitle' : 'Question List', dataUrl : 'api/questions'},
     },
 
 

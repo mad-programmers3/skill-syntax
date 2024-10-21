@@ -26,7 +26,23 @@ SkillSyntax is an online course management system developed by our inter-team pr
 - Composer
 - Node.js & npm
 
-### Workflow
+### Installation
+
+```bash
+git clone https://github.com/mad-programmers3/skill-syntax.git
+cd skill-syntax
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan db:seed
+php artisan storage:link
+```
+
+
+
+## Workflow
 
 1. Installation
 2. Setup Git
@@ -158,8 +174,3 @@ This section outlines the main tasks related to managing the application. For ea
     - Path: `string`
     - Extension: `string`
     - Size: `unsignedBigInteger`
-
-### Git Pull Command
-To pull the latest changes, use:
-```bash
-git branch --set-upstream-to=origin/mehedi
