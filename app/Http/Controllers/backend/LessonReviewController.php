@@ -29,7 +29,7 @@ class LessonReviewController extends Controller
         try {
             // store the review
             mergeAuth($request);
-            $review = Review::create($request->only(['comment', 'user_id','rating','likes']));
+            $review = Review::create($request->all());
 
             //store course review
             $request->merge(['review_id' => $review->id]);

@@ -13,13 +13,13 @@
                                 <h4 class="mb-0">{{ lesson.title }}</h4> <!-- Added mb-0 to remove margin from the heading -->
                                 <div>
                                     <span class="meta_info mr-3">
-                                        <a @click="doLike" class="primary-text2"> <!-- Call doLike without parameters -->
+                                        <a @click="doLike()" class="primary-text2"> <!-- Call doLike without parameters -->
                                             <i :class="`pointer ${likes.includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i>
                                             {{ likes.length }}
                                         </a>
                                     </span>
                                     <span class="meta_info">
-                                       <a href="#" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
+                                       <a href="#review-area" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
                                     </span>
                                 </div>
                             </div>
@@ -52,8 +52,8 @@
 
                                             <div class="review-footer mt-2 d-flex justify-content-between">
                                                 <div>
-                                                    <a class="mr-3 primary-text2">
-                                                        <i class="pointer far fa-thumbs-up"></i>{{ likes.length }}
+                                                    <a @click="doLike(TYPE_LIKE_REVIEW, review.id)" class="mr-3 primary-text2">
+                                                        <i :class="`pointer ${reviewsLikes[review.id].includes(getAuth().id) ? 'fas' : 'far' } fa-thumbs-up`"></i> {{reviewsLikes[review.id].length}}
                                                     </a>
                                                     <a class="mr-3 primary-text2">
                                                         <i class="pointer fas fa-reply"></i>
@@ -86,7 +86,7 @@
                                         <div>
                                             <textarea v-model="form.comment" class="form-control" rows="4" placeholder="Share your experience..."></textarea>
                                             <div class="text-right mt-3">
-                                                <button @click="submitReview" class="genric-btn primary-bg2 text-white circle arrow">Submit<span class="ti-arrow-right"></span></button>
+                                                <button @click="submitReview()" class="genric-btn primary-bg2 text-white circle arrow">Submit<span class="ti-arrow-right"></span></button>
                                             </div>
                                         </div>
                                     </div>
@@ -132,16 +132,18 @@
                 lesson: [],
                 reviews: [],
                 likes: [],
+                reviewsLikes: {},
                 form: {
                     comment: '',
                 },
+                TYPE_LIKE_LESSON: 11,
+                TYPE_LIKE_REVIEW: 12,
 
             };
         },
         watch: {
             // Watch for changes in lesson_id
             lesson_id(newId, oldId) {
-                // Refetch data when the lesson_id changes
                 if (newId !== oldId) {
                     this.fetchLesson(newId);
                 }
@@ -152,7 +154,7 @@
         },
         computed: {
             lesson_id() {
-                return this.$route.params.id; // Get the current lesson ID from the route
+                return this.$route.params.id;
             }
         },
         methods: {
@@ -162,19 +164,17 @@
                     _this.lesson = result['lesson'];
                     _this.reviews = result['reviews'];
                     _this.likes = result['likes'];
-                    _this.form.user_id = _this.getAuth() ? _this.getAuth().id : null; // Set user_id from auth
+                    _this.reviewsLikes = result['reviews-likes'];
+                    _this.form.user_id = _this.getAuth() ? _this.getAuth().id : null;
                     _this.form.lesson_id = _this.lesson ? _this.lesson.id : null;
 
                     _this.checkUserReview();
                 });
             },
             handleDropDown(action, review) {
-                // Close the dropdown
                 this.$nextTick(() => {
-                    $('#dropdownMenuButton').dropdown('toggle'); // Close the dropdown manually
+                    $('#dropdownMenuButton').dropdown('toggle');
                 });
-
-                // Perform your action logic here based on the action type
                 if (action === 'edit') this.form = review;
                 if (action === 'delete') this.deleteReview(review.id);
 
@@ -193,26 +193,25 @@
                     data: _this.form,
                     callback(response) {
                         if (response.data) {
-                            // Update the review list
                             const newReview = response.data.result;
 
-                            if (!_this.form.id ) {
+                            if (!_this.form.id) {
                                 newReview.user = _this.getAuth();
+                                _this.reviewsLikes[newReview.id] = [];
                                 _this.reviews.push(newReview);
-                                // Mark that the user has reviewed the course
                                 _this.hasReviewed = true;
                             }
-
-                            // Reset the form
                             _this.form = {
                                 comment: '',
                             };
+                            _this.fetchLesson(_this.lesson_id);
                         } else {
                             alert('Failed to submit the review. Please try again.');
                         }
                     },
                 });
             },
+
             deleteReview(id) {
                 this.httpReq({
                     customUrl: 'api/reviews',
@@ -238,31 +237,35 @@
                 return this.form && this.form.id === review.id;
             },
 
-            doLike() {
+            doLike(type = this.TYPE_LIKE_LESSON, id = this.lesson.id) {
                 const auth = this.getAuth();
                 if (!auth) return;
 
-                const customUrl = 'api/lesson/do-like';
-                const data = { lesson_id: this.lesson.id };
+                let customUrl = 'api/lessons/do-like';
+                let likesArr = this.likes;
+                let data = {lesson_id: id,};
 
+                if (type === this.TYPE_LIKE_REVIEW) {
+                    customUrl = 'api/reviews/do-like';
+                    likesArr = this.reviewsLikes[id];
+                    data = {review_id: id}
+                }
+
+                const _this = this;
                 this.httpReq({
                     customUrl,
                     method: 'post',
                     data,
-                    callback: (response) => {
-                        const result = response.data.result;
-                        if (result === 1) {
-                            this.likes.push(auth.id);
-                        } else if (result === 0) {
-                            this.removeArrItem(this.likes, auth.id);
-                        } else {
-                            this.showToast('Failed to like the lesson. Please try again.', 'error');
-                        }
+                    callback(response) {
+                        if (response.data.result === 1)
+                            likesArr.push(auth.id);
+                        else if(response.data.result === 0)
+                            _this.removeArrItem(likesArr, auth.id);
+                        else
+                            _this.showToast('Failed to like the course. Please try again.', 'error')
                     }
                 });
             }
-
-
         },
     }
 </script>
