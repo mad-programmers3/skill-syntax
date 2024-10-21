@@ -11,6 +11,7 @@ class Lesson extends Model
 
     protected $fillable = [
         'course_id',
+        'thumbnail_id',
         'title',
         'description',
         'video',
@@ -21,6 +22,11 @@ class Lesson extends Model
     public function course()
     {
         return $this->belongsTo(Course::class);
+    }
+    // Relationship with File
+    public function thumbnail()
+    {
+        return $this->belongsTo(MyFile::class, 'thumbnail_id');
     }
     // Relationship with CourseLike
     public function likes()

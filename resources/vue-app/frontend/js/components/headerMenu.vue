@@ -49,7 +49,7 @@
                             <ul class="mb-0">
                                 <li v-if="isAuthenticated" class="nav-item nav-profile dropdown border-0">
                                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
-                                        <img class="nav-profile-img" alt="" :src="generateFileUrl(getAuth() ? getAuth.avatar : null, DEF_AVATAR_B)" />
+                                        <img class="nav-profile-img" alt="" :src="generateFileUrl(getAuth() ? getAuth.avatar : null, TYPE_USER)" />
                                         <span class="profile-name">{{ userName }}</span>
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">

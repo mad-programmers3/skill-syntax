@@ -10,7 +10,7 @@
                                 <i @click="() => {$refs.fileInput.click()}" class="fas fa-edit text-white p-1 edit-icon" title="Upload"></i>
                                 <i v-if="user.avatar" @click="updateUser(DELETE_AVATAR)" class="fas fa-trash text-white p-1 delete-icon" title="Delete"></i>
                             </div>
-                            <img :src="generateFileUrl(avatarFormData.avatar ? avatarFormData.avatar : user.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="Preview" class="preview-img mx-auto p-1" :style="{backgroundColor: btnBg}"/>
+                            <img :src="generateFileUrl(avatarFormData.avatar ? avatarFormData.avatar : user.avatar, TYPE_USER)" alt="Preview" class="preview-img mx-auto p-1" :style="{backgroundColor: btnBg}"/>
                         </div>
                         <input type="file" ref="fileInput" @change="handleFileUpload($event, 'avatar', avatarFormData)" class="file-input" accept="image/*"/>
                         <div  v-if="avatarFormData.avatar && avatarFormData.avatar.success" class="mt-1">

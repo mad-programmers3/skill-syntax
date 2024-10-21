@@ -18,8 +18,19 @@ export default {
             PERM_EDIT: 'edit',
             PERM_DELETE: 'delete',
             PERM_MANAGE: 'manage',
-            DEF_AVATAR_B: 'backend/assets/images/def-user-avatar.svg',
-            DEF_COURSE_THUMB: 'images/course-def-thumbnail.jpg',
+            TYPE_COURSE: 1,
+            TYPE_LESSON: 2,
+            TYPE_CATEGORY: 3,
+            TYPE_USER: 4,
+            DEF_FILES: {},
+        };
+    },
+    created() {
+        this.DEF_FILES = {
+            [this.TYPE_COURSE]: 'images/course-def-thumbnail.jpg',
+            [this.TYPE_LESSON]: 'images/course-def-thumbnail.jpg',
+            [this.TYPE_CATEGORY]: 'images/category-def-thumbnail.gif',
+            [this.TYPE_USER]: 'images/def-user-avatar.svg',
         };
     },
     computed: {
@@ -62,7 +73,9 @@ export default {
         asset(path) {
             return baseUrl + '/' + path;
         },
-        generateFileUrl(file, def = this.DEF_COURSE_THUMB) {
+        generateFileUrl(file, type = this.TYPE_COURSE) {
+            let def = this.DEF_FILES[type];
+
             if (file && file.path)
                 def = 'storage/' + file.path;
 

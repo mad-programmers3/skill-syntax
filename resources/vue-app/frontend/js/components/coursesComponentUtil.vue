@@ -4,7 +4,7 @@
             <div class="single_course card h-80 w-100 "> <!-- Added shadow, removed border, rounded corners -->
                 <div class="course_head">
                     <!-- Display the dynamic thumbnail image -->
-                    <img class="img-fluid rounded-top" :src="course.thumbnail && course.thumbnail.path ? generateFileUrl(course.thumbnail) : baseUrl + '/images/course-def-thumbnail.jpg'" alt="" style="object-fit: cover; height: 100%; width: 100%;">
+                    <img class="img-fluid rounded-top" :src="generateFileUrl(course.thumbnail)" alt="" style="object-fit: cover; height: 100%; width: 100%;">
                 </div>
 
                 <div class="course_content card-body">

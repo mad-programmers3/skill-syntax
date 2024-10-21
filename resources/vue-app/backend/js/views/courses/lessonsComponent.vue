@@ -2,8 +2,11 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" :show-add-btn="can('lesson_add')">
-            <tr v-for="(lesson, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="lesson.id">
-                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
+            <tr v-for="(lesson, index) in dataList.data" style="font-size: 0.8rem" :key="lesson.id">
+                <td>{{ (dataList.current_page - 1) * perPage + index + 1 }}</td>
+                <td>
+                    <img :src="generateFileUrl(lesson.thumbnail, TYPE_LESSON)" style="width: 50px; height: 35px; border-radius: 0%" alt="">
+                </td>
                 <td>{{ limitText(lesson.title) }}</td>
                 <td>{{ limitText(lesson.course ? lesson.course.title : '') }}</td>
                 <td>
@@ -50,7 +53,7 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Courses
-                    <select class="form-select" v-model="formData.course_id" v-validate="'required'" name="course_id">
+                    <select class="form-control" v-model="formData.course_id" v-validate="'required'" name="course_id">
                         <option value="" disabled>Select a course</option>
                         <option v-for="course in courses" :key="course.id" :value="course.id">
                             {{ course.title }}
@@ -66,6 +69,13 @@
                         {{ formData.status ? 'Active' : 'Inactive' }}
                     </label>
                 </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="upload-area d-block m-auto" @click="() => {$refs.fileInput.click()}">
+                    <img :src="generateFileUrl(formData.thumbnail, TYPE_LESSON)" alt="Preview" class="preview-img"/>
+                </div>
+                <input type="file" ref="fileInput" @change="handleFileUpload" class="file-input" accept="image/*"/>
             </div>
         </validate-form-modal>
     </div>
@@ -83,7 +93,7 @@
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Title', 'Courses', 'Status', 'Actions'], // Column headings for the data table
+                tableHeading: ['SL', 'Thumbnail', 'Title', 'Courses', 'Status', 'Actions'], // Column headings for the data table
                 courses: [], // Array to hold courses fetched from the server
                 lessons: [], // Data list for lessons
                 perPage: 5,
@@ -109,5 +119,22 @@
 </script>
 
 <style scoped>
-    /* Add any custom styles here */
+    .upload-area {
+        width: 300px;
+        height: 200px;
+        border: 2px dashed #34a9cc;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .preview-img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .file-input {
+        display: none;
+    }
 </style>

@@ -10,7 +10,7 @@
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4" v-for="(category, index) in categories" :key="index">
                 <router-link :to="{ name: 'courses', params: { cat_id: category.id } }" class="card h-100 shadow border-0 custom-card">
                     <div class="card-img-container text-center p-3">
-                        <img class="card-img-top img-fluid" :src="generateFileUrl(category.thumbnail, 'images/category-def-thumbnail.gif')" :alt="category.title" />
+                        <img class="card-img-top img-fluid" :src="generateFileUrl(category.thumbnail, TYPE_CATEGORY)" :alt="category.title" />
                     </div>
                     <div class="card-body text-center">
                         <h5 class="card-title text-truncate">{{ category.title }}</h5>

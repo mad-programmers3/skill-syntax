@@ -15,7 +15,7 @@
             <li class="nav-item nav-profile">
                 <router-link :to="{name: 'user-profile'}" class="nav-link">
                     <div class="nav-profile-image">
-                        <img :src="generateFileUrl(Config.auth ? Config.auth.avatar : null, DEF_AVATAR_B)" class="nav-profile-img" alt="profile" />
+                        <img :src="generateFileUrl(Config.auth ? Config.auth.avatar : null, TYPE_USER)" class="nav-profile-img" alt="profile" />
                         <span class="login-status online"></span>
                     </div>
                     <div class="nav-profile-text d-flex flex-column pr-3">

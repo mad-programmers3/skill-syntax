@@ -4,6 +4,7 @@ namespace App\Http\Controllers\backend;
 
 use App\Models\LessonLike;
 use App\Supports\LikeHelper;
+use App\Supports\MyFileHelper;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\Controller;
@@ -12,11 +13,27 @@ use App\Supports\BaseCrudHelper;
 
 class LessonController extends Controller
 {
-    use BaseCrudHelper,LikeHelper;
+    use BaseCrudHelper, MyFileHelper, LikeHelper;
 
     public function __construct() {
         $this->model = new Lesson();
-        $this->with = ['course:id,title', 'likes'];
+        $this->with = ['thumbnail:id,path', 'course:id,title', 'likes'];
+
+
+
+        $this->beforeStore = function ($request) {
+            $this->storeFile($request, 'thumbnail');
+        };
+
+        $this->beforeUpdate = function ($request) {
+            $this->updateFile($request, 'thumbnail');
+        };
+
+        $this->afterDelete = function ($record) {
+            if ($record && $record->thumbnail_id) { // delete also file
+                $this->deleteFile($record->thumbnail_id);
+            }
+        };
     }
 
     public function lessonLike(Request $request) {

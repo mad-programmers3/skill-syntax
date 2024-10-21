@@ -38,7 +38,7 @@
                                 <div v-for="review in reviews" :key="review.id" class="review-item mb-3">
                                     <div class="user-info d-flex align-items-start justify-content-between">
                                         <div class="user-thumb mr-3">
-                                            <img :src="generateFileUrl(getAuth() ? getAuth.avatar : null, DEF_AVATAR_B)" alt="User Avatar" />
+                                            <img :src="generateFileUrl(getAuth() ? getAuth.avatar : null, TYPE_USER)" alt="User Avatar" />
                                         </div>
                                         <div class="user-details flex-grow-1">
                                             <h6 class="mb-1">{{ review.user ? review.user.name : ''}}</h6>

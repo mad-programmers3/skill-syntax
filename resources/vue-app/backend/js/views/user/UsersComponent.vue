@@ -4,7 +4,7 @@
             <tr v-for="(user, index) in dataList.data" style="font-size: 0.8rem" :key="user.id">
                 <td>{{ (dataList.current_page - 1) * perPage + index + 1 }}</td>
                 <td>
-                    <img :src="generateFileUrl(user.avatar, DEF_AVATAR_B)" style="width: 35px; height: 35px" alt="Avatar">
+                    <img :src="generateFileUrl(user.avatar, TYPE_USER)" style="width: 35px; height: 35px" alt="Avatar">
                 </td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.email }}</td>
@@ -34,7 +34,7 @@
         <validate-form-modal title="User" width="700px" :init-val="initVal" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">
                 <div class="upload-area mx-auto" @click="() => {$refs.fileInput.click()}">
-                    <img :src="generateFileUrl(formData.avatar, 'backend/assets/images/def-user-avatar.svg')" alt="Preview" class="preview-img"/>
+                    <img :src="generateFileUrl(formData.avatar, TYPE_USER)" alt="Preview" class="preview-img"/>
                 </div>
                 <input type="file" ref="fileInput" @change="handleFileUpload($event, 'avatar')" class="file-input" accept="image/*"/>
             </div>

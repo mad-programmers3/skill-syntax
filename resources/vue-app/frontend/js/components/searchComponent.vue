@@ -38,7 +38,7 @@
                         <h3>COURSES</h3>
                         <div v-for="course in results.courses" :key="course.id" class="result-item">
                             <router-link :to="`/courses/${course.id}`" @click.native="handleResultClick" class="d-flex">
-                                <img :src="generateFileUrl(course.thumbnail, baseUrl + '/images/course-def-thumbnail.jpg')" height="70px" width="100px">
+                                <img :src="generateFileUrl(course.thumbnail)" height="70px" width="100px">
                                 <div>
                                     <h3>{{ course.title }}</h3>
                                     <span>{{course.category.title}}</span>

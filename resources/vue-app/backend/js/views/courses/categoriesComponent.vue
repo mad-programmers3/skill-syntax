@@ -4,7 +4,7 @@
             <tr v-for="(data, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="data.id">
                 <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
                 <td>
-                    <img :src="generateFileUrl(data.thumbnail, 'images/category-def-thumbnail.gif')" style="width: 40px; height: 35px; border-radius: 0%" alt="">
+                    <img :src="generateFileUrl(data.thumbnail, TYPE_CATEGORY)" style="width: 40px; height: 35px; border-radius: 0%" alt="">
                 </td>
                 <td>{{ limitText(data.title) }}</td>
                 <td>
@@ -52,7 +52,7 @@
             </div>
             <div>
                 <div class="upload-area d-block m-auto" @click="() => {$refs.fileInput.click()}">
-                    <img :src="generateFileUrl(formData.thumbnail)" alt="Preview" class="preview-img"/>
+                    <img :src="generateFileUrl(formData.thumbnail, TYPE_CATEGORY)" alt="Preview" class="preview-img"/>
                 </div>
                 <input type="file" ref="fileInput" @change="handleFileUpload" class="file-input" accept="image/*"/>
             </div>
