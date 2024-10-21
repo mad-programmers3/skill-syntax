@@ -52,6 +52,13 @@ class SettingsTableSeeder extends Seeder
                 'value' => '26'
             ],
             [
+                'key' => 'default_quiz_time_limit',
+                'name' => 'Default Quiz Time Limit (Second)',
+                'type' => 'number',
+                'group' => 'general',
+                'value' => '300'
+            ],
+            [
                 'key' => 'application_logo',
                 'name' => 'Application Logo',
                 'type' => 'file',

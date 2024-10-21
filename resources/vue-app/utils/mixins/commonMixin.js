@@ -6,6 +6,12 @@ export default {
             authUser: window.authUser,  // Authenticated user information from the window object
             currentUrl: window.location.href,
             auth: {},                   // Parsed authentication data
+            questionOptions: [
+                { label: 'A', key: 'option_a' },
+                { label: 'B', key: 'option_b' },
+                { label: 'C', key: 'option_c' },
+                { label: 'D', key: 'option_d' }
+            ],
             UI_HEADER_HIDE: 0,
             UI_HEADER_REGULAR: 1,
             UI_FOOTER_REGULAR: 1,

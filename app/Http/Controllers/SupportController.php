@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\MyFile;
+use App\Models\Quiz;
 use App\Models\Role;
 use App\Models\Setting;
 use App\Models\SubCategory;
@@ -67,6 +68,9 @@ class SupportController extends Controller
 
         if (request()->has('roles'))
             $data['roles'] = Role::all();
+
+        if (request()->has('quizzes'))
+            $data['quizzes'] = Quiz::all('id', 'title');
 
         return retRes('Successfully fetched all records', $data);
     }

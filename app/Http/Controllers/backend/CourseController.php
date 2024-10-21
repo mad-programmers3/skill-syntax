@@ -25,7 +25,7 @@ class CourseController extends Controller
     public function __construct()
     {
         $this->model = new Course();
-        $this->with = ['thumbnail:id,path', 'category:id,title', 'likes'];
+        $this->with = ['thumbnail:id,path', 'category:id,title', 'likes', 'quizzes'];
         $this->showWith = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'reviews.review.user'];
 
 

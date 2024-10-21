@@ -55,6 +55,21 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 ]
             ],
             [
+                'module' => ['name' => 'Quiz', 'icon' => 'fas fa-clipboard-list'],
+                'nodes' => [
+                    [
+                        'module' => ['name' => 'Quizzes', 'link' => '/admin/quiz/quizzes'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                    [
+                        'module' => ['name' => 'Questions', 'link' => '/admin/quiz/questions'],
+                        'permissions' => $rawPermissions,
+                        'nodes' => []
+                    ],
+                ]
+            ],
+            [
                 'module' => ['name' => 'Review', 'icon' => 'fas fa-star'],
                 'nodes' => [
                     [
