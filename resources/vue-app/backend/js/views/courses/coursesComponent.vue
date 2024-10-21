@@ -2,8 +2,8 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" :show-add-btn="can('course_add')">
-            <tr v-for="(course, index) in ( dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="course.id">
-                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
+            <tr v-for="(course, index) in dataList.data" style="font-size: 0.8rem" :key="course.id">
+                <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>
                     <img :src="generateFileUrl(course.thumbnail)" style="width: 50px; height: 35px; border-radius: 0%" alt="">
                 </td>
@@ -30,7 +30,7 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
         <!--  Modal  -->
         <validate-form-modal title="Course" width="700px" :current-page="dataList.current_page" :per-page="perPage">

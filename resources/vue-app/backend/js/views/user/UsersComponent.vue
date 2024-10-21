@@ -28,8 +28,8 @@
             </tr>
         </data-table>
 
-        <!-- pagination Control-->
-        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <!-- Pagination Control -->
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
         <validate-form-modal title="User" width="700px" :init-val="initVal" :current-page="dataList.current_page" :per-page="perPage">
             <div class="mb-3">

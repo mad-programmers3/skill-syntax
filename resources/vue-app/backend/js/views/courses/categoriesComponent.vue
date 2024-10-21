@@ -1,8 +1,8 @@
 <template>
     <div>
         <data-table :table-heading="tableHeading" :show-add-btn="can('category_add')">
-            <tr v-for="(data, index) in (dataList.data ? dataList.data : dataList)" style="font-size: 0.8rem" :key="data.id">
-                <td>{{ (dataList.current_page ? (dataList.current_page - 1) * perPage : 0) + index + 1 }}</td>
+            <tr v-for="(data, index) in dataList.data" style="font-size: 0.8rem" :key="data.id">
+                <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>
                     <img :src="generateFileUrl(data.thumbnail, TYPE_CATEGORY)" style="width: 40px; height: 35px; border-radius: 0%" alt="">
                 </td>
@@ -26,7 +26,7 @@
         </data-table>
 
 <!-- pagination Control-->
-        <Pagination v-if="dataList.current_page" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
 
 
         <validate-form-modal title="Category" :current-page="dataList.current_page" :per-page="perPage">
