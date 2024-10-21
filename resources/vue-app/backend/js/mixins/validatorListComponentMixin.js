@@ -13,7 +13,7 @@ export default {
         },
 
         // handle the deletion of an item
-        deleteItem(id, currentPage, perPage) {
+        deleteItem(id, currentPage, perPage, params = {}) {
             const _this = this;
             this.showSweetAlert({
                 confirmButtonText: 'Yes, Delete it',
@@ -27,7 +27,7 @@ export default {
                                 if (response.data) {
                                     // Show success toast notification for deletion
                                     _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? "success" : "error");
-                                    _this.fetchData(this.urlGenerate(false, false, {page: currentPage, perPage}));
+                                    _this.fetchData(this.urlGenerate(false, false, { ...{page: currentPage, perPage}, ...params }));
                                 }
                             }
                         });

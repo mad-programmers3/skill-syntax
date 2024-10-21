@@ -12,8 +12,8 @@
                 <td>{{ formatDecimal(course.price) }}</td>
                 <td>{{ course.sits }}/00</td>
                 <td>
-                    <span :class="course.status ? 'badge badge-success' : 'badge badge-danger'">
-                        {{ course.status ? 'Active' : 'Inactive' }}
+                    <span :class="course.status === 1 ? 'badge badge-success' : course.status === 2 ? 'badge badge-warning' : 'badge badge-danger'">
+                        {{ course.status === 2 ? 'Pending' : course.status ? 'Active' : 'Inactive' }}
                     </span>
                 </td>
                 <td>
@@ -103,7 +103,7 @@
                 </div>
             </div>
 
-            <div class="mb-3">
+            <div v-if="[0, 1].includes(formData.status)" class="mb-3">
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0" v-validate="'required'" name="status"/>
                     <label class="custom-control-label" for="customSwitch">

@@ -14,6 +14,7 @@ import PermissionsComponents from "../views/RolesPermission/PermissionsComponent
 import UsersComponent from "../views/user/UsersComponent";
 import SettingsComponent from "../views/SettingsComponent";
 import AdminProfileComponent from "../views/user/AdminProfileComponent";
+import pendingCoursesComponent from "../views/courses/pendingCoursesComponent";
 
 
 const routes =[
@@ -47,6 +48,12 @@ const routes =[
         name:'subCategories',
         component:subCategoriesComponent,
         meta : {'pageTitle' : 'subCategory List', dataUrl : 'api/sub-categories'},
+    },
+    {
+        path: '/admin/course/pending',
+        name:'pending-courses',
+        component: pendingCoursesComponent,
+        meta : {'pageTitle' : 'Course List', dataUrl : 'api/courses'},
     },
 
 

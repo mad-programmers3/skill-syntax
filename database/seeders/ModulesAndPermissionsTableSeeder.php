@@ -29,7 +29,7 @@ class ModulesAndPermissionsTableSeeder extends Seeder
                 'nodes' => [
                     [
                         'module' => ['name' => 'Courses', 'link' => '/admin/course/courses'],
-                        'permissions' => $rawPermissions,
+                        'permissions' => array_merge($rawPermissions, ['accept']),
                         'nodes' => []
                     ],
                     [

@@ -47,6 +47,15 @@ if (!function_exists('retRes')) {
     }
 }
 
+// Function to get the setting value
+if (!function_exists('getSetting')) {
+    function getSetting($key)
+    {
+        $setting = \App\Models\Setting::where('key', $key)->first();
+        return $setting ? $setting->value : null;
+    }
+}
+
 // Function to merge authenticated user ID into the request data
 if (!function_exists('mergeAuth')) {
     function mergeAuth(Request $request)
