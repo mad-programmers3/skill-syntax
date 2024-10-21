@@ -79,6 +79,12 @@ class FrontendController extends Controller
             $data['lesson'] = Lesson::with(['likes', 'course.lessons', 'lesson_reviews.review.user'])->findOrFail($id);
             $data['reviews'] = $data['lesson']->lesson_reviews->pluck('review');
             $data['likes'] = $data['lesson']->likes->pluck('user_id');
+
+            $data['reviews-likes'] = [];
+            foreach ($data['reviews'] as $review) {
+                $data['reviews-likes'][$review->id] = ReviewLike::where('review_id', $review->id)->pluck('user_id');
+            }
+
             return retRes('Fetched course data for lesson page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
