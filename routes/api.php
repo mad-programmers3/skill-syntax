@@ -61,11 +61,14 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('questions', QuestionController::class);
     Route::resource('categories', CategoryController::class);
     Route::resource('sub-categories', SubCategoryController::class);
+
     Route::resource('courses', CourseController::class);
     Route::post('courses/add-quiz', [CourseController::class, 'addQuiz']);
     Route::post('courses/do-like', [CourseController::class, 'doLike']);
+
     Route::resource('lessons', LessonController::class);
     Route::post('lessons/do-like', [LessonController::class, 'lessonLike']);
+    Route::post('lessons/add-quiz', [LessonController::class, 'addQuiz']);
 
     Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
     Route::resource('reviews', ReviewController::class);

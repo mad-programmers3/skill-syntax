@@ -6,17 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseLike;
 use App\Models\CourseQuiz;
-use App\Models\MyFile;
-use App\Models\Setting;
 use App\Supports\BaseCrudHelper;
 use App\Supports\LikeHelper;
 use App\Supports\MyFileHelper;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use function League\Flysystem\delete;
-use function Symfony\Component\HttpKernel\Log\record;
 
 class CourseController extends Controller
 

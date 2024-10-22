@@ -10,6 +10,26 @@
                 <td>{{ limitText(lesson.title) }}</td>
                 <td>{{ limitText(lesson.course ? lesson.course.title : '') }}</td>
                 <td>
+                    {{ lesson.quizzes ? lesson.quizzes.length : '' }}
+
+                    <i class="ml-1 fas fa-plus" data-toggle="modal" :data-target="`#quizzesModal${lesson.id}`" style="cursor: pointer"></i>
+                    <show-details-modal :id="`quizzesModal${lesson.id}`" :title="`${lesson.title} => Quizzes`">
+                        <div v-for="(quiz, index) in lesson.quizzes" :key="index" class="p-2 d-flex align-items-center justify-content-between" :style="{ backgroundColor: index % 2 === 0 ? '#e9e9e9' : '#f5f5f5' }">
+                            <li style="list-style-type: decimal">{{ quiz.title }}</li>
+                            <button @click="manipulateQuiz(quiz.id, lesson)" class="btn btn-danger px-1">Remove</button>
+                        </div>
+                        <label class="form-label d-block mt-5">
+                            Add Quiz
+                            <select @change="(event)=>{manipulateQuiz(event.target.value, lesson)}" class="form-control">
+                                <option value="">Select a new quiz</option>
+                                <option v-for="quiz in quizzes" v-if="!lesson.quizzes.map(q => q.id).includes(quiz.id)" :key="quiz.id" :value="quiz.id">
+                                    {{ quiz.title }}
+                                </option>
+                            </select>
+                        </label>
+                    </show-details-modal>
+                </td>
+                <td>
                     <span :class="lesson.status ? 'badge badge-success' : 'badge badge-danger'">
                         {{ lesson.status ? 'Active' : 'Inactive' }}
                     </span>
@@ -86,16 +106,18 @@
     import ValidateFormModal from "../../components/validateFormModal";
     import Pagination from "../../components/Pagination"; // Import your Pagination component
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
+    import ShowDetailsModal from "../../components/showDetailsModal";
 
     export default {
         name: "lessonsComponent",
-        components: { ValidateFormModal, DataTable, Pagination },
+        components: {ShowDetailsModal, ValidateFormModal, DataTable, Pagination },
         mixins: [validatorListComponentMixin],
         data() {
             return {
                 tableHeading: ['SL', 'Thumbnail', 'Title', 'Courses', 'Status', 'Actions'], // Column headings for the data table
                 courses: [], // Array to hold courses fetched from the server
                 lessons: [], // Data list for lessons
+                quizzes: [],
                 perPage: 5,
             };
         },
@@ -108,12 +130,34 @@
 
             // Fetch courses for the dropdown
 
-            // Fetch courses
-            this.fetchData(this.urlGenerate('api/required-data', false, {'courses': true}), (result) => {
+            // Fetch courses and quizzes
+            this.fetchData(this.urlGenerate('api/required-data', false, {courses: true, quizzes: true}), (result) => {
                 _this.courses = result.courses;
+                _this.quizzes = result.quizzes;
             });
         },
 
+        methods: {
+            manipulateQuiz(quiz_id, lesson) {
+                const _this = this;
+                this.httpReq({
+                    urlSuffix: 'add-quiz',
+                    method: 'post',
+                    data: {'quiz_id': quiz_id, lesson_id: lesson.id},
+                    callback: (response) => {
+                        let {result} = response.data;
+                        if (result) {
+                            if (result.flag === 1) // Item added
+                                lesson.quizzes.push(result.quiz);
+                            else if (result.flag === 0) // Item removed
+                                _this.removeObjArrItem(lesson.quizzes, result.quiz);
+                        }
+                    }
+                });
+            },
+
+
+        }
 
     };
 </script>

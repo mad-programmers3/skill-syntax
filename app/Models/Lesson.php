@@ -38,4 +38,9 @@ class Lesson extends Model
     {
         return $this->hasMany(LessonReview::class);
     }
+    // Relationship with quizzes
+    public function quizzes()
+    {
+        return $this->belongsToMany(Quiz::class, 'lesson_quizzes');
+    }
 }

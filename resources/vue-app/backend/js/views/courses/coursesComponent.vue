@@ -12,11 +12,10 @@
                 <td>{{ formatDecimal(course.price) }}</td>
                 <td>{{ course.sits }}/00</td>
                 <td>
-                    {{ course.quizzes ? course.quizzes.length : 'NA' }}
+                    {{ course.quizzes ? course.quizzes.length : '' }}
 
                     <i class="ml-1 fas fa-plus" data-toggle="modal" :data-target="`#quizzesModal${course.id}`" style="cursor: pointer"></i>
                     <show-details-modal :id="`quizzesModal${course.id}`" :title="`${course.title} => Quizzes`">
-<!--                        <pre>{{ course.quizzes }}</pre>-->
                         <div v-for="(quiz, index) in course.quizzes" :key="index" class="p-2 d-flex align-items-center justify-content-between" :style="{ backgroundColor: index % 2 === 0 ? '#e9e9e9' : '#f5f5f5' }">
                             <li style="list-style-type: decimal">{{ quiz.title }}</li>
                             <button @click="manipulateQuiz(quiz.id, course)" class="btn btn-danger px-1">Remove</button>
