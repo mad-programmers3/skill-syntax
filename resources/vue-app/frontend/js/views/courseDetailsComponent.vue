@@ -144,7 +144,6 @@
                         </div>
                     </div>
 
-
                     <!-- Course Lessons Section -->
                     <div class="col-lg-4 right-contents" v-if="course && course.lessons">
                         <h4 class="title mt-5">Lessons</h4>
@@ -160,21 +159,47 @@
                                                 <h6 class="card-title">{{ lesson.title }}</h6>
                                             </router-link>
                                             <div class="mt-lg-0 mt-3">
-                                  <span class="meta_info mr-4">
-                                  <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2"><i :class="`${getAuth() && lessonsLikes[lesson.id].includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}</a>
-                                  </span>
+                              <span class="meta_info mr-4">
+                                   <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2">
+                                       <i :class="`${getAuth() && lessonsLikes[lesson.id].includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}
+                                   </a>
+                               </span>
                                                 <span class="meta_info padded-info">
-                                <a href="#" class="primary-text2"><i class="far fa-comment"></i> {{ reviews.length }}</a>
-                                </span>
+                                  <a href="#" class="primary-text2">
+                                    <i class="far fa-comment"></i> {{ reviews.length }}
+                                       </a>
+                                         </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <hr>
+                        <div v-for="quiz in course.quizzes" :key="quiz.id" class="playlist">
+                            <!-- Quizzes Button -->
+                            <button
+                                    data-toggle="modal" :data-target="`#quizModal${quiz.id}`"
+                                    class="btn btn-custom btn-lg mt-3 d-flex justify-content-center align-items-center"
+                                    style="background-color: #002347; color: #ffffff;" >
+
+                                    {{ quiz.title }}
+                            </button>
+
+                            <!-- Quiz Card -->
+                            <div class="card mt-3" style="background-color: #002347; color: #ffffff;">
+                                <div class="card-body" style="background-color: #ffffff; color: #333;">
+                                    <h5 class="card-title">{{ quiz.title }}</h5>
+                                    <p class="card-text">Description or other quiz details here.</p>
+                                    <button class="btn btn-primary" data-toggle="modal" :data-target="`#quizModal${quiz.id}`">Take Quiz</button>
+                                </div>
+                            </div>
+
+                            <!-- Modal Component -->
+                            <quiz-modal-component :id="`quizModal${quiz.id}`" :quiz="quiz" />
+                        </div>
+
                     </div>
-
-
                 </div>
             </div>
         </section>
@@ -183,8 +208,10 @@
 </template>
 
 <script>
+    import QuizModalComponent from "../components/quizModalComponent";
     export default {
         name: "courseDetails",
+        components: {QuizModalComponent},
         props: ['courseId'],
         data() {
             return {
@@ -426,6 +453,34 @@
         color: #777;
         font-size: 0.8rem;
     }
-    
+
+    .btn-custom {
+        background-color: #002347;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        width: 100%;
+    }
+
+    .btn-custom:hover {
+        background-color: #001d32;
+        color: #ffffff;
+        transform: translateY(-2px);
+    }
+
+    .btn-custom {
+        background-color: #002347;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        width: 100%;
+    }
+
+    .btn-custom:hover {
+        background-color: #001d32;
+        color: #ffffff;
+    }
 
 </style>
