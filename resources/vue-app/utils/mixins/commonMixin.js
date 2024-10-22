@@ -96,8 +96,17 @@ export default {
         },
 
         removeArrItem(array, item) {
-            let index = array.indexOf(item);
+            if (!Array.isArray(array) || !item) return;
+
+            const index = array.indexOf(item);
             array.splice(index , 1)
+        },
+
+        removeObjArrItem(objArr, obj, key = 'id') {
+            if (!Array.isArray(objArr) || !obj || !obj[key]) return;
+
+            const index = objArr.findIndex(item => item[key] === obj[key]);
+            if (index !== -1) objArr.splice(index, 1);
         },
 
 

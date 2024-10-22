@@ -16,12 +16,14 @@
 
                     <i class="ml-1 fas fa-plus" data-toggle="modal" :data-target="`#quizzesModal${course.id}`" style="cursor: pointer"></i>
                     <show-details-modal :id="`quizzesModal${course.id}`" :title="`${course.title} => Quizzes`">
-                        <li class="my-2" v-for="quiz in course.quizzes" style="list-style-type: decimal">
-                            {{ quiz.title }}
-                        </li>
-                        <label class="form-label d-block mt-3">
+<!--                        <pre>{{ course.quizzes }}</pre>-->
+                        <div v-for="(quiz, index) in course.quizzes" :key="index" class="p-2 d-flex align-items-center justify-content-between" :style="{ backgroundColor: index % 2 === 0 ? '#e9e9e9' : '#f5f5f5' }">
+                            <li style="list-style-type: decimal">{{ quiz.title }}</li>
+                            <button @click="manipulateQuiz(quiz.id, course)" class="btn btn-danger px-1">Remove</button>
+                        </div>
+                        <label class="form-label d-block mt-5">
                             Add Quiz
-                            <select @change="addQuiz($event, course)" class="form-control">
+                            <select @change="(event)=>{manipulateQuiz(event.target.value, course)}" class="form-control">
                                 <option value="">Select a new quiz</option>
                                 <option v-for="quiz in quizzes" v-if="!course.quizzes.map(q => q.id).includes(quiz.id)" :key="quiz.id" :value="quiz.id">
                                     {{ quiz.title }}
@@ -178,20 +180,25 @@
         },
 
         methods: {
-            addQuiz(event, course) {
-                const selectedQuizId = event.target.value;
-
+            manipulateQuiz(quiz_id, course) {
                 const _this = this;
                 this.httpReq({
-                    customUrl: 'api/courses/quizzes',
+                    urlSuffix: 'add-quiz',
                     method: 'post',
-                    data: {'quiz_id': selectedQuizId, course_id: course.id},
+                    data: {'quiz_id': quiz_id, course_id: course.id},
                     callback: (response) => {
-                        if (response.data)
-                            course.quizzes.push(response.data.result);
+                        let { result } = response.data;
+                        if (result) {
+                            if (result.flag === 1) // Item added
+                                course.quizzes.push(result.quiz);
+                            else if (result.flag === 0) // Item removed
+                                _this.removeObjArrItem(course.quizzes, result.quiz);
+                        }
                     }
-                })
-            }
+                });
+            },
+
+
         },
 
     };

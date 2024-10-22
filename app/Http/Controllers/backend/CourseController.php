@@ -55,6 +55,31 @@ class CourseController extends Controller
         return $this->likeHelper($request, new CourseLike(), 'course');
     }
 
+    public function addQuiz(Request $request) {
+        try {
+            $courseId = $request->input('course_id');
+            $quizId = $request->input('quiz_id');
+
+            // Use firstOrNew to fetch existing or create new instance without saving
+            $courseQuiz = CourseQuiz::firstOrNew(
+                ['course_id' => $courseId, 'quiz_id' => $quizId]
+            );
+
+            if ($courseQuiz->exists) {
+                $courseQuiz->delete();
+                return retRes('Successfully removed course quiz', ['flag' => 0, 'quiz' => $courseQuiz->quiz]);
+            }
+
+            // Save new quiz to course
+            $courseQuiz->fill($request->all())->save();
+            return retRes('Successfully added course quiz', ['flag' => 1, 'quiz' => $courseQuiz->quiz]);
+
+        } catch (Exception $e) {
+            return retRes('Failed to manipulate course quiz', null, 500);
+        }
+    }
+
+
 
 //    public function index(Request $request)
 //    {
