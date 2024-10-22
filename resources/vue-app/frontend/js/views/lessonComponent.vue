@@ -98,24 +98,29 @@
                     <div class="col-lg-4 right-contents" v-if="lesson && lesson.course">
                         <h4 class="title mt-5">Lessons</h4>
                         <div class="playlist">
-                            <div v-for="less in lesson.course.lessons" :key="less.id" :class="['card mb-3', { 'highlight-card': lesson.id === less.id }]">
+                            <div v-for="less in lesson.course.lessons" :key="less.id"
+                                 :class="['card mb-3', { 'highlight-card': lesson.id === less.id }]">
                                 <router-link :to="{ name: 'lesson', params: { id: less.id } }" class="row no-gutters">
-
-                                    <div class="col-md-4">
-                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c2.jpg'"
-                                             alt="Course Image"
-                                             style="margin: 10px; padding: 5px;">
+                                    <div class="col-md-4 justify-content-center">
+                                        <img
+                                                class="img-fluid"
+                                                :src="baseUrl + '/frontend/img/courses/c2.jpg'"
+                                                alt="Course Image"
+                                                style="border: 1px solid #ddd; padding: 5px; margin: 10px; border-radius: 8px;"
+                                        >
                                     </div>
 
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <h5 class="card-title">{{ less.title }}</h5>
+                                            <h6 class="card-title">{{ less.title }}</h6>
+                                            <p class="card-text">Duration: 10 mins</p>
                                         </div>
                                     </div>
                                 </router-link>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
@@ -276,13 +281,48 @@
         border-radius: 50%;
     }
 
-    .card {
-
+    .playlist {
+        border: 1px solid #e0e0e0;
         border-radius: 8px;
+        padding: 10px;
+        background-color: #002347;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .highlight-card {
-        border: 2px solid #ff5e14; /* Blue border for highlighted card */
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    .playlist .card {
+        border: 0;
+        border-bottom: 1px solid #e0e0e0;
+        background-color: #fff;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+        color: #333;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     }
+
+    .playlist .card:hover {
+        background-color: #f1f1f1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .playlist .highlight-card {
+        background-color: #f5f5f5;
+        border-left: 3px solid #e91e63;
+    }
+
+    .card-body h6 {
+        color: #002347;
+        font-size: 0.8rem;
+    }
+
+    .card-body p {
+        color: #777;
+        font-size: 0.8rem;
+    }
+
+    img.img-fluid {
+        border-radius: 8px;
+        border: 1px solid #e91e63;
+        padding: 3px;
+    }
+
 </style>

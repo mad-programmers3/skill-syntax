@@ -143,6 +143,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     <!-- Course Lessons Section -->
                     <div class="col-lg-4 right-contents" v-if="course && course.lessons">
                         <h4 class="title mt-5">Lessons</h4>
@@ -155,15 +157,15 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <router-link :to="{ name: 'lesson', params: { id: lesson.id } }" :class="{ 'font-weight-bold': lesson.id === lesson_id }">
-                                                <h5 class="card-title">{{ lesson.title }}</h5>
+                                                <h6 class="card-title">{{ lesson.title }}</h6>
                                             </router-link>
                                             <div class="mt-lg-0 mt-3">
-                                                <span class="meta_info mr-4">
-                                                    <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2"> <i :class="`${getAuth() && lessonsLikes[lesson.id].includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }} </a>
-                                                </span>
+                                  <span class="meta_info mr-4">
+                                  <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2"><i :class="`${getAuth() && lessonsLikes[lesson.id].includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}</a>
+                                  </span>
                                                 <span class="meta_info padded-info">
-                                                    <a href="#" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
-                                                </span>
+                                <a href="#" class="primary-text2"><i class="far fa-comment"></i> {{ reviews.length }}</a>
+                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -171,6 +173,8 @@
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </section>
@@ -383,4 +387,45 @@
         width: 50px;
         border-radius: 50%;
     }
+
+
+    .playlist {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 10px;
+        background-color: #002347;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .playlist .card {
+        border: 0;
+        border-bottom: 1px solid #e0e0e0;
+        background-color: #fff;
+        border-radius: 8px;
+        transition: background-color 0.3s ease;
+        color: #333;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .playlist .card:hover {
+        background-color: #f1f1f1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .playlist .highlight-card {
+        background-color: #f5f5f5;
+        border-left: 3px solid #e91e63;
+    }
+
+    .card-body h6 {
+        color: #002347;
+        font-size: 0.8rem;
+    }
+
+    .card-body p {
+        color: #777;
+        font-size: 0.8rem;
+    }
+    
+
 </style>
