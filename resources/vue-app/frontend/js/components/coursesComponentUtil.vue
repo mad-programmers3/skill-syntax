@@ -2,9 +2,11 @@
     <div class="row">
         <div v-for="course in courses" :key="course.id" class="col-md-3 mb-4"> <!-- Updated spacing -->
             <div class="single_course card h-80 w-100 "> <!-- Added shadow, removed border, rounded corners -->
-                <div class="course_head">
-                    <!-- Display the dynamic thumbnail image -->
+                <div class="course_head position-relative">
                     <img class="img-fluid rounded-top" :src="generateFileUrl(course.thumbnail)" alt="" style="object-fit: cover; height: 100%; width: 100%;">
+                    <button class="wishlist-remove btn btn-danger btn-sm position-absolute" >
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
 
                 <div class="course_content card-body">
@@ -40,6 +42,9 @@
                 type: Array,
                 required: true
             },
+        },
+        methods: {
+            //
         }
     }
 </script>
@@ -103,5 +108,13 @@
 
     .single_course .course_content {
         padding: 10px;
+    }
+    .wishlist-remove {
+        top: 8px;
+        right: 8px;
+        padding: 5px;
+        background-color: rgba(255, 0, 0, 0.8);
+        border: none;
+        border-radius: 100%;
     }
 </style>
