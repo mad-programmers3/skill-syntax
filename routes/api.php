@@ -16,6 +16,7 @@ use App\Http\Controllers\backend\SubCategoryController;
 use App\Http\Controllers\backend\TestimonialController;
 use App\Http\Controllers\backend\UserController;
 use App\Http\Controllers\frontend\FrontendController;
+use App\Http\Controllers\frontend\StudentController;
 use App\Http\Controllers\SupportController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,9 @@ Route::group(['prefix' => 'pages'], function () {
     Route::post('courses', [FrontendController::class, 'courses']);
     Route::get('courses/{id}', [FrontendController::class, 'showCurse']);
     Route::get('lessons/{id}', [FrontendController::class, 'showLesson']);
+});
+Route::group(['prefix' => 'student'], function () {
+    Route::get('wish-list', [StudentController::class, 'wishList']);
 });
 
 Route::resource('tests', QuestionController::class);

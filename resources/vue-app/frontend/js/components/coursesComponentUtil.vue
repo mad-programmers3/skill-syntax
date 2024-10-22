@@ -13,7 +13,7 @@
                         {{ course.price == 0 ? 'Free' : '$' + course.price }}
                     </span>
                     <div style="padding-right: 15px">
-                        <span class="tag mb-3 d-inline-block text-sm badge badge-secondary p-1 " style="font-size: 10px" >{{course.category.title}}</span>
+                        <span class="tag mb-3 d-inline-block text-sm badge badge-secondary p-1 " style="font-size: 10px" >{{course.category ? course.category.title : ''}}</span>
                     </div>
                     <h4 class="mb-3">
                         <router-link to="/courses" class="text-dark" style="font-size: 17px; text-overflow: ellipsis;">{{ limitText(course.title, 23)}}</router-link> <!-- Adjusted link color -->
@@ -39,7 +39,7 @@
             courses: {
                 type: Array,
                 required: true
-            }
+            },
         }
     }
 </script>

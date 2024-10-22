@@ -84,17 +84,20 @@ const route = [
             {
                 path: 'wishlist',
                 name:'student-wishlist',
-                component: studentWishlistComponent
+                component: studentWishlistComponent,
+                meta : {dataUrl : 'api/student/wish-list'},
             },
             {
                 path: 'messages',
                 name:'student-messages',
-                component: studentMessagesComponent
+                component: studentMessagesComponent,
+                meta : {dataUrl : 'api/student/abc'},
             },
             {
                 path: 'purchase-history',
                 name:'student-purchaseHistory',
-                component: studentPurchaseHistoryComponent
+                component: studentPurchaseHistoryComponent,
+                meta : {dataUrl : 'api/student/abc'},
             },
             {
                 path: 'profile',
@@ -105,7 +108,8 @@ const route = [
             {
                 path: 'settings',
                 name:'student-settings',
-                component: studentSettingsComponent
+                component: studentSettingsComponent,
+                meta : {dataUrl : 'api/student/abc'},
             },
         ]
 

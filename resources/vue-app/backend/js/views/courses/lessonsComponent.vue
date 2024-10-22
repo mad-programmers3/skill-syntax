@@ -114,7 +114,7 @@
         mixins: [validatorListComponentMixin],
         data() {
             return {
-                tableHeading: ['SL', 'Thumbnail', 'Title', 'Courses', 'Status', 'Actions'], // Column headings for the data table
+                tableHeading: ['SL', 'Thumbnail', 'Title', 'Courses', 'Quizzes', 'Status', 'Actions'], // Column headings for the data table
                 courses: [], // Array to hold courses fetched from the server
                 lessons: [], // Data list for lessons
                 quizzes: [],
