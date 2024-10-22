@@ -23,7 +23,8 @@ const routes =[
     {
         path: '/admin/dashboard',
         name:'home',
-        component: DashboardComponent
+        component: DashboardComponent,
+        meta : {dataUrl : 'api/dashboard'},
     },
 
     //Courses

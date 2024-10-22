@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\backend\BackendController;
 use App\Http\Controllers\backend\CategoryController;
 use App\Http\Controllers\backend\CourseController;
 use App\Http\Controllers\backend\CourseQuizController;
@@ -57,6 +58,8 @@ Route::resource('tests', QuestionController::class);
 Route::get('required-data', [SupportController::class, 'requiredData']);
 // Role routes
 Route::middleware('auth:api')->group(function () {
+
+    Route::get('dashboard', [BackendController::class, 'dashboard']);
 
     Route::resource('users', UserController::class);
     Route::post('users/password-reset', [UserController::class, 'resetPassword']);

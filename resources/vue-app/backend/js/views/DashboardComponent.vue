@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container my-5">
         <h3 class="mb-4">Dashboard Overview</h3>
         <div class="row">
             <!-- Courses Card -->
@@ -11,10 +11,29 @@
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                     Courses
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">13</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ courses.length  }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-graduation-cap fa-2x text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posts Card -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card shadow-sm border-left-warning h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Lessons
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ lessons.length }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-warning"></i>
                             </div>
                         </div>
                     </div>
@@ -30,7 +49,7 @@
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                     Students
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ students.length }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-user-graduate fa-2x text-success"></i>
@@ -49,29 +68,10 @@
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
                                     Instructors
                                 </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ instructors.length }}</div>
                             </div>
                             <div class="col-auto">
                                 <i class="fas fa-user-tie fa-2x text-info"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Posts Card -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card shadow-sm border-left-warning h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Posts
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">10</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-comments fa-2x text-warning"></i>
                             </div>
                         </div>
                     </div>
@@ -98,29 +98,53 @@
 <script>
     export default {
         name: "DashboardComponent",
+
+        data() {
+            return {
+                courses: [],
+                lessons: [],
+                instructors: [],
+                students: [],
+            }
+        },
+
         mounted() {
             // Chart initialization
-            const ctx = document.getElementById('lineChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-                    datasets: [{
-                        label: 'Sales',
-                        data: [12, 19, 3, 5, 2, 3, 10, 15, 13, 7],
-                        borderColor: '#4e73df',
-                        backgroundColor: 'rgba(78, 115, 223, 0.1)',
-                        fill: true
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+            this.initCart();
+
+            const _this = this;
+            this.fetchData(false, (result) => {
+                _this.courses = result.courses;
+                _this.lessons = result.lessons;
+                _this.instructors = result.instructors;
+                _this.students = result.students;
+            });
+        },
+
+        methods: {
+            initCart() {
+                const ctx = document.getElementById('lineChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                        datasets: [{
+                            label: 'Sales',
+                            data: [12, 19, 3, 5, 2, 3, 10, 15, 13, 7],
+                            borderColor: '#4e73df',
+                            backgroundColor: 'rgba(78, 115, 223, 0.1)',
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
+                });
+            },
         }
     }
 </script>
@@ -154,7 +178,6 @@
 
     .chart-area {
         position: relative;
-        height: 40vh;
     }
 
     .chart-area canvas {
