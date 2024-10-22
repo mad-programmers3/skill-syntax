@@ -217,6 +217,9 @@
 
                             _this.user = response.data.result;
 
+                            // reset auth from store
+                            _this.$store.commit('setAuth', type !== _this.DELETE_USER &&_this.user ? _this.user : {});
+
                             if (response.data.status === _this.CODE_SUCCESS && type === _this.RESET_PASSWORD) _this.resetFormData = {};
                         }
 

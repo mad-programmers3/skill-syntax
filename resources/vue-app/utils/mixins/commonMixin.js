@@ -5,7 +5,6 @@ export default {
             baseUrl: window.baseUrl,    // Base URL for the application
             authUser: window.authUser,  // Authenticated user information from the window object
             currentUrl: window.location.href,
-            auth: {},                   // Parsed authentication data
             questionOptions: [
                 { label: 'A', key: 'option_a' },
                 { label: 'B', key: 'option_b' },
@@ -40,6 +39,9 @@ export default {
         };
     },
     computed: {
+        auth() {
+            return this.$store.getters.auth
+        },
         /**
          * Retrieve the list of data from the Vuex store.
          * This is a computed property to automatically react to changes in the store.
@@ -113,12 +115,6 @@ export default {
         formatDecimal(value) {
             if (value % 1 === 0) return parseInt(value);
             return parseFloat(value).toFixed(2);
-        },
-
-
-        getAuth() {
-            let decodedJson = window.authUser.replace(/&quot;/g, '"');
-            return JSON.parse(decodedJson);
         },
 
         // Authentication-related methods

@@ -47,13 +47,13 @@
                                 </li>
                             </ul>
                             <ul class="mb-0">
-                                <li v-if="isAuthenticated" class="nav-item nav-profile dropdown border-0">
+                                <li v-if="auth" class="nav-item nav-profile dropdown border-0">
                                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
-                                        <img class="nav-profile-img" alt="" :src="generateFileUrl(getAuth() ? getAuth.avatar : null, TYPE_USER)" />
+                                        <img class="nav-profile-img" alt="" :src="generateFileUrl(auth ? auth.avatar : null, TYPE_USER)" />
                                         <span class="profile-name">{{ userName }}</span>
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
-                                        <router-link v-if="getAuth().role_id === 4" :to="{name: 'student-profile'}" class="dropdown-item">
+                                        <router-link v-if="auth.role_id === 4" :to="{name: 'student-profile'}" class="dropdown-item">
                                             <i class="fa fa-user mr-2 text-primary"></i> Profile
                                         </router-link>
                                         <a v-else :href="urlGenerate('admin/user/profile')" target="blank" class="dropdown-item">
@@ -89,12 +89,12 @@
         },
         data() {
             return {
-                isAuthenticated: this.getAuth(), // Initialize auth status from your auth logic
+                //
             };
         },
         computed: {
             userName() {
-                const user = this.getAuth();
+                const user = this.auth;
                 return user ? user.name : 'Guest';
             }
         },
@@ -120,7 +120,7 @@
                             customUrl: 'logout',
                             method: 'post',
                             callback: (response) => {
-                                _this.isAuthenticated = false;
+                                _this.$store.commit('setAuth', {});
                                 window.location.href = this.urlGenerate('login');
                             }
                         })

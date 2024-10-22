@@ -17,7 +17,15 @@
  import HomeComponent from "./views/homeComponent";
  import MyFooterMini from "./components/myFooterMini";
  export default {
-     components: {MyFooterMini, HomeComponent, MyFooter, HeaderMenu}
+     components: {MyFooterMini, HomeComponent, MyFooter, HeaderMenu},
+
+     mounted() {
+         const _this = this;
+         this.fetchData(this.urlGenerate('api/required-data', false, {auth: true}), (result) => {
+             _this.$store.commit('setAuth', result.auth);
+
+         })
+     }
  }
 </script>
 <style scoped>

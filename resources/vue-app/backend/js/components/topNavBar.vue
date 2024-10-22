@@ -30,8 +30,8 @@
 
                 <li class="nav-item nav-profile dropdown border-0">
                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
-                        <img class="nav-profile-img mr-2 bg-white" alt="" :src="generateFileUrl(Config.auth ? Config.auth.avatar : null, TYPE_USER)" />
-                        <span class="profile-name">{{ Config.auth ? Config.auth.name : 'No User' }}</span> <!-- Display the user's name -->
+                        <img class="nav-profile-img mr-2 bg-white" alt="" :src="generateFileUrl(auth ? auth.avatar : null, TYPE_USER)" />
+                        <span class="profile-name">{{ auth ? auth.name : 'No User' }}</span> <!-- Display the user's name -->
                     </a>
                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
                         <a class="dropdown-item" href="#" @click.prevent="confirmLogout">

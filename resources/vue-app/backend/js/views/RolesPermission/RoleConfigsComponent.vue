@@ -61,7 +61,6 @@
                 permPrefix: 'role_config',
                 ADD_MODULE: 1,
                 ADD_PERMISSION: 2,
-                auth: null,
                 crrRole: {},
                 roles: [],
                 modules: [],
@@ -71,10 +70,9 @@
             const _this = this;
 
             // Fetch modules with permissions and roles
-            this.fetchData(this.urlGenerate('api/required-data', false, {roles: true, modules: true, with_permissions: true, auth: true}), (result) => {
+            this.fetchData(this.urlGenerate('api/required-data', false, {roles: true, modules: true, with_permissions: true}), (result) => {
                 _this.modules = result.modules;
                 _this.roles = result.roles;
-                _this.auth = result.auth;
 
                 // get current role with users, modules, permission
                 _this.getRolePermissions();

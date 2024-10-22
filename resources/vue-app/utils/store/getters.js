@@ -1,4 +1,7 @@
 export const getters = {
+    auth(state) {
+        return state.auth;
+    },
     dataList(state) {
         return state.dataList;
     },

@@ -21,7 +21,14 @@
             TopNavBar,
             SideNavBar
         },
-        mounted() {}
+
+        mounted() {
+            const _this = this;
+            this.fetchData(this.urlGenerate('api/required-data', false, {auth: true}), (result) => {
+                _this.$store.commit('setAuth', result.auth);
+
+            })
+        }
     }
 </script>
 

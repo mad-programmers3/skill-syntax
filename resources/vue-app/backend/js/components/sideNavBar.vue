@@ -15,12 +15,12 @@
             <li class="nav-item nav-profile">
                 <router-link :to="{name: 'user-profile'}" class="nav-link">
                     <div class="nav-profile-image">
-                        <img :src="generateFileUrl(Config.auth ? Config.auth.avatar : null, TYPE_USER)" class="nav-profile-img" alt="profile" />
+                        <img :src="generateFileUrl(auth ? auth.avatar : null, TYPE_USER)" class="nav-profile-img" alt="profile" />
                         <span class="login-status online"></span>
                     </div>
                     <div class="nav-profile-text d-flex flex-column pr-3">
-                        <span class="font-weight-medium mb-2">{{ Config.auth ? Config.auth.name : 'No User' }}</span>
-                        <span class="font-weight-normal">{{ Config.auth && Config.auth.role ? Config.auth.role.name : 'NA' }}</span>
+                        <span class="font-weight-medium mb-2">{{ auth ? auth.name : 'No User' }}</span>
+                        <span class="font-weight-normal">{{ auth && auth.role ? auth.role.name : 'NA' }}</span>
                     </div>
                     <span class="badge badge-danger text-white ml-3 rounded">3</span>
                 </router-link>
@@ -54,11 +54,6 @@
 <script>
     export default {
         name: 'Sidebar',
-        data() {
-          return {
-              auth: null,
-          }
-        },
         mounted() {
             const _this = this;
             this.fetchData(this.urlGenerate('api/configurations'), (result) => {
