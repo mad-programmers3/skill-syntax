@@ -14,7 +14,7 @@
                                 <div>
                                     <span class="meta_info mr-3">
                                         <a @click="doLike()" class="primary-text2"> <!-- Call doLike without parameters -->
-                                            <i :class="`pointer ${likes.includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i>
+                                            <i :class="`pointer ${getAuth() && likes.includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i>
                                             {{ likes.length }}
                                         </a>
                                     </span>
@@ -53,12 +53,12 @@
                                             <div class="review-footer mt-2 d-flex justify-content-between">
                                                 <div>
                                                     <a @click="doLike(TYPE_LIKE_REVIEW, review.id)" class="mr-3 primary-text2">
-                                                        <i :class="`pointer ${reviewsLikes[review.id].includes(getAuth().id) ? 'fas' : 'far' } fa-thumbs-up`"></i> {{reviewsLikes[review.id].length}}
+                                                        <i :class="`pointer ${getAuth() && reviewsLikes[review.id].includes(getAuth().id) ? 'fas' : 'far' } fa-thumbs-up`"></i> {{reviewsLikes[review.id].length}}
                                                     </a>
                                                     <a class="mr-3 primary-text2">
                                                         <i class="pointer fas fa-reply"></i>
                                                     </a>
-                                                    <a v-if="review.user.id === getAuth().id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <a v-if="getAuth() && review.user.id === getAuth().id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="pointer fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

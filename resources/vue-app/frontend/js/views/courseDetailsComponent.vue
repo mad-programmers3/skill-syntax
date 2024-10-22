@@ -16,7 +16,7 @@
                                 <div>
                                     <span class="meta_info mr-3">
                                         <a @click="doLike()" class="primary-text2">
-                                            <i :class="`pointer ${likes.includes(getAuth().id) ? 'fas' : 'far' } fa-heart`"></i> {{likes.length }}
+                                            <i :class="`pointer ${getAuth() && likes.includes(getAuth().id) ? 'fas' : 'far' } fa-heart`"></i> {{likes.length }}
                                         </a>
                                     </span>
                                     <span class="meta_info">
@@ -72,12 +72,12 @@
                                                 <div class="review-footer mt-2 d-flex justify-content-between">
                                                     <div>
                                                         <a @click="doLike(TYPE_LIKE_REVIEW, review.id)" class="mr-3 primary-text2">
-                                                            <i :class="`pointer ${reviewsLikes[review.id].includes(getAuth().id) ? 'fas' : 'far' } fa-thumbs-up`"></i> {{reviewsLikes[review.id].length}}
+                                                            <i :class="`pointer ${getAuth() && reviewsLikes[review.id].includes(getAuth().id) ? 'fas' : 'far' } fa-thumbs-up`"></i> {{reviewsLikes[review.id].length}}
                                                         </a>
                                                         <a class="mr-3 primary-text2">
                                                             <i class="pointer fas fa-reply"></i>
                                                         </a>
-                                                        <a v-if="review.user.id === getAuth().id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <a v-if="getAuth() && review.user.id === getAuth().id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="pointer fas fa-ellipsis-v"></i>
                                                         </a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -159,7 +159,7 @@
                                             </router-link>
                                             <div class="mt-lg-0 mt-3">
                                                 <span class="meta_info mr-4">
-                                                    <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2"> <i :class="`${lessonsLikes[lesson.id].includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }} </a>
+                                                    <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2"> <i :class="`${getAuth() && lessonsLikes[lesson.id].includes(getAuth().id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }} </a>
                                                 </span>
                                                 <span class="meta_info padded-info">
                                                     <a href="#" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
