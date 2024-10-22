@@ -1,5 +1,7 @@
 export const mutations = {
     setAuth(state, data) {
+        if (!data) data = {}; 
+        
         state.auth = data;
     },
     setDataList(state, data) {

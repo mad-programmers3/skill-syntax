@@ -16,7 +16,7 @@
                                 <div>
                                     <span class="meta_info mr-3">
                                         <a @click="doLike()" class="primary-text2">
-                                            <i :class="`pointer ${auth && likes.includes(auth.id) ? 'fas' : 'far' } fa-heart`"></i> {{likes.length }}
+                                            <i :class="`pointer ${likes.includes(auth.id) ? 'fas' : 'far' } fa-heart`"></i> {{likes.length }}
                                         </a>
                                     </span>
                                     <span class="meta_info">
@@ -57,7 +57,7 @@
                                     <div v-for="review in reviews" :key="review.id" class="review-item mb-3">
                                         <div class="user-info d-flex align-items-start justify-content-between">
                                             <div class="user-thumb mr-3">
-                                                <img :src="generateFileUrl(auth ? auth.avatar : null, TYPE_USER)" alt="User Avatar" />
+                                                <img :src="generateFileUrl(review.user ? review.user.avatar : null, TYPE_USER)" alt="User Avatar" />
                                             </div>
                                             <div class="user-details flex-grow-1">
                                                 <h6 class="mb-1">{{ review.user ? review.user.name : ''}}</h6>
@@ -72,12 +72,12 @@
                                                 <div class="review-footer mt-2 d-flex justify-content-between">
                                                     <div>
                                                         <a @click="doLike(TYPE_LIKE_REVIEW, review.id)" class="mr-3 primary-text2">
-                                                            <i :class="`pointer ${auth && reviewsLikes[review.id].includes(auth.id) ? 'fas' : 'far' } fa-thumbs-up`"></i> {{reviewsLikes[review.id].length}}
+                                                            <i :class="`pointer ${reviewsLikes[review.id].includes(auth.id) ? 'fas' : 'far' } fa-thumbs-up`"></i> {{reviewsLikes[review.id].length}}
                                                         </a>
                                                         <a class="mr-3 primary-text2">
                                                             <i class="pointer fas fa-reply"></i>
                                                         </a>
-                                                        <a v-if="auth && review.user.id === auth.id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <a v-if="review.user.id === auth.id" class="primary-text2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <i class="pointer fas fa-ellipsis-v"></i>
                                                         </a>
                                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -109,7 +109,7 @@
                             </div>
                             <!-- Review Area (New review) -->
                             <div id="review-area">
-                                <div v-if="!auth" class="text-center">
+                                <div v-if="isEmptyObj(auth)" class="text-center">
                                     <h5>You need to be logged in to provide feedback</h5>
                                     <a class="primary-btn" :href="urlGenerate('login', false, { url: currentUrl + '#review-area' })">Log In</a>
                                 </div>
@@ -161,7 +161,7 @@
                                             <div class="mt-lg-0 mt-3">
                               <span class="meta_info mr-4">
                                    <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2">
-                                       <i :class="`${auth && lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}
+                                       <i :class="`${lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}
                                    </a>
                                </span>
                                                 <span class="meta_info padded-info">
@@ -232,7 +232,13 @@
             };
         },
         mounted() {
+            // if (!this.auth) {
+            //     this.fetchData(this.urlGenerate('required-data', false, {}));
+            // }
+
+
             this.fetchCourseData();
+            this.checkUserReview();
         },
         methods: {
             // Fetch course and related data
@@ -244,10 +250,9 @@
                     _this.likes = result['likes'];
                     _this.reviewsLikes = result['reviews-likes'];
                     _this.lessonsLikes = result['lessons-likes'];
-                    _this.form.user_id = _this.auth ? _this.auth.id : null; // Set user_id from auth
+                    _this.form.user_id = _this.auth.id;
                     _this.form.course_id = _this.course ? _this.course.id : null;
 
-                    _this.checkUserReview();
                 });
             },
 
@@ -350,8 +355,7 @@
                 return this.form && this.form.id === review.id;
             },
             doLike(type = this.TYPE_LIKE_COURSE, id = this.course.id) {
-                const auth = this.auth;
-                if (!auth) return;
+                if (this.isEmptyObj(this.auth)) return;
 
                 let customUrl = 'api/courses/do-like';
                 let likesArr = this.likes;
@@ -378,9 +382,9 @@
                     data,
                     callback(response) {
                         if (response.data.result === 1)
-                            likesArr.push(auth.id);
+                            likesArr.push(_this.auth.id);
                         else if(response.data.result === 0)
-                            _this.removeArrItem(likesArr, auth.id);
+                            _this.removeArrItem(likesArr, _this.auth.id);
                         else
                             _this.showToast('Failed to like the course. Please try again.', 'error')
                     }
@@ -412,6 +416,7 @@
 
     .review-item .user-thumb img {
         width: 50px;
+        height: 50px;
         border-radius: 50%;
     }
 

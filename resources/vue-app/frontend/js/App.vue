@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="isAppReady">
         <header-menu v-if="showHeader === 1"></header-menu>
 
         <router-view></router-view>
@@ -19,11 +19,16 @@
  export default {
      components: {MyFooterMini, HomeComponent, MyFooter, HeaderMenu},
 
+     data() {
+         return {
+             isAppReady: false,  // Flag to check if app is ready
+         };
+     },
      mounted() {
          const _this = this;
          this.fetchData(this.urlGenerate('api/required-data', false, {auth: true}), (result) => {
              _this.$store.commit('setAuth', result.auth);
-
+             _this.isAppReady = true;
          })
      }
  }

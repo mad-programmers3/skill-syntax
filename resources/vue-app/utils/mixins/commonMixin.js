@@ -78,6 +78,9 @@ export default {
         dd(data) {
             console.log(data);
         },
+        isEmptyObj(obj) {
+            return Object.keys(obj).length === 0;
+        },
         asset(path) {
             return baseUrl + '/' + path;
         },

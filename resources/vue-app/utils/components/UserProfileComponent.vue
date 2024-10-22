@@ -159,13 +159,10 @@
         },
 
         mounted() {
-            const _this = this;
-            this.fetchData(this.urlGenerate('api/required-data', false, {'auth': true}), (result) => {
-                _this.user = result.auth;
+            this.user = this.auth;
 
-                let copy = Object.assign({}, result.auth); // to avoid reference
-                this.$store.commit('setFormData', copy);
-            });
+            let copy = Object.assign({}, this.user); // to avoid reference
+            this.$store.commit('setFormData', copy);
         },
         props: {
             btnBg: {
@@ -217,10 +214,14 @@
 
                             _this.user = response.data.result;
 
+                            if (response.data.status === _this.CODE_SUCCESS && type === _this.RESET_PASSWORD) _this.resetFormData = {};
+
                             // reset auth from store
                             _this.$store.commit('setAuth', type !== _this.DELETE_USER &&_this.user ? _this.user : {});
 
-                            if (response.data.status === _this.CODE_SUCCESS && type === _this.RESET_PASSWORD) _this.resetFormData = {};
+                            _this.fetchData(_this.urlGenerate('required-data', false, {auth: true}), (result) => {
+                                _this.$store.commit('setAuth', result.auth);
+                            })
                         }
 
                         if (type === _this.UPDATE_AVATAR) _this.avatarFormData = {};

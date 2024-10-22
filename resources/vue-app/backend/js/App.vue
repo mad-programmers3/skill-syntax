@@ -1,5 +1,5 @@
 <template>
-    <div class="container-scroller">
+    <div v-if="isAppReady" class="container-scroller">
         <side-nav-bar></side-nav-bar>
         <top-nav-bar></top-nav-bar>
         <div class="main-panel">
@@ -22,11 +22,16 @@
             SideNavBar
         },
 
+        data() {
+            return {
+                isAppReady: false,  // Flag to check if app is ready
+            };
+        },
         mounted() {
             const _this = this;
             this.fetchData(this.urlGenerate('api/required-data', false, {auth: true}), (result) => {
                 _this.$store.commit('setAuth', result.auth);
-
+                _this.isAppReady = true;
             })
         }
     }
