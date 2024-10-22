@@ -50,4 +50,9 @@ class Course extends Model
     {
         return $this->belongsToMany(Quiz::class, 'course_quizzes');
     }
+
+    public function user_purchased()
+    {
+        return $this->belongsToMany(User::class, 'purchased_courses');
+    }
 }

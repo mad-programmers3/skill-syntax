@@ -24,8 +24,10 @@ class SupportController extends Controller
     {
         $data = [];
 
-        if (request()->has('auth'))
-            $data['auth'] = Auth::user()->load('avatar')->load('role');
+        if (request()->has('auth')) {
+            $data['auth'] = Auth::user()->load('avatar')->load('role')->load('purchased_courses');
+            $data['auth']['purchased_courses_id'] = $data['auth']->purchased_courses->pluck('id');
+        }
 
 
         if (request()->has('users'))

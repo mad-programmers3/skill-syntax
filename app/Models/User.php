@@ -58,9 +58,9 @@ class User extends Authenticatable
         return $this->hasMany(Course::class, 'user_id');
     }
 
-    public function isFree()
+    public function purchased_courses()
     {
-        return $this->price == 0.00;
+        return $this->belongsToMany(Course::class, 'purchased_courses');
     }
 
 
