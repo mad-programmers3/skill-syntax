@@ -63,6 +63,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Course::class, 'purchased_courses');
     }
 
+    public function solved_questions()
+    {
+        return $this->hasMany(SolvedQuestion::class);
+    }
+
 
     // Relationship with Reviews
 //    public function reviews()

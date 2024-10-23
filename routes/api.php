@@ -64,8 +64,11 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('users', UserController::class);
     Route::post('users/password-reset', [UserController::class, 'resetPassword']);
     Route::post('users/avatar-delete', [UserController::class, 'deleteAvatar']);
+
     Route::resource('quizzes', QuizController::class);
+    Route::post('quizzes/submit', [QuizController::class, 'submit']);
     Route::resource('questions', QuestionController::class);
+
     Route::resource('categories', CategoryController::class);
     Route::resource('sub-categories', SubCategoryController::class);
 

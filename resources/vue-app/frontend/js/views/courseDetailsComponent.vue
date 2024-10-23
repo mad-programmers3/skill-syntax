@@ -215,11 +215,18 @@
                                     <!-- Quiz Card -->
                                     <div class="card mt-3" style="background-color: #002347; color: #ffffff;">
                                         <div class="card-body text-center" style="background-color: #ffffff; color: #333;">
-                                            <div>
-                                                <label class="card-text" for="file">Start this quiz now</label>
-                                                <progress id="file" value="2" max="4"> 32% </progress>
+                                            <div class="mb-2">
+                                                <p class="card-text">{{ getSolvedQsN(quiz.questions) }} solved out of {{ quiz.questions ? quiz.questions.length : 0 }} questions</p>
+                                                <div class="progress">
+                                                    <div :class="`progress-bar ${isSolvedAllQs(quiz.questions) ? 'bg-success' : 'primary-bg3'}`" role="progressbar"
+                                                         :style="{ width: `${!isEmptyData(quiz.questions) ? getSolvedQsN(quiz.questions)/quiz.questions.length*100 : 100}%` }"
+                                                         :aria-valuenow="getSolvedQsN(quiz.questions)" aria-valuemin="0"
+                                                         :aria-valuemax="quiz.questions ? quiz.questions.length : 0">
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <button class="genric-btn primary2 circle arrow" data-toggle="modal" :data-target="`#quizModal${quiz.id}`">Take Quiz</button>
+                                            <div v-if="isSolvedAllQs(quiz.questions)" class="genric-btn primary-bg2 circle text-white" style="cursor: default">Solved</div>
+                                            <button v-else class="genric-btn primary2 circle" data-toggle="modal" :data-target="`#quizModal${quiz.id}`">Take Now</button>
                                         </div>
                                     </div>
 
