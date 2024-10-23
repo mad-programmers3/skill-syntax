@@ -162,7 +162,7 @@ export default {
         },
 
         // close the modal and reset the form data.
-        closeModal(modalId = '#backendModal', callBack = false, defVal = {status: 1}) {
+        closeModal(modalId = '#backendModal', callBack = false, defVal = {}) {
             $(modalId).modal('hide'); // Hide the modal
 
             if (typeof callBack === 'function') callBack(); // Execute callback if provided
@@ -202,5 +202,20 @@ export default {
                 data: imgFormData
             });
         },
+
+        getSolvedQsN(questions) {
+            if (this.isEmptyData(this.auth) || this.isEmptyData(questions)) return 0;
+
+            let n = 0;
+            questions.forEach((q) => {
+                if (this.auth.solved_questions_id.includes(q.id)) n++;
+            });
+
+            return n;
+        },
+
+        isSolvedAllQs(questions){
+            return questions && this.getSolvedQsN(questions) === questions.length;
+        }
     }
 }
