@@ -1,31 +1,57 @@
 <template>
     <div class="row">
-        <div v-for="course in courses" :key="course.id" class="col-md-3 mb-4"> <!-- Updated spacing -->
-            <div class="single_course card h-80 w-100 "> <!-- Added shadow, removed border, rounded corners -->
+        <div v-for="course in courses" :key="course.id" class="col-md-3 mb-4">
+            <div class="single_course card h-80 w-100">
                 <div class="course_head position-relative">
                     <img class="img-fluid rounded-top" :src="generateFileUrl(course.thumbnail)" alt="" style="object-fit: cover; height: 100%; width: 100%;">
-                    <button class="wishlist-remove btn btn-danger btn-sm position-absolute" >
+
+                    <!-- Wishlist Remove Button -->
+                    <button v-if="course.inWishlist" @click="removeFromWishlist(course.id)" class="wishlist-remove btn btn-danger btn-sm position-absolute">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
 
                 <div class="course_content card-body">
-                    <span class="price badge badge-success p-1">
-                        <!-- Show 'Free' if price is 0.00, otherwise show the price -->
-                        {{ course.price == 0 ? 'Free' : '$' + course.price }}
-                    </span>
+                    <!-- Category Tag -->
                     <div style="padding-right: 15px">
-                        <span class="tag mb-3 d-inline-block text-sm badge badge-secondary p-1 " style="font-size: 10px" >{{course.category ? course.category.title : ''}}</span>
+                        <span class="tag mb-3 d-inline-block text-sm badge badge-secondary p-1" style="font-size: 10px">{{course.category ? course.category.title : ''}}</span>
                     </div>
+
+                    <!-- Course Title -->
                     <h4 class="mb-3">
-                        <router-link to="/courses" class="text-dark" style="font-size: 17px; text-overflow: ellipsis;">{{ limitText(course.title, 23)}}</router-link> <!-- Adjusted link color -->
+                        <router-link to="/courses" class="text-dark" style="font-size: 17px; text-overflow: ellipsis;">{{ limitText(course.title, 23) }}</router-link>
                     </h4>
 
-                    <!-- See Details Button -->
+                    <!-- Course Details (Duration and Students) -->
+                    <div class="mb-2 d-flex align-items-center">
+                        <span class="mr-3">
+                            <i class="fas fa-clock text-info mr-1"></i> {{ course.duration }} months
+                        </span>
+                        <span>
+                            <i class="fas fa-user-graduate text-success mr-1"></i> {{ course.students }} students
+                        </span>
+                    </div>
+
+                    <!-- Horizontal line -->
+                    <hr class="my-2">
+
+                    <!-- Review Section with 5 Stars -->
+                    <div class="review-section d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-star text-warning" v-for="n in 5" :key="n"></i>
+                            <span> 5.0</span>
+                        </div>
+
+                        <span class="font-weight-bold ml-2" style="padding-left: 10px;">
+                        {{ course.price == 0 ? 'Free' : '$' + course.price }}
+                        </span>
+                    </div>
+
+                    <!-- See Details Button at the top -->
                     <div class="mt-4">
                         <router-link :to="{ name: 'courseDetails', params: { id: course.id } }" class="btn btn-primary btn-block btn-lg see-details-button d-flex justify-content-center align-items-center">
                             SEE DETAILS
-                            <img class="transition-all duration-200 w-6 h-6 min-w-[24px] ml-2 arrow-icon" src="https://cdn.ostad.app/public/icons/arrow-right-line.svg" alt="Arrow Right">
+                            <i class="fas fa-arrow-right ml-2"></i>
                         </router-link>
                     </div>
                 </div>
@@ -41,10 +67,13 @@
             courses: {
                 type: Array,
                 required: true
-            },
+            }
         },
         methods: {
-            //
+            // Emit an event to parent component when wishlist remove button is clicked
+            removeFromWishlist(courseId) {
+                this.$emit('remove-wishlist', courseId);
+            }
         }
     }
 </script>
@@ -55,40 +84,19 @@
         width: 100%;
     }
 
-    .price {
-        font-size: 1rem;
-        font-weight: bold;
-        color: #ff5e14;
-    }
-
     .see-details-button {
         background-color: white;
-        color: #ff5e14;
+        color: #002347;
         font-size: 1rem;
         padding: 10px;
         border-radius: 4px;
-        border: 2px solid #ff5e14;
+        border: 2px solid #002347;
         transition: background-color 0.3s ease, color 0.3s ease;
     }
 
     .see-details-button:hover {
-        background-color: #ff5e14;
+        background-color: #002347;
         color: white;
-    }
-
-    .see-details-button img {
-        width: 20px;
-        height: 20px;
-        transition: all 0.3s ease;
-    }
-
-    .single_course .price {
-        top: -30px;
-        right: 15px;
-        height: 50px;
-        line-height: 50px;
-        width: 50px;
-        font-size: 12px;
     }
 
     .single_course {
@@ -102,19 +110,51 @@
 
     .single_course:hover {
         transform: translateY(-5px);
-        border-color: #ff5e14;
+        border-color: #002347;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
     .single_course .course_content {
         padding: 10px;
     }
+
     .wishlist-remove {
         top: 8px;
         right: 8px;
         padding: 5px;
-        background-color: rgba(255, 0, 0, 0.8);
+        background-color: white;
         border: none;
         border-radius: 100%;
+        color: black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+    }
+
+    .wishlist-remove i {
+        font-size: 16px;
+    }
+
+    .review-section {
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    .review-section i {
+        margin-right: 4px;
+    }
+
+    hr {
+        border-top: 1px solid #ddd;
+    }
+
+    .fa-clock {
+        color: #17a2b8;
+    }
+
+    .fa-user-graduate {
+        color: #28a745;
     }
 </style>
