@@ -72,6 +72,7 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('courses', CourseController::class);
     Route::post('courses/add-quiz', [CourseController::class, 'addQuiz']);
     Route::post('courses/do-like', [CourseController::class, 'doLike']);
+    Route::post('courses/purchase/{id}', [CourseController::class, 'purchase']);
 
     Route::resource('lessons', LessonController::class);
     Route::post('lessons/do-like', [LessonController::class, 'lessonLike']);

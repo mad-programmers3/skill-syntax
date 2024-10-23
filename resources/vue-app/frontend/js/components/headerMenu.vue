@@ -47,7 +47,7 @@
                                 </li>
                             </ul>
                             <ul class="mb-0">
-                                <li v-if="!isEmptyObj(auth)" class="nav-item nav-profile dropdown border-0">
+                                <li v-if="!isEmptyData(auth)" class="nav-item nav-profile dropdown border-0">
                                     <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
                                         <img class="nav-profile-img" alt="" :src="generateFileUrl(auth ? auth.avatar : null, TYPE_USER)" />
                                         <span class="profile-name">{{ userName }}</span>

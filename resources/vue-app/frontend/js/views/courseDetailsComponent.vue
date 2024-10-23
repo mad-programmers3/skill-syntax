@@ -3,7 +3,7 @@
         <!--================ Start Course Details Area =================-->
         <section class="course_details_area section_gap">
             <div class="container">
-                <div class="row">
+                <div v-if="!isEmptyData(course)" class="row">
                     <div class="col-lg-8 course_details_left">
                         <div class="main_image">
                             <!-- Display the course thumbnail or a default image if it's not available -->
@@ -109,9 +109,12 @@
                             </div>
                             <!-- Review Area (New review) -->
                             <div id="review-area">
-                                <div v-if="isEmptyObj(auth)" class="text-center">
+                                <div v-if="isEmptyData(auth)" class="text-center">
                                     <h5>You need to be logged in to provide feedback</h5>
                                     <a class="primary-btn" :href="urlGenerate('login', false, { url: currentUrl + '#review-area' })">Log In</a>
+                                </div>
+                                <div v-else-if="!auth.purchased_courses_id.includes(course.id)" class="text-center">
+                                    <h5>Purchase this course to review it</h5>
                                 </div>
                                 <!-- If the user is logged in and has not already reviewed the course -->
                                 <div v-else-if="!hasReviewed">
@@ -131,7 +134,7 @@
                                         <div>
                                             <textarea v-model="form.comment" class="form-control" rows="4" placeholder="Share your experience..."></textarea>
                                             <div class="text-right mt-3">
-                                                <button @click="submitReview" class="genric-btn primary-bg2 text-white circle arrow">Submit<span class="ti-arrow-right"></span></button>
+                                                <button @click="submitReview" class="genric-btn primary2  circle arrow">Submit<span class="ti-arrow-right"></span></button>
                                             </div>
                                         </div>
                                     </div>
@@ -144,60 +147,87 @@
                         </div>
                     </div>
 
-                    <!-- Course Lessons Section -->
-                    <div class="col-lg-4 right-contents" v-if="course && course.lessons">
-                        <h4 class="title mt-5">Lessons</h4>
-                        <div class="playlist">
-                            <div v-for="lesson in course.lessons" :key="lesson.id" class="card mb-3">
-                                <div class="row no-gutters">
-                                    <div class="col-md-4">
-                                        <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="" style="margin: 10px; padding: 5px;" />
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <router-link :to="{ name: 'lesson', params: { id: lesson.id } }" :class="{ 'font-weight-bold': lesson.id === lesson_id }">
-                                                <h6 class="card-title">{{ lesson.title }}</h6>
-                                            </router-link>
-                                            <div class="mt-lg-0 mt-3">
-                              <span class="meta_info mr-4">
-                                   <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2">
-                                       <i :class="`${lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}
-                                   </a>
-                               </span>
-                                                <span class="meta_info padded-info">
-                                  <a href="#" class="primary-text2">
-                                    <i class="far fa-comment"></i> {{ reviews.length }}
+                    <!-- Course Lessons And Quizzes Section -->
+                    <div v-if="true" class="col-lg-4 right-contents" >
+
+                        <template v-if="isEmptyData(auth)">
+                            No logged in
+                        </template>
+                        <template v-else-if="!auth.purchased_courses_id.includes(course.id)">
+                            <div class="mt-5 row justify-content-center">
+                                <div class="col-md-8 text-center">
+                                    <h4 class="font-weight-bold">
+                                        Purchase the course now for only <span class="text-success">{{ course.price }} Taka</span>
+                                    </h4>
+                                    <button @click="purchaseCourse" class="mt-2 genric-btn primary2 circle arrow">Purchase Now<span class="ti-arrow-right"></span></button>
+                                </div>
+                            </div>
+                        </template>
+                        <template v-else>
+                            <!-- Lessons Section -->
+                            <h4 v-if="isEmptyData(course.lessons)" class="mt-5">No lessons available for this course</h4>
+                            <template v-else>
+                                <h4 class="title mt-5">Lessons</h4>
+                                <div class="playlist">
+                                    <div v-for="lesson in course.lessons" :key="lesson.id" class="card mb-3">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4">
+                                                <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="" style="margin: 10px; padding: 5px;" />
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <router-link :to="{ name: 'lesson', params: { id: lesson.id } }" :class="{ 'font-weight-bold': lesson.id === lesson_id }">
+                                                        <h6 class="card-title">{{ lesson.title }}</h6>
+                                                    </router-link>
+                                                    <div class="mt-lg-0 mt-3">
+                                  <span class="meta_info mr-4">
+                                       <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2">
+                                           <i :class="`${lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}
                                        </a>
-                                         </span>
+                                   </span>
+                                                        <span class="meta_info padded-info">
+                                      <a href="#" class="primary-text2">
+                                        <i class="far fa-comment"></i> {{ reviews.length }}
+                                           </a>
+                                             </span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div v-for="quiz in course.quizzes" :key="quiz.id" class="playlist">
-                            <!-- Quizzes Button -->
-                            <button
-                                    data-toggle="modal" :data-target="`#quizModal${quiz.id}`"
-                                    class="btn btn-custom btn-lg mt-3 d-flex justify-content-center align-items-center"
-                                    style="background-color: #002347; color: #ffffff;" >
+                            </template>
 
-                                    {{ quiz.title }}
-                            </button>
 
-                            <!-- Quiz Card -->
-                            <div class="card mt-3" style="background-color: #002347; color: #ffffff;">
-                                <div class="card-body" style="background-color: #ffffff; color: #333;">
-                                    <h5 class="card-title">{{ quiz.title }}</h5>
-                                    <p class="card-text">Description or other quiz details here.</p>
-                                    <button class="btn btn-primary" data-toggle="modal" :data-target="`#quizModal${quiz.id}`">Take Quiz</button>
+                            <!-- Quizzes Section -->
+                            <h4 v-if="isEmptyData(course.quizzes)" class="mt-5">No quizzes available for this course</h4>
+                            <template v-else>
+                                <h4 class="title mt-5">Quizzes</h4>
+                                <div v-for="quiz in course.quizzes" :key="quiz.id" class="playlist">
+                                    <button
+                                            data-toggle="modal" :data-target="`#quizModal${quiz.id}`"
+                                            class="btn btn-custom btn-lg mt-3 d-flex justify-content-center align-items-center"
+                                            style="background-color: #002347; color: #ffffff;" >
+
+                                        {{ quiz.title }}
+                                    </button>
+
+                                    <!-- Quiz Card -->
+                                    <div class="card mt-3" style="background-color: #002347; color: #ffffff;">
+                                        <div class="card-body text-center" style="background-color: #ffffff; color: #333;">
+                                            <div>
+                                                <label class="card-text" for="file">Start this quiz now</label>
+                                                <progress id="file" value="2" max="4"> 32% </progress>
+                                            </div>
+                                            <button class="genric-btn primary2 circle arrow" data-toggle="modal" :data-target="`#quizModal${quiz.id}`">Take Quiz</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal Component -->
+                                    <quiz-modal-component :id="`quizModal${quiz.id}`" :quiz="quiz" />
                                 </div>
-                            </div>
-
-                            <!-- Modal Component -->
-                            <quiz-modal-component :id="`quizModal${quiz.id}`" :quiz="quiz" />
-                        </div>
+                            </template>
+                        </template>
 
                     </div>
                 </div>
@@ -253,6 +283,24 @@
                     _this.form.user_id = _this.auth.id;
                     _this.form.course_id = _this.course ? _this.course.id : null;
 
+                });
+            },
+
+
+            purchaseCourse() {
+                if (this.isEmptyData(this.auth) || this.isEmptyData(this.course)) return;
+                
+                const _this = this;
+                this.httpReq({
+                    customUrl: 'api/courses/purchase',
+                    urlSuffix: this.course.id,
+                    method: 'post',
+                    callback: (response) => {
+                        if (response.data) {
+                            _this.showToast(response.data.message);
+                            _this.auth.purchased_courses_id.push(_this.course.id);
+                        }
+                    }
                 });
             },
 
@@ -355,7 +403,7 @@
                 return this.form && this.form.id === review.id;
             },
             doLike(type = this.TYPE_LIKE_COURSE, id = this.course.id) {
-                if (this.isEmptyObj(this.auth)) return;
+                if (this.isEmptyData(this.auth)) return;
 
                 let customUrl = 'api/courses/do-like';
                 let likesArr = this.likes;

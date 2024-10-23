@@ -243,7 +243,7 @@
             },
 
             doLike(type = this.TYPE_LIKE_LESSON, id = this.lesson.id) {
-                if (this.isEmptyObj(this.auth)) return;
+                if (this.isEmptyData(this.auth)) return;
 
                 let customUrl = 'api/lessons/do-like';
                 let likesArr = this.likes;

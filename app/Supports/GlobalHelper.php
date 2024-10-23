@@ -15,6 +15,10 @@ if (!defined('CODE_DANGER')) {
     define('CODE_DANGER', 3000);
 }
 
+if (!defined('CODE_EXIST')) {
+    define('CODE_EXIST', 4000);
+}
+
 if (!defined('PERM_VIEW')) {
     define('PERM_VIEW', 'view');
 }

@@ -2040,6 +2040,26 @@ h6 {
   background: #f8b600;
   border: 1px solid transparent; }
 
+.genric-btn.primary2 {
+  color: #fff;
+  background: #002347;
+  border: 1px solid transparent; }
+
+.genric-btn.primary2:hover {
+  color: #002347;
+  border: 1px solid #002347;
+  background: #fff; }
+
+.genric-btn.primary2-border {
+  color: #002347;
+  border: 1px solid #002347;
+  background: #fff; }
+
+.genric-btn.primary2-border:hover {
+  color: #fff;
+  background: #002347;
+  border: 1px solid transparent; }
+
 .genric-btn.success {
   color: #fff;
   background: #4cd3e3;

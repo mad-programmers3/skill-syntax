@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseLike;
 use App\Models\CourseQuiz;
+use App\Models\PurchasedCourse;
+use App\Models\Role;
 use App\Supports\BaseCrudHelper;
 use App\Supports\LikeHelper;
 use App\Supports\MyFileHelper;
@@ -72,6 +74,33 @@ class CourseController extends Controller
             return retRes('Failed to manipulate course quiz', null, 500);
         }
     }
+
+    public function purchase($id) {
+        try {
+            // Ensure user is authenticated
+            $user = auth()->user();
+            $studentRole = Role::where('name', 'Student')->first(); // Fetch the first match
+            if (!$user || !$studentRole || $user->role_id !== $studentRole->id)
+                return retRes('User is not authenticated or not a student.', null, CODE_DANGER);
+
+            // Use firstOrNew to find existing purchase or create a new instance
+            $purchase = PurchasedCourse::firstOrNew([
+                'user_id' => $user->id,
+                'course_id' => $id,
+            ]);
+
+            // Check if the course has already been purchased
+            if ($purchase->exists)
+                return retRes('You have already purchased this course.', null, CODE_EXIST);
+
+            $purchase->save();
+            return retRes('Course purchased successfully!', $purchase, CODE_SUCCESS);
+
+        } catch (Exception $e) {
+            return retRes('Failed to purchase course', null, 500);
+        }
+    }
+
 
 
 
