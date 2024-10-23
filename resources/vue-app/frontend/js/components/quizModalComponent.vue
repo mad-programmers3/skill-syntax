@@ -44,7 +44,7 @@
         },
         mounted() {
             const _this = this;
-            $('#'+id).on('hidden.bs.modal', () => {
+            $('#'+this.id).on('hidden.bs.modal', () => {
                 _this.$store.commit('setFormData', {});
             });
         },
