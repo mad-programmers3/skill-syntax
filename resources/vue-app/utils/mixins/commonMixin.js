@@ -84,6 +84,11 @@ export default {
             if (typeof data === 'object') return Object.keys(data).length === 0;
             return false;
         },
+        objLen(obj) {
+            if (!obj || obj !== 'object') return 0;
+
+            return Object.keys(obj).length;
+        },
         asset(path) {
             return baseUrl + '/' + path;
         },
@@ -216,6 +221,10 @@ export default {
 
         isSolvedAllQs(questions){
             return questions && this.getSolvedQsN(questions) === questions.length;
-        }
+        },
+
+        isSolveQs(question) {
+            return question && this.auth && this.auth.solved_questions_id.includes(question.id);
+        },
     }
 }
