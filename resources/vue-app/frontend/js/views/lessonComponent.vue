@@ -10,7 +10,12 @@
                         </div>
                         <div class="content_wrapper">
                             <div class="title d-flex justify-content-between align-items-center">
-                                <h4 class="mb-0">{{ lesson.title }}</h4> <!-- Added mb-0 to remove margin from the heading -->
+                                <div>
+                                    <h3>{{ lesson.title }}</h3>
+                                    <router-link v-if="!isEmptyData(lesson.course)" :to="`/courses/${lesson.course.id}`">
+                                        <h6 class="mb-0"><strong>Course: </strong>{{ lesson.course.title }}</h6>
+                                    </router-link>
+                                </div>
                                 <div>
                                     <span class="meta_info mr-3">
                                         <a @click="doLike()" class="primary-text2"> <!-- Call doLike without parameters -->
@@ -22,9 +27,6 @@
                                        <a href="#review-area" class="primary-text2"> <i class="far fa-comment"></i> {{ reviews.length }} </a>
                                     </span>
                                 </div>
-                            </div>
-                            <div>
-                                <h4>Course title</h4>
                             </div>
                             <div class="content">
                                 {{ lesson.description }}
@@ -98,16 +100,10 @@
                     <div class="col-lg-4 right-contents" v-if="lesson && lesson.course">
                         <h4 class="title mt-5">Lessons</h4>
                         <div class="playlist">
-                            <div v-for="less in lesson.course.lessons" :key="less.id"
-                                 :class="['card mb-3', { 'highlight-card': lesson.id === less.id }]">
-                                <router-link :to="{ name: 'lesson', params: { id: less.id } }" class="row no-gutters">
+                            <div v-if="!isEmptyData(lesson.course)" v-for="less in lesson.course.lessons" :key="less.id" :class="['card mb-3', { 'highlight-card': lesson.id === less.id }]" :style="`background: ${ runningInfo.current_lesson_id >= less.id ? 'white' : '#d4d4d4'};`">
+                                <div @click="goToLesson(less.id, runningInfo.current_lesson_id)" class="row no-gutters pointer">
                                     <div class="col-md-4 justify-content-center">
-                                        <img
-                                                class="img-fluid"
-                                                :src="baseUrl + '/frontend/img/courses/c2.jpg'"
-                                                alt="Course Image"
-                                                style="border: 1px solid #ddd; padding: 5px; margin: 10px; border-radius: 8px;"
-                                        >
+                                        <img class="img-fluid" :src="generateFileUrl(less.thumbnail, TYPE_LESSON)" alt="Course Image" style="border: 1px solid #ddd; padding: 5px; margin: 10px; border-radius: 8px;" >
                                     </div>
 
                                     <div class="col-md-8">
@@ -116,7 +112,7 @@
                                             <p class="card-text">Duration: 10 mins</p>
                                         </div>
                                     </div>
-                                </router-link>
+                                </div>
                             </div>
                         </div>
 
@@ -125,7 +121,7 @@
                                 <router-link :to="{ name: 'lesson', params: { id: prev.id } }" v-if="!isEmptyData(prev)" class="genric-btn primary2 circle arrow px-3"><span class="ml-0 mr-2 ti-arrow-left"></span>Prev</router-link>
                             </div>
                             <div>
-                                <button @click="goNextLesson({current_lesson_id: next.id})"  v-if="!isEmptyData(next)" class="genric-btn primary2 circle arrow px-3">Next<span class="ti-arrow-right"></span></button>
+                                <button @click="goNextLesson()"  v-if="!isEmptyData(next)" class="genric-btn primary2 circle arrow px-3">Next<span class="ti-arrow-right"></span></button>
                             </div>
                         </div>
                     </div>
@@ -286,8 +282,7 @@
                 });
             },
 
-
-            goNextLesson(data) {
+            goNextLesson() {
                 if (this.isEmptyData(this.runningInfo)) return;
 
                 const _this = this;
@@ -295,26 +290,11 @@
                     customUrl: 'api/running-infos',
                     urlSuffix: this.runningInfo.id,
                     method: 'put',
-                    data,
+                    data: {current_lesson_id: this.next.id},
                     callback: (response) => {
-                        _this.dd(response);
+                        _this.$router.push({name: 'lesson', params: {id: _this.next.id}});
                     },
                 });
-            },
-            goToLesson(lessId) {
-                if (this.isLessonUnlocked(lessId))
-                    this.$router.push({ name: 'lesson', params: { id: lessId } });
-                else {
-                    const _this = this;
-                    this.showSweetAlert({
-                        title: 'Locked Lesson',
-                        text: 'To continue this lesson you need to complete previous lessons. Want to continue where you left?',
-                        callback: (confirm) => {
-                            if (confirm)
-                                this.$router.push({name: 'lesson', params: {id: _this.runningInfo.current_lesson_id}});
-                        }
-                    });
-                }
             },
         },
     }

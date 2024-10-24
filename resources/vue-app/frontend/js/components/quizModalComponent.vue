@@ -47,6 +47,11 @@
                 type: Array | Object,
                 default: {},
             },
+            runningInfo: {
+                type: Array | Object,
+                default: {},
+            },
+            nextQuizId: Number,
             id: String,
         },
         methods: {
@@ -81,6 +86,20 @@
                                     if (confirm) _this.closeModal('#'+_this.id);
                                 }
                             });
+
+                            // if done move the current_quiz_it to next
+                            if (!failedQs && _this.nextQuizId) {
+                                if (confirm) _this.closeModal('#'+_this.id);
+                                this.httpReq({
+                                    customUrl: 'api/running-infos',
+                                    urlSuffix: _this.runningInfo.id,
+                                    method: 'put',
+                                    data: {current_quiz_id: _this.nextQuizId},
+                                    callback: (response) => {
+                                        _this.runningInfo.current_quiz_id = _this.nextQuizId;
+                                    },
+                                });
+                            }
 
                             if (!_this.isEmptyData(_this.auth) && !_this.isEmptyData(solvedIds))
                                 _this.auth.solved_questions_id.push(...solvedIds)

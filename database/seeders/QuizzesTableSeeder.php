@@ -24,9 +24,6 @@ class QuizzesTableSeeder extends Seeder
             [
                 'title' => 'Quiz 3',
             ],
-            [
-                'title' => 'Quiz 4'
-            ],
 
         ];
 

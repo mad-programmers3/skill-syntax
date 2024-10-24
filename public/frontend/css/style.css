@@ -651,9 +651,7 @@ button:focus {
 /* Start Courses Details Area css
 ============================================================================================ */
 .course_details_area .title {
-  font-size: 21px;
   border: none;
-  cursor: pointer;
   margin-top: 40px;
   border-bottom: 1px solid #eeeeee;
   position: relative;
@@ -2058,6 +2056,26 @@ h6 {
 .genric-btn.primary2-border:hover {
   color: #fff;
   background: #002347;
+  border: 1px solid transparent; }
+
+.genric-btn.primary3 {
+  color: #fff;
+  background: #ff5e14;
+  border: 1px solid transparent; }
+
+.genric-btn.primary3:hover {
+  color: #ff5e14;
+  border: 1px solid #ff5e14;
+  background: #fff; }
+
+.genric-btn.primary3-border {
+  color: #ff5e14;
+  border: 1px solid #ff5e14;
+  background: #fff; }
+
+.genric-btn.primary3-border:hover {
+  color: #fff;
+  background: #ff5e14;
   border: 1px solid transparent; }
 
 .genric-btn.success {

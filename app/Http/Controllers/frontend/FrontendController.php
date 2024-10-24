@@ -52,7 +52,7 @@ class FrontendController extends Controller
     {
         try {
             $data = [];
-            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'course_reviews.review.user.avatar', 'quizzes.questions', 'user_purchased'])->findOrFail($id);
+            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'course_reviews.review.user.avatar', 'quizzes.questions:id,quiz_id,title,option_a,option_b,option_c,option_d', 'user_purchased'])->findOrFail($id);
             $data['likes'] = $data['course']->likes->pluck('user_id');
             $data['reviews'] = $data['course']->course_reviews->pluck('review');
 
@@ -67,9 +67,8 @@ class FrontendController extends Controller
                     //ReviewLike::where('review_id', $lesson->id)->pluck('user_id');
             }
 
-
-
-            $data['running_info'] = Auth::user() ? PurchasedCourse::where('course_id', $id)->where('user_id', Auth::id())->first() : [];
+            $ri = Auth::user() ? PurchasedCourse::where('course_id', $id)->where('user_id', Auth::id())->first() : [];
+            $data['running_info'] = $ri ? $ri : [];
 
             return retRes('Fetched course data for course page', $data);
         } catch (Exception $e) {
@@ -104,11 +103,15 @@ class FrontendController extends Controller
 
     public function updateRunningInfo(Request $request, $id)
     {
-
         try {
             $record = PurchasedCourse::findOrFail($id);
             if ($record) {
-                $record->update($request->all());
+                $data = $request->all();
+
+                if ($request->input('current_lesson_id') < $record->current_lesson_id)
+                    unset($data['current_lesson_id']);
+
+                $record->update($data);
                 return retRes('Running info updated', $record);
             }
 
@@ -116,5 +119,6 @@ class FrontendController extends Controller
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
         }
+
     }
 }
