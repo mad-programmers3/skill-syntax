@@ -156,31 +156,33 @@
                             </div>
                         </div>
                         <div v-else-if="!auth.purchased_courses_id.includes(course.id)" class="mt-5 row justify-content-center">
-<!--                            <div class="col-md-8 text-center">-->
-<!--                                <h4 class="font-weight-bold">-->
-<!--                                    Purchase the course now for only <span class="text-success">{{ course.price }} Taka</span>-->
-<!--                                </h4>-->
-<!--                                <button @click="purchaseCourse" class="mt-2 genric-btn primary2 circle arrow">Purchase Now<span class="ti-arrow-right"></span></button>-->
-<!--                            </div>-->
                             <div class="card p-4 shadow-sm mb-4">
                                 <form @submit.prevent="purchaseCourse">
                                     <div class="form-group mt-3">
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="radio" id="method-0" value="bkash" v-model="selectedMethod" required/>
-                                            <label class="form-check-label d-flex align-items-center" for="method-0">
+                                        <!-- Bkash Payment Method -->
+                                        <div :class="['d-flex align-items-center form-check mb-3', {'primary-border-bold': selectedMethod === 1}]">
+                                            <input class="form-check-input d-none" type="radio" id="method-1" :value="1" v-model="selectedMethod" required/>
+                                            <label class="form-check-label" for="method-1">
                                                 <img width="50px" :src="asset('frontend/img/payment-img/Logo__Bkash.svg')" alt="Bkash" class="payment-logo mr-2" />
                                                 Bkash
                                             </label>
                                         </div>
-                                        <div class="form-check mb-3">
-                                            <input class="form-check-input" type="radio" id="method-1" value="nagad" v-model="selectedMethod" required/>
-                                            <label class="form-check-label d-flex align-items-center" for="method-1">
+
+                                        <!-- Nagad Payment Method -->
+                                        <div :class="['d-flex align-items-center form-check mb-3', {'primary-border-bold': selectedMethod === 2}]">
+                                            <input class="form-check-input d-none" type="radio" id="method-2" :value="2" v-model="selectedMethod" required/>
+                                            <label class="form-check-label" for="method-2">
                                                 <img width="50px" :src="asset('frontend/img/payment-img/nagad.png')" alt="Nagad" class="payment-logo mr-2" />
                                                 Nagad
                                             </label>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-warning btn-block">Complete Payment 2000tk</button>
+
+                                    <!-- Purchase Button -->
+                                    <button type="submit" class="mt-2 genric-btn primary2 circle arrow">
+                                        Get at {{ course.price }}tk
+                                        <span class="ti-arrow-right"></span>
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -261,7 +263,7 @@
                                     <h6 class="font-weight-bold">
                                         Congratulations on completing the course! You can now download your certificate.
                                     </h6>
-                                    <button @click="purchaseCourse" class="mt-2 genric-btn primary2 circle arrow">Download<span class="fas fa-download"></span></button>
+                                    <button @click="downloadCertificate" class="mt-2 genric-btn primary2 circle arrow">Download<span class="fas fa-download"></span></button>
                                 </div>
                             </div>
                         </template>
@@ -273,7 +275,9 @@
 </template>
 
 <script>
+    import jsPDF from 'jspdf';
     import QuizModalComponent from "../components/quizModalComponent";
+
     export default {
         name: "courseDetails",
         components: {QuizModalComponent},
@@ -295,6 +299,7 @@
                 TYPE_LIKE_LESSON: 13,
                 hoverRating: 0,
                 hasReviewed: false,
+                selectedMethod: 1,
             };
         },
         mounted() {
@@ -323,7 +328,6 @@
 
                 });
             },
-
 
             purchaseCourse() {
                 if (this.isEmptyData(this.auth) || this.isEmptyData(this.course)) return;
@@ -363,7 +367,6 @@
                     this.hasReviewed = this.reviews.some((review) => review.user.id === userId);
                 }
             },
-
 
             // Handle submitting a new review
             submitReview() {
@@ -478,6 +481,92 @@
                 });
             },
 
+            downloadCertificate() {
+                const doc = new jsPDF('landscape', 'mm', 'a4'); // Landscape orientation
+
+                // Background color
+                doc.setFillColor(240, 240, 240); // Light gray background
+                doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
+
+                // Outer Border (Info Color)
+                const outerBorderWidth = 1;
+                doc.setLineWidth(outerBorderWidth);
+                doc.setDrawColor(0, 123, 255); // Info color (Bootstrap primary)
+                doc.rect(outerBorderWidth, outerBorderWidth, doc.internal.pageSize.width - (outerBorderWidth * 2), doc.internal.pageSize.height - (outerBorderWidth * 2));
+
+                // Inner Border (#002347)
+                const innerBorderWidth = 10;
+                doc.setLineWidth(1); // 1px thickness
+                doc.setDrawColor(0, 35, 71); // #002347 in RGB
+                doc.roundedRect(innerBorderWidth, innerBorderWidth, doc.internal.pageSize.width - (innerBorderWidth * 2), doc.internal.pageSize.height - (innerBorderWidth * 2), 10, 10);
+
+                // Title
+                doc.setFont('Helvetica', 'bold');
+                doc.setFontSize(36);
+                doc.setTextColor(0, 51, 153); // Dark blue color
+                doc.text('CERTIFICATE OF COMPLETION', doc.internal.pageSize.width / 2, 30, {align: 'center'});
+
+                // Subtitle
+                doc.setFontSize(20);
+                doc.setFont('Helvetica', 'normal');
+                doc.setTextColor(0, 0, 0); // Black color
+                doc.text('This certificate is awarded to', doc.internal.pageSize.width / 2, 50, {align: 'center'});
+
+                // Student Name
+                doc.setFontSize(28);
+                doc.setFont('Georgia', 'italic'); // Cursive-like font
+                doc.text(this.auth ? this.auth.name : 'NA', doc.internal.pageSize.width / 2, 60, {align: 'center'});
+
+                // Horizontal Line for Course Title
+                doc.setDrawColor(0, 51, 153); // Blue color
+                doc.setLineWidth(1);
+                doc.line(40, 80, doc.internal.pageSize.width - 40, 80); // Horizontal line
+
+                // Course Title
+                doc.setFontSize(20);
+                doc.setFont('Helvetica', 'bold');
+                doc.text('For successfully completing:', doc.internal.pageSize.width / 2, 90, {align: 'center'});
+
+                // Course title in a separate line
+                doc.setFontSize(22);
+                doc.setFont('Georgia', 'bold'); // Cursive-like font
+                doc.text(this.course.title || 'Course Title', doc.internal.pageSize.width / 2, 100, {align: 'center'});
+
+                // Body text
+                doc.setFontSize(14);
+                doc.setFont('Helvetica', 'normal');
+                doc.text('', doc.internal.pageSize.width / 2, 210, {align: 'center', maxWidth: 190});
+
+                // Completion Date
+                const currentDate = new Date();
+                const year = currentDate.getFullYear();   // e.g., 2024
+                const month = currentDate.getMonth() + 1; // Month is 0-based, so add 1 (e.g., 10 for October)
+                const day = currentDate.getDate();        // e.g., 24
+                doc.setFontSize(12);
+                doc.text(`Completion Date: ${year}-${month}-${day}`, 30, doc.internal.pageSize.height - 60);
+
+                // Horizontal Line for Signature
+                doc.setDrawColor(0, 0, 0); // Black color
+                doc.setLineWidth(1);
+                doc.line(30, doc.internal.pageSize.height - 50, 120, doc.internal.pageSize.height - 50); // Left signature line
+
+                // Set font for signature text to normal
+                doc.setFont('Helvetica', 'normal'); // Change to normal
+                doc.text('CSE Engineer Signature', 30, doc.internal.pageSize.height - 45); // Left Signature Text
+
+                // Horizontal Line for Head Sir Signature
+                doc.line(doc.internal.pageSize.width - 120, doc.internal.pageSize.height - 50, doc.internal.pageSize.width - 30, doc.internal.pageSize.height - 50); // Right signature line
+                doc.text('Head Sir Signature', doc.internal.pageSize.width - 120, doc.internal.pageSize.height - 45); // Right Signature Text
+
+                // Add 30-word Lorem Ipsum text
+                doc.setFontSize(12);
+                const loremText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+                doc.text(loremText, 30, doc.internal.pageSize.height - 90, {maxWidth: doc.internal.pageSize.width - 60}); // Add Lorem Ipsum text
+
+                // Save the PDF
+                doc.save(`${this.auth ? this.auth.name : 'NA'}_Certificate_${new Date()}.pdf`);
+            }
+
         },
         computed: {
             course_id() {
@@ -491,7 +580,7 @@
                 if (this.isEmptyData(this.course.quizzes) && !this.runningInfo.current_quiz_id) return false;
                 const lastQuiz = this.course.quizzes[this.course.quizzes.length - 1];
                 if (this.isEmptyData(lastQuiz)) return false;
-                return lastQuiz.id === this.runningInfo.current_quiz_id;
+                return this.isSolvedAllQs(lastQuiz.questions);
             }
         },
     };
