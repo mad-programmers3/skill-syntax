@@ -1,6 +1,4 @@
 <template>
-    <div>
-        <!--================ Start Course Details Area =================-->
         <section class="course_details_area section_gap">
             <div class="container">
                 <div v-if="!isEmptyData(course)" class="row">
@@ -158,11 +156,32 @@
                             </div>
                         </div>
                         <div v-else-if="!auth.purchased_courses_id.includes(course.id)" class="mt-5 row justify-content-center">
-                            <div class="col-md-8 text-center">
-                                <h4 class="font-weight-bold">
-                                    Purchase the course now for only <span class="text-success">{{ course.price }} Taka</span>
-                                </h4>
-                                <button @click="purchaseCourse" class="mt-2 genric-btn primary2 circle arrow">Purchase Now<span class="ti-arrow-right"></span></button>
+<!--                            <div class="col-md-8 text-center">-->
+<!--                                <h4 class="font-weight-bold">-->
+<!--                                    Purchase the course now for only <span class="text-success">{{ course.price }} Taka</span>-->
+<!--                                </h4>-->
+<!--                                <button @click="purchaseCourse" class="mt-2 genric-btn primary2 circle arrow">Purchase Now<span class="ti-arrow-right"></span></button>-->
+<!--                            </div>-->
+                            <div class="card p-4 shadow-sm mb-4">
+                                <form @submit.prevent="purchaseCourse">
+                                    <div class="form-group mt-3">
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" id="method-0" value="bkash" v-model="selectedMethod" required/>
+                                            <label class="form-check-label d-flex align-items-center" for="method-0">
+                                                <img width="50px" :src="asset('frontend/img/payment-img/Logo__Bkash.svg')" alt="Bkash" class="payment-logo mr-2" />
+                                                Bkash
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-3">
+                                            <input class="form-check-input" type="radio" id="method-1" value="nagad" v-model="selectedMethod" required/>
+                                            <label class="form-check-label d-flex align-items-center" for="method-1">
+                                                <img width="50px" :src="asset('frontend/img/payment-img/nagad.png')" alt="Nagad" class="payment-logo mr-2" />
+                                                Nagad
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-warning btn-block">Complete Payment 2000tk</button>
+                                </form>
                             </div>
                         </div>
                         <template v-else>
@@ -251,8 +270,6 @@
                 </div>
             </div>
         </section>
-        <!--================ End Course Details Area =================-->
-    </div>
 </template>
 
 <script>
