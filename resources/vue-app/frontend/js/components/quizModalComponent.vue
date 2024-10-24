@@ -1,6 +1,6 @@
 <template>
     <!-- Modal -->
-    <div class="modal fade" :id="id" tabindex="-1" role="dialog" aria-labelledby="quizModalLabel" aria-hidden="true">
+    <div class="modal fade" :id="id" tabindex="-1" role="dialog" aria-labelledby="quizModalLabel" aria-hidden="true"  data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document" :style="{maxWidth: windowWidth >= 700 ? '700px' : '90%'}">
             <div class="modal-content" style="background-color: #002347; color: #ffffff;">
                 <div class="modal-header">
@@ -10,7 +10,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div v-for="(question, indexQ) in quiz.questions" :key="question.id" class="card mb-3">
+                    <div v-for="(question, indexQ) in quiz.questions" v-if="!isSolveQs(question)" :key="question.id" class="card mb-3">
                         <div class="card-body" style="background-color: #ffffff; color: #333;">
                             <h6 class="card-title">{{ indexQ + 1 }}. {{ question.title }}</h6>
                             <div class="row mx-2">
@@ -73,16 +73,25 @@
                     callback: (response) => {
                         if (response.data) {
                             let solvedIds = response.data.result;
-                            if (_this.isEmptyData(solvedIds)) return;
+                            let totalQs = (_this.quiz && _this.quiz.questions ? _this.quiz.questions.length : 0) - this.getSolvedQsN(this.quiz ? this.quiz.questions : null);
+                            let solvedQs = solvedIds ? solvedIds.length : 0;
+                            let failedQs = totalQs - solvedQs;
+                            _this.showSweetAlert({
+                                title: 'Quiz Summary',
+                                text: `Total Qs: "${totalQs}", Solved: "${solvedQs}", Failed: "${failedQs}"`,
+                                icon: failedQs ? 'warning' : 'success',
+                                cancelButtonText: 'Quit',
+                                confirmButtonText: failedQs ? 'Retry' : 'Done',
+                                showCancelButton: failedQs !== 0,
+                                callback: (confirm) => {
+                                    if (confirm) $('#'+_this.id).modal('hide');
+                                }
+                            });
 
-                            _this.showToast(`You solved ${solvedIds.length} out of ${_this.quiz && _this.quiz.questions ? _this.quiz.questions.length : 'NA'}`)
-
-                            if (!_this.isEmptyData(_this.auth)) {
+                            if (!_this.isEmptyData(_this.auth) && !_this.isEmptyData(solvedIds))
                                 _this.auth.solved_questions_id.push(...solvedIds)
-                            }
                         }
-
-                        $('#'+_this.id).modal('hide');
+                        // close the modal
                     }
                 });
             },
