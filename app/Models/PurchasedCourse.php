@@ -10,7 +10,7 @@ class PurchasedCourse extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'course_id'
+        'user_id', 'course_id', 'current_lesson_id', 'current_quiz_id', 'marks'
     ];
 
 

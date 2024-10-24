@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('course_id')->constrained()->onDelete('cascade');
+            $table->foreignId('current_lesson_id')->nullable();
+            $table->foreignId('current_quiz_id')->nullable();
+            $table->integer('marks')->default(0);
             $table->timestamps();
         });
     }

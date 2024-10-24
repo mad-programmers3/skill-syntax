@@ -119,6 +119,15 @@
                                 </router-link>
                             </div>
                         </div>
+
+                        <div class="mt-5 d-flex justify-content-between">
+                            <div>
+                                <router-link :to="{ name: 'lesson', params: { id: prev.id } }" v-if="!isEmptyData(prev)" class="genric-btn primary2 circle arrow px-3"><span class="ml-0 mr-2 ti-arrow-left"></span>Prev</router-link>
+                            </div>
+                            <div>
+                                <button @click="goNextLesson({current_lesson_id: next.id})"  v-if="!isEmptyData(next)" class="genric-btn primary2 circle arrow px-3">Next<span class="ti-arrow-right"></span></button>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -134,7 +143,10 @@
         props: ['lessonId'],
         data() {
             return {
-                lesson: [],
+                lesson: {},
+                runningInfo : {},
+                prev: {},
+                next: {},
                 reviews: [],
                 likes: [],
                 reviewsLikes: {},
@@ -160,13 +172,16 @@
         computed: {
             lesson_id() {
                 return this.$route.params.id;
-            }
+            },
         },
         methods: {
             fetchLesson(id) {
                 const _this = this;
                 this.fetchData(this.urlGenerate(false, id), (result) => {
                     _this.lesson = result['lesson'];
+                    _this.runningInfo = result['running_info'];
+                    _this.prev = result['prev'];
+                    _this.next = result['next'];
                     _this.reviews = result['reviews'];
                     _this.likes = result['likes'];
                     _this.reviewsLikes = result['reviews-likes'];
@@ -269,7 +284,38 @@
                             _this.showToast('Failed to like the course. Please try again.', 'error')
                     }
                 });
-            }
+            },
+
+
+            goNextLesson(data) {
+                if (this.isEmptyData(this.runningInfo)) return;
+
+                const _this = this;
+                this.httpReq({
+                    customUrl: 'api/running-infos',
+                    urlSuffix: this.runningInfo.id,
+                    method: 'put',
+                    data,
+                    callback: (response) => {
+                        _this.dd(response);
+                    },
+                });
+            },
+            goToLesson(lessId) {
+                if (this.isLessonUnlocked(lessId))
+                    this.$router.push({ name: 'lesson', params: { id: lessId } });
+                else {
+                    const _this = this;
+                    this.showSweetAlert({
+                        title: 'Locked Lesson',
+                        text: 'To continue this lesson you need to complete previous lessons. Want to continue where you left?',
+                        callback: (confirm) => {
+                            if (confirm)
+                                this.$router.push({name: 'lesson', params: {id: _this.runningInfo.current_lesson_id}});
+                        }
+                    });
+                }
+            },
         },
     }
 </script>

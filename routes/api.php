@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::resource('tests', QuestionController::class);
 
 
 
@@ -53,7 +54,8 @@ Route::group(['prefix' => 'student'], function () {
     Route::get('wish-list', [StudentController::class, 'wishList']);
 });
 
-Route::resource('tests', QuestionController::class);
+Route::put('running-infos/{id}', [FrontendController::class, 'updateRunningInfo']);
+
 
 Route::get('required-data', [SupportController::class, 'requiredData']);
 // Role routes

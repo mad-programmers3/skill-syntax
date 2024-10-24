@@ -149,47 +149,49 @@
 
                     <!-- Course Lessons And Quizzes Section -->
                     <div v-if="true" class="col-lg-4 right-contents" >
-
-                        <template v-if="isEmptyData(auth)">
-                            No logged in
-                        </template>
-                        <template v-else-if="!auth.purchased_courses_id.includes(course.id)">
-                            <div class="mt-5 row justify-content-center">
-                                <div class="col-md-8 text-center">
-                                    <h4 class="font-weight-bold">
-                                        Purchase the course now for only <span class="text-success">{{ course.price }} Taka</span>
-                                    </h4>
-                                    <button @click="purchaseCourse" class="mt-2 genric-btn primary2 circle arrow">Purchase Now<span class="ti-arrow-right"></span></button>
-                                </div>
+                        <div v-if="isEmptyData(auth)" class="mt-5 row justify-content-center">
+                            <div class="col-md-8 text-center">
+                                <h4 class="font-weight-bold">
+                                    You need to be logged in to continue
+                                </h4>
+                                <a :href="urlGenerate('login', false, { url: currentUrl})" class="mt-2 genric-btn primary2 circle arrow">Login Now<span class="ti-arrow-right"></span></a>
                             </div>
-                        </template>
+                        </div>
+                        <div v-else-if="!auth.purchased_courses_id.includes(course.id)" class="mt-5 row justify-content-center">
+                            <div class="col-md-8 text-center">
+                                <h4 class="font-weight-bold">
+                                    Purchase the course now for only <span class="text-success">{{ course.price }} Taka</span>
+                                </h4>
+                                <button @click="purchaseCourse" class="mt-2 genric-btn primary2 circle arrow">Purchase Now<span class="ti-arrow-right"></span></button>
+                            </div>
+                        </div>
                         <template v-else>
                             <!-- Lessons Section -->
                             <h4 v-if="isEmptyData(course.lessons)" class="mt-5">No lessons available for this course</h4>
                             <template v-else>
                                 <h4 class="title mt-5">Lessons</h4>
                                 <div class="playlist">
-                                    <div v-for="lesson in course.lessons" :key="lesson.id" class="card mb-3">
+                                    <div v-for="lesson in course.lessons" :key="lesson.id" class="card mb-3" :style="`background: ${ isLessonUnlocked(lesson.id) ? 'white' : '#d4d4d4'};`">
                                         <div class="row no-gutters">
                                             <div class="col-md-4">
                                                 <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="" style="margin: 10px; padding: 5px;" />
                                             </div>
                                             <div class="col-md-8">
                                                 <div class="card-body">
-                                                    <router-link :to="{ name: 'lesson', params: { id: lesson.id } }" :class="{ 'font-weight-bold': lesson.id === lesson_id }">
+                                                    <div @click="goToLesson(lesson.id)" :class="{'pointer': true, 'font-weight-bold': lesson.id === lesson_id }">
                                                         <h6 class="card-title">{{ lesson.title }}</h6>
-                                                    </router-link>
+                                                    </div>
                                                     <div class="mt-lg-0 mt-3">
-                                  <span class="meta_info mr-4">
-                                       <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2">
-                                           <i :class="`${lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}
-                                       </a>
-                                   </span>
+                                                        <span class="meta_info mr-4">
+                                                           <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2">
+                                                               <i :class="`${lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}
+                                                           </a>
+                                                       </span>
                                                         <span class="meta_info padded-info">
-                                      <a href="#" class="primary-text2">
-                                        <i class="far fa-comment"></i> {{ reviews.length }}
-                                           </a>
-                                             </span>
+                                                            <a href="#" class="primary-text2">
+                                                                <i class="far fa-comment"></i> {{ reviews.length }}
+                                                            </a>
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -257,6 +259,7 @@
                 likes: [],
                 reviewsLikes: [],
                 lessonsLikes: [],
+                runningInfo: {},
                 form: {
                     rating: 0,
                     comment: '',
@@ -285,8 +288,10 @@
                     _this.course = result['course'];
                     _this.reviews = result['reviews'];
                     _this.likes = result['likes'];
-                    _this.reviewsLikes = result['reviews-likes'];
-                    _this.lessonsLikes = result['lessons-likes'];
+                    _this.reviewsLikes = result['reviews_likes'];
+                    _this.lessonsLikes = result['lessons_likes'];
+                    _this.runningInfo = result['running_info'];
+
                     _this.form.user_id = _this.auth.id;
                     _this.form.course_id = _this.course ? _this.course.id : null;
 
@@ -444,7 +449,27 @@
                             _this.showToast('Failed to like the course. Please try again.', 'error')
                     }
                 });
-            }
+            },
+
+            isLessonUnlocked(lessId) {
+                return this.runningInfo.current_lesson_id >= lessId;
+            },
+            goToLesson(lessId) {
+                if (this.isLessonUnlocked(lessId))
+                    this.$router.push({ name: 'lesson', params: { id: lessId } });
+                else {
+                    const _this = this;
+                    this.showSweetAlert({
+                        title: 'Locked Lesson',
+                        text: 'To continue this lesson you need to complete previous lessons. Want to continue where you left?',
+                        callback: (confirm) => {
+                            if (confirm)
+                                this.$router.push({name: 'lesson', params: {id: _this.runningInfo.current_lesson_id}});
+                        }
+                    });
+                }
+            },
+
         },
         computed: {
             course_id() {
@@ -495,7 +520,7 @@
     }
 
     .playlist .card:hover {
-        background-color: #f1f1f1;
+        background-color: #f5f1ff !important;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 

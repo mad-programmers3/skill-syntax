@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\PurchasedCourse;
 use App\Models\ReviewLike;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FrontendController extends Controller
 {
@@ -54,16 +56,21 @@ class FrontendController extends Controller
             $data['likes'] = $data['course']->likes->pluck('user_id');
             $data['reviews'] = $data['course']->course_reviews->pluck('review');
 
-            $data['reviews-likes'] = [];
+            $data['reviews_likes'] = [];
             foreach ($data['reviews'] as $review) {
-                $data['reviews-likes'][$review->id] = ReviewLike::where('review_id', $review->id)->pluck('user_id');
+                $data['reviews_likes'][$review->id] = ReviewLike::where('review_id', $review->id)->pluck('user_id');
             }
 
-            $data['lessons-likes'] = [];
+            $data['lessons_likes'] = [];
             foreach ($data['course']->lessons as $lesson) {
-                $data['lessons-likes'][$lesson->id] = $lesson->likes->pluck('user_id');
+                $data['lessons_likes'][$lesson->id] = $lesson->likes->pluck('user_id');
                     //ReviewLike::where('review_id', $lesson->id)->pluck('user_id');
             }
+
+
+
+            $data['running_info'] = Auth::user() ? PurchasedCourse::where('course_id', $id)->where('user_id', Auth::id())->first() : [];
+
             return retRes('Fetched course data for course page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
@@ -76,6 +83,9 @@ class FrontendController extends Controller
         try {
             $data = [];
             $data['lesson'] = Lesson::with(['likes', 'course.lessons', 'lesson_reviews.review.user', 'quizzes.questions'])->findOrFail($id);
+            $data['prev'] = $data['lesson']->prev();
+            $data['next'] = $data['lesson']->next();
+
             $data['reviews'] = $data['lesson']->lesson_reviews->pluck('review');
             $data['likes'] = $data['lesson']->likes->pluck('user_id');
 
@@ -84,7 +94,25 @@ class FrontendController extends Controller
                 $data['reviews-likes'][$review->id] = ReviewLike::where('review_id', $review->id)->pluck('user_id');
             }
 
+            $data['running_info'] = Auth::user() && $data['lesson']->course ? PurchasedCourse::where('course_id', $data['lesson']->course->id)->where('user_id', Auth::id())->first() : [];
+
             return retRes('Fetched lesson data for lesson page', $data);
+        } catch (Exception $e) {
+            return retRes('Something went wrong', null, 500);
+        }
+    }
+
+    public function updateRunningInfo(Request $request, $id)
+    {
+
+        try {
+            $record = PurchasedCourse::findOrFail($id);
+            if ($record) {
+                $record->update($request->all());
+                return retRes('Running info updated', $record);
+            }
+
+            return retRes('Data not found', null, CODE_NOT_FOUND);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
         }

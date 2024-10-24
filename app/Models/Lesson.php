@@ -18,6 +18,21 @@ class Lesson extends Model
         'status',
     ];
 
+    public function prev()
+    {
+        return Lesson::where('id', '<', $this->id)
+            ->orderBy('id', 'desc')
+            ->first();
+    }
+
+    // Method to get the next lesson based on ID
+    public function next()
+    {
+        return Lesson::where('id', '>', $this->id)
+            ->orderBy('id', 'asc')
+            ->first();
+    }
+
     // Define the relationship with the Course model
     public function course()
     {

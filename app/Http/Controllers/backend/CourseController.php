@@ -83,6 +83,7 @@ class CourseController extends Controller
             if (!$user || !$studentRole || $user->role_id !== $studentRole->id)
                 return retRes('User is not authenticated or not a student.', null, CODE_DANGER);
 
+
             // Use firstOrNew to find existing purchase or create a new instance
             $purchase = PurchasedCourse::firstOrNew([
                 'user_id' => $user->id,
@@ -91,7 +92,11 @@ class CourseController extends Controller
 
             // Check if the course has already been purchased
             if ($purchase->exists)
-                return retRes('You have already purchased this course.', null, CODE_EXIST);
+                return retRes('You have already purchased this course.', null, CODE_NOT_FOUND);
+
+            $course = Course::findOrFail($id);
+            $purchase->current_lesson_id = $course->lessons->first() ? $course->lessons->first()->id : null;
+            $purchase->current_quiz_id = $course->quizzes->first() ? $course->quizzes->first()->id : null;
 
             $purchase->save();
             return retRes('Course purchased successfully!', $purchase, CODE_SUCCESS);
