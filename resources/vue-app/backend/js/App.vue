@@ -29,10 +29,11 @@
         },
         mounted() {
             const _this = this;
-            this.fetchData(this.urlGenerate('api/required-data', false, {auth: true}), (result) => {
+            this.fetchData(this.urlGenerate('api/configurations'), (result) => {
+                _this.$store.commit('setConfig', result);
                 _this.$store.commit('setAuth', result.auth);
                 _this.isAppReady = true;
-            })
+            });
         }
     }
 </script>

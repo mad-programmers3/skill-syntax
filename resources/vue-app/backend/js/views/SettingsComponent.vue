@@ -1,6 +1,9 @@
 <template>
     <div class="container mt-5">
-        <h2 class="mb-4">SkillSyntax - Be A Skilled Soul</h2>
+        <div class="d-sm-flex mb-2 justify-content-between">
+            <h3>SkillSyntax - Be A Skilled Soul</h3>
+            <button @click="saveSettings" class="btn btn-primary">Save</button>
+        </div>
 
         <!-- General Settings Section -->
         <div v-for="(settings, groupName) in settingsByGroup" class="form-section">
@@ -8,28 +11,19 @@
             <div class="p-3 mx-0 border row">
                 <div v-for="setting in settings" class="form-group col-md-6">
                     <label>{{ setting.name }}</label>
+                    <input v-if="setting.type === 'text'" type="text" class="form-control" v-model="setting.value">
 
-                    <input v-if="setting.type === 'text'" type="text" class="form-control" :value="setting.value">
+                    <input v-if="setting.type === 'number'" type="number" class="form-control" v-model.number="setting.value">
 
-                    <input v-else-if="setting.type === 'number'" type="number" class="form-control" :value="parseInt(setting.value)">
+                    <textarea v-if="setting.type === 'textarea'" class="form-control" rows="3" v-model="setting.value"></textarea>
 
-                    <textarea v-else-if="setting.type === 'textarea'" class="form-control" rows="3">{{ setting.value }}</textarea>
-
-                    <select v-else-if="setting.type === 'select'" class="form-control">
-                        <template v-if="setting.key === 'default_course_status'">
-                            <option value="0">Inactive</option>
-                            <option value="1">Active</option>
-                            <option value="2" selected>Pending</option>
-                        </template>
-                        <template v-else-if="setting.key === 'default_document_type'">
-                            <option>Course Material</option>
-                            <option>Assignment</option>
-                        </template>
-                        <template v-else-if="setting.key === 'default_user_role'">
-                            <option>Student</option>
-                            <option>Instructor</option>
-                        </template>
-                    </select>
+                    <template v-if="setting.type === 'select'">
+                        <select  class="form-control" v-model="setting.value">
+                            <template v-for="item in settingSelects[setting.key]">
+                                <option :value="item.id">{{ item.name }}</option>
+                            </template>
+                        </select>
+                    </template>
 
                     <div v-else-if="setting.type === 'file'" class="file-upload-wrapper">
                         <img :src="asset('backend/assets/images/logo-backend.png')" alt="Logo">
@@ -42,7 +36,6 @@
     </div>
 
 </template>
-
 <script>
     export default {
         name: "SettingsComponent",
@@ -50,22 +43,38 @@
         data () {
             return {
                 settingsByGroup: [],
+                settingSelects: [],
             }
         },
         mounted() {
             const _this = this;
             this.fetchData(false, (settings) => {
-                // Separate settings by group
-                if (settings) {
-                    _this.settingsByGroup = settings.reduce((groups, setting) => {
-                        if (!groups[setting.group]) {
-                            groups[setting.group] = [];
-                        }
-                        groups[setting.group].push(setting);
-                        return groups;
-                    }, {});
+                if (!_this.isEmptyData(settings))
+                    _this.settingsByGroup = settings;
+            });
+
+
+            this.httpReq({
+                url : this.urlGenerate('api/required-data', false, {roles: true}),
+                callback : function (response) {
+                    _this.$set(_this.settingSelects, 'default_user_role', response.data.result.roles);
+                    _this.$set(_this.settingSelects, 'default_course_status', [
+                        {name : 'Inactive', id : '0'},
+                        {name : 'Active', id : '1'},
+                        {name : 'Pending', id : '2'}
+                    ]);
                 }
             });
+        },
+
+        methods: {
+            saveSettings() {
+                this.httpReq({
+                    customUrl: 'api/settings/update-all',
+                    method: 'post',
+                    data:this.settingsByGroup
+                })
+            },
         }
     }
 </script>

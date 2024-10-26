@@ -74,7 +74,6 @@
         data() {
             return {
                 tableHeading: ['SL','Thumbnail', 'Title', 'Status', 'Actions'],
-                perPage:5,
                 permPrefix: 'category'
             }
         },

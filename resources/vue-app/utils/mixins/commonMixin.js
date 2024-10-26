@@ -74,6 +74,12 @@ export default {
          */
         Config() {
             return this.$store.getters.Config;
+        },
+
+        perPage() {
+            // const itemsPerPageSetting = Config.settings.find(setting => setting.key === "items_per_page");
+            // return itemsPerPageSetting ? parseInt(itemsPerPageSetting.value, 10) : null;
+            return this.$store.getters.Config ? this.$store.getters.Config.settings.items_per_page : 10;
         }
     },
     methods: {

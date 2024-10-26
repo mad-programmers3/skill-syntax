@@ -161,7 +161,6 @@
                 categories: {},
                 subCategories: {},
                 quizzes: {},
-                perPage: 5,
             };
         },
 

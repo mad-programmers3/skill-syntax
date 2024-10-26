@@ -79,6 +79,11 @@ class SupportController extends Controller
         if (request()->has('quizzes'))
             $data['quizzes'] = Quiz::where('status', 0)->get(['id', 'title']); // ret not added == 0
 
+        if (request()->has('items_per_page')) {
+            $p = Setting::where('key', 'items_per_page')->first();
+            $data['items_per_page'] = $p ? $p->value : 10;
+        }
+
         return retRes('Successfully fetched all records', $data);
     }
 
@@ -103,7 +108,7 @@ class SupportController extends Controller
         if ($auth) $auth->load('avatar')->load('role');
         $data['auth'] = $auth;
 
-        $data['settings'] = Setting::all();
+        $data['settings'] = Setting::pluck('value', 'key')->toArray();
 
         return retRes('Successfully fetched all records', $data);
     }

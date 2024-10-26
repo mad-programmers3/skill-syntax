@@ -86,7 +86,7 @@ trait BaseCrudHelper
             call($this->afterUpdate, $record, $newRecord);
             return retRes('Successfully updated record', $newRecord);
         } catch (ModelNotFoundException $e) {
-            return retRes('Record not found', null, 404);
+            return retRes('Record not found', null, CODE_NOT_FOUND);
         } catch (Exception $e) {
             return retRes('Failed to update record', null, 500);
         }

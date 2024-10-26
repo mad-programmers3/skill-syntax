@@ -136,7 +136,6 @@
                 courses: [], // Array to hold courses fetched from the server
                 lessons: [], // Data list for lessons
                 quizzes: [],
-                perPage: 5,
             };
         },
 

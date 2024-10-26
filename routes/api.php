@@ -90,7 +90,10 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('review/lesson-reviews', LessonReviewController::class);
     Route::resource('review/testimonials', TestimonialController::class);
     Route::resource('files', MyFileController::class);
+
     Route::resource('settings', SettingController::class);
+    Route::post('settings/update-all', [SettingController::class, 'updateAll']);
+
     Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
     Route::get('configurations', [SupportController::class, 'getConfigurations']);
 
