@@ -155,7 +155,7 @@ button:focus {
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
 .header_area {
-  position: absolute;
+  position: fixed;
   width: 100%;
   z-index: 99;
   transition: background 0.4s, all 0.3s linear; }
@@ -3038,9 +3038,6 @@ h6 {
     cursor: pointer;
     margin-top: 27px;
     margin-bottom: 23px; }
-
-  .header_area {
-    position: absolute; }
 
 
   .navbar-toggler[aria-expanded="false"] span:nth-child(2) {

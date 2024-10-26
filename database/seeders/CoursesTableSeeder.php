@@ -19,6 +19,7 @@ class CoursesTableSeeder extends Seeder
             [
                 'user_id' => 1,
                 'category_id' => 1,
+                'sub_category_id' => 1,
                 'title' => 'Introduction to Web Development',
                 'description' => 'Learn the basics of web development, including HTML, CSS, and JavaScript.',
                 'price' => 99.99,
@@ -30,6 +31,7 @@ class CoursesTableSeeder extends Seeder
             [
                 'user_id' => 2,
                 'category_id' => 2,
+                'sub_category_id' => 2,
                 'title' => 'Data Science Bootcamp',
                 'description' => 'Become a data scientist in this comprehensive bootcamp covering Python, R, and machine learning.',
                 'price' => 199.99,
@@ -41,6 +43,7 @@ class CoursesTableSeeder extends Seeder
             [
                 'user_id' => 1,
                 'category_id' => 3,
+                'sub_category_id' => 3,
                 'title' => 'Graphic Design Fundamentals',
                 'description' => 'An introduction to graphic design concepts, tools, and techniques.',
                 'price' => 89.99,

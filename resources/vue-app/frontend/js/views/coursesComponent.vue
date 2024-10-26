@@ -23,6 +23,9 @@
                         </div>
                     </div>
                     <courses-component-util :courses="courses" />
+
+                    <!-- Loading Indicator -->
+                    <div ref="loading"></div>
                 </div>
             </div>
         </template>
@@ -57,13 +60,16 @@
                 courses: [],
                 categories: [],
                 selectedCats: [],
+                page: 1,
             };
         },
         mounted() {
             const paramCatId = this.$route.params.cat_id;
             if (paramCatId) this.selectedCats.push(paramCatId);
 
-            this.fetchCourses();
+            this.fetchCourses(1);
+
+            this.setupObserver();
 
             const _this = this;
             this.fetchData(this.urlGenerate('api/required-data', false, {categories: true}), (result) => {
@@ -73,22 +79,36 @@
         watch: {
             selectedCats() {
                 // Fetch new courses when selected categories change
-                this.fetchCourses();
+                this.fetchCourses(1);
             }
         },
         methods: {
-            fetchCourses() {
+            fetchCourses(page) {
                 const _this = this;
                 this.httpReq({
+                    url: this.urlGenerate(false, false, {page: page}),
                     method: 'post',
                     data: {categories_id: this.selectedCats},
                     callback: (response) => {
                         const result = response.data ? response.data.result : null;
                         if (!result) return;
 
-                        _this.courses = result['courses'];
+                        if (page === 1) _this.courses = [];
+                        _this.courses.push(...result.data);
+                        _this.page = result.current_page;
                     }
                 })
+            },
+            setupObserver() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            this.fetchCourses(++this.page); // Fetch more courses when visible
+                        }
+                    });
+                });
+
+                observer.observe(this.$refs.loading); // Observe the loading element
             },
             selectCategories(id) {
                 // If id is 0 (All categories), reset the selectedCats
@@ -97,7 +117,7 @@
                     return;
                 }
                 // Add/remove category ID to/from selectedCats
-                if (this.selectedCats.includes(id)) this.removeArrItem(this.selectedCats, id)
+                if (this.selectedCats.includes(id)) this.removeArrItem(this.selectedCats, id);
                 else this.selectedCats.push(id);
             }
         }

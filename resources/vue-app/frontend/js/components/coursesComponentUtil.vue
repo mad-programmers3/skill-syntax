@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div v-for="course in courses" :key="course.id" class="col-md-3 mb-4">
+        <div v-for="course in courses" :key="course.id" class="col-lg-3 col-md-4 mb-4">
             <div class="single_course card h-80 w-100">
                 <div class="course_head position-relative">
                     <img class="img-fluid rounded-top" :src="generateFileUrl(course.thumbnail)" alt="" style="object-fit: cover; height: 100%; width: 100%;">
@@ -28,7 +28,7 @@
                             <i class="fas fa-clock primary-text2 mr-1"></i> {{ course.duration }} 6 mon
                         </span>
                         <span class="text-black">
-                            <i class="fas fa-user-graduate primary-text2 mr-1"></i> {{ course.students }} 99
+                            <i class="fas fa-user-graduate primary-text2 mr-1"></i> {{ !isEmptyData(course.students) ? course.students.length : 0}}/{{ course.sits }}
                         </span>
                     </div>
 
@@ -39,7 +39,7 @@
                     <div class="review-section d-flex justify-content-between align-items-center">
                         <div>
                             <i class="fas fa-star primary-text"></i>
-                            <span> 5.0</span>
+                            <span>{{ course.reviews_avg_rating ? Number(course.reviews_avg_rating).toFixed(1) : 'NA' }}</span>
                         </div>
 
                         <span class="font-weight-bold ml-2" style="padding-left: 10px;">

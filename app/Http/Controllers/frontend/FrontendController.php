@@ -32,15 +32,15 @@ class FrontendController extends Controller
     public function courses(Request $request)
     {
         try {
-            $data = [];
             $categories = $request->input('categories_id');
 
-            $data['courses'] = Course::where('status', 1)
+            $data = Course::where('status', 1)
                 ->when(!empty($categories), function($query) use ($categories) {
                     return $query->whereIn('category_id', $categories);
                 })
-                ->with(['thumbnail:id,path', 'category:id,title', 'likes'])
-                ->get();
+                ->with(['students', 'thumbnail:id,path', 'category:id,title', 'likes', 'reviews'])
+                ->withAvg('reviews', 'rating')
+                ->paginate(20);
 
             return retRes('Fetched all data for courses page', $data);
         } catch (Exception $e) {

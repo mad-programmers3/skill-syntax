@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Instructor ID
             $table->foreignId('category_id')->constrained()->onDelete('cascade'); // Course category
+            $table->foreignId('sub_category_id')->constrained()->onDelete('cascade'); // Course sub category
             $table->foreignId('thumbnail_id')->nullable(); // Thumbnail id
             $table->string('title', 255);
             $table->text('description')->nullable(); // Changed from details to description

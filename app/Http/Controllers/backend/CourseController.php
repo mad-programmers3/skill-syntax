@@ -5,7 +5,6 @@ namespace App\Http\Controllers\backend;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseLike;
-use App\Models\CourseQuiz;
 use App\Models\PurchasedCourse;
 use App\Models\Role;
 use App\Models\StudentLesson;
@@ -23,7 +22,7 @@ class CourseController extends Controller
     public function __construct()
     {
         $this->model = new Course();
-        $this->with = ['thumbnail:id,path', 'category:id,title', 'likes', 'quizzes'];
+        $this->with = ['thumbnail:id,path', 'category:id,title', 'sub_category:id,title', 'likes', 'quizzes'];
         $this->showWith = ['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'reviews.review.user'];
 
 
