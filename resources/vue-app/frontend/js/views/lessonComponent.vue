@@ -5,8 +5,14 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 course_details_left" v-if="lesson">
-                        <div class="main_image">
-                            <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/course-details.jpg'" alt="">
+                        <div class="main_image w-100" style="overflow: hidden;">
+                            <img v-if="isEmptyData(lesson.video)" class="img-fluid" :src="generateFileUrl(lesson.thumbnail, TYPE_LESSON)" alt="">
+                            <video v-else ref="lessonVideo" class="rounded w-100" controls>
+                                <source :src="generateFileUrl(lesson.video, TYPE_LESSON_VIDEO)" type="video/mp4">
+                                <source :src="generateFileUrl(lesson.video, TYPE_LESSON_VIDEO)" type="video/webm">
+                                <source :src="generateFileUrl(lesson.video, TYPE_LESSON_VIDEO)" type="video/ogg">
+                                Your browser does not support the video tag.
+                            </video>
                         </div>
                         <div class="content_wrapper">
                             <div class="title d-flex justify-content-between align-items-center">
@@ -155,6 +161,8 @@
             }
         },
         mounted() {
+
+
             this.fetchLesson(this.lesson_id);
         },
         computed: {
@@ -176,7 +184,8 @@
                     _this.form.user_id =  _this.auth.id;
                     _this.form.lesson_id = _this.lesson ? _this.lesson.id : null;
 
-                    _this.checkUserReview();
+                    const videoElement = this.$refs.lessonVideo;
+                    if (videoElement) videoElement.load(); // Load the new video
                 });
             },
             handleDropDown(action, review) {

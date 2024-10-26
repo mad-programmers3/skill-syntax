@@ -19,21 +19,24 @@ class LessonController extends Controller
 
     public function __construct() {
         $this->model = new Lesson();
-        $this->with = ['thumbnail:id,path', 'course:id,title', 'likes', 'quizzes'];
+        $this->with = ['thumbnail:id,path', 'video:id,path', 'course:id,title', 'likes', 'quizzes'];
 
 
 
         $this->beforeStore = function ($request) {
             $this->storeFile($request, 'thumbnail');
+            $this->storeFile($request, 'video');
         };
 
         $this->beforeUpdate = function ($request) {
             $this->updateFile($request, 'thumbnail');
+            $this->updateFile($request, 'video');
         };
 
         $this->afterDelete = function ($record) {
             if ($record && $record->thumbnail_id) { // delete also file
                 $this->deleteFile($record->thumbnail_id);
+                $this->deleteFile($record->video_id);
             }
         };
     }

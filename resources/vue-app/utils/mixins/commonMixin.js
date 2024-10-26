@@ -25,6 +25,7 @@ export default {
             PERM_MANAGE: 'manage',
             TYPE_COURSE: 1,
             TYPE_LESSON: 2,
+            TYPE_LESSON_VIDEO: 2,
             TYPE_CATEGORY: 3,
             TYPE_USER: 4,
             DEF_FILES: {},
@@ -34,6 +35,7 @@ export default {
         this.DEF_FILES = {
             [this.TYPE_COURSE]: 'images/course-def-thumbnail.jpg',
             [this.TYPE_LESSON]: 'images/course-def-thumbnail.jpg',
+            [this.TYPE_LESSON_VIDEO]: 'images/course-def-thumbnail.jpg',
             [this.TYPE_CATEGORY]: 'images/category-def-thumbnail.gif',
             [this.TYPE_USER]: 'images/def-user-avatar.svg',
         };
@@ -183,9 +185,9 @@ export default {
 
 
         // upload the file on storage and set it's infos on form data
-        handleFileUpload(event, key = 'thumbnail', dataHolder = this.formData) {
+        handleFileUpload(event, key = 'thumbnail', dataHolder = this.formData, player) {
             const file = event.target.files[0];  // Get the selected file
-            if (!file || !file.type.startsWith("image/")) {  // Check if the file is an image
+            if (!file) {  // Check if the file is an image
                 alert("Please upload a valid image file.");  // Show an alert if the file is not valid
                 return;
             }
@@ -202,6 +204,8 @@ export default {
                 callback: (res) => {
                     if (res.data.success) {
                         _this.$set(dataHolder, key, res.data);
+                        console.log(player);
+                        if(player) player.load()
                     }
                 },
                 data: imgFormData

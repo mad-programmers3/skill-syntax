@@ -304,7 +304,7 @@
             // Check if the user has already reviewed the course
             checkUserReview() {
                 const user = this.auth;
-                if (user) {
+                if (!this.isEmptyData(user)) {
                     const userId = user.id;
                     this.hasReviewed = this.reviews.some((review) => review.user.id === userId);
                 }

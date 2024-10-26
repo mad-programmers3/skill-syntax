@@ -24,7 +24,6 @@ class LessonsTableSeeder extends Seeder
                     'course_id' => $course->id,
                     'title' => "Lesson {$i} for {$course->title}",
                     'description' => "This is the description for Lesson {$i} of the course {$course->title}.",
-                    'video' => "https://example.com/videos/{$course->id}_lesson{$i}.mp4",
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

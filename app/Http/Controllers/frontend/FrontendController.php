@@ -82,7 +82,7 @@ class FrontendController extends Controller
 
         try {
             $data = [];
-            $data['lesson'] = Lesson::with(['likes', 'course.lessons', 'lesson_reviews.review.user', 'quizzes.questions'])->findOrFail($id);
+            $data['lesson'] = Lesson::with(['thumbnail:id,path', 'video:id,path', 'likes', 'course.lessons.thumbnail', 'lesson_reviews.review.user', 'quizzes.questions'])->findOrFail($id);
             $data['prev'] = $data['lesson']->prev();
             $data['next'] = $data['lesson']->next();
 

@@ -91,12 +91,30 @@
                 </div>
             </div>
 
-            <div class="mb-3">
-                <div class="upload-area d-block m-auto" @click="() => {$refs.fileInput.click()}">
-                    <img :src="generateFileUrl(formData.thumbnail, TYPE_LESSON)" alt="Preview" class="preview-img"/>
+            <div class="mb-3 d-flex">
+                <div class="w-50 pr-2">
+                    <div class="upload-area d-block m-auto" @click="$refs.thumbnailInput.click()">
+                        <img :src="generateFileUrl(formData.thumbnail, TYPE_LESSON)" alt="Preview" class="preview-img"/>
+                    </div>
+                    <input type="file" ref="thumbnailInput" @change="handleFileUpload" class="file-input" accept="image/*"/>
+                    <h5 class="text-center pt-1">Thumbnail</h5>
                 </div>
-                <input type="file" ref="fileInput" @change="handleFileUpload" class="file-input" accept="image/*"/>
+
+                <div class="w-50 pl-2">
+                    <div class="upload-area d-block m-auto" @click="$refs.videoInput.click()">
+                        <img v-if="isEmptyData(formData.video)" :src="generateFileUrl(null, TYPE_LESSON, TYPE_LESSON_VIDEO)" alt="Preview" class="preview-img">
+                        <video @click.prevent="" v-else ref="lessonVideo" class="rounded w-100" controls>
+                            <source :src="generateFileUrl(formData.video, TYPE_LESSON_VIDEO)" type="video/mp4">
+                            <source :src="generateFileUrl(formData.video, TYPE_LESSON_VIDEO)" type="video/webm">
+                            <source :src="generateFileUrl(formData.video, TYPE_LESSON_VIDEO)" type="video/ogg">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <input type="file" ref="videoInput" @change="handleFileUpload($event, 'video', formData, $refs.lessonVideo)" class="file-input" accept="video/*"/>
+                    <h5 class="text-center pt-1">Video</h5>
+                </div>
             </div>
+
         </validate-form-modal>
     </div>
 </template>

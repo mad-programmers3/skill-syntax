@@ -18,7 +18,7 @@ class MyFileController extends Controller
     {
         // Validate the incoming request
         $request->validate([
-            'file' => 'required|max:2048', // Max size of 2MB
+            'file' => 'required|max:204800', // Max size of 200MB
         ]);
 
         // Handle the uploaded file
