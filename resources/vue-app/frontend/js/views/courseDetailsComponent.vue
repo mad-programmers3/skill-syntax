@@ -189,76 +189,16 @@
                         <template v-else>
                             <!-- Lessons Section -->
                             <h4 v-if="isEmptyData(course.lessons)" class="mt-5 text-center">No lessons available for this course</h4>
-                            <template v-else>
-                                <h4 class="title mt-5">Lessons</h4>
-                                <div class="playlist">
-                                    <div v-for="lesson in course.lessons" :key="lesson.id" class="card mb-3" :style="`background: ${ runningInfo.current_lesson_id >= lesson.id ? 'white' : '#d4d4d4'};`">
-                                        <div class="row no-gutters">
-                                            <div class="col-md-4">
-                                                <img class="img-fluid" :src="baseUrl + '/frontend/img/courses/c1.jpg'" alt="" style="margin: 10px; padding: 5px;" />
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="card-body">
-                                                    <div @click="goToLesson(lesson.id, runningInfo.current_lesson_id)" :class="{'pointer': true, 'font-weight-bold': lesson.id === lesson_id }">
-                                                        <h6 class="card-title">{{ lesson.title }}</h6>
-                                                    </div>
-                                                    <div class="mt-lg-0 mt-3">
-                                                        <span class="meta_info mr-4">
-                                                           <a @click="doLike(TYPE_LIKE_LESSON, lesson.id)" class="primary-text2">
-                                                               <i :class="`${lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{ lessonsLikes[lesson.id].length }}
-                                                           </a>
-                                                       </span>
-                                                        <span class="meta_info padded-info">
-                                                            <a href="#" class="primary-text2">
-                                                                <i class="far fa-comment"></i> {{ reviews.length }}
-                                                            </a>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-
+                            <lessons-playlist-component v-else :lessons="course.lessons" :current-lesson-id="runningInfo.current_lesson_id"/>
 
                             <!-- Quizzes Section -->
                             <h4 v-if="isEmptyData(course.quizzes)" class="mt-5 text-center">No quizzes available for this course</h4>
                             <h4 v-else-if="!canShowQuiz(course.lessons, runningInfo.current_lesson_id)" class="mt-5 text-center">The {{ course.quizzes.length }} quizzes will appear soon</h4>
-                            <template v-else>
-                                <h4 class="title mt-5">Quizzes</h4>
-                                <div v-for="(quiz, index) in course.quizzes" :key="quiz.id" class="playlist">
-                                    <button data-toggle="modal" :data-target="`#quizModal${quiz.id}`" class="btn btn-custom btn-lg mt-3 d-flex justify-content-center align-items-center" style="background-color: #002347; color: #ffffff;">
-                                        {{ quiz.title }}
-                                    </button>
-
-                                    <!-- Quiz Card -->
-                                    <div class="card mt-3" style="background-color: #002347; color: #ffffff;">
-                                        <div class="card-body text-center" style="background-color: #ffffff; color: #333;">
-                                            <div class="mb-2">
-                                                <p class="card-text">{{ getSolvedQsN(quiz.questions) }} solved out of {{ quiz.questions ? quiz.questions.length : 0 }} questions</p>
-                                                <div class="progress">
-                                                    <div :class="`progress-bar ${isSolvedAllQs(quiz.questions) ? 'primary-bg2' : 'primary-bg3'}`" role="progressbar"
-                                                         :style="{ width: `${!isEmptyData(quiz.questions) ? getSolvedQsN(quiz.questions)/quiz.questions.length*100 : 100}%` }"
-                                                         :aria-valuenow="getSolvedQsN(quiz.questions)" aria-valuemin="0"
-                                                         :aria-valuemax="quiz.questions ? quiz.questions.length : 0">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div v-if="runningInfo.current_quiz_id < quiz.id" class="genric-btn primary-bg circle text-white" style="cursor: default">Upcoming</div>
-                                            <div v-else-if="isSolvedAllQs(quiz.questions)" class="genric-btn primary-bg2 circle text-white" style="cursor: default">Solved</div>
-                                            <button v-else class="genric-btn primary3 circle" data-toggle="modal" :data-target="`#quizModal${quiz.id}`">Take Now</button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Modal Component -->
-                                    <quiz-modal-component :id="`quizModal${quiz.id}`" :quiz="quiz" :running-info="runningInfo" :next-quiz-id="course.quizzes[index+1] ? course.quizzes[index+1].id : null"/>
-                                </div>
-                            </template>
+                            <quizzes-playlist-component v-else :quizzes="course.quizzes" :running-info="runningInfo"/>
 
 
                             <!-- Get Certification -->
-                            <div v-if="canShowCerificate" class="mt-5 py-3 px-4 primary-bg2 rounded">
+                            <div v-if="isCompleteAllQuizzes(course.quizzes)" class="mt-5 py-3 px-4 primary-bg2 rounded">
                                 <div class="text-center bg-white p-3 rounded">
                                     <h6 class="font-weight-bold">
                                         Congratulations on completing the course! You can now download your certificate.
@@ -277,10 +217,12 @@
 <script>
     import jsPDF from 'jspdf';
     import QuizModalComponent from "../components/quizModalComponent";
+    import LessonsPlaylistComponent from "../components/lessonsPlaylistComponent";
+    import QuizzesPlaylistComponent from "../components/sections/quizzesPlaylistComponent";
 
     export default {
         name: "courseDetails",
-        components: {QuizModalComponent},
+        components: {QuizzesPlaylistComponent, LessonsPlaylistComponent, QuizModalComponent},
         props: ['courseId'],
         data() {
             return {
@@ -575,13 +517,6 @@
             lesson_id() {
                 return this.$route.params.id;
             },
-
-            canShowCerificate() {
-                if (this.isEmptyData(this.course.quizzes) && !this.runningInfo.current_quiz_id) return false;
-                const lastQuiz = this.course.quizzes[this.course.quizzes.length - 1];
-                if (this.isEmptyData(lastQuiz)) return false;
-                return this.isSolvedAllQs(lastQuiz.questions);
-            }
         },
     };
 </script>

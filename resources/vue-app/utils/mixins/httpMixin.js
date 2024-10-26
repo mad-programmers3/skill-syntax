@@ -81,6 +81,32 @@ export default {
                     // Handle the error here, for example by showing a toast notification
                     // toastr.error(error.message, 'Error!', {positionClass: 'toast-top-center'});
                 });
-        }
+        },
+
+
+
+        // add or remove quiz from item
+        manipulateQuiz(quizzes, item, data, type) {
+            const _this = this;
+            this.httpReq({
+                customUrl: 'api/quizzes/add-quiz',
+                urlSuffix: type,
+                method: 'post',
+                data,
+                callback: (response) => {
+                    let { result } = response.data;
+                    if (result) {
+                        if (result.flag === 1) { // Item added
+                            item.quizzes.push(result.quiz);
+                            _this.removeObjArrItem(quizzes, result.quiz);
+                        }
+                        else if (result.flag === 0) { // Item removed
+                            _this.removeObjArrItem(item.quizzes, result.quiz);
+                            quizzes.push(result.quiz);
+                        }
+                    }
+                }
+            });
+        },
     }
 }

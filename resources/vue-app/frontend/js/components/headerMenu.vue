@@ -48,20 +48,20 @@
                             </ul>
                             <ul class="mb-0">
                                 <li v-if="!isEmptyData(auth)" class="nav-item nav-profile dropdown border-0">
-                                    <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
+                                    <a class="dropdown-toggle primary-text2" id="profileDropdown" href="#" data-toggle="dropdown">
                                         <img class="nav-profile-img" alt="" :src="generateFileUrl(auth ? auth.avatar : null, TYPE_USER)" />
-                                        <span class="profile-name">{{ userName }}</span>
+                                        <span class="profile-name primary-text2">{{ userName }}</span>
                                     </a>
                                     <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
-                                        <router-link v-if="auth.role_id === 4" :to="{name: 'student-profile'}" class="dropdown-item">
-                                            <i class="fa fa-user mr-2 text-primary"></i> Profile
+                                        <router-link v-if="auth.role_id === 4" :to="{name: 'student-profile'}" class="dropdown-item primary-text2">
+                                            <i class="fa fa-user mr-2"></i> Profile
                                         </router-link>
-                                        <a v-else :href="urlGenerate('admin/user/profile')" target="blank" class="dropdown-item">
-                                            <i class="fa fa-user mr-2 text-primary"></i> Profile
+                                        <a v-else :href="urlGenerate('admin/user/profile')" target="blank" class="dropdown-item primary-text2">
+                                            <i class="fa fa-user mr-2"></i> Profile
                                         </a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" @click.prevent="confirmLogout">
-                                            <i class="fas fa-sign-out-alt mr-2 text-danger"></i> Logout
+                                        <a class="dropdown-item text-danger" href="#" @click.prevent="confirmLogout">
+                                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
                                         </a>
                                     </div>
 
@@ -133,8 +133,8 @@
 
 <style scoped>
     .nav-profile-img {
-        width: 40px;
-        height: 40px;
+        width: 35px;
+        height: 35px;
         border-radius: 50%;
         border: 2px solid #fff;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -144,7 +144,6 @@
     .profile-name {
         font-weight: bold;
         color: #333;
-        margin-left: 5px;
     }
 
     .search-container {
@@ -156,15 +155,14 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         background-color: #ffffff;
         transition: all 0.2s ease;
-        padding: 0.5rem 0;
     }
 
     .dropdown-item {
         display: flex;
         align-items: center;
-        padding: 10px 20px;
+        padding: 0 10px;
         color: #333;
-        font-size: 0.9rem;
+        font-size: 14px;
         font-weight: 500;
     }
 
@@ -176,7 +174,6 @@
     /* Divider style */
     .dropdown-divider {
         height: 1px;
-        margin: 0.5rem 0;
         background-color: #e9ecef;
     }
 

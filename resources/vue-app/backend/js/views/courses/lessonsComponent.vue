@@ -16,11 +16,11 @@
                     <show-details-modal :id="`quizzesModal${lesson.id}`" :title="`${lesson.title} => Quizzes`">
                         <div v-for="(quiz, index) in lesson.quizzes" :key="index" class="p-2 d-flex align-items-center justify-content-between" :style="{ backgroundColor: index % 2 === 0 ? '#e9e9e9' : '#f5f5f5' }">
                             <li style="list-style-type: decimal">{{ quiz.title }}</li>
-                            <button @click="manipulateQuiz(quiz.id, lesson)" class="btn btn-danger px-1">Remove</button>
+                            <button @click="manipulateQuiz(quizzes, lesson, {lesson_id: lesson.id, quiz_id: quiz.id}, 'lesson')" class="btn btn-danger px-1">Remove</button>
                         </div>
                         <label class="form-label d-block mt-5">
                             Add Quiz
-                            <select @change="(event)=>{manipulateQuiz(event.target.value, lesson)}" class="form-control">
+                            <select @change="(event)=>{manipulateQuiz(quizzes, lesson, {lesson_id: lesson.id, quiz_id: event.target.value}, 'lesson')}" class="form-control">
                                 <option value="">Select a new quiz</option>
                                 <option v-for="quiz in quizzes" v-if="!lesson.quizzes.map(q => q.id).includes(quiz.id)" :key="quiz.id" :value="quiz.id">
                                     {{ quiz.title }}
@@ -136,29 +136,6 @@
                 _this.quizzes = result.quizzes;
             });
         },
-
-        methods: {
-            manipulateQuiz(quiz_id, lesson) {
-                const _this = this;
-                this.httpReq({
-                    urlSuffix: 'add-quiz',
-                    method: 'post',
-                    data: {'quiz_id': quiz_id, lesson_id: lesson.id},
-                    callback: (response) => {
-                        let {result} = response.data;
-                        if (result) {
-                            if (result.flag === 1) // Item added
-                                lesson.quizzes.push(result.quiz);
-                            else if (result.flag === 0) // Item removed
-                                _this.removeObjArrItem(lesson.quizzes, result.quiz);
-                        }
-                    }
-                });
-            },
-
-
-        }
-
     };
 </script>
 

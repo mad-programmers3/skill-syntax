@@ -77,7 +77,7 @@ class SupportController extends Controller
             $data['roles'] = Role::all();
 
         if (request()->has('quizzes'))
-            $data['quizzes'] = Quiz::all('id', 'title');
+            $data['quizzes'] = Quiz::where('status', 0)->get(['id', 'title']); // ret not added == 0
 
         return retRes('Successfully fetched all records', $data);
     }

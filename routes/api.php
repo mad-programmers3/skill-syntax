@@ -54,7 +54,7 @@ Route::group(['prefix' => 'student'], function () {
     Route::get('wish-list', [StudentController::class, 'wishList']);
 });
 
-Route::put('running-infos/{id}', [FrontendController::class, 'updateRunningInfo']);
+Route::put('running-infos/{id}', [FrontendController::class, 'goToNextLesson']);
 
 
 Route::get('required-data', [SupportController::class, 'requiredData']);
@@ -69,6 +69,7 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('quizzes', QuizController::class);
     Route::post('quizzes/submit', [QuizController::class, 'submit']);
+    Route::post('quizzes/add-quiz/{type}', [QuizController::class, 'addQuizToItem']);
     Route::resource('questions', QuestionController::class);
 
     Route::resource('categories', CategoryController::class);
@@ -81,7 +82,6 @@ Route::middleware('auth:api')->group(function () {
 
     Route::resource('lessons', LessonController::class);
     Route::post('lessons/do-like', [LessonController::class, 'lessonLike']);
-    Route::post('lessons/add-quiz', [LessonController::class, 'addQuiz']);
 
     Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
     Route::resource('reviews', ReviewController::class);

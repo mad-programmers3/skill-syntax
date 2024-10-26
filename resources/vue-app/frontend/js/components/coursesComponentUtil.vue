@@ -23,12 +23,12 @@
                     </h4>
 
                     <!-- Course Details (Duration and Students) -->
-                    <div class="mb-2 d-flex align-items-center">
-                        <span class="mr-3">
-                            <i class="fas fa-clock text-info mr-1"></i> {{ course.duration }} months
+                    <div class="mb-2 d-flex align-items-center justify-content-between">
+                        <span class="text-black">
+                            <i class="fas fa-clock primary-text2 mr-1"></i> {{ course.duration }} 6 mon
                         </span>
-                        <span>
-                            <i class="fas fa-user-graduate text-success mr-1"></i> {{ course.students }} students
+                        <span class="text-black">
+                            <i class="fas fa-user-graduate primary-text2 mr-1"></i> {{ course.students }} 99
                         </span>
                     </div>
 
@@ -38,18 +38,18 @@
                     <!-- Review Section with 5 Stars -->
                     <div class="review-section d-flex justify-content-between align-items-center">
                         <div>
-                            <i class="fas fa-star text-warning" v-for="n in 5" :key="n"></i>
+                            <i class="fas fa-star primary-text"></i>
                             <span> 5.0</span>
                         </div>
 
                         <span class="font-weight-bold ml-2" style="padding-left: 10px;">
-                        {{ course.price == 0 ? 'Free' : '$' + course.price }}
+                        {{ course.price === 0 ? 'Free' : course.price+'tk'}}
                         </span>
                     </div>
 
                     <!-- See Details Button at the top -->
                     <div class="mt-4">
-                        <router-link :to="{ name: 'courseDetails', params: { id: course.id } }" class="btn btn-primary btn-block btn-lg see-details-button d-flex justify-content-center align-items-center">
+                        <router-link :to="{ name: 'courseDetails', params: { id: course.id } }" class="btn btn-block btn-lg see-details-button d-flex justify-content-center align-items-center">
                             SEE DETAILS
                             <i class="fas fa-arrow-right ml-2"></i>
                         </router-link>
@@ -100,7 +100,6 @@
     }
 
     .single_course {
-        border: 1px solid #ddd;
         border-radius: 8px;
         overflow: hidden;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -110,12 +109,7 @@
 
     .single_course:hover {
         transform: translateY(-5px);
-        border-color: #002347;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    .single_course .course_content {
-        padding: 10px;
     }
 
     .wishlist-remove {
@@ -148,13 +142,5 @@
 
     hr {
         border-top: 1px solid #ddd;
-    }
-
-    .fa-clock {
-        color: #17a2b8;
-    }
-
-    .fa-user-graduate {
-        color: #28a745;
     }
 </style>

@@ -18,11 +18,11 @@
                     <show-details-modal :id="`quizzesModal${course.id}`" :title="`${course.title} => Quizzes`">
                         <div v-for="(quiz, index) in course.quizzes" :key="index" class="p-2 d-flex align-items-center justify-content-between" :style="{ backgroundColor: index % 2 === 0 ? '#e9e9e9' : '#f5f5f5' }">
                             <li style="list-style-type: decimal">{{ quiz.title }}</li>
-                            <button @click="manipulateQuiz(quiz.id, course)" class="btn btn-danger px-1">Remove</button>
+                            <button @click="manipulateQuiz(quizzes, course, {course_id: course.id, quiz_id: quiz.id}, 'course')" class="btn btn-danger px-1">Remove</button>
                         </div>
                         <label class="form-label d-block mt-5">
                             Add Quiz
-                            <select @change="(event)=>{manipulateQuiz(event.target.value, course)}" class="form-control">
+                            <select @change="(event)=>{manipulateQuiz(quizzes, course, {course_id: course.id, quiz_id: event.target.value}, 'course')}" class="form-control">
                                 <option value="">Select a new quiz</option>
                                 <option v-for="quiz in quizzes" v-if="!course.quizzes.map(q => q.id).includes(quiz.id)" :key="quiz.id" :value="quiz.id">
                                     {{ quiz.title }}
@@ -171,35 +171,12 @@
             this.fetchData(this.urlGenerate(false, false, {page: 1, perPage: _this.perPage}));
 
             // Fetch categories and sub-categories
-            this.fetchData(this.urlGenerate('api/required-data', false, {'categories': true, 'sub_categories': true, quizzes: false}), (result) => {
+            this.fetchData(this.urlGenerate('api/required-data', false, {categories: true, sub_categories: true, quizzes: false}), (result) => {
                 _this.categories = result.categories;
                 _this.subCategories = result.sub_categories;
                 _this.quizzes = result.quizzes;
             });
         },
-
-        methods: {
-            manipulateQuiz(quiz_id, course) {
-                const _this = this;
-                this.httpReq({
-                    urlSuffix: 'add-quiz',
-                    method: 'post',
-                    data: {'quiz_id': quiz_id, course_id: course.id},
-                    callback: (response) => {
-                        let { result } = response.data;
-                        if (result) {
-                            if (result.flag === 1) // Item added
-                                course.quizzes.push(result.quiz);
-                            else if (result.flag === 0) // Item removed
-                                _this.removeObjArrItem(course.quizzes, result.quiz);
-                        }
-                    }
-                });
-            },
-
-
-        },
-
     };
 </script>
 

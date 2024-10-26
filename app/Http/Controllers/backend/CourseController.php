@@ -8,6 +8,7 @@ use App\Models\CourseLike;
 use App\Models\CourseQuiz;
 use App\Models\PurchasedCourse;
 use App\Models\Role;
+use App\Models\StudentLesson;
 use App\Supports\BaseCrudHelper;
 use App\Supports\LikeHelper;
 use App\Supports\MyFileHelper;
@@ -51,30 +52,6 @@ class CourseController extends Controller
         return $this->likeHelper($request, new CourseLike(), 'course');
     }
 
-    public function addQuiz(Request $request) {
-        try {
-            $courseId = $request->input('course_id');
-            $quizId = $request->input('quiz_id');
-
-            // Use firstOrNew to fetch existing or create new instance without saving
-            $courseQuiz = CourseQuiz::firstOrNew(
-                ['course_id' => $courseId, 'quiz_id' => $quizId]
-            );
-
-            if ($courseQuiz->exists) {
-                $courseQuiz->delete();
-                return retRes('Successfully removed course quiz', ['flag' => 0, 'quiz' => $courseQuiz->quiz]);
-            }
-
-            // Save new quiz to course
-            $courseQuiz->fill($request->all())->save();
-            return retRes('Successfully added course quiz', ['flag' => 1, 'quiz' => $courseQuiz->quiz]);
-
-        } catch (Exception $e) {
-            return retRes('Failed to manipulate course quiz', null, 500);
-        }
-    }
-
     public function purchase($id) {
         try {
             // Ensure user is authenticated
@@ -92,98 +69,29 @@ class CourseController extends Controller
 
             // Check if the course has already been purchased
             if ($purchase->exists)
-                return retRes('You have already purchased this course.', null, CODE_NOT_FOUND);
+                return retRes('You have already purchased this course.', null, CODE_EXIST);
 
             $course = Course::findOrFail($id);
-            $purchase->current_lesson_id = $course->lessons->first() ? $course->lessons->first()->id : null;
-            $purchase->current_quiz_id = $course->quizzes->first() ? $course->quizzes->first()->id : null;
+            $firstLess = $course->lessons->first();
+            if ($firstLess) {
+                $purchase->current_lesson_id = $firstLess->id;
 
+                // Also store the first student lesson info
+                StudentLesson::create([
+                    'user_id' => $user->id,
+                    'lesson_id' => $firstLess->id,
+                    'current_quiz_id' => $firstLess->quizzes->first() ? $firstLess->quizzes->first()->id : null
+                ]);
+            }
+
+            $purchase->current_quiz_id = $course->quizzes->first() ? $course->quizzes->first()->id : null;
             $purchase->save();
+
+
             return retRes('Course purchased successfully!', $purchase, CODE_SUCCESS);
 
         } catch (Exception $e) {
             return retRes('Failed to purchase course', null, 500);
         }
     }
-
-
-
-
-//    public function index(Request $request)
-//    {
-//        $perPage = $request->query('perPage');
-//        try {
-//            $courses = Course::with(['thumbnail:id,path', 'category:id,title', 'likes'])->paginate($perPage);
-//            return retRes('Courses fetched successfully', $courses);
-//        } catch (Exception $e) {
-//            return retRes('Something went wrong', null, CODE_DANGER);
-//        }
-//    }
-
-//    public function store(Request $request)
-//    {
-//        try {
-//            mergeAuth($request);
-//
-//            // store the file first
-//            if ($request->thumbnail) {
-//                //store the file and get the id
-//                $storedFile = MyFile::create($request->thumbnail); // thumbnail is an object
-//                if ($storedFile) $request->merge(['thumbnail_id' => $storedFile->id]);
-//            }
-//
-//            $record = Course::create($request->all()); // Create a new record
-//            return retRes('Successfully created course', $record);
-//        } catch (Exception $e) {
-//            return retRes('Failed to create record', null, 500);
-//        }
-//    }
-//
-//    // Update an existing record
-//    public function update(Request $request, $id)
-//    {
-//        try {
-//            // update the file/thumbnail first
-//            if ($request->thumbnail) {
-//                // merge all file infos on fileReq from $request->thumbnail
-//                $fileReq = new Request();
-//                mergeAll($fileReq, $request->thumbnail);
-//
-//                if ($request->thumbnail_id)
-//                    // keep the thumbnail_id as it is, update the file
-//                    $this->fileCon->update($fileReq, $request->thumbnail_id);
-//                else {
-//                    // store a new file => get id => set this id merge thumbnail_id
-//                    $storedFile = MyFile::create($request->thumbnail); // thumbnail is an object
-//                    if ($storedFile) $request->merge(['thumbnail_id' => $storedFile->id]);
-//                }
-//            }
-//
-//
-//            // update the course
-//            $record = Course::findOrFail($id); // Find the record by ID
-//            $record->update($request->all()); // Update the record
-//            return retRes('Successfully updated record', $record);
-//        } catch (ModelNotFoundException $e) {
-//            return retRes('Record not found', null, 404);
-//        } catch (Exception $e) {
-//            return retRes('Failed to update record', null, 500);
-//        }
-//    }
-//
-//    public function destroy($id)
-//    {
-//        try {
-//            $record = Course::findOrFail($id); // Find the record by ID
-//            if ($record && $record->thumbnail_id) // delete also file
-//                $this->fileCon->destroy($record->thumbnail_id);
-//
-//            $record->delete(); // Delete the record
-//            return retRes('Successfully deleted the course', $record, CODE_DANGER);
-//        } catch (ModelNotFoundException $e) {
-//            return retRes("The course isn't found", null, 404);
-//        } catch (Exception $e) {
-//            return retRes('Failed to delete the course', null, 500);
-//        }
-//    }
 }

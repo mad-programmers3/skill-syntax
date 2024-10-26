@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\PurchasedCourse;
 use App\Models\ReviewLike;
+use App\Models\StudentLesson;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -93,7 +94,14 @@ class FrontendController extends Controller
                 $data['reviews-likes'][$review->id] = ReviewLike::where('review_id', $review->id)->pluck('user_id');
             }
 
-            $data['running_info'] = Auth::user() && $data['lesson']->course ? PurchasedCourse::where('course_id', $data['lesson']->course->id)->where('user_id', Auth::id())->first() : [];
+            $ri = [];
+            if (Auth::user()) {
+                $ri = StudentLesson::where('lesson_id', $id)->where('user_id', Auth::id())->first();
+                $ric = PurchasedCourse::where('course_id', $data['lesson']->course->id)->where('user_id', Auth::id())->first();
+                $ri->current_lesson_id = $ric->current_lesson_id;
+                $ri->ric_id = $ric->id;
+            }
+            $data['running_info'] = $ri ? $ri : [];
 
             return retRes('Fetched lesson data for lesson page', $data);
         } catch (Exception $e) {
@@ -101,7 +109,7 @@ class FrontendController extends Controller
         }
     }
 
-    public function updateRunningInfo(Request $request, $id)
+    public function goToNextLesson(Request $request, $id)
     {
         try {
             $record = PurchasedCourse::findOrFail($id);
@@ -110,6 +118,16 @@ class FrontendController extends Controller
 
                 if ($request->input('current_lesson_id') < $record->current_lesson_id)
                     unset($data['current_lesson_id']);
+                else {
+                    $lesson = Lesson::findOrFail($data['current_lesson_id']);
+                    if ($lesson) {
+                        StudentLesson::create([
+                            'user_id' => Auth::id(),
+                            'lesson_id' => $lesson->id,
+                            'current_quiz_id' => $lesson->quizzes->first() ? $lesson->quizzes->first()->id : null
+                        ]);
+                    }
+                }
 
                 $record->update($data);
                 return retRes('Running info updated', $record);

@@ -75,6 +75,10 @@
                             let totalQs = (_this.quiz && _this.quiz.questions ? _this.quiz.questions.length : 0) - this.getSolvedQsN(this.quiz ? this.quiz.questions : null);
                             let solvedQs = solvedIds ? solvedIds.length : 0;
                             let failedQs = totalQs - solvedQs;
+
+                            // all questions are correct, no need to open modal
+                            if (!failedQs) _this.closeModal('#'+_this.id);
+
                             _this.showSweetAlert({
                                 title: 'Quiz Summary',
                                 text: `Total Qs: "${totalQs}", Solved: "${solvedQs}", Failed: "${failedQs}"`,
@@ -89,13 +93,12 @@
 
                             // if done move the current_quiz_it to next
                             if (!failedQs && _this.nextQuizId) {
-                                if (confirm) _this.closeModal('#'+_this.id);
                                 this.httpReq({
                                     customUrl: 'api/running-infos',
                                     urlSuffix: _this.runningInfo.id,
                                     method: 'put',
                                     data: {current_quiz_id: _this.nextQuizId},
-                                    callback: (response) => {
+                                    callback: () => {
                                         _this.runningInfo.current_quiz_id = _this.nextQuizId;
                                     },
                                 });

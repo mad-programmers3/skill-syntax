@@ -15,8 +15,12 @@ if (!defined('CODE_DANGER')) {
     define('CODE_DANGER', 3000);
 }
 
+if (!defined('CODE_EXIST')) {
+    define('CODE_EXIST', 2500);
+}
+
 if (!defined('CODE_NOT_FOUND')) {
-    define('CODE_NOT_FOUND', 4000);
+    define('CODE_NOT_FOUND', 4040);
 }
 
 if (!defined('PERM_VIEW')) {

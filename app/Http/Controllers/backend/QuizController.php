@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\CourseQuiz;
+use App\Models\LessonQuiz;
 use App\Models\Question;
 use App\Models\Quiz;
 use App\Models\SolvedQuestion;
@@ -64,5 +66,44 @@ class QuizController extends Controller
         }
     }
 
+
+
+    public function addQuizToItem(Request $request, $type) {
+        try {
+            $quizId = $request->input('quiz_id');
+
+            // Determine the model and foreign key based on the type
+            if ($type === 'course') {
+                $itemId = $request->input('course_id');
+                $model = CourseQuiz::class;
+                $foreignKey = 'course_id';
+            } elseif ($type === 'lesson') {
+                $itemId = $request->input('lesson_id');
+                $model = LessonQuiz::class;
+                $foreignKey = 'lesson_id';
+            } else {
+                return retRes('Invalid type specified', null, 400);
+            }
+
+            // Use firstOrNew to fetch existing or create new instance without saving
+            $quizRelation = $model::firstOrNew(
+                [$foreignKey => $itemId, 'quiz_id' => $quizId]
+            );
+
+            if ($quizRelation->exists) {
+                $quizRelation->delete();
+                $quizRelation->quiz->update(['status' => 0]);
+                return retRes("Successfully removed {$type} quiz", ['flag' => 0, 'quiz' => $quizRelation->quiz]);
+            }
+
+            // Save new quiz to item
+            $quizRelation->fill($request->all())->save();
+            $quizRelation->quiz->update(['status' => 1]);
+            return retRes("Successfully added {$type} quiz", ['flag' => 1, 'quiz' => $quizRelation->quiz]);
+
+        } catch (Exception $e) {
+            return retRes("Failed to manipulate {$type} quiz", null, 500);
+        }
+    }
 
 }

@@ -11,7 +11,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-3 d-flex">
+                    <div class="mb-3 d-sm-flex">
                         <div class="d-flex align-items-center primary-bg2 text-white py-2 px-3" :style="{ borderRadius: '10px 0px 0px 10px' }">
                             Categories
                         </div>

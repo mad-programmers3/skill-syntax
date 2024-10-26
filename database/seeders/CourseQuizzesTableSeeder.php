@@ -15,13 +15,15 @@ class CourseQuizzesTableSeeder extends Seeder
      */
     public function run()
     {
-        $quizzesId = Quiz::all()->pluck('id');
+        $quizzes = Quiz::where('status', 0)->take(2)->get();
 
-        foreach ($quizzesId as $quiz_id) {
+        foreach ($quizzes as $quiz) {
             CourseQuiz::create([
                 'course_id' => 1,
-                'quiz_id' => $quiz_id,
+                'quiz_id' => $quiz->id,
             ]);
+
+            $quiz->update(['status' => 1]);
         }
 
     }

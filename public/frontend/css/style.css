@@ -25,7 +25,7 @@ theme.
 /*----------------------------------------------------*/
 body {
   line-height: 25px;
-  font-size: 16px;
+  font-size: 14px;
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   color: #7b838a; }
@@ -113,7 +113,7 @@ button:focus {
 ============================================================================================ */
 .main_title {
   text-align: center;
-  margin-bottom: 85px; }
+  margin-bottom: 40px; }
   @media (max-width: 991px) {
     .main_title {
       margin-bottom: 40px; } }
@@ -174,7 +174,7 @@ button:focus {
         display: inline-block; }
         @media (max-width: 991px) {
           .header_area .navbar .nav .nav-item .nav-link {
-            color: #ffffff; } }
+            color: #002347; } }
         .header_area .navbar .nav .nav-item .nav-link:after {
           display: none; }
       .header_area .navbar .nav .nav-item:hover .nav-link, .header_area .navbar .nav .nav-item.active .nav-link {
@@ -329,7 +329,7 @@ button:focus {
   z-index: 1;
   min-height: 900px;
   position: relative;
-  background-color: rgba(0, 0, 0, 0.3)
+  background-color: rgba(0, 0, 0, 0.6)
 }
   .home_banner_area .banner_inner {
     position: absolute;
@@ -600,7 +600,7 @@ button:focus {
       -o-transition: all 0.3s ease 0s;
       transition: all 0.3s ease 0s; }
   .single_course .course_content {
-    padding: 30px 26px;
+    padding: 0 10px 10px;
     background: #f9f9ff;
     position: relative;
     -webkit-transition: all 0.3s ease 0s;
@@ -3042,8 +3042,6 @@ h6 {
   .header_area {
     position: absolute; }
 
-  .header_area .navbar {
-    background: #868686; }
 
   .navbar-toggler[aria-expanded="false"] span:nth-child(2) {
     opacity: 1; }
@@ -3065,7 +3063,7 @@ h6 {
     display: block;
     width: 25px;
     height: 3px;
-    background: #fdc632;
+    background: #002347;
     margin: auto;
     margin-bottom: 4px;
     transition: all 400ms linear;
@@ -3073,7 +3071,8 @@ h6 {
 
   .navbar .container {
     padding-left: 15px;
-    padding-right: 15px; }
+    padding-right: 15px;
+    background: white !important;}
 
   .nav {
     padding: 0px 0px; }
@@ -3087,10 +3086,10 @@ h6 {
     padding: 0px; }
 
   .header_area .navbar .nav .nav-item .nav-link {
-    line-height: 40px;
+    line-height: 35px;
     margin-right: 0px;
     display: block;
-    border-bottom: 1px solid #ededed33;
+    border-bottom: 1px solid #002347;
     border-radius: 0px; }
 
   .header_area .navbar .search {

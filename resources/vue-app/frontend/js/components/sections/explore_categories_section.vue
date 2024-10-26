@@ -1,20 +1,20 @@
 <template>
-    <div class="container my-5">
-        <h2 class="text-center mb-4">Explore Categories</h2>
-        <p class="subtitle wow animate__ animate__fadeInUp animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
-            Discouraged and irrelevant life attitudes. You're you. Sneak peek into what has in store.
-        </p>
+    <div class="container my-5 pb-5">
+        <div  class="main_title">
+            <h2 class="mb-3">Explore Categories</h2>
+            <p>Discouraged and irrelevant life attitudes. You're you. Sneak peek into what has in store.</p>
+        </div>
         <hr class="custom-hr" />
         <div class="row">
             <!-- Category Images -->
             <div class="col-lg-3 col-md-4 col-sm-6 mb-4" v-for="(category, index) in displayedCategories" :key="index">
                 <router-link :to="{ name: 'courses', params: { cat_id: category.id } }" class="card h-100 shadow border-0 custom-card">
-                    <div class="card-img-container text-center p-3">
+                    <div class="text-center">
                         <img class="card-img-top img-fluid" :src="generateFileUrl(category.thumbnail, TYPE_CATEGORY)" :alt="category.title" />
                     </div>
-                    <div class="card-body text-center">
-                        <h5 class="card-title text-truncate">{{ category.title }}</h5>
-                        <p class="course-count">{{ category.courses ? category.courses.length : 0 }} courses available</p>
+                    <div class="text-center">
+                        <h6 class="card-title mb-0 text-truncate">{{ category.title }}</h6>
+                        <p class="course-count mt-0">{{ category.courses ? category.courses.length : 0 }} courses available</p>
                     </div>
                 </router-link>
             </div>
@@ -79,29 +79,9 @@
         border-radius: 8px 8px 0 0;
     }
 
-    .card-img-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100px;
-        overflow: hidden;
-    }
-
     .card:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    }
-
-    h2 {
-        font-weight: bold;
-        color: #002347;
-    }
-
-    .subtitle {
-        text-align: center;
-        color: #555;
-        margin-bottom: 20px;
-        font-style: italic;
     }
 
     .card-title {
@@ -125,21 +105,5 @@
         .card-img-top {
             max-height: 60px;
         }
-    }
-
-    .btn {
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        border: none;
-    }
-
-    .btn-secondary {
-        background-color: #6c757d;
-        border: none;
     }
 </style>

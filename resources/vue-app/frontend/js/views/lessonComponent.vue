@@ -98,23 +98,11 @@
                     </div>
 
                     <div class="col-lg-4 right-contents" v-if="lesson && lesson.course">
-                        <h4 class="title mt-5">Lessons</h4>
-                        <div class="playlist">
-                            <div v-if="!isEmptyData(lesson.course)" v-for="less in lesson.course.lessons" :key="less.id" :class="['card mb-3', { 'highlight-card': lesson.id === less.id }]" :style="`background: ${ runningInfo.current_lesson_id >= less.id ? 'white' : '#d4d4d4'};`">
-                                <div @click="goToLesson(less.id, runningInfo.current_lesson_id)" class="row no-gutters pointer">
-                                    <div class="col-md-4 justify-content-center">
-                                        <img class="img-fluid" :src="generateFileUrl(less.thumbnail, TYPE_LESSON)" alt="Course Image" style="border: 1px solid #ddd; padding: 5px; margin: 10px; border-radius: 8px;" >
-                                    </div>
+                        <lessons-playlist-component v-if="lesson.course" :id="lesson.id" :lessons="lesson.course.lessons" :current-lesson-id="runningInfo.current_lesson_id"/>
 
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h6 class="card-title">{{ less.title }}</h6>
-                                            <p class="card-text">Duration: 10 mins</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <h4 v-if="isEmptyData(lesson.quizzes)" class="mt-5 text-center">No quizzes available for this Lesson</h4>
+                        <h4 v-else-if="false" class="mt-5 text-center">The {{ lesson.quizzes.length }} quizzes will appear soon</h4>
+                        <quizzes-playlist-component v-else :quizzes="lesson.quizzes" :running-info="runningInfo"/>
 
                         <div class="mt-5 d-flex justify-content-between">
                             <div>
@@ -134,8 +122,12 @@
 </template>
 
 <script>
+    import QuizModalComponent from "../components/quizModalComponent";
+    import LessonsPlaylistComponent from "../components/lessonsPlaylistComponent";
+    import QuizzesPlaylistComponent from "../components/sections/quizzesPlaylistComponent";
     export default {
         name: "lessonDetails",
+        components: {QuizzesPlaylistComponent, LessonsPlaylistComponent, QuizModalComponent},
         props: ['lessonId'],
         data() {
             return {
@@ -285,13 +277,25 @@
             goNextLesson() {
                 if (this.isEmptyData(this.runningInfo)) return;
 
+                if (!this.isCompleteAllQuizzes(this.lesson ? this.lesson.quizzes : null)) {
+                    this.showSweetAlert({
+                        title: 'Complete The Quizzes First!',
+                        text: 'You have to complete all quizzes to unlock the next lesson.',
+                        icon: 'error',
+                        showCancelButton: false,
+                        confirmButtonText: 'Got It',
+                        confirmButtonColor: '#002347'
+                    });
+                    return;
+                }
+
                 const _this = this;
                 this.httpReq({
                     customUrl: 'api/running-infos',
-                    urlSuffix: this.runningInfo.id,
+                    urlSuffix: this.runningInfo.ric_id,
                     method: 'put',
                     data: {current_lesson_id: this.next.id},
-                    callback: (response) => {
+                    callback: () => {
                         _this.$router.push({name: 'lesson', params: {id: _this.next.id}});
                     },
                 });
@@ -303,35 +307,8 @@
 <style scoped>
     .review-item .user-thumb img {
         width: 50px;
+        height: 50px;
         border-radius: 50%;
-    }
-
-    .playlist {
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 10px;
-        background-color: #002347;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .playlist .card {
-        border: 0;
-        border-bottom: 1px solid #e0e0e0;
-        background-color: #fff;
-        border-radius: 8px;
-        transition: background-color 0.3s ease;
-        color: #333;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-
-    .playlist .card:hover {
-        background-color: #f1f1f1;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .playlist .highlight-card {
-        background-color: #f5f5f5;
-        border-left: 3px solid #e91e63;
     }
 
     .card-body h6 {
@@ -342,12 +319,6 @@
     .card-body p {
         color: #777;
         font-size: 0.8rem;
-    }
-
-    img.img-fluid {
-        border-radius: 8px;
-        border: 1px solid #e91e63;
-        padding: 3px;
     }
 
 </style>

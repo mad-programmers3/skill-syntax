@@ -249,6 +249,13 @@ export default {
             return lastLesson.id === crrLessId;
         },
 
+        isCompleteAllQuizzes(quizzes) {
+            if (this.isEmptyData(quizzes)) return true;
+            const lastQuiz = quizzes[quizzes.length - 1];
+            if (this.isEmptyData(lastQuiz)) return true;
+            return this.isSolvedAllQs(lastQuiz.questions);
+        }
+
 
     }
 }
