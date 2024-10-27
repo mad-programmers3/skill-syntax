@@ -2,9 +2,11 @@
     <div class="container mt-5">
         <!-- Top Controls -->
         <div class="table-controls mb-3 d-flex justify-content-between align-items-center">
-            <input type="text" class="form-control w-25" placeholder="Search" v-model="searchQuery" @input="debouncedSearch" />
+            <input type="text" class="form-control w-25" placeholder="Search" v-model="searchQuery" />
+            <button class="btn btn-primary" @click="performSearch">Search</button>
             <button class="compose-btn" @click="showModal">Compose Message</button>
         </div>
+
 
         <!-- Data Table -->
         <table class="table table-bordered mt-3">
@@ -94,8 +96,6 @@
 <script>
     import axios from 'axios';
     import Swal from 'sweetalert2';
-    import debounce from 'lodash/debounce';
-
     export default {
         data() {
             return {
@@ -133,9 +133,6 @@
                     this.results.users = [];
                 }
             },
-            debouncedSearch: debounce(function() {
-                this.performSearch();
-            },),
             handleResultClick(email) {
                 this.email = email; // Set the email field to the selected user's email
                 this.showModal(); // Open the compose modal
