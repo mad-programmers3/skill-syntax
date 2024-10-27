@@ -16,11 +16,17 @@
                         </div>
 
                         <!-- Conditional rendering: Show spinner if loading, else show the table -->
-                        <div v-if="Object.keys(dataList).length === 0" class="text-center my-3">
+                        <div v-if="isEmptyData(dataList)" class="text-center my-3">
 <!--                            {{ dataList }}-->
                             <div class="spinner-border" role="status">
                                 <span class="sr-only">Loading...</span>
                             </div>
+                        </div>
+
+                        <!-- Conditional rendering: Show spinner if loading, else show the table -->
+                        <div v-if="isEmptyData(dataList.data)" class="text-center my-3">
+<!--                            {{ dataList }}-->
+                            <h3>No Data To Show</h3>
                         </div>
 
                         <div v-else class="table-responsive">

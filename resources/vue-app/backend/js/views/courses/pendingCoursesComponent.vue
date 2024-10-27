@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('course_add')">
+        <data-table :table-heading="tableHeading" :show-add-btn="false">
             <tr v-for="(course, index) in dataList.data" style="font-size: 0.8rem" :key="course.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>
@@ -16,7 +16,7 @@
                         <i class="fa fa-trash text-white"></i>
                     </button>
                     <!--    accept btn    -->
-                    <button v-if="can('course_accept')" @click="acceptCourse(course.id)" class="btn btn-success btn-sm" :title="`Accept ${course.title}`" type="button">
+                    <button v-if="can('course_accept')" @click="acceptCourse(course.id, dataList.current_page)" class="btn btn-success btn-sm" :title="`Accept ${course.title}`" type="button">
                         <i class="fas fa-vote-yea text-white"></i>
                     </button>
                 </td>
@@ -52,14 +52,14 @@
         },
 
         methods: {
-            acceptCourse(id) {
+            acceptCourse(id, currentPage) {
                 const _this = this;
                 this.httpReq({
                     urlSuffix: id,
                     method: 'put',
                     data: {'status': 1},
                     callback: () => {
-                        _this.fetchData(this.urlGenerate(false, false, {page: currentPage, perPage}))
+                        _this.fetchData(this.urlGenerate(false, false, {page: currentPage, perPage: _this.perPage, get_pending: true}))
                     }
                 })
             }

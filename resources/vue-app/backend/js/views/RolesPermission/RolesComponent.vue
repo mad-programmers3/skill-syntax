@@ -77,7 +77,7 @@
             </div>
             <div class="mb-3">
                 <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0" v-validate="'required'" name="status"/>
+                    <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0"/>
                     <label class="custom-control-label" for="customSwitch">
                         {{ formData.status ? 'Active' : 'Inactive' }}
                     </label>

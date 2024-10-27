@@ -80,6 +80,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('courses/do-like', [CourseController::class, 'doLike']);
     Route::post('courses/purchase/{id}', [CourseController::class, 'purchase']);
 
+
     Route::resource('lessons', LessonController::class);
     Route::post('lessons/do-like', [LessonController::class, 'lessonLike']);
 
@@ -97,6 +98,10 @@ Route::middleware('auth:api')->group(function () {
     Route::post('files/upload', [MyFileController::class, 'upload'])->name('files.upload');
     Route::get('configurations', [SupportController::class, 'getConfigurations']);
 
+    Route::post('categories/check/title', [CategoryController::class, 'checkTitle']);
+    Route::post('sub-categories/check/title', [SubCategoryController::class, 'checkTitle']);
+    Route::post('courses/check/title', [CourseController::class, 'checkTitle']);
+    Route::post('lessons/check/title', [LessonController::class, 'checkTitle']);
 
     Route::group(['prefix' => 'config'], function () {
         Route::resource('roles', RoleController::class);

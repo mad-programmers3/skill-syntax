@@ -111,6 +111,20 @@ trait BaseCrudHelper
     }
 
 
+    public function checkTitle(Request $request)
+    {
+        try {
+            $id = $request->input('id');
+            $title = $request->input('title');
+            $exists = $this->model->where('title', $title)->where('id', '!=', $id)->exists(); // Use instance method
+
+            return response()->json(['isUnique' => !$exists]);
+        } catch (Exception $e) {
+            return retRes('Failed to check title', null, 500);
+        }
+    }
+
+
 
     /*
      * raw = show, model = User => user_show

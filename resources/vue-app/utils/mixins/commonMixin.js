@@ -214,7 +214,6 @@ export default {
                 callback: (res) => {
                     if (res.data.success) {
                         _this.$set(dataHolder, key, res.data);
-                        console.log(player);
                         if(player) player.load()
                     }
                 },

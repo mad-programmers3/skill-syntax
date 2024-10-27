@@ -100,7 +100,6 @@
                     this.httpReq({
                         customUrl: 'api/config/roles/remove-permission', method: 'post', data, callback: (response) => {
                             if (response.data.result) {
-                                console.log(response.data.result);
                                 let {modules, permissions} = response.data.result;
                                 modules.forEach((id) => {
                                     _this.removeArrItem(_this.crrRole.modules, id)

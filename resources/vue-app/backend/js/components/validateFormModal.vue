@@ -41,7 +41,7 @@
             },
             initVal: {
                 type: Object,
-                default: () => ({ status: 1 }),
+                default: () => ({ }),
             },
             currentPage: Number,
         },
@@ -102,7 +102,6 @@
                         urlSuffix: urlSuffix,
                         method: method,
                         callback: (response) => {
-                            console.log(response);
                             if (response.data) {
                                 // Show success toast notification instead of alert
                                 _this.showToast(response.data.message, response.data.status === _this.CODE_SUCCESS ? 'success' : 'error');
