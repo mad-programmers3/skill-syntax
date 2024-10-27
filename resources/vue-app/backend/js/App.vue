@@ -1,8 +1,8 @@
 <template>
-    <div v-if="isAppReady" class="container-scroller">
+    <div class="container-scroller">
         <side-nav-bar></side-nav-bar>
         <top-nav-bar></top-nav-bar>
-        <div class="main-panel">
+        <div v-if="isAppReady" class="main-panel">
             <router-view></router-view>
             <Footer></Footer>
         </div>

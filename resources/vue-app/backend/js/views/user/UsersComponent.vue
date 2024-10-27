@@ -119,7 +119,7 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Bio
-                    <quill-editor v-if="formData.bio" v-model="formData.bio" class="quill-editor"></quill-editor>
+                    <quill-editor :content="formData.bio" class="quill-editor"></quill-editor>
                 </label>
             </div>
 

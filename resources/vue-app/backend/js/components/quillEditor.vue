@@ -2,7 +2,7 @@
     <div>
         <quill-editor
                 ref="quillEditor"
-                v-model="editorContent"
+                v-model="content"
                 :options="editorOptions"
                 style="height: 300px;"
         ></quill-editor>
@@ -18,12 +18,11 @@
     export default {
         name: 'QuillEditorComponent',
         components: quillEditor ,
-        props: ['value'],
+        props: {
+            content: String
+        },
         data() {
             return {
-                // Setting the initial content of the editor to the value passed from parent
-                editorContent: this.value,
-
                 // Quill editor options like theme and toolbar configuration
                 editorOptions: {
                     theme: 'snow', // Set the Quill editor theme
@@ -41,7 +40,7 @@
         },
 
         watch: {
-            editorContent(val) {
+            content(val) {
                 this.$emit('input', val);
             }
         }

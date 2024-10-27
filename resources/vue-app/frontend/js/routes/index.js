@@ -13,7 +13,6 @@ import studentProfileComponent from "../views/student/studentProfileComponent";
 import studentWishlistComponent from "../views/student/studentWishlistComponent";
 import studentMessagesComponent from "../views/student/studentMessagesComponent";
 import studentPurchaseHistoryComponent from "../views/student/studentPurchaseHistoryComponent";
-import studentCertificate from "../views/student/studentCertificate";
 
 
 const route = [
@@ -97,19 +96,13 @@ const route = [
                 path: 'purchase-history',
                 name:'student-purchaseHistory',
                 component: studentPurchaseHistoryComponent,
-                meta : {dataUrl : 'api/student/abc'},
+                meta : {dataUrl : 'api/student/purchase'},
             },
             {
                 path: 'profile',
                 name:'student-profile',
                 component: studentProfileComponent,
                 meta : {'pageTitle' : 'Student Profile', dataUrl : 'api/users'},
-            },
-            {
-                path: 'certificate',
-                name:'student-certificate',
-                component:studentCertificate,
-                meta : {dataUrl : 'api/student/abc'},
             },
         ]
 

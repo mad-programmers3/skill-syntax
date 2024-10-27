@@ -1,6 +1,6 @@
 <!-- Parent.vue -->
 <template>
-    <div>
+    <div style="min-height: 82vh">
         <header>
             <div class="container">
                 <div class="main_menu">
@@ -25,10 +25,6 @@
                                     </li>
                                     <li class="nav-item">
                                         <router-link :to="{name: 'student-messages'}" class="nav-link"><i class="fas fa-envelope"></i> My messages</router-link>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <router-link :to="{name: 'student-certificate'}" class="nav-link"><i class="fas fa-certificate"></i>Certificate</router-link>
                                     </li>
                                     <li class="nav-item">
                                         <router-link :to="{name: 'student-purchaseHistory'}" class="nav-link"><i class="fas fa-history"></i> Purchase History</router-link>

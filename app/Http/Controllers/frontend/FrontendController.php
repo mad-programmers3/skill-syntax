@@ -53,7 +53,7 @@ class FrontendController extends Controller
     {
         try {
             $data = [];
-            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons', 'course_reviews.review.user.avatar', 'quizzes.questions:id,quiz_id,title,option_a,option_b,option_c,option_d', 'user_purchased'])->findOrFail($id);
+            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons.thumbnail:id,path', 'lessons.video:id,duration', 'course_reviews.review.user.avatar', 'quizzes.questions:id,quiz_id,title,option_a,option_b,option_c,option_d', 'user_purchased'])->findOrFail($id);
             $data['likes'] = $data['course']->likes->pluck('user_id');
             $data['reviews'] = $data['course']->course_reviews->pluck('review');
 
@@ -82,7 +82,7 @@ class FrontendController extends Controller
 
         try {
             $data = [];
-            $data['lesson'] = Lesson::with(['thumbnail:id,path', 'video:id,path', 'likes', 'course.lessons.thumbnail', 'lesson_reviews.review.user', 'quizzes.questions'])->findOrFail($id);
+            $data['lesson'] = Lesson::with(['thumbnail:id,path', 'video:id,path,duration', 'likes', 'course.lessons.thumbnail:id,path',  'course.lessons.video:id,path,duration', 'lesson_reviews.review.user', 'quizzes.questions'])->findOrFail($id);
             $data['prev'] = $data['lesson']->prev();
             $data['next'] = $data['lesson']->next();
 

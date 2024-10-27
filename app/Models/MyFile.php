@@ -9,6 +9,6 @@ class MyFile extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name', 'path', 'extension', 'size', ];
+    protected $fillable = ['user_id', 'name', 'path', 'extension', 'size', 'duration' ];
 
 }

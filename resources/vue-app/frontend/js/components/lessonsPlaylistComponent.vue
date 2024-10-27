@@ -10,7 +10,7 @@
 
                     <div class="col-md-8 py-3 pl-3">
                         <h6 class="card-title mb-0">{{ lesson.title }}</h6>
-                        <p class="card-text"><i class="fas fa-clock primary-text2"></i>10 mins</p>
+                        <p class="card-text"><i class="fas fa-clock primary-text2"></i> {{ !isEmptyData(lesson.video) ? formatSecondsToTime(lesson.video.duration) : 'NA' }}</p>
                     </div>
     <!--                <div class="mt-lg-0 mt-3">-->
     <!--                    <span class="meta_info mr-4">-->

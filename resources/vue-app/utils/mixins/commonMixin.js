@@ -135,6 +135,23 @@ export default {
             return parseFloat(value).toFixed(2);
         },
 
+        formatSecondsToTime(seconds) {
+            if (seconds === null || seconds === undefined) return 'NA';
+
+            const hours = Math.floor(seconds / 3600);            // Calculate hours
+            const minutes = Math.floor((seconds % 3600) / 60);   // Calculate minutes
+            const remainingSeconds = seconds % 60;                // Calculate remaining seconds
+
+            // Build the time string conditionally
+            let formattedTime = [];
+
+            if (hours > 0) formattedTime.push(String(hours));  // Include hours only if greater than 0
+            formattedTime.push(String(minutes).padStart(2, '0'));  // Always include minutes
+            formattedTime.push(String(remainingSeconds).padStart(2, '0')); // Always include seconds
+
+            return formattedTime.join(':'); // Join components with a colon
+        },
+
         // Authentication-related methods
 
         can(task) {
@@ -197,16 +214,33 @@ export default {
         // upload the file on storage and set it's infos on form data
         handleFileUpload(event, key = 'thumbnail', dataHolder = this.formData, player) {
             const file = event.target.files[0];  // Get the selected file
-            if (!file) {  // Check if the file is an image
-                alert("Please upload a valid image file.");  // Show an alert if the file is not valid
+            if (!file) {  // Check if the file is selected
+                alert("Please upload a valid file.");  // Show an alert if the file is not valid
                 return;
             }
 
             const imgFormData = new FormData();
-            imgFormData.append('file', file);  // Append the image file to the FormData
+            imgFormData.append('file', file);  // Append the file to the FormData
             imgFormData.append('key', key);
 
-            // Send the image to the server
+            // If the file is a video, get its duration
+            if (file.type.startsWith('video/')) {
+                const videoElement = document.createElement('video');
+                videoElement.src = URL.createObjectURL(file);
+
+                videoElement.addEventListener('loadedmetadata', () => {
+                    const duration = videoElement.duration;
+                    imgFormData.append('duration', duration);
+                    this.sendFileToServer(imgFormData, dataHolder, key, player);
+                });
+
+                videoElement.load();
+            } else {
+                this.sendFileToServer(imgFormData, dataHolder, key, player);
+            }
+        },
+
+        sendFileToServer(imgFormData, dataHolder, key, player) {
             const _this = this;
             this.httpReq({
                 customUrl: 'api/files/upload',
@@ -214,7 +248,7 @@ export default {
                 callback: (res) => {
                     if (res.data.success) {
                         _this.$set(dataHolder, key, res.data);
-                        if(player) player.load()
+                        if (player) player.load();
                     }
                 },
                 data: imgFormData

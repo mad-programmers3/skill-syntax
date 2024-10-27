@@ -6,7 +6,7 @@
                     <img class="img-fluid rounded-top" :src="generateFileUrl(course.thumbnail)" alt="" style="object-fit: cover; height: 100%; width: 100%;">
 
                     <!-- Wishlist Remove Button -->
-                    <button v-if="course.inWishlist" @click="removeFromWishlist(course.id)" class="wishlist-remove btn btn-danger btn-sm position-absolute">
+                    <button v-if="showCloseBtn"   @click="$emit('remove-course', course.id)"  class="wishlist-remove btn btn-danger btn-sm position-absolute">
                         <i class="fas fa-times"></i>
                     </button>
                 </div>
@@ -67,12 +67,15 @@
             courses: {
                 type: Array,
                 required: true
+            },
+            showCloseBtn: {
+                type: Boolean,
+                default: false
             }
         },
         methods: {
-            // Emit an event to parent component when wishlist remove button is clicked
-            removeFromWishlist(courseId) {
-                this.$emit('remove-wishlist', courseId);
+            confirmRemove(courseId) {
+                this.$emit('remove-course', courseId);
             }
         }
     }

@@ -63,7 +63,7 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Description
-                    <quill-editor v-if="formData.description" v-model="formData.description" class="quill-editor"></quill-editor>
+                    <quill-editor :content="formData.description" class="quill-editor"></quill-editor>
                 </label>
             </div>
 

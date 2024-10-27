@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('path');
             $table->string('extension');
             $table->unsignedBigInteger('size'); // File size in bytes
+            $table->integer('duration')->nullable(); // in second
             $table->timestamps();
         });
     }

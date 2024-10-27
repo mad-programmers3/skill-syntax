@@ -63,12 +63,6 @@
                     <textarea type="text" class="form-control" placeholder="Lesson description here" v-model="formData.description" v-validate="'max:500'" name="description" @input="validateField"></textarea>
                 </label>
             </div>
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    Video URL
-                    <input type="text" class="form-control" placeholder="Enter video URL or link here" v-model="formData.video" v-validate="'required|url'" name="video" @input="validateField"/>
-                </label>
-            </div>
 
             <div class="mb-3">
                 <label class="form-label w-100">

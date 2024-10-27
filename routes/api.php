@@ -58,6 +58,7 @@ Route::group(['prefix' => 'pages'], function () {
 });
 Route::group(['prefix' => 'student'], function () {
     Route::get('wish-list', [StudentController::class, 'wishList']);
+    Route::get('purchase', [StudentController::class, 'purchaseHistory']);
 });
 
 Route::put('running-infos/{id}', [FrontendController::class, 'goToNextLesson']);
