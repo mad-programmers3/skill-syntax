@@ -25,9 +25,9 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
 
-        <validate-form-modal title="Category" :current-page="dataList.current_page" :per-page="perPage">
+        <validate-form-modal title="Category" :current-page="dataList.current_page">
 
             <div class="mb-3">
                 <div class="custom-control custom-switch">
@@ -54,7 +54,6 @@
         data() {
             return {
                 tableHeading: ['SL', 'Users','Comment','Rating', 'Status', 'Actions'],
-                perPage: 4,
             }
         },
         mounted() {

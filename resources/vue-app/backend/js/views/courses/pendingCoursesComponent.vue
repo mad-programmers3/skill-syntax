@@ -24,7 +24,7 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
     </div>
 </template>
 
@@ -42,7 +42,6 @@
         data() {
             return {
                 tableHeading: ['SL', 'Thumbnail', 'Title', 'Category', 'Price(TK)', 'Sits/Sold', 'Actions'],
-                perPage: 5,
             };
         },
 

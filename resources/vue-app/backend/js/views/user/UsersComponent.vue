@@ -29,9 +29,9 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
 
-        <validate-form-modal title="User" width="700px" :init-val="initVal" :current-page="dataList.current_page" :per-page="perPage">
+        <validate-form-modal title="User" width="700px" :init-val="initVal" :current-page="dataList.current_page">
             <div class="mb-3">
                 <div class="upload-area mx-auto" @click="() => {$refs.fileInput.click()}">
                     <img :src="generateFileUrl(formData.avatar, TYPE_USER)" alt="Preview" class="preview-img"/>
@@ -119,7 +119,7 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Bio
-                    <quill-editor v-model="formData.bio" class="quill-editor"></quill-editor>
+                    <quill-editor v-if="formData.bio" v-model="formData.bio" class="quill-editor"></quill-editor>
                 </label>
             </div>
 
@@ -153,7 +153,6 @@
                 tableHeading: ['SL', 'Avatar', 'Name', 'Email', 'Mobile', 'Role', 'Status', 'Actions'],
                 roles: [],
                 initVal: {role_id: '', password: 'ss guest', status: 2},
-                perPage:10,
                 permPrefix: 'user'
             }
         },

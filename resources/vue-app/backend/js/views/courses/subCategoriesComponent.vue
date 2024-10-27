@@ -24,9 +24,9 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
 
-        <validate-form-modal title="SubCategory" :current-page="dataList.current_page" :per-page="perPage">
+        <validate-form-modal title="SubCategory" :current-page="dataList.current_page">
 
             <div class="mb-3">
                 <label class="form-label w-100">
@@ -78,7 +78,6 @@
             return {
                 tableHeading: ['SL','Title', 'Category', 'Status', 'Actions'], // Table headings
                 categories: [], // Array to hold categories data
-                perPage: 5,
             }
         },
         mounted() {

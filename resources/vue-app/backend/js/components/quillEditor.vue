@@ -4,6 +4,7 @@
                 ref="quillEditor"
                 v-model="editorContent"
                 :options="editorOptions"
+                style="height: 300px;"
         ></quill-editor>
     </div>
 </template>

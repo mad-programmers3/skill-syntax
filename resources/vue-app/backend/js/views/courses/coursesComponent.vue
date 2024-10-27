@@ -50,10 +50,10 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
 
         <!--  Modal  -->
-        <validate-form-modal title="Course" width="700px" :current-page="dataList.current_page" :per-page="perPage">
+        <validate-form-modal title="Course" width="700px" :current-page="dataList.current_page">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
@@ -63,7 +63,7 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Description
-                    <quill-editor v-model="formData.description" class="quill-editor"></quill-editor>
+                    <quill-editor v-if="formData.description" v-model="formData.description" class="quill-editor"></quill-editor>
                 </label>
             </div>
 

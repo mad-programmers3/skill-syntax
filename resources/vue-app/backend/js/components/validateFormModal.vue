@@ -43,7 +43,6 @@
                 type: Object,
                 default: () => ({ status: 1 }),
             },
-            perPage: Number,
             currentPage: Number,
         },
 

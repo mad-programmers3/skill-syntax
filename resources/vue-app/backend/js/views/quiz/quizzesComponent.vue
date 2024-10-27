@@ -28,10 +28,10 @@
         </data-table>
 
 <!-- pagination Control-->
-        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
 
 
-        <validate-form-modal title="Category" :current-page="dataList.current_page" :per-page="perPage">
+        <validate-form-modal title="Category" :current-page="dataList.current_page">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
@@ -63,7 +63,6 @@
         data() {
             return {
                 tableHeading: ['SL', 'Title', 'Questions', 'Actions'],
-                perPage:5,
                 permPrefix: 'quiz'
             }
         },

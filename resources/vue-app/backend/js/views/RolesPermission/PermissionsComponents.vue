@@ -41,9 +41,9 @@
         </data-table>
 
         <!-- Pagination Control -->
-        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page" :per-page="perPage"/>
+        <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
 
-        <validate-form-modal  title="Module" :current-page="dataList.current_page" :per-page="perPage">
+        <validate-form-modal  title="Module" :current-page="dataList.current_page">
             <div class="mb-3">
                 <label class="form-label w-100">
                     Name
@@ -90,7 +90,6 @@
             return {
                 tableHeading: ['SL', 'Name', 'Module', 'Roles', 'Status', 'Action'],
                 modules: [],
-                perPage: 15,
             }
         },
         mounted() {
