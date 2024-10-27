@@ -15,15 +15,19 @@ class QuizzesTableSeeder extends Seeder
     public function run()
     {
         $quizzes = [
-            [
-                'title' => 'Quiz 1',
-            ],
-            [
-                'title' => 'Quiz 2',
-            ],
-            [
-                'title' => 'Quiz 3',
-            ],
+            ['title' => 'Java & DSA Course for Placement - Quiz 1'],
+            ['title' => 'Java & DSA Course for Placement - Quiz 2'],
+            ['title' => 'Java & DSA Course for Placement - Quiz 3'],
+            ['title' => 'Introduction to Java Language - Quiz'],
+            ['title' => 'Variables in Java - Quiz'],
+            ['title' => 'Conditional Statements - Quiz'],
+            ['title' => 'Loops in Java - Quiz'],
+            ['title' => 'Patterns - Quiz'],
+            ['title' => 'Quiz'],
+            ['title' => 'Quiz'],
+            ['title' => 'Quiz'],
+            ['title' => 'Quiz'],
+            ['title' => 'Quiz'],
 
         ];
 

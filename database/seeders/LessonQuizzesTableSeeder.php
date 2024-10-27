@@ -16,11 +16,15 @@ class LessonQuizzesTableSeeder extends Seeder
      */
     public function run()
     {
-        $quizzes = Quiz::where('status', 0)->get();
+        $quizzes = Quiz::where('status', 0)
+            ->whereBetween('id', [4, 8])
+            ->take(5)
+            ->get();
 
-        foreach ($quizzes as $quiz) {
+
+        foreach ($quizzes as $index => $quiz) {
             LessonQuiz::create([
-                'lesson_id' => 1,
+                'lesson_id' => $index+1,
                 'quiz_id' => $quiz->id,
             ]);
 

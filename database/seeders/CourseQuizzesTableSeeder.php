@@ -15,7 +15,7 @@ class CourseQuizzesTableSeeder extends Seeder
      */
     public function run()
     {
-        $quizzes = Quiz::where('status', 0)->take(2)->get();
+        $quizzes = Quiz::where('status', 0)->take(3)->get();
 
         foreach ($quizzes as $quiz) {
             CourseQuiz::create([

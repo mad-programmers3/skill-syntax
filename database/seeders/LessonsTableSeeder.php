@@ -17,17 +17,23 @@ class LessonsTableSeeder extends Seeder
     public function run()
     {
         $course = Course::findOrFail(1);
+        $lessons = [
+            'Introduction to Java Language | Lecture 1',
+            'Variables in Java | Input Output',
+            'Conditional Statements | If-else, Switch Break',
+            'Loops in Java',
+            '9 Best Patterns Questions in Java (for Beginners)',
+            'Advanced Pattern Questions in Java',
+        ];
 
-        if($course) {
-            for ($i = 1; $i <= 5; $i++) {
-                Lesson::create([
-                    'course_id' => $course->id,
-                    'title' => "Lesson {$i} for {$course->title}",
-                    'description' => "This is the description for Lesson {$i} of the course {$course->title}.",
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
+        foreach ($lessons as $index => $title) {
+            Lesson::create([
+                'course_id' => $course->id,
+                'title' => $title,
+                'description' => "This is the detailed description for {$title} of the course {$course->title}, covering essential concepts and exercises.",
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
         }
 
     }
