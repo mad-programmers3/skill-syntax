@@ -77,9 +77,8 @@ export default {
         },
 
         perPage() {
-            // const itemsPerPageSetting = Config.settings.find(setting => setting.key === "items_per_page");
-            // return itemsPerPageSetting ? parseInt(itemsPerPageSetting.value, 10) : null;
-            return this.$store.getters.Config ? this.$store.getters.Config.settings.items_per_page : 10;
+            const settings = this.$store.getters.settings;
+            return settings && settings.items_per_page ? +settings.items_per_page : 10;
         }
     },
     methods: {
@@ -140,6 +139,11 @@ export default {
 
         can(task) {
             return this.Config && this.Config.permissions && this.Config.permissions.includes(task);
+        },
+
+        getSetting(key, defVal) {
+            const settings = this.$store.getters.settings;
+            return settings && settings[key] ? settings[key] : defVal ? defVal : "";
         },
 
 

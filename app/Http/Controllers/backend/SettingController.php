@@ -46,7 +46,9 @@ class SettingController extends Controller
                 }
             }
 
-            return retRes('Successfully updated record');
+
+            $settings = Setting::pluck('value', 'key')->toArray();
+            return retRes('Successfully updated record', $settings);
         } catch (Exception $e) {
             return retRes('Failed to update record', null, 500);
         }

@@ -1,7 +1,7 @@
 <template>
     <div class="container mt-5">
         <div class="d-sm-flex mb-2 justify-content-between">
-            <h3>SkillSyntax - Be A Skilled Soul</h3>
+            <h3>{{ getSetting('application_name') }} - {{ getSetting('application_slogan') }}</h3>
             <button @click="saveSettings" class="btn btn-primary">Save</button>
         </div>
 
@@ -69,10 +69,15 @@
 
         methods: {
             saveSettings() {
+                const _this = this;
                 this.httpReq({
                     customUrl: 'api/settings/update-all',
                     method: 'post',
-                    data:this.settingsByGroup
+                    data:this.settingsByGroup,
+                    callback: (response) => {
+                        _this.showToast(response.data.message);
+                        if (response.data) _this.$store.commit('setSettings', response.data.result);
+                    }
                 })
             },
         }

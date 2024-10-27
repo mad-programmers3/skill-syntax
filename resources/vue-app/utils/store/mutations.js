@@ -13,6 +13,9 @@ export const mutations = {
     setConfig(state, data) {
         state.Config = data;
     },
+    setSettings(state, data) {
+        state.settings = data;
+    },
     setShowHeader(state, data) {
         state.showHeader = data;
     },

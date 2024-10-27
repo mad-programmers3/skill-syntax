@@ -11,6 +11,9 @@ export const getters = {
     Config(state) {
         return state.Config;
     },
+    settings(state) {
+        return state.settings;
+    },
     showHeader(state) {
         return state.showHeader;
     },

@@ -32,6 +32,7 @@
             this.fetchData(this.urlGenerate('api/configurations'), (result) => {
                 _this.$store.commit('setConfig', result);
                 _this.$store.commit('setAuth', result.auth);
+                _this.$store.commit('setSettings', result.settings);
                 _this.isAppReady = true;
             });
         }

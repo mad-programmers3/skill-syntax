@@ -3,6 +3,7 @@ export const state = {
     dataList: {},
     formData: {},
     Config: [],
+    settings: {},
     showHeader: 1,
     showFooter: 1,
 };
