@@ -23,6 +23,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\backend\ModuleController;
 use App\Http\Controllers\backend\PermissionController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,11 @@ use App\Http\Controllers\backend\PermissionController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+
+Route::post('/send-message', [MessageController::class, 'sendMessage'])->middleware('auth:sanctum');
+Route::get('/messages/{userId}', [MessageController::class, 'getMessages'])->middleware('auth:sanctum');
 
 
 Route::resource('tests', QuestionController::class);

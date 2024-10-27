@@ -2,22 +2,12 @@
     <div class="container mt-5">
         <!-- Top Controls -->
         <div class="table-controls mb-3 d-flex justify-content-between align-items-center">
-            <label>
-                Show
-                <select class="custom-select d-inline-block w-auto">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-                entries
-            </label>
-            <input type="text" class="form-control w-25" placeholder="Search" />
+            <input type="text" class="form-control w-25" placeholder="Search" v-model="searchQuery" @input="debouncedSearch" />
             <button class="compose-btn" @click="showModal">Compose Message</button>
         </div>
 
         <!-- Data Table -->
-        <table class="table table-bordered">
+        <table class="table table-bordered mt-3">
             <thead>
             <tr>
                 <th>Name</th>
@@ -44,39 +34,55 @@
             </tbody>
         </table>
 
-        <!-- Pagination -->
-        <div class="pagination d-flex justify-content-between align-items-center mt-3">
-            <span>Showing 1 to 1 of 1 entries</span>
-            <div>
-                <button class="btn btn-primary" disabled>Previous</button>
-                <span class="mx-2">1</span>
-                <button class="btn btn-primary" disabled>Next</button>
+        <!-- Search Results Modal -->
+        <div class="modal fade" id="searchResultsModal" tabindex="-1" aria-labelledby="searchResultsModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchResultsModalLabel">Search Results</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div v-if="results.users.length">
+                            <h3>USERS</h3>
+                            <div v-for="user in results.users" :key="user.id" class="result-item">
+                                <!-- Prevent default behavior on click -->
+                                <a href="#" @click.prevent="handleResultClick(user.email)">
+                                    {{ user.name.toLowerCase() }} - {{ user.email.toLowerCase() }}
+                                </a>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <h3>No users found</h3>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Modal -->
+        <!-- Compose Message Modal -->
         <div class="modal fade" id="composeModal" tabindex="-1" aria-labelledby="composeModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="composeModalLabel">Send Message</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
                     </div>
                     <div class="modal-body">
                         <form @submit.prevent="submitMessage">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email*</label>
-                                <input type="email" class="form-control" id="email" v-model="email" required />
+                                <input type="email" class="form-control" id="email" v-model="email" required readonly />
                             </div>
                             <div class="mb-3">
                                 <label for="subject" class="form-label">Subject*</label>
                                 <input type="text" class="form-control" id="subject" v-model="subject" required />
                             </div>
                             <div class="mb-3">
-                                <label for="message" class="form-label">Your Message*</label>
-                                <textarea class="form-control" id="message" rows="4" v-model="message" required></textarea>
+                                <label for="message" class="form-label">Message*</label>
+                                <textarea class="form-control" id="message" v-model="message" rows="3" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-success">Send Message</button>
+                            <button type="submit" class="btn btn-primary" :disabled="isSending">Send</button>
                         </form>
                     </div>
                 </div>
@@ -86,39 +92,121 @@
 </template>
 
 <script>
+    import axios from 'axios';
+    import Swal from 'sweetalert2';
+    import debounce from 'lodash/debounce';
+
     export default {
-        name: "studentMessagesComponent",
         data() {
             return {
+                searchQuery: '',
+                results: {
+                    users: [],
+                },
                 email: '',
                 subject: '',
-                message: ''
+                message: '',
+                isSending: false
             };
         },
         methods: {
+            async performSearch() {
+                if (this.searchQuery) {
+                    try {
+                        const response = await axios.get('/search', {
+                            params: { query: this.searchQuery }
+                        });
+                        this.results.users = response.data.users;
+
+                        this.showSearchResultsModal();
+
+                        if (!this.results.users.length) {
+                            Swal.fire({
+                                icon: 'warning',
+                                title: 'No users found',
+                            });
+                        }
+                    } catch (error) {
+                        console.error('Search error:', error);
+                    }
+                } else {
+                    this.results.users = [];
+                }
+            },
+            debouncedSearch: debounce(function() {
+                this.performSearch();
+            },),
+            handleResultClick(email) {
+                this.email = email; // Set the email field to the selected user's email
+                this.showModal(); // Open the compose modal
+                this.results.users = []; // Clear results when clicking on a result
+            },
+            async submitMessage() {
+                this.isSending = true;
+                try {
+                    const response = await axios.post('/send-message', {
+                        email: this.email,
+                        subject: this.subject,
+                        message: this.message
+                    });
+                    if (response.data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Message sent successfully!',
+                        });
+                        this.closeModal();
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Failed to send message. Please try again.',
+                        });
+                    }
+                } catch (error) {
+                    console.error('Message send error:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'An error occurred. Please try again.',
+                    });
+                } finally {
+                    this.isSending = false; // Re-enable the send button
+                }
+            },
             showModal() {
-                const modal = new window.bootstrap.Modal(document.getElementById('composeModal'));
+                const modal = new bootstrap.Modal(document.getElementById('composeModal'));
                 modal.show();
             },
-            submitMessage() {
-                // Here, you can handle the form submission logic
-                console.log("Email:", this.email);
-                console.log("Subject:", this.subject);
-                console.log("Message:", this.message);
-                // Reset form fields
+            closeModal() {
+                const modalCompose = bootstrap.Modal.getInstance(document.getElementById('composeModal'));
+                const modalSearch = bootstrap.Modal.getInstance(document.getElementById('searchResultsModal'));
+
+                if (modalCompose) {
+                    modalCompose.hide();
+                }
+                if (modalSearch) {
+                    modalSearch.hide();
+                }
+
                 this.email = '';
                 this.subject = '';
                 this.message = '';
-                // Close the modal
-                const modal = bootstrap.Modal.getInstance(document.getElementById('composeModal'));
-                modal.hide();
+            },
+            showSearchResultsModal() {
+                const modal = new bootstrap.Modal(document.getElementById('searchResultsModal'));
+                modal.show();
             }
         }
     };
 </script>
 
 <style scoped>
-    /* Custom Styles */
+    .container {
+        margin: 0 auto;
+    }
+
+    .table-controls {
+        margin-bottom: 20px;
+    }
+
     .compose-btn {
         background-color: #007bff;
         color: white;
@@ -128,33 +216,28 @@
         cursor: pointer;
     }
 
-    .compose-btn:hover {
-        background-color: #0056b3;
+    .table {
+        margin-bottom: 20px;
     }
 
-    .btn-view {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 6px 8px;
-        border-radius: 4px;
-        cursor: pointer;
+    .modal-content {
+        padding: 20px;
     }
 
-    .btn-view:hover {
-        background-color: #0056b3;
+    .result-item {
+        margin: 5px 0;
     }
 
-    .btn-delete {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        padding: 6px 8px;
-        border-radius: 4px;
-        cursor: pointer;
+    h3 {
+        margin: 10px 0;
     }
 
-    .btn-delete:hover {
-        background-color: #c82333;
+    .modal-header {
+        background-color: #f7f7f7;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .modal-title {
+        font-weight: bold;
     }
 </style>
