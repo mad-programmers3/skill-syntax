@@ -38,8 +38,8 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Category
-                    <select class="form-select" v-model="formData.category_id" v-validate="'required'" name="subcategory">
-                        <option value="" disabled>Select a category</option>
+                    <select class="form-control" v-model="formData.category_id" v-validate="'required'" name="category_id" @change="validateField">
+                        <option value="">Select a category</option>
                         <option v-for="category in categories" :key="category.id" :value="category.id">
                             {{ category.title }}
                         </option>
