@@ -42,7 +42,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 
-Route::post('/send-message', [MessageController::class, 'sendMessage'])->middleware('auth:sanctum');
+Route::post('send-message', [MessageController::class, 'sendMessage']);
 Route::get('/messages/{userId}', [MessageController::class, 'getMessages'])->middleware('auth:sanctum');
 
 

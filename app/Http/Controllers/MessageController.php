@@ -10,6 +10,7 @@ class MessageController extends Controller
 {
     public function sendMessage(Request $request)
     {
+        dd($request);
         $validatedData = $request->validate([
             'receiver_id' => 'required|exists:users,id',
             'message' => 'required|string',
