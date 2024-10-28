@@ -189,7 +189,7 @@
                         <template v-else>
                             <!-- Lessons Section -->
                             <h4 v-if="isEmptyData(course.lessons)" class="mt-5 text-center">No lessons available for this course</h4>
-                            <lessons-playlist-component v-else :lessons="course.lessons" :current-lesson-id="runningInfo.current_lesson_id"/>
+                            <lessons-playlist-component v-else :lessons="course.lessons" :running-info="runningInfo"/>
 
                             <!-- Quizzes Section -->
                             <h4 v-if="isEmptyData(course.quizzes)" class="mt-5 text-center">No quizzes available for this course</h4>

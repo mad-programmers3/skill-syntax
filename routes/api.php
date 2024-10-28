@@ -61,7 +61,8 @@ Route::group(['prefix' => 'student'], function () {
     Route::get('purchase', [StudentController::class, 'purchaseHistory']);
 });
 
-Route::put('running-infos/{id}', [FrontendController::class, 'goToNextLesson']);
+Route::put('courses/running-infos/{id}', [FrontendController::class, 'updateCourseRunning']);
+Route::put('lessons/running-infos/{id}', [FrontendController::class, 'updateLessonRunning']);
 
 
 Route::get('required-data', [SupportController::class, 'requiredData']);

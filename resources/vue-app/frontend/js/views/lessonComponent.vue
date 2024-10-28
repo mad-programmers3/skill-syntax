@@ -104,7 +104,7 @@
                     </div>
 
                     <div class="col-lg-4 right-contents" v-if="lesson && lesson.course">
-                        <lessons-playlist-component v-if="lesson.course" :id="lesson.id" :lessons="lesson.course.lessons" :current-lesson-id="runningInfo.current_lesson_id"/>
+                        <lessons-playlist-component v-if="lesson.course" :id="lesson.id" :lessons="lesson.course.lessons" :running-info="runningInfo"/>
 
                         <h4 v-if="isEmptyData(lesson.quizzes)" class="mt-5 text-center">No quizzes available for this Lesson</h4>
                         <h4 v-else-if="false" class="mt-5 text-center">The {{ lesson.quizzes.length }} quizzes will appear soon</h4>
@@ -300,7 +300,7 @@
 
                 const _this = this;
                 this.httpReq({
-                    customUrl: 'api/running-infos',
+                    customUrl: 'api/courses/running-infos',
                     urlSuffix: this.runningInfo.ric_id,
                     method: 'put',
                     data: {current_lesson_id: this.next.id},

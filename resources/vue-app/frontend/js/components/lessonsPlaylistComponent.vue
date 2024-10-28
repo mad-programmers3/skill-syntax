@@ -12,18 +12,18 @@
                         <h6 class="card-title mb-0">{{ lesson.title }}</h6>
                         <p class="card-text"><i class="fas fa-clock primary-text2"></i> {{ !isEmptyData(lesson.video) ? formatSecondsToTime(lesson.video.duration) : 'NA' }}</p>
                     </div>
-    <!--                <div class="mt-lg-0 mt-3">-->
-    <!--                    <span class="meta_info mr-4">-->
-    <!--                       <a @click="()=>{$emit('do-like')}" class="primary-text2">-->
-    <!--                           <i :class="`${lessonsLikes && lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{lessonsLikes && lessonsLikes[lesson.id] ? lessonsLikes[lesson.id].length : 0 }}-->
-    <!--                       </a>-->
-    <!--                    </span>-->
-    <!--                    <span class="meta_info padded-info">-->
-    <!--                        <a href="#" class="primary-text2">-->
-    <!--                            <i class="far fa-comment"></i> {{ lessonsReviews && lessonsReviews[lesson.id] ? lessonsReviews[lesson.id].length }}-->
-    <!--                        </a>-->
-    <!--                    </span>-->
-    <!--                </div>-->
+                    <!--                <div class="mt-lg-0 mt-3">-->
+                    <!--                    <span class="meta_info mr-4">-->
+                    <!--                       <a @click="()=>{$emit('do-like')}" class="primary-text2">-->
+                    <!--                           <i :class="`${lessonsLikes && lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{lessonsLikes && lessonsLikes[lesson.id] ? lessonsLikes[lesson.id].length : 0 }}-->
+                    <!--                       </a>-->
+                    <!--                    </span>-->
+                    <!--                    <span class="meta_info padded-info">-->
+                    <!--                        <a href="#" class="primary-text2">-->
+                    <!--                            <i class="far fa-comment"></i> {{ lessonsReviews && lessonsReviews[lesson.id] ? lessonsReviews[lesson.id].length }}-->
+                    <!--                        </a>-->
+                    <!--                    </span>-->
+                    <!--                </div>-->
                 </div>
             </div>
         </div>
@@ -42,19 +42,17 @@
 
         methods: {
             goToLesson(lessId, index) {
-                const crrLessId = runningInfo.current_lesson_id;
+                const crrLessId = this.runningInfo.current_lesson_id;
                 const _this = this;
 
                 if (crrLessId >= lessId)
                     this.$router.push({ name: 'lesson', params: { id: lessId } });
-                else if(this.isCompleteLesson(index-1)) {
-                    this.$router.push({ name: 'lesson', params: { id: lessId } });
-
+                else if(this.isCompleteLesson(index-1)) { // if prev is complete the go
                     this.httpReq({
-                        customUrl: 'api/running-infos',
+                        customUrl: 'api/courses/running-infos',
                         urlSuffix: this.runningInfo.ric_id ? this.runningInfo.ric_id : this.runningInfo.id,
                         method: 'put',
-                        data: {current_lesson_id: this.next.id},
+                        data: {current_lesson_id: lessId},
                         callback: () => {
                             this.$router.push({ name: 'lesson', params: { id: lessId } });
                         },
@@ -73,8 +71,7 @@
             isCompleteLesson(index) {
                 if (index < 0) return true;
                 const less = !this.isEmptyData(this.lessons) ? this.lessons[index] : null;
-                const less_id = less ? less.id;
-                return this.runningInfo && this.runningInfo.completed_lessons_id && this.runningInfo.completed_lessons_id.includes(less_id);
+                return this.runningInfo && this.runningInfo.completed_lessons_id && less && this.runningInfo.completed_lessons_id.includes(less.id);
             }
         }
     }

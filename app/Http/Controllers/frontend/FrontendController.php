@@ -138,7 +138,7 @@ class FrontendController extends Controller
         }
     }
 
-    public function goToNextLesson(Request $request, $id)
+    public function updateCourseRunning(Request $request, $id)
     {
         try {
             $record = PurchasedCourse::findOrFail($id);
@@ -148,6 +148,7 @@ class FrontendController extends Controller
                 if ($request->input('current_lesson_id') < $record->current_lesson_id)
                     unset($data['current_lesson_id']);
                 else {
+                    // move the crr les id and create new student lesson record
                     $lesson = Lesson::findOrFail($data['current_lesson_id']);
                     if ($lesson) {
                         StudentLesson::create([
@@ -157,6 +158,27 @@ class FrontendController extends Controller
                         ]);
                     }
                 }
+
+                $record->update($data);
+                return retRes('Running info updated', $record);
+            }
+
+            return retRes('Data not found', null, CODE_NOT_FOUND);
+        } catch (Exception $e) {
+            return retRes('Something went wrong', null, 500);
+        }
+
+    }
+
+    public function updateLessonRunning(Request $request, $id)
+    {
+        try {
+            $record = StudentLesson::findOrFail($id);
+            if ($record) {
+                $data = $request->all();
+
+                if ($request->input('current_quiz_id') < $record->current_quiz_id)
+                    unset($data['current_quiz_id']);
 
                 $record->update($data);
                 return retRes('Running info updated', $record);
