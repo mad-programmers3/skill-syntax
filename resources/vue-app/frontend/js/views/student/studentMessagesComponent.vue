@@ -21,10 +21,15 @@
                 <td>{{ message.subject }}</td>
                 <td>{{ message.message }}</td>
                 <td>
-                    <button @click="replyToMessage(message)" class="btn btn-primary btn-sm">Reply</button>
-                    <button @click="deleteMessage(message.id)" class="btn btn-danger btn-sm">Delete</button>
+                    <button @click="replyToMessage(message)" class="btn btn-primary btn-sm">
+                        <i class="fas fa-reply"></i>
+                    </button>
+                    <button @click="deleteMessage(message.id)" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </td>
             </tr>
+
             </tbody>
         </table>
 
@@ -94,10 +99,10 @@
             async fetchMessages() {
                 try {
                     const response = await axios.get('/api/messages');
+                    console.log(response.data); // Log the response to check the structure
                     this.messages = response.data.messages;
                 } catch (error) {
                     console.error('Fetch messages error:', error);
-                    console.log(response);
                 }
             },
             async performSearch() {

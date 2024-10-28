@@ -48,6 +48,14 @@ class MessageController extends Controller
         }
     }
 
+    public function getMessages()
+    {
+        // Retrieve all messages or apply any necessary filters
+        $messages = Message::all(); // Or paginate if needed
+
+        return response()->json(['messages' => $messages], 200);
+    }
+
 
 
 }
