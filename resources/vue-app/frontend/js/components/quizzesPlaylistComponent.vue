@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import QuizModalComponent from "../quizModalComponent";
+    import QuizModalComponent from "./quizModalComponent";
     export default {
         name: "quizzesPlaylistComponent",
         components: {QuizModalComponent},

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
             $table->foreignId('current_quiz_id')->nullable();
             $table->integer('marks')->default(0);
+            $table->tinyInteger('status')->default(0); // 0 not complete, 1 is
             $table->timestamps();
         });
     }

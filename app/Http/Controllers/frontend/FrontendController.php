@@ -69,6 +69,13 @@ class FrontendController extends Controller
             }
 
             $ri = Auth::user() ? PurchasedCourse::where('course_id', $id)->where('user_id', Auth::id())->first() : [];
+            if ($ri) {
+                $lessonsIds = $data['course']->lessons->pluck('id');
+                $ri->completed_lessons_id = StudentLesson::whereIn('lesson_id', $lessonsIds)
+                    ->where('user_id', Auth::id())
+                    ->where('status', 1)
+                    ->pluck('lesson_id');
+            }
             $data['running_info'] = $ri ? $ri : [];
 
             return retRes('Fetched course data for course page', $data);
@@ -79,10 +86,18 @@ class FrontendController extends Controller
 
     public function showLesson($id)
     {
-
         try {
             $data = [];
-            $data['lesson'] = Lesson::with(['thumbnail:id,path', 'video:id,path,duration', 'likes', 'course.lessons.thumbnail:id,path',  'course.lessons.video:id,path,duration', 'lesson_reviews.review.user', 'quizzes.questions'])->findOrFail($id);
+            $data['lesson'] = Lesson::with([
+                'thumbnail:id,path',
+                'video:id,path,duration',
+                'likes',
+                'course.lessons.thumbnail:id,path',
+                'course.lessons.video:id,path,duration',
+                'lesson_reviews.review.user',
+                'quizzes.questions'
+            ])->findOrFail($id);
+
             $data['prev'] = $data['lesson']->prev();
             $data['next'] = $data['lesson']->next();
 
@@ -96,12 +111,26 @@ class FrontendController extends Controller
 
             $ri = [];
             if (Auth::user()) {
-                $ri = StudentLesson::where('lesson_id', $id)->where('user_id', Auth::id())->first();
-                $ric = PurchasedCourse::where('course_id', $data['lesson']->course->id)->where('user_id', Auth::id())->first();
-                $ri->current_lesson_id = $ric->current_lesson_id;
-                $ri->ric_id = $ric->id;
+                $ri = StudentLesson::where('lesson_id', $id)
+                    ->where('user_id', Auth::id())
+                    ->first();
+
+                if ($ri) {
+                    $ric = PurchasedCourse::where('course_id', $data['lesson']->course->id)
+                        ->where('user_id', Auth::id())
+                        ->first();
+
+                    $ri->current_lesson_id = $ric->current_lesson_id;
+                    $ri->ric_id = $ric->id;
+
+                    $lessonsIds = $data['lesson']->course->lessons->pluck('id');
+                    $ri->completed_lessons_id = StudentLesson::whereIn('lesson_id', $lessonsIds)
+                        ->where('user_id', Auth::id())
+                        ->where('status', 1)
+                        ->pluck('lesson_id');
+                }
             }
-            $data['running_info'] = $ri ? $ri : [];
+            $data['running_info'] = $ri ?: [];
 
             return retRes('Fetched lesson data for lesson page', $data);
         } catch (Exception $e) {

@@ -2,8 +2,8 @@
     <div>
         <h4 class="title mt-2">Lessons</h4>
         <div class="playlist">
-            <div v-if="!isEmptyData(lessons)" v-for="lesson in lessons" :key="lesson.id" :class="['card my-2', { 'highlight-card': id === lesson.id }]" :style="`background: ${ currentLessonId >= lesson.id ? '#fff' : '#d4d4d4'};`">
-                <div @click="id !== lesson.id && goToLesson(lesson.id, currentLessonId)" class="row no-gutters pointer align-items-center">
+            <div v-if="!isEmptyData(lessons)" v-for="(lesson, index) in lessons" :key="lesson.id" :class="['card my-2', { 'highlight-card': id === lesson.id }]" :style="`background: ${ runningInfo.current_lesson_id >= lesson.id ? '#fff' : '#d4d4d4'};`">
+                <div @click="id !== lesson.id && goToLesson(lesson.id, index)" class="row no-gutters pointer align-items-center">
                     <div class="col-md-4 justify-content-center">
                         <img class="img-fluid" :src="generateFileUrl(lesson.thumbnail, TYPE_LESSON)" alt="Course Image" style="border: 1px solid #ddd; padding: 5px; margin: 10px; border-radius: 8px;" >
                     </div>
@@ -37,7 +37,45 @@
         props: {
             id: Number,
             lessons: Array,
-            currentLessonId: Number,
+            runningInfo: Object,
+        },
+
+        methods: {
+            goToLesson(lessId, index) {
+                const crrLessId = runningInfo.current_lesson_id;
+                const _this = this;
+
+                if (crrLessId >= lessId)
+                    this.$router.push({ name: 'lesson', params: { id: lessId } });
+                else if(this.isCompleteLesson(index-1)) {
+                    this.$router.push({ name: 'lesson', params: { id: lessId } });
+
+                    this.httpReq({
+                        customUrl: 'api/running-infos',
+                        urlSuffix: this.runningInfo.ric_id ? this.runningInfo.ric_id : this.runningInfo.id,
+                        method: 'put',
+                        data: {current_lesson_id: this.next.id},
+                        callback: () => {
+                            this.$router.push({ name: 'lesson', params: { id: lessId } });
+                        },
+                    });
+                } else {
+                    this.showSweetAlert({
+                        title: 'Locked Lesson',
+                        text: 'To continue this lesson you need to complete previous lessons. Want to continue where you left?',
+                        callback: (confirm) => {
+                            if (confirm)
+                                _this.$router.push({name: 'lesson', params: {id: crrLessId}});
+                        }
+                    });
+                }
+            },
+            isCompleteLesson(index) {
+                if (index < 0) return true;
+                const less = !this.isEmptyData(this.lessons) ? this.lessons[index] : null;
+                const less_id = less ? less.id;
+                return this.runningInfo && this.runningInfo.completed_lessons_id && this.runningInfo.completed_lessons_id.includes(less_id);
+            }
         }
     }
 </script>

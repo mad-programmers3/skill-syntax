@@ -273,22 +273,6 @@ export default {
         isSolveQs(question) {
             return question && this.auth && this.auth.solved_questions_id.includes(question.id);
         },
-
-        goToLesson(lessId, crrLessId) {
-            if (crrLessId >= lessId)
-                this.$router.push({ name: 'lesson', params: { id: lessId } });
-            else {
-                const _this = this;
-                this.showSweetAlert({
-                    title: 'Locked Lesson',
-                    text: 'To continue this lesson you need to complete previous lessons. Want to continue where you left?',
-                    callback: (confirm) => {
-                        if (confirm)
-                            _this.$router.push({name: 'lesson', params: {id: crrLessId}});
-                    }
-                });
-            }
-        },
         canShowQuiz(lessons, crrLessId) {
             if (this.isEmptyData(lessons) && !crrLessId) return false;
             const lastLesson = lessons[lessons.length - 1];

@@ -218,7 +218,7 @@
     import jsPDF from 'jspdf';
     import QuizModalComponent from "../components/quizModalComponent";
     import LessonsPlaylistComponent from "../components/lessonsPlaylistComponent";
-    import QuizzesPlaylistComponent from "../components/sections/quizzesPlaylistComponent";
+    import QuizzesPlaylistComponent from "../components/quizzesPlaylistComponent";
 
     export default {
         name: "courseDetails",

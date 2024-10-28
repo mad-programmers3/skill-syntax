@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Lesson extends Model
 {
@@ -32,6 +33,17 @@ class Lesson extends Model
             ->orderBy('id', 'asc')
             ->first();
     }
+
+    // Is complete this lesson by student
+    public function is_complete()
+    {
+        $studentLesson = StudentLesson::where('lesson_id', $this->id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        return $studentLesson && $studentLesson->status === 1;
+    }
+
 
     // Define the relationship with the Course model
     public function course()
