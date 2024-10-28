@@ -93,14 +93,12 @@
 
                             // if done move the current_quiz_it to next
                             if (!failedQs) {
-                                let data = {};
+                                let data = {current_quiz_id: _this.nextQuizId};
                                 const customUrl = _this.runningInfo.ric_id ? 'api/lessons/running-infos' : 'api/courses/running-infos';  // lesson runningInfo always contains ric_id
 
-                                if (_this.nextQuizId) {
-                                    data = {current_quiz_id: _this.nextQuizId};
-                                } else if (_this.runningInfo.lesson_id) {
+                               if (!_this.nextQuizId && _this.runningInfo.lesson_id) {
                                     // it's from lesson and it's the last quiz , lesson done
-                                    data = {status: 1};
+                                    data.status = 1;
                                     if(!_this.isEmptyData(_this.runningInfo.completed_lessons_id)) _this.runningInfo.completed_lessons_id.push(_this.runningInfo.lesson_id);
                                 }
                                 this.httpReq({
@@ -108,8 +106,9 @@
                                     urlSuffix: _this.runningInfo.id,
                                     method: 'put',
                                     data,
-                                    callback: () => {
-                                        _this.runningInfo.current_quiz_id = _this.nextQuizId;
+                                    callback: (reponse) => {
+                                        if (reponse.data && reponse.data.result)
+                                            _this.runningInfo.current_quiz_id = reponse.data.result.current_quiz_id;
                                     },
                                 });
                             }

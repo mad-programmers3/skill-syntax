@@ -17,8 +17,8 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="runningInfo.current_quiz_id < quiz.id" class="genric-btn primary-bg circle text-white" style="cursor: default">Upcoming</div>
-                    <div v-else-if="isSolvedAllQs(quiz.questions)" class="genric-btn primary-bg2 circle text-white" style="cursor: default">Solved</div>
+                    <div v-if="isSolvedAllQs(quiz.questions)" class="genric-btn primary-bg2 circle text-white" style="cursor: default">Solved</div>
+                    <div v-else-if="index && runningInfo.current_quiz_id && runningInfo.current_quiz_id < quiz.id" class="genric-btn primary-bg circle text-white" style="cursor: default">Upcoming</div>
                     <button v-else class="genric-btn primary3 circle" data-toggle="modal" :data-target="`#quizModal${quiz.id}`">Take Now</button>
                 </div>
             </div>

@@ -273,12 +273,6 @@ export default {
         isSolveQs(question) {
             return question && this.auth && this.auth.solved_questions_id.includes(question.id);
         },
-        canShowQuiz(lessons, crrLessId) {
-            if (this.isEmptyData(lessons) && !crrLessId) return false;
-            const lastLesson = lessons[lessons.length - 1];
-            if (this.isEmptyData(lastLesson)) return false;
-            return lastLesson.id === crrLessId;
-        },
 
         isCompleteAllQuizzes(quizzes) {
             if (this.isEmptyData(quizzes)) return true;

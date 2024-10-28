@@ -193,12 +193,12 @@
 
                             <!-- Quizzes Section -->
                             <h4 v-if="isEmptyData(course.quizzes)" class="mt-5 text-center">No quizzes available for this course</h4>
-                            <h4 v-else-if="!canShowQuiz(course.lessons, runningInfo.current_lesson_id)" class="mt-5 text-center">The {{ course.quizzes.length }} quizzes will appear soon</h4>
+                            <h4 v-else-if="!canShowQuiz()" class="mt-5 text-center">The {{ course.quizzes.length }} quizzes will appear soon</h4>
                             <quizzes-playlist-component v-else :quizzes="course.quizzes" :running-info="runningInfo"/>
 
 
                             <!-- Get Certification -->
-                            <div v-if="isCompleteAllQuizzes(course.quizzes)" class="mt-5 py-3 px-4 primary-bg2 rounded">
+                            <div v-if="canShowCertificate()" class="mt-5 py-3 px-4 primary-bg2 rounded">
                                 <div class="text-center bg-white p-3 rounded">
                                     <h6 class="font-weight-bold">
                                         Congratulations on completing the course! You can now download your certificate.
@@ -288,6 +288,24 @@
                     }
                 });
             },
+
+            canShowQuiz() {
+                const lessons = this.course.lessons;
+                const crrLessId = this.runningInfo.current_lesson_id;
+                if (this.isEmptyData(lessons) && !crrLessId) return false;
+                const lastLesson = lessons[lessons.length - 1];
+                if (this.isEmptyData(lastLesson)) return false;
+                return lastLesson.id === crrLessId;
+            },
+            canShowCertificate() {
+                if (this.isEmptyData(this.runningInfo) || !this.runningInfo.completed_lessons_id || !this.course.lessons || !this.course.quizzes) return false;
+
+                const allLessonsCompleted = this.runningInfo.completed_lessons_id.length === this.course.lessons.length;
+                const allQuizzesCompleted = this.isCompleteAllQuizzes(this.course.quizzes);
+
+                return allLessonsCompleted && allQuizzesCompleted;
+            },
+
 
             handleDropDown(action, review) {
                 // Close the dropdown

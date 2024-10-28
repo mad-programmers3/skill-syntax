@@ -2,7 +2,7 @@
     <div>
         <h4 class="title mt-2">Lessons</h4>
         <div class="playlist">
-            <div v-if="!isEmptyData(lessons)" v-for="(lesson, index) in lessons" :key="lesson.id" :class="['card my-2', { 'highlight-card': id === lesson.id }]" :style="`background: ${ runningInfo.current_lesson_id >= lesson.id ? '#fff' : '#d4d4d4'};`">
+            <div v-if="!isEmptyData(lessons)" v-for="(lesson, index) in lessons" :key="lesson.id" :class="['card my-2', { 'highlight-card': id === lesson.id }]" :style="`background: ${isHighlighted(lesson.id, index) ? '#fff' : '#d4d4d4'};`">
                 <div @click="id !== lesson.id && goToLesson(lesson.id, index)" class="row no-gutters pointer align-items-center">
                     <div class="col-md-4 justify-content-center">
                         <img class="img-fluid" :src="generateFileUrl(lesson.thumbnail, TYPE_LESSON)" alt="Course Image" style="border: 1px solid #ddd; padding: 5px; margin: 10px; border-radius: 8px;" >
@@ -12,18 +12,6 @@
                         <h6 class="card-title mb-0">{{ lesson.title }}</h6>
                         <p class="card-text"><i class="fas fa-clock primary-text2"></i> {{ !isEmptyData(lesson.video) ? formatSecondsToTime(lesson.video.duration) : 'NA' }}</p>
                     </div>
-                    <!--                <div class="mt-lg-0 mt-3">-->
-                    <!--                    <span class="meta_info mr-4">-->
-                    <!--                       <a @click="()=>{$emit('do-like')}" class="primary-text2">-->
-                    <!--                           <i :class="`${lessonsLikes && lessonsLikes[lesson.id].includes(auth.id) ? 'fas' : 'far'} fa-thumbs-up`"></i> {{lessonsLikes && lessonsLikes[lesson.id] ? lessonsLikes[lesson.id].length : 0 }}-->
-                    <!--                       </a>-->
-                    <!--                    </span>-->
-                    <!--                    <span class="meta_info padded-info">-->
-                    <!--                        <a href="#" class="primary-text2">-->
-                    <!--                            <i class="far fa-comment"></i> {{ lessonsReviews && lessonsReviews[lesson.id] ? lessonsReviews[lesson.id].length }}-->
-                    <!--                        </a>-->
-                    <!--                    </span>-->
-                    <!--                </div>-->
                 </div>
             </div>
         </div>
@@ -72,6 +60,10 @@
                 if (index < 0) return true;
                 const less = !this.isEmptyData(this.lessons) ? this.lessons[index] : null;
                 return this.runningInfo && this.runningInfo.completed_lessons_id && less && this.runningInfo.completed_lessons_id.includes(less.id);
+            },
+
+            isHighlighted(less_id, index) {
+                return (this.isEmptyData(this.runningInfo.current_lesson_id) && index === 0) || this.runningInfo.current_lesson_id >= less_id;
             }
         }
     }
