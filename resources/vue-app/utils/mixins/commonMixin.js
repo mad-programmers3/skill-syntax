@@ -129,6 +129,10 @@ export default {
             if (index !== -1) objArr.splice(index, 1);
         },
 
+        goTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+
 
         formatDecimal(value) {
             if (value % 1 === 0) return parseInt(value);

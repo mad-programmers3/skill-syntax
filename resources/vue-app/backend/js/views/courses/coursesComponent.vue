@@ -111,14 +111,14 @@
                 <div class="w-50 pr-2">
                     <label class="form-label w-100">
                         Price
-                        <input type="text" class="form-control" placeholder="Enter course price" v-model="formData.price" v-validate="'required|decimal'" name="price" @input="validateField"/>
+                        <input type="number" class="form-control" placeholder="Enter course price" v-model="formData.price" v-validate="'required|decimal'" name="price" @input="validateField"/>
                     </label>
                 </div>
 
                 <div class="w-50 pl-2">
                     <label class="form-label w-100">
                         Sits
-                        <input type="text" class="form-control" placeholder="Enter available sits" v-model="formData.sits" v-validate="'required|numeric'" name="sits" @input="validateField"/>
+                        <input type="number" class="form-control" placeholder="Enter available sits" v-model="formData.sits" v-validate="'required|numeric'" name="sits" @input="validateField"/>
                     </label>
                 </div>
             </div>

@@ -8,6 +8,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\PurchasedCourse;
 use App\Models\ReviewLike;
+use App\Models\Role;
 use App\Models\StudentLesson;
 use Exception;
 use Illuminate\Http\Request;
@@ -98,8 +99,15 @@ class FrontendController extends Controller
                 'quizzes.questions'
             ])->findOrFail($id);
 
-            $data['prev'] = $data['lesson']->prev();
-            $data['next'] = $data['lesson']->next();
+            // Get all lessons in the course and collect their IDs
+            $lessons = $data['lesson']->course->lessons;
+            $lessonIds = $lessons->pluck('id')->all();
+            $currentLessonIndex = array_search($id, $lessonIds);
+
+            // Determine previous and next lessons based on the current lesson's index
+            $data['prev'] = $currentLessonIndex > 0 ? $lessons[$currentLessonIndex - 1] : null;
+            $data['next'] = $currentLessonIndex < count($lessonIds) - 1 ? $lessons[$currentLessonIndex + 1] : null;
+
 
             $data['reviews'] = $data['lesson']->lesson_reviews->pluck('review');
             $data['likes'] = $data['lesson']->likes->pluck('user_id');
@@ -135,6 +143,32 @@ class FrontendController extends Controller
             return retRes('Fetched lesson data for lesson page', $data);
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
+        }
+    }
+
+    public function purchase($id) {
+        try {
+            // Ensure user is authenticated
+            $user = auth()->user();
+            $studentRole = Role::where('name', 'Student')->first(); // Fetch the first match
+            if (!$user || !$studentRole || $user->role_id !== $studentRole->id)
+                return retRes('User is not authenticated or not a student.', null, CODE_DANGER);
+
+            // Use firstOrNew to find existing purchase or create a new instance
+            $purchase = PurchasedCourse::firstOrNew([
+                'user_id' => $user->id,
+                'course_id' => $id,
+            ]);
+
+            // Check if the course has already been purchased
+            if ($purchase->exists)
+                return retRes('You have already purchased this course.', null, CODE_EXIST);
+
+
+            $purchase->save();
+            return retRes('Course purchased successfully!', $purchase, CODE_SUCCESS);
+        } catch (Exception $e) {
+            return retRes('Failed to purchase course', null, 500);
         }
     }
 

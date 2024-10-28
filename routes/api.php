@@ -63,6 +63,7 @@ Route::group(['prefix' => 'student'], function () {
 
 Route::put('courses/running-infos/{id}', [FrontendController::class, 'updateCourseRunning']);
 Route::put('lessons/running-infos/{id}', [FrontendController::class, 'updateLessonRunning']);
+Route::post('courses/purchase/{id}', [FrontendController::class, 'purchase']);
 
 
 Route::get('required-data', [SupportController::class, 'requiredData']);
@@ -86,7 +87,6 @@ Route::middleware('auth:api')->group(function () {
     Route::resource('courses', CourseController::class);
     Route::post('courses/add-quiz', [CourseController::class, 'addQuiz']);
     Route::post('courses/do-like', [CourseController::class, 'doLike']);
-    Route::post('courses/purchase/{id}', [CourseController::class, 'purchase']);
 
 
     Route::resource('lessons', LessonController::class);

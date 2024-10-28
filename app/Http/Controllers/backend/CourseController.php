@@ -50,47 +50,4 @@ class CourseController extends Controller
     public function doLike(Request $request) {
         return $this->likeHelper($request, new CourseLike(), 'course');
     }
-
-    public function purchase($id) {
-        try {
-            // Ensure user is authenticated
-            $user = auth()->user();
-            $studentRole = Role::where('name', 'Student')->first(); // Fetch the first match
-            if (!$user || !$studentRole || $user->role_id !== $studentRole->id)
-                return retRes('User is not authenticated or not a student.', null, CODE_DANGER);
-
-
-            // Use firstOrNew to find existing purchase or create a new instance
-            $purchase = PurchasedCourse::firstOrNew([
-                'user_id' => $user->id,
-                'course_id' => $id,
-            ]);
-
-            // Check if the course has already been purchased
-            if ($purchase->exists)
-                return retRes('You have already purchased this course.', null, CODE_EXIST);
-
-            $course = Course::findOrFail($id);
-            $firstLess = $course->lessons->first();
-            if ($firstLess) {
-                $purchase->current_lesson_id = $firstLess->id;
-
-                // Also store the first student lesson info
-                StudentLesson::create([
-                    'user_id' => $user->id,
-                    'lesson_id' => $firstLess->id,
-                    'current_quiz_id' => $firstLess->quizzes->first() ? $firstLess->quizzes->first()->id : null
-                ]);
-            }
-
-            $purchase->current_quiz_id = $course->quizzes->first() ? $course->quizzes->first()->id : null;
-            $purchase->save();
-
-
-            return retRes('Course purchased successfully!', $purchase, CODE_SUCCESS);
-
-        } catch (Exception $e) {
-            return retRes('Failed to purchase course', null, 500);
-        }
-    }
 }

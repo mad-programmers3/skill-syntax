@@ -48,7 +48,7 @@
                 } else {
                     this.showSweetAlert({
                         title: 'Locked Lesson',
-                        text: 'To continue this lesson you need to complete previous lessons. Want to continue where you left?',
+                        text: 'To continue this lesson you need to complete previous lessons and all quizzes. Want to continue where you left?',
                         callback: (confirm) => {
                             if (confirm)
                                 _this.$router.push({name: 'lesson', params: {id: crrLessId}});

@@ -108,14 +108,14 @@
 
                         <h4 v-if="isEmptyData(lesson.quizzes)" class="mt-5 text-center">No quizzes available for this Lesson</h4>
                         <h4 v-else-if="false" class="mt-5 text-center">The {{ lesson.quizzes.length }} quizzes will appear soon</h4>
-                        <quizzes-playlist-component v-else :quizzes="lesson.quizzes" :running-info="runningInfo"/>
+                        <quizzes-playlist-component v-else id="quiz_area" :quizzes="lesson.quizzes" :running-info="runningInfo"/>
 
                         <div class="mt-5 d-flex justify-content-between">
                             <div>
-                                <router-link :to="{ name: 'lesson', params: { id: prev.id } }" v-if="!isEmptyData(prev)" class="genric-btn primary2 circle arrow px-3"><span class="ml-0 mr-2 ti-arrow-left"></span>Prev</router-link>
+                                <router-link :to="{ name: 'lesson', params: { id: prev.id } }" v-if="showPrevNextBtn(prev)" class="genric-btn primary2 circle arrow px-3"><span class="ml-0 mr-2 ti-arrow-left"></span>Prev</router-link>
                             </div>
                             <div>
-                                <button @click="goNextLesson()"  v-if="!isEmptyData(next)" class="genric-btn primary2 circle arrow px-3">Next<span class="ti-arrow-right"></span></button>
+                                <button @click="goNextLesson()"  v-if="showPrevNextBtn(next)" class="genric-btn primary2 circle arrow px-3">Next<span class="ti-arrow-right"></span></button>
                             </div>
                         </div>
                     </div>
@@ -161,8 +161,6 @@
             }
         },
         mounted() {
-
-
             this.fetchLesson(this.lesson_id);
         },
         computed: {
@@ -241,6 +239,16 @@
                         }
                     }
                 });
+            },
+
+
+            showPrevNextBtn(less) {
+                const lessons = this.lesson && this.lesson.course ? this.lesson.course.lessons : [];
+                // Base cases: Check if lessons array and currentLessonId are valid
+                if (this.isEmptyData(less) || this.isEmptyData(lessons)) return false;
+                const currentIndex = lessons.findIndex(lesson => lesson.id === less.id);
+                return currentIndex !== -1;
+
             },
 
             cancelUpdate() {
