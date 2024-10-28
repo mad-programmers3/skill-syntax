@@ -119,7 +119,7 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Bio
-                    <quill-editor :content="formData.bio" class="quill-editor"></quill-editor>
+                    <vue2-tinymce-editor v-model="formData.bio"></vue2-tinymce-editor>
                 </label>
             </div>
 
@@ -138,15 +138,15 @@
 
 
 <script>
-    import QuillEditor from "../../components/quillEditor"; // Text editor
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
     import Pagination from "../../components/Pagination"; // Import your Pagination component
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
+    import Vue2TinymceEditor from "vue2-tinymce-editor/src/lib-components/Vue2TinymceEditor";
 
     export default {
         name: "categoriesComponent",
-        components: {ValidateFormModal, DataTable, Pagination, QuillEditor},
+        components: {Vue2TinymceEditor, ValidateFormModal, DataTable, Pagination},
         mixins: [validatorListComponentMixin],
         data() {
             return {

@@ -29,7 +29,6 @@
 </template>
 
 <script>
-    import QuillEditor from "../../components/quillEditor"; // Text editor
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
     import Pagination from "../../components/Pagination"; // Import your Pagination component
@@ -37,7 +36,7 @@
 
     export default {
         name: "pendingCoursesComponent",
-        components: { ValidateFormModal, DataTable, QuillEditor, Pagination }, // Register Pagination component
+        components: { ValidateFormModal, DataTable, Pagination }, // Register Pagination component
         mixins: [validatorListComponentMixin],
         data() {
             return {

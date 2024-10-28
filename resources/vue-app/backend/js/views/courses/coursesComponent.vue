@@ -63,7 +63,7 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Description
-                    <quill-editor :content="formData.description" class="quill-editor"></quill-editor>
+                    <vue2-tinymce-editor v-model="formData.description"></vue2-tinymce-editor>
                 </label>
             </div>
 
@@ -144,16 +144,16 @@
 </template>
 
 <script>
-    import QuillEditor from "../../components/quillEditor"; // Text editor
     import DataTable from "../../components/dataTable";
     import ValidateFormModal from "../../components/validateFormModal";
     import Pagination from "../../components/Pagination"; // Import your Pagination component
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
     import ShowDetailsModal from "../../components/showDetailsModal";
+    import Vue2TinymceEditor from "vue2-tinymce-editor/src/lib-components/Vue2TinymceEditor";
 
     export default {
         name: "coursesComponent",
-        components: {ShowDetailsModal, ValidateFormModal, DataTable, QuillEditor, Pagination }, // Register Pagination component
+        components: {Vue2TinymceEditor, ShowDetailsModal, ValidateFormModal, DataTable, Pagination }, // Register Pagination component
         mixins: [validatorListComponentMixin],
         data() {
             return {
