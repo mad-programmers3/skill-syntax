@@ -9,7 +9,7 @@ class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['sender_id', 'receiver_id', 'message'];
+    protected $fillable = ['sender_id', 'receiver_id', 'email', 'subject', 'message'];
 
     // Relationship to sender
     public function sender()
@@ -23,4 +23,3 @@ class Message extends Model
         return $this->belongsTo(User::class, 'receiver_id');
     }
 }
-

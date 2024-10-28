@@ -2,41 +2,52 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Message;
 use Illuminate\Http\Request;
+use App\Models\Message;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
     public function sendMessage(Request $request)
     {
-        dd($request);
-        $validatedData = $request->validate([
-            'receiver_id' => 'required|exists:users,id',
+        // Validate the request data
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'subject' => 'required|string|max:255',
             'message' => 'required|string',
         ]);
 
-        $message = Message::create([
-            'sender_id' => Auth::id(),
-            'receiver_id' => $validatedData['receiver_id'],
-            'message' => $validatedData['message'],
-        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors()
+            ], 400);
+        }
 
-        return response()->json(['success' => true, 'message' => 'Message sent successfully!', 'data' => $message]);
+        try {
+            // Create and save the message
+            $message = new Message();
+            $message->email = $request->email;
+            $message->subject = $request->subject;
+            $message->message = $request->message;
+            $message->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Message sent successfully.'
+            ], 200);
+        } catch (\Exception $e) {
+            // Log the error
+            \Log::error('Message send error: ' . $e->getMessage());
+
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while sending the message.'
+            ], 500);
+        }
     }
 
-    public function getMessages($userId)
-    {
-        // Get messages for the authenticated user with the specified userId
-        $messages = Message::where(function ($query) use ($userId) {
-            $query->where('sender_id', Auth::id())
-                ->where('receiver_id', $userId);
-        })->orWhere(function ($query) use ($userId) {
-            $query->where('receiver_id', Auth::id())
-                ->where('sender_id', $userId);
-        })->orderBy('created_at', 'asc')->get();
 
-        return response()->json(['success' => true, 'data' => $messages]);
-    }
+
 }
-

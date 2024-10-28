@@ -41,9 +41,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::post('/send-message', [MessageController::class, 'sendMessage']);
 
-Route::post('send-message', [MessageController::class, 'sendMessage']);
-Route::get('/messages/{userId}', [MessageController::class, 'getMessages'])->middleware('auth:sanctum');
+//Route::post('send-message', [MessageController::class, 'sendMessage']);
+Route::get('/messages', [MessageController::class, 'getMessages']);
 
 
 Route::resource('tests', QuestionController::class);

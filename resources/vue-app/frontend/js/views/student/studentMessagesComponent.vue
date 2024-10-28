@@ -1,104 +1,81 @@
 <template>
-    <div class="container mt-5">
-        <!-- Top Controls -->
-        <div class="table-controls mb-3 d-flex justify-content-between align-items-center">
-            <input type="text" class="form-control w-25" placeholder="Search" v-model="searchQuery" />
-            <button class="btn btn-success" @click="performSearch">Search</button>
-            <button class="compose-btn" @click="showModal">Another Message</button>
+    <div class="container">
+        <div class="mb-3">
+            <input type="text" v-model="searchQuery" @keyup="performSearch" placeholder="Search users..." class="form-control" />
         </div>
 
-        <!-- Data Table -->
-        <table class="table table-bordered mt-3">
+        <table class="table table-bordered">
             <thead>
             <tr>
-                <th>SL</th>
-                <th>Name</th>
+                <th>#</th>
+                <th>Email</th>
+                <th>Subject</th>
                 <th>Message</th>
-                <th>Sent</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             <tr v-for="(message, index) in messages" :key="message.id">
                 <td>{{ index + 1 }}</td>
-                <td>{{ message.name }}</td>
-                <td>{{ message.content }}</td>
-                <td>{{ message.sent_at }}</td>
+                <td>{{ message.email }}</td>
+                <td>{{ message.subject }}</td>
+                <td>{{ message.message }}</td>
                 <td>
-                    <button type="button" class="btn btn-danger btn-sm" title="Delete Message" @click="deleteMessage(message.id)">
-                        <i class="fas fa-trash text-white"></i>
-                    </button>
-
-                    <!-- Reply Button -->
-                    <button type="button" class="btn btn-info btn-sm" title="Reply Message" @click="replyToMessage(message)">
-                        <i class="fas fa-reply text-white"></i>
-                    </button>
+                    <button @click="replyToMessage(message)" class="btn btn-primary btn-sm">Reply</button>
+                    <button @click="deleteMessage(message.id)" class="btn btn-danger btn-sm">Delete</button>
                 </td>
             </tr>
             </tbody>
         </table>
 
-        <!-- Search Results Modal -->
-        <div class="modal fade" id="searchResultsModal" tabindex="-1" aria-labelledby="searchResultsModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <!-- Compose Modal -->
+        <div class="modal fade" id="composeModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="searchResultsModalLabel">Search Results</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div v-if="results.users.length">
-                            <h3>USERS</h3>
-                            <div v-for="user in results.users" :key="user.id" class="result-item">
-                                <a href="#" @click.prevent="handleResultClick(user.email)">
-                                    {{ user.name.toLowerCase() }} - {{ user.email.toLowerCase() }}
-                                </a>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <h3>No users found</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Compose Message Modal -->
-        <div class="modal fade" id="composeModal" tabindex="-1" aria-labelledby="composeModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="composeModalLabel">Send Message</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeModal">
+                        <h5 class="modal-title">Compose Message</h5>
+                        <button type="button" class="close" @click="closeModal">
+                            <span>&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form @submit.prevent="submitMessage">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email*</label>
-                                <input type="email" class="form-control" id="email" v-model="email" required readonly />
-                            </div>
-                            <div class="mb-3">
-                                <label for="subject" class="form-label">Subject*</label>
-                                <input type="text" class="form-control" id="subject" v-model="subject" required />
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">Message*</label>
-                                <textarea class="form-control" id="message" v-model="message" rows="3" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-success" :disabled="isSending">Send</button>
-                        </form>
+                        <input type="email" v-model="email" placeholder="Email" class="form-control" />
+                        <input type="text" v-model="subject" placeholder="Subject" class="form-control" />
+                        <textarea v-model="message" placeholder="Message" class="form-control"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
+                        <button type="button" class="btn btn-primary" @click="submitMessage" :disabled="isSending">Send</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Search Results Modal -->
+        <div class="modal fade" id="searchResultsModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Search Results</h5>
+                        <button type="button" class="close" @click="closeSearchResultsModal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div v-for="user in results.users" :key="user.id" class="result-item" @click="selectUser(user)">
+                            {{ user.email }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
     import axios from 'axios';
     import Swal from 'sweetalert2';
+
     export default {
         data() {
             return {
@@ -110,35 +87,19 @@
                 subject: '',
                 message: '',
                 isSending: false,
-                messages: [
-                    {
-                        id: 1,
-                        name: 'John Doe',
-                        content: 'Hello, how are you?',
-                        sent_at: '2024-10-26 10:30 AM',
-                        email: 'john@example.com',
-                        subject: 'Greetings',
-                    },
-                    {
-                        id: 2,
-                        name: 'Jane Smith',
-                        content: 'Don’t forget our meeting tomorrow.',
-                        sent_at: '2024-10-27 2:15 PM',
-                        email: 'jane@example.com',
-                        subject: 'Meeting Reminder',
-                    },
-                    {
-                        id: 3,
-                        name: 'Mike Johnson',
-                        content: 'Can you send me the report?',
-                        sent_at: '2024-10-28 9:45 AM',
-                        email: 'mike@example.com',
-                        subject: 'Report Request',
-                    },
-                ],
+                messages: [],
             };
         },
         methods: {
+            async fetchMessages() {
+                try {
+                    const response = await axios.get('/api/messages');
+                    this.messages = response.data.messages;
+                } catch (error) {
+                    console.error('Fetch messages error:', error);
+                    console.log(response);
+                }
+            },
             async performSearch() {
                 if (this.searchQuery) {
                     try {
@@ -161,51 +122,47 @@
                     this.results.users = [];
                 }
             },
-            handleResultClick(email) {
-                this.email = email; // Set the email field to the selected user's email
-                this.showModal(); // Open the compose modal
-                this.results.users = []; // Clear results when clicking on a result
+            selectUser(user) {
+                this.email = user.email; // Set the email directly
+                this.subject = ''; // Clear previous subject
+                this.message = ''; // Clear previous message
+                this.closeSearchResultsModal(); // Close search results modal
+                this.showModal(); // Show the compose modal
             },
             async submitMessage() {
-                this.httpReq({
-                    customUrl: 'api/send-message',
-                    method: 'post',
-                    data: {},
-                })
-                // this.isSending = true;
-                // try {
-                //     const response = await axios.post('api/send-message', {
-                //         email: this.email,
-                //         subject: this.subject,
-                //         message: this.message
-                //     });
-                //     if (response.data.success) {
-                //         Swal.fire({
-                //             icon: 'success',
-                //             title: 'Message sent successfully!',
-                //         });
-                //         this.closeModal();
-                //     } else {
-                //         Swal.fire({
-                //             icon: 'error',
-                //             title: 'Failed to send message. Please try again.',
-                //         });
-                //     }
-                // } catch (error) {
-                //     console.error('Message send error:', error);
-                //     Swal.fire({
-                //         icon: 'error',
-                //         title: 'An error occurred. Please try again.',
-                //     });
-                // } finally {
-                //     this.isSending = false; // Re-enable the send button
-                // }
+                if (!this.email) {
+                    Swal.fire('Error!', 'Email field is required.', 'error');
+                    return;
+                }
+
+                this.isSending = true;
+
+                try {
+                    const response = await axios.post('/api/send-message', {
+                        email: this.email,
+                        subject: this.subject,
+                        message: this.message
+                    });
+
+                    if (response.data.success) {
+                        Swal.fire('Success!', response.data.message, 'success');
+                        this.closeModal(); // Close the modal after successful send
+                        this.fetchMessages(); // Fetch updated messages
+                    } else {
+                        Swal.fire('Error!', response.data.message, 'error');
+                    }
+                } catch (error) {
+                    console.error('Send message error:', error);
+                    Swal.fire('Error!', 'An error occurred while sending the message.', 'error');
+                } finally {
+                    this.isSending = false;
+                }
             },
             replyToMessage(message) {
-                this.email = message.email; // Assuming the message has the sender's email
-                this.subject = `Re: ${message.subject}`; // Assuming you want to prepend "Re:" to the subject
-                this.message = ''; // Start with an empty message body
-                this.showModal(); // Show the compose modal
+                this.email = message.email;
+                this.subject = `Re: ${message.subject}`;
+                this.message = '';
+                this.showModal();
             },
             async deleteMessage(messageId) {
                 const confirmDelete = await Swal.fire({
@@ -228,75 +185,37 @@
                             Swal.fire('Error!', 'Failed to delete the message.', 'error');
                         }
                     } catch (error) {
-                        console.error('Delete error:', error);
+                        console.error('Delete message error:', error);
                         Swal.fire('Error!', 'An error occurred while deleting the message.', 'error');
                     }
                 }
             },
             showModal() {
-                const modal = new bootstrap.Modal(document.getElementById('composeModal'));
-                modal.show();
+                $('#composeModal').modal('show');
             },
             closeModal() {
-                const modalCompose = bootstrap.Modal.getInstance(document.getElementById('composeModal'));
-                const modalSearch = bootstrap.Modal.getInstance(document.getElementById('searchResultsModal'));
-
-                if (modalCompose) {
-                    modalCompose.hide();
-                }
-                if (modalSearch) {
-                    modalSearch.hide();
-                }
-
-                // Clear form fields
-                this.email = '';
-                this.subject = '';
-                this.message = '';
+                $('#composeModal').modal('hide');
             },
             showSearchResultsModal() {
-                const modal = new bootstrap.Modal(document.getElementById('searchResultsModal'));
-                modal.show();
+                $('#searchResultsModal').modal('show');
+            },
+            closeSearchResultsModal() {
+                $('#searchResultsModal').modal('hide');
             }
+        },
+        mounted() {
+            this.fetchMessages();
         }
     };
 </script>
 
 <style scoped>
-    .container {
-        margin: 0 auto;
-    }
-
-    .table-controls {
-        margin-bottom: 20px;
-    }
-
-    .compose-btn {
-        background-color: #28a745;
-        color: white;
-        padding: 8px 12px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .table {
-        margin-bottom: 20px;
-    }
-
-    .modal-content {
-        padding: 20px;
-    }
-
     .result-item {
-        margin: 5px 0;
+        padding: 10px;
+        cursor: pointer;
+        border-bottom: 1px solid #ddd;
     }
-
-    h3 {
-        margin: 10px 0;
-    }
-
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
+    .result-item:hover {
+        background-color: #f0f0f0;
     }
 </style>
