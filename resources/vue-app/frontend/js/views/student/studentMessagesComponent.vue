@@ -60,8 +60,10 @@
                 <form @submit.prevent="submitMessage" class="modal-content">
                     <div class="modal-header">
                         <!-- Dynamic title with green color and send icon -->
-                        <h4 class="modal-title text-success">{{ composeModalTitle }} <i class="fas fa-paper-plane"></i></h4>
-                        <button type="button" class="close" @click="closeModal('#composeModal')">
+                        <h3 class="modal-title" :style="{ color: '#002347' }">
+                            {{ composeModalTitle }}
+                            <i class="fas fa-paper-plane text-success" :style="{ color: '#28a745' }"></i>
+                        </h3>                        <button type="button" class="close" @click="closeModal('#composeModal')">
                             <span>&times;</span>
                         </button>
                     </div>
