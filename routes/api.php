@@ -60,6 +60,7 @@ Route::group(['prefix' => 'pages'], function () {
 Route::group(['prefix' => 'student'], function () {
     Route::get('wish-list', [StudentController::class, 'wishList']);
     Route::get('purchase', [StudentController::class, 'purchaseHistory']);
+    Route::get('my-courses', [StudentController::class, 'myCourse']);
 });
 
 Route::put('courses/running-infos/{id}', [FrontendController::class, 'updateCourseRunning']);

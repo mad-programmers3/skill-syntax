@@ -40,4 +40,17 @@ class StudentController extends Controller
             return retRes('Something went wrong', null, 500);
         }
     }
+    public function myCourse(){
+        try {
+            if (!Auth::user())return retRes('your are not authenticated.', null, CODE_DANGER);
+
+            $data = [];
+            $data['purchased_course'] = PurchasedCourse::where('user_id', Auth::id())->with('course.category')->get()->pluck('course');
+
+
+            return retRes('Fetched liked course data for wish list page', $data);
+        } catch (Exception $e) {
+            return retRes('Something went wrong', null, 500);
+        }
+    }
 }
