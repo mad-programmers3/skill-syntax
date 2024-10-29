@@ -4,22 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Message extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['sender_id', 'receiver_id', 'email', 'subject', 'message'];
+    protected $fillable = ['email', 'subject', 'message', 'user_id'];
 
-    // Relationship to sender
-    public function sender()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'sender_id');
-    }
-
-    // Relationship to receiver
-    public function receiver()
-    {
-        return $this->belongsTo(User::class, 'receiver_id');
+        return $this->belongsTo(User::class);
     }
 }

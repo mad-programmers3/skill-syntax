@@ -41,11 +41,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/send-message', [MessageController::class, 'sendMessage']);
-
-//Route::post('send-message', [MessageController::class, 'sendMessage']);
+// In routes/api.php
 Route::get('/messages', [MessageController::class, 'getMessages']);
-
+Route::post('/send-message', [MessageController::class, 'sendMessage']);
+Route::delete('/messages/{id}', [MessageController::class, 'deleteMessage']);
 
 Route::resource('tests', QuestionController::class);
 

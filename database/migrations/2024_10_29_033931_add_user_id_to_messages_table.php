@@ -9,7 +9,8 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
+            $table->unsignedBigInteger('user_id')->nullable(); // Add user_id column
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');            $table->string('email');
             $table->string('subject');
             $table->text('message');
             $table->timestamps();
