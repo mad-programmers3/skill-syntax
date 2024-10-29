@@ -3,22 +3,18 @@
         <h2 class="my-4">Messages</h2>
 
         <div class="d-flex mb-3">
-            <button class="btn btn-primary me-2" @click="showInbox">
+            <button class="btn btn-primary button-spacing" @click="showInbox">
                 <i class="fas fa-inbox"></i> Inbox
             </button>
-            <button class="btn btn-secondary" @click="showSent">
+            <button class="btn btn-secondary button-spacing" @click="showSent">
                 <i class="fas fa-paper-plane"></i> Sent
             </button>
         </div>
 
+
         <div class="mb-3">
-            <input
-                    type="text"
-                    v-model="searchQuery"
-                    @keyup="performSearch"
-                    placeholder="Search users..."
-                    class="form-control"
-            />
+            <input type="text" v-model="searchQuery" @keyup.enter="performSearch" placeholder="Search users..." class="form-control"/>
+
         </div>
 
         <table class="table table-striped table-hover">
@@ -36,16 +32,25 @@
                 <td>{{ index + 1 }}</td>
                 <td>{{ message.sender ? message.sender.email : (message.receiver ? message.receiver.email : 'NA') }}</td>
                 <td>{{ message.subject }}</td>
-                <td>{{ message.message }}</td>
                 <td>
-                    <button @click="replyToMessage(message)" class="btn btn-info btn-sm">
-                        <i class="fas fa-reply"></i>
-                    </button>
-                    <button @click="deleteMessage(message.id)" class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    <span v-if="message.visible">{{ message.message }}</span>
+                    <span v-else>Message Hidden</span>
+                </td>
+                <td>
+                    <!-- Eye icon for inbox, with toggle functionality -->
+                    <template v-if="displayedMessages === receivedMessages">
+                        <button @click="toggleMessageVisibility(message)" class="btn btn-info btn-sm">
+                            <i :class="message.visible ? 'fa fa-eye' : 'fa fa-eye-slash'" aria-hidden="true"></i>
+                        </button>
+                    </template>
+                    <template v-else>
+                        <button @click="deleteMessage(message.id)" class="btn btn-outline-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </template>
                 </td>
             </tr>
+
             </tbody>
         </table>
 
@@ -54,14 +59,15 @@
             <div class="modal-dialog" role="document">
                 <form @submit.prevent="submitMessage" class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Compose Message</h5>
+                        <!-- Dynamic title with green color and send icon -->
+                        <h4 class="modal-title text-success">{{ composeModalTitle }} <i class="fas fa-paper-plane"></i></h4>
                         <button type="button" class="close" @click="closeModal('#composeModal')">
                             <span>&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" v-model="formData.subject" placeholder="Subject" class="form-control mt-2" required />
-                        <textarea v-model="formData.message" placeholder="Message" class="form-control mt-2" rows="4" required ></textarea>
+                        <input type="text" v-model="formData.subject" placeholder="Subject*" class="form-control mt-2" required />
+                        <textarea v-model="formData.message" placeholder="Message*" class="form-control mt-2" rows="4" required ></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" @click="closeModal('#composeModal')">Close</button>
@@ -70,6 +76,8 @@
                 </form>
             </div>
         </div>
+
+
 
         <!-- Search Results Modal -->
         <div class="modal fade" id="searchResultsModal" tabindex="-1" role="dialog">
@@ -190,7 +198,7 @@
                             method: 'delete',
                             urlSuffix: messageId,
                             callback: (response) => {
-                                _this.showToast(response.message);
+                                _this.showToast(response.data.message);
                             }
                         })
                     }
@@ -203,6 +211,15 @@
                 $('#searchResultsModal').modal('hide');
             }
         },
+        toggleMessageVisibility(message) {
+            message.visible = !message.visible; // Toggle the visibility
+        },
+        computed: {
+            composeModalTitle() {
+                return this.receiver ? `Message to ${this.receiver.email}` : 'Message';
+            }
+        }
+
     };
 </script>
 
@@ -214,6 +231,11 @@
     .result-item:hover {
         background-color: #f1f1f1;
     }
+    .button-spacing {
+        margin-right: 10px; /* Adjust the spacing as needed */
+    }
+
+
 </style>
 
 
