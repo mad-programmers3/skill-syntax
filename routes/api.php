@@ -40,12 +40,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
-// In routes/api.php
-Route::get('/messages', [MessageController::class, 'getMessages']);
-Route::post('/send-message', [MessageController::class, 'sendMessage']);
-Route::delete('/messages/{id}', [MessageController::class, 'deleteMessage']);
-
 Route::resource('tests', QuestionController::class);
 
 
@@ -59,6 +53,10 @@ Route::group(['prefix' => 'pages'], function () {
 Route::group(['prefix' => 'student'], function () {
     Route::get('wish-list', [StudentController::class, 'wishList']);
     Route::get('purchase', [StudentController::class, 'purchaseHistory']);
+    Route::get('messages', [MessageController::class, 'getMessages']);
+    Route::post('messages/send', [MessageController::class, 'sendMessage']);
+    Route::put('messages/hide/{id}', [MessageController::class, 'hideMessage']);
+    Route::delete('messages/{id}', [MessageController::class, 'deleteMessage']);
 });
 
 Route::put('courses/running-infos/{id}', [FrontendController::class, 'updateCourseRunning']);

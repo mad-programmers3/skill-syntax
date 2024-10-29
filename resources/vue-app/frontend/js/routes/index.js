@@ -90,7 +90,7 @@ const route = [
                 path: 'messages',
                 name:'student-messages',
                 component: studentMessagesComponent,
-                meta : {dataUrl : 'api/student/abc'},
+                meta : {dataUrl : 'api/student/messages'},
             },
             {
                 path: 'purchase-history',
