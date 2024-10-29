@@ -78,7 +78,8 @@ const route = [
             {
                 path: '/my-courses',
                 name:'student-myCourses',
-                component: studentMyCoursesComponent
+                component: studentMyCoursesComponent,
+                meta : {dataUrl : 'api/student/my-courses'}
             },
             {
                 path: 'wishlist',

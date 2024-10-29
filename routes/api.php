@@ -53,6 +53,7 @@ Route::group(['prefix' => 'pages'], function () {
 Route::group(['prefix' => 'student'], function () {
     Route::get('wish-list', [StudentController::class, 'wishList']);
     Route::get('purchase', [StudentController::class, 'purchaseHistory']);
+    Route::get('my-courses', [StudentController::class, 'myCourse']);
     Route::get('messages', [MessageController::class, 'getMessages']);
     Route::post('messages/send', [MessageController::class, 'sendMessage']);
     Route::put('messages/hide/{id}', [MessageController::class, 'hideMessage']);
