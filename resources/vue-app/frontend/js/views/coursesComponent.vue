@@ -25,7 +25,7 @@
                     <courses-component-util :courses="courses" />
 
                     <!-- Loading Indicator -->
-                    <div ref="loading"></div>
+                    <div v-if="scroll" ref="loading"></div>
                 </div>
             </div>
         </template>
@@ -60,6 +60,7 @@
                 courses: [],
                 categories: [],
                 selectedCats: [],
+                scroll: true,
                 page: 1,
             };
         },
@@ -91,7 +92,10 @@
                     data: {categories_id: this.selectedCats},
                     callback: (response) => {
                         const result = response.data ? response.data.result : null;
-                        if (!result) return;
+                        if (!result || _this.isEmptyData(result.data)) {
+                            _this.scroll = false;
+                            return;
+                        }
 
                         if (page === 1) _this.courses = [];
                         _this.courses.push(...result.data);

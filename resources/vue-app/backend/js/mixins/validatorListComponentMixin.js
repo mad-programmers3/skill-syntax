@@ -39,9 +39,9 @@ export default {
 
 
         // Validates a specific field when the user interacts with it
-        async validateField(e) {
+        async validateField(e, unique = false) {
             const field = e.target.name;
-            if (field === 'title') {
+            if (field === 'title' && unique) {
                 // Check for uniqueness by sending a request to the server
                 await this.checkUniqueTitle();
             }

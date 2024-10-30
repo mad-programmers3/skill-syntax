@@ -57,7 +57,7 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
-                    <input type="text" class="form-control" v-model="formData.title" v-validate="'required|min:3|max:255'" name="title" @input="validateField"/>
+                    <input type="text" class="form-control" v-model="formData.title" v-validate="'required|min:3|max:255'" name="title" @input="validateField($event, true)"/>
                 </label>
             </div>
             <div class="mb-3">

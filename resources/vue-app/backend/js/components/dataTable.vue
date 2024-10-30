@@ -10,7 +10,16 @@
                             <h4 class="card-title mb-0">{{ tableTitle }}</h4>
 
                             <!-- Button to trigger the modal, emits the 'open-modal' event -->
-                            <button v-if="showAddBtn" @click="()=>{this.openModal()}" class="btn btn-primary">
+                            <button v-if="showAddBtn"
+                                    @click="()=>{
+                                        this.openModal(
+                                            '#backendModal',
+                                            () => {
+                                                this.$store.commit('setFormData', initFormData)
+                                            }
+                                        )
+                                    }"
+                                    class="btn btn-primary">
                                 <i class="fa fa-plus"></i>
                             </button>
                         </div>
@@ -59,6 +68,10 @@
             tableHeading: {
                 type: [Array, Object], // Can be either an array or object
                 default: []
+            },
+            initFormData: {
+                type: Object,
+                default: () => ({ }),
             },
             showAddBtn: Boolean,
         },

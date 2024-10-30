@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('category_add')">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('question_add')">
             <tr v-for="(question, index) in dataList.data" style="font-size: 0.8rem" :key="question.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>{{ limitText(question.title) }}</td>
@@ -17,11 +17,11 @@
                 </td>
                 <td>
                     <!-- Edit button -->
-                    <button v-if="can('category_edit')" @click="onClickUpdate(question)" class="btn btn-primary btn-sm" :title="`Edit ${question.title}`" type="button">
+                    <button v-if="can('question_edit')" @click="onClickUpdate(question)" class="btn btn-primary btn-sm" :title="`Edit ${question.title}`" type="button">
                         <i class="fa fa-edit"></i>
                     </button>
                     <!-- Delete button -->
-                    <button v-if="can('category_delete')" @click="deleteItem(question.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${question.title}`" type="button">
+                    <button v-if="can('question_delete')" @click="deleteItem(question.id, dataList.current_page, perPage)" class="btn btn-danger btn-sm" :title="`Delete ${question.title}`" type="button">
                         <i class="fa fa-trash text-white"></i>
                     </button>
                 </td>

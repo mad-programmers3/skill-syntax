@@ -18,6 +18,7 @@ class QuestionsTableSeeder extends Seeder
             // Quiz 1 - 3 for course 1
             [
                 'quiz_id' => 1,
+                'user_id' => 1,
                 'title' => 'Which statement is used to exit a switch case in Java?',
                 'option_a' => 'exit',
                 'option_b' => 'return',
@@ -27,6 +28,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 1,
+                'user_id' => 1,
                 'title' => 'Which loop will always execute at least once, regardless of the condition?',
                 'option_a' => 'for loop',
                 'option_b' => 'while loop',
@@ -36,6 +38,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 1,
+                'user_id' => 1,
                 'title' => 'How many times will while(false) { System.out.print("Loop"); } execute?',
                 'option_a' => '0 times',
                 'option_b' => '1 time',
@@ -46,6 +49,7 @@ class QuestionsTableSeeder extends Seeder
 
             [
                 'quiz_id' => 2,
+                'user_id' => 1,
                 'title' => 'Which of these is not a valid type of loop in Java?',
                 'option_a' => 'for',
                 'option_b' => 'while',
@@ -55,6 +59,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 2,
+                'user_id' => 1,
                 'title' => 'To print a diamond pattern in Java, which type of loop combination is generally used?',
                 'option_a' => 'Only for',
                 'option_b' => 'Only while',
@@ -64,6 +69,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 2,
+                'user_id' => 1,
                 'title' => 'Which nested loop structure would you use to print a pyramid pattern?',
                 'option_a' => 'One for loop',
                 'option_b' => 'Two for loops',
@@ -74,6 +80,7 @@ class QuestionsTableSeeder extends Seeder
 
             [
                 'quiz_id' => 3,
+                'user_id' => 1,
                 'title' => 'Which of the following is not a Java feature?',
                 'option_a' => 'Object-Oriented',
                 'option_b' => 'Platform-Independent',
@@ -83,6 +90,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 3,
+                'user_id' => 1,
                 'title' => 'Which of these is the correct way to start a Java program?',
                 'option_a' => 'public class myProgram',
                 'option_b' => 'public static void main(String[] args)',
@@ -92,6 +100,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 3,
+                'user_id' => 1,
                 'title' => 'What is the default value of a boolean in Java?',
                 'option_a' => '0',
                 'option_b' => 'false',
@@ -103,6 +112,7 @@ class QuestionsTableSeeder extends Seeder
             // quiz 4 for course 1 less 1
             [
                 'quiz_id' => 4,
+                'user_id' => 1,
                 'title' => 'Which of the following is not a keyword in Java?',
                 'option_a' => 'class',
                 'option_b' => 'try',
@@ -112,6 +122,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 4,
+                'user_id' => 1,
                 'title' => 'What is the size of the int data type in Java?',
                 'option_a' => '8 bits',
                 'option_b' => '16 bits',
@@ -123,6 +134,7 @@ class QuestionsTableSeeder extends Seeder
             // Quiz 5 course 1 less 2
             [
                 'quiz_id' => 5,
+                'user_id' => 1,
                 'title' => 'Which of the following correctly declares a variable in Java?',
                 'option_a' => 'int num = 5;',
                 'option_b' => 'num int = 5;',
@@ -132,6 +144,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 5,
+                'user_id' => 1,
                 'title' => 'Which keyword is used to make a variable unchangeable in Java?',
                 'option_a' => 'static',
                 'option_b' => 'final',
@@ -141,6 +154,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 5,
+                'user_id' => 1,
                 'title' => 'What will System.out.print("Hello World"); output?',
                 'option_a' => 'Hello World',
                 'option_b' => 'Hello World (with a newline)',
@@ -150,6 +164,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 5,
+                'user_id' => 1,
                 'title' => 'Which of the following is the correct syntax to read input from a user in Java?',
                 'option_a' => 'Scanner input = new Scanner();',
                 'option_b' => 'int num = Scanner.nextInt();',
@@ -159,6 +174,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 5,
+                'user_id' => 1,
                 'title' => 'What data type should you use to store the number 123.456?',
                 'option_a' => 'int',
                 'option_b' => 'long',
@@ -170,6 +186,7 @@ class QuestionsTableSeeder extends Seeder
             // Quiz 6 for course 1 less 3
             [
                 'quiz_id' => 6,
+                'user_id' => 1,
                 'title' => 'What will if (true) { System.out.println("Hello"); } else { System.out.println("Bye"); } print?',
                 'option_a' => 'Hello',
                 'option_b' => 'Bye',
@@ -179,6 +196,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 6,
+                'user_id' => 1,
                 'title' => 'Which of the following operators is used for equality checking in Java?',
                 'option_a' => '=',
                 'option_b' => '==',
@@ -188,6 +206,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 6,
+                'user_id' => 1,
                 'title' => 'What will be the output of switch(3) { case 1: System.out.print("1"); case 3: System.out.print("3"); }?',
                 'option_a' => '1',
                 'option_b' => '3',
@@ -197,6 +216,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 6,
+                'user_id' => 1,
                 'title' => 'What will if (5 > 3) System.out.print("Yes"); else System.out.print("No"); print?',
                 'option_a' => 'Yes',
                 'option_b' => 'No',
@@ -206,6 +226,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 6,
+                'user_id' => 1,
                 'title' => 'Which statement is used to exit a switch case in Java?',
                 'option_a' => 'exit',
                 'option_b' => 'return',
@@ -218,6 +239,7 @@ class QuestionsTableSeeder extends Seeder
             // Quiz 7 for course 1 less 4
             [
                 'quiz_id' => 7,
+                'user_id' => 1,
                 'title' => 'What is the output of for(int i = 0; i < 3; i++) System.out.print(i);?',
                 'option_a' => '123',
                 'option_b' => '012',
@@ -227,6 +249,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 7,
+                'user_id' => 1,
                 'title' => 'Which loop will always execute at least once, regardless of the condition?',
                 'option_a' => 'for loop',
                 'option_b' => 'while loop',
@@ -236,6 +259,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 7,
+                'user_id' => 1,
                 'title' => 'How many times will while(false) { System.out.print("Loop"); } execute?',
                 'option_a' => '0 times',
                 'option_b' => '1 time',
@@ -245,6 +269,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 7,
+                'user_id' => 1,
                 'title' => 'What is the output of for(int i = 1; i <= 5; i++) { if(i == 3) break; System.out.print(i); }?',
                 'option_a' => '12345',
                 'option_b' => '12',
@@ -254,6 +279,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 7,
+                'user_id' => 1,
                 'title' => 'Which of these is not a valid type of loop in Java?',
                 'option_a' => 'for',
                 'option_b' => 'while',
@@ -265,6 +291,7 @@ class QuestionsTableSeeder extends Seeder
             // Quiz 8 for course 1 less 5
             [
                 'quiz_id' => 8,
+                'user_id' => 1,
                 'title' => 'Which nested loop structure would you use to print a pyramid pattern?',
                 'option_a' => 'One for loop',
                 'option_b' => 'Two for loops',
@@ -274,6 +301,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 8,
+                'user_id' => 1,
                 'title' => 'To print a pattern with rows of increasing numbers, which approach is most efficient?',
                 'option_a' => 'Nested loop with increment on i',
                 'option_b' => 'Nested loop with decrement on i',
@@ -287,6 +315,7 @@ class QuestionsTableSeeder extends Seeder
             // extra
             [
                 'quiz_id' => 9,
+                'user_id' => 1,
                 'title' => 'What does PHP stand for?',
                 'option_a' => 'Personal Home Page',
                 'option_b' => 'PHP: Hypertext Preprocessor',
@@ -296,6 +325,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 9,
+                'user_id' => 1,
                 'title' => 'Which of the following is a valid PHP variable?',
                 'option_a' => '$variable_name',
                 'option_b' => 'variable_name',
@@ -305,6 +335,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 9,
+                'user_id' => 1,
                 'title' => 'What is the correct syntax to output "Hello World" in JavaScript?',
                 'option_a' => 'echo "Hello World";',
                 'option_b' => 'print("Hello World");',
@@ -315,6 +346,7 @@ class QuestionsTableSeeder extends Seeder
 
             [
                 'quiz_id' => 10,
+                'user_id' => 1,
                 'title' => 'Which company developed Java?',
                 'option_a' => 'Microsoft',
                 'option_b' => 'Google',
@@ -324,6 +356,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 10,
+                'user_id' => 1,
                 'title' => 'Which keyword is used to create a class in Java?',
                 'option_a' => 'class',
                 'option_b' => 'public',
@@ -333,6 +366,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 10,
+                'user_id' => 1,
                 'title' => 'Which method must be implemented by all Java threads?',
                 'option_a' => 'start()',
                 'option_b' => 'run()',
@@ -343,6 +377,7 @@ class QuestionsTableSeeder extends Seeder
 
             [
                 'quiz_id' => 11,
+                'user_id' => 1,
                 'title' => 'What is the default port number for HTTP?',
                 'option_a' => '21',
                 'option_b' => '80',
@@ -352,6 +387,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 11,
+                'user_id' => 1,
                 'title' => 'Which protocol is used to send an email?',
                 'option_a' => 'FTP',
                 'option_b' => 'HTTP',
@@ -361,6 +397,7 @@ class QuestionsTableSeeder extends Seeder
             ],
             [
                 'quiz_id' => 11,
+                'user_id' => 1,
                 'title' => 'Which of the following is a NoSQL database?',
                 'option_a' => 'MySQL',
                 'option_b' => 'PostgreSQL',

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('sub_category_add')">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('sub_category_add')" :init-form-data="{status: 1}">
             <tr v-for="(data, index) in dataList.data" style="font-size: 0.8rem" :key="data.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>{{ limitText(data.title)}}</td>
@@ -31,7 +31,7 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
-                    <input type="text" class="form-control" placeholder="Category title here" v-model="formData.title" v-validate="'required|min:3|max:255'" name="title" @input="validateField"/>
+                    <input type="text" class="form-control" v-model="formData.title" v-validate="'required|min:3|max:255'" name="title" @input="validateField($event, true)"/>
                 </label>
             </div>
 

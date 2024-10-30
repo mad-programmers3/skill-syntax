@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('title');
             $table->integer('time_limit')->nullable();
             $table->tinyInteger('status')->default(0);

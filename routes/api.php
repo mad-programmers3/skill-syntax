@@ -108,7 +108,6 @@ Route::middleware('auth:api')->group(function () {
     Route::post('categories/check/title', [CategoryController::class, 'checkTitle']);
     Route::post('sub-categories/check/title', [SubCategoryController::class, 'checkTitle']);
     Route::post('courses/check/title', [CourseController::class, 'checkTitle']);
-    Route::post('lessons/check/title', [LessonController::class, 'checkTitle']);
 
     Route::group(['prefix' => 'config'], function () {
         Route::resource('roles', RoleController::class);

@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('lesson_add')">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('lesson_add')" :init-form-data="{status: 1}">
             <tr v-for="(lesson, index) in dataList.data" style="font-size: 0.8rem" :key="lesson.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>
@@ -54,13 +54,13 @@
             <div class="mb-3">
                 <label class="form-label w-100">
                     Title
-                    <input type="text" class="form-control" placeholder="Lesson title here" v-model="formData.title" v-validate="'required|min:3|max:255'" name="title" @input="validateField"/>
+                    <input type="text" class="form-control" v-model="formData.title" v-validate="'required|min:3|max:255'" name="title" @input="validateField"/>
                 </label>
             </div>
             <div class="mb-3">
                 <label class="form-label w-100">
                     Description
-                    <textarea type="text" class="form-control" placeholder="Lesson description here" v-model="formData.description" v-validate="'max:500'" name="description" @input="validateField"></textarea>
+                    <textarea type="text" class="form-control" v-model="formData.description" v-validate="'max:500'" name="description" @input="validateField"></textarea>
                 </label>
             </div>
 

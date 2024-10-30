@@ -33,6 +33,7 @@ class QuizzesTableSeeder extends Seeder
 
         foreach ($quizzes as $qui) {
             Quiz::create(array_merge($qui, [
+                'user_id' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
                 'time_limit' => getSetting('default_quiz_time_limit'),

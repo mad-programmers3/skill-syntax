@@ -29,6 +29,7 @@ class LessonsTableSeeder extends Seeder
         foreach ($lessons as $index => $title) {
             Lesson::create([
                 'course_id' => $course->id,
+                'user_id' => 1,
                 'title' => $title,
                 'description' => "This is the detailed description for {$title} of the course {$course->title}, covering essential concepts and exercises.",
                 'created_at' => now(),

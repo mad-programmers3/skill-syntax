@@ -2,9 +2,12 @@
 
 namespace App\Supports;
 
+use App\Models\Role;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 trait BaseCrudHelper
@@ -28,6 +31,12 @@ trait BaseCrudHelper
             $data = null;
             $perPage = $request->query('perPage');
             $query = $this->model->with($this->with);
+
+            $role = $role = Role::where('name', 'Instructor')->first();
+            if (Schema::hasColumn($query->getModel()->getTable(), 'user_id') && Auth::check() && Auth::user()->role_id == $role->id) {
+                // check also is present user_id clmn in table
+                $query->where('user_id', Auth::id());
+            }
             call($this->beforeFetch, $query);
             if ($this->orderBy) $query->orderBy($this->orderBy);
             if ($perPage && is_numeric($perPage) && $perPage > 0) $data = $query->paginate($perPage);
