@@ -91,6 +91,10 @@ export default {
             if (typeof data === 'object') return Object.keys(data).length === 0;
             return false;
         },
+        isFree(course) {
+            if (this.isEmptyData(course)) return true;
+            return parseFloat(course.price) === 0 ;
+        },
         objLen(obj) {
             if (!obj || obj !== 'object') return 0;
 

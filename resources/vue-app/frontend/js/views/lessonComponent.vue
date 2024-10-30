@@ -163,6 +163,19 @@
         mounted() {
             this.fetchLesson(this.lesson_id);
         },
+        destroyed() {
+            // check for is complete this lesson, if yes then update
+            if (this.isCompleteAllQuizzes(this.lesson.quizzes)) {
+                if (!this.isEmptyData(this.runningInfo.completed_lessons_id))
+                    this.runningInfo.completed_lessons_id.push(this.runningInfo.lesson_id);
+                this.httpReq({
+                    customUrl: 'api/lessons/running-infos',
+                    urlSuffix: this.runningInfo.id,
+                    method: 'put',
+                    data: {status: 1}, // 1 == completed
+                });
+            }
+        },
         computed: {
             lesson_id() {
                 return this.$route.params.id;

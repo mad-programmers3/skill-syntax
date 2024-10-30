@@ -26,10 +26,10 @@
                     <!-- Course Details (Duration and Students) -->
                     <div class="mb-2 d-flex align-items-center justify-content-between">
                         <span class="text-black">
-                            <i class="fas fa-clock primary-text2 mr-1"></i> {{ formatDaysToDuration(course.duration) }}
+                            <i class="fas fa-clock primary-text3 mr-1"></i> {{ formatDaysToDuration(course.duration) }}
                         </span>
                         <span class="text-black">
-                            <i class="fas fa-user-graduate primary-text2 mr-1"></i> {{ course.students_count}}/{{ course.sits }}
+                            <i class="fas fa-user-graduate primary-text3 mr-1"></i> {{ course.students_count ? course.students_count : 0}}/{{ course.sits }}
                         </span>
                     </div>
 
@@ -44,7 +44,7 @@
                         </div>
 
                         <span class="font-weight-bold ml-2" style="padding-left: 10px;">
-                        {{ course.price === 0 ? 'Free' : course.price+'tk'}}
+                        {{ isFree(course) ? 'Free' : course.price+'tk' }}
                         </span>
                     </div>
 

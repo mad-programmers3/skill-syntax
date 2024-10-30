@@ -4,7 +4,7 @@
             <!-- column -->
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body" style="min-height: 80vh">
                         <div class="d-flex justify-content-between align-items-center">
                             <!-- Table title is dynamically set based on the page title from route meta -->
                             <h4 class="card-title mb-0">{{ tableTitle }}</h4>

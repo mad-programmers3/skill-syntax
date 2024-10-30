@@ -30,19 +30,19 @@
                                     <ul class="list-unstyled">
                                         <li class="mb-3 d-flex justify-content-between align-items-center">
                                             <h5>Price:</h5>
-                                            <span class="text-muted">${{ course ? course.price : '' }}</span>
+                                            <span class="text-muted">{{ isFree(course) ? 'Free' : course.price+'tk' }}</span>
                                         </li>
                                         <li class="mb-3 d-flex justify-content-between align-items-center">
-                                            <h5>Seats Available:</h5>
-                                            <span class="text-muted">{{ course ? course.sits : '' }}</span>
+                                            <h5>Sits:</h5>
+                                            <span class="text-muted">{{ course.students_count }}/{{ course.sits}}</span>
                                         </li>
                                         <li class="mb-3 d-flex justify-content-between align-items-center">
                                             <h5>Start Date:</h5>
-                                            <span class="text-muted">{{ course ? course.start_date : '' }}</span>
+                                            <span class="text-muted">{{ course.start_date}}</span>
                                         </li>
                                         <li class="mb-3 d-flex justify-content-between align-items-center">
                                             <h5>End Date:</h5>
-                                            <span class="text-muted">{{ course ? course.end_date : '' }}</span>
+                                            <span class="text-muted">{{ course.end_date}}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -158,7 +158,7 @@
                         <div v-else-if="!auth.purchased_courses_id.includes(course.id)" class="mt-5 row justify-content-center">
                             <div class="card p-4 shadow-sm mb-4">
                                 <form @submit.prevent="purchaseCourse">
-                                    <div class="form-group mt-3">
+                                    <div v-if="!isFree(course)" class="form-group mt-3">
                                         <!-- Bkash Payment Method -->
                                         <div :class="['d-flex align-items-center form-check mb-3', {'primary-border-bold': selectedMethod === 1}]">
                                             <input class="form-check-input d-none" type="radio" id="method-1" :value="1" v-model="selectedMethod" required/>
@@ -180,7 +180,7 @@
 
                                     <!-- Purchase Button -->
                                     <button type="submit" class="mt-2 genric-btn primary2 circle arrow">
-                                        Get at {{ course.price }}tk
+                                        Get at {{ isFree(course) ? 'free' : course.price+'tk' }}
                                         <span class="ti-arrow-right"></span>
                                     </button>
                                 </form>
@@ -284,6 +284,7 @@
                             _this.runningInfo = response.data.result;
                             _this.showToast(response.data.message);
                             _this.auth.purchased_courses_id.push(_this.course.id);
+                            _this.course.students_count++;
                         }
                     }
                 });
@@ -298,7 +299,9 @@
                 return lastLesson.id === crrLessId;
             },
             canShowCertificate() {
-                if (this.isEmptyData(this.runningInfo) || !this.runningInfo.completed_lessons_id || !this.course.lessons || !this.course.quizzes) return false;
+                const currentDate = new Date();
+                const endDate = new Date(this.course.end_date);
+                if (currentDate < endDate || this.isEmptyData(this.runningInfo) || !this.runningInfo.completed_lessons_id || !this.course.lessons || !this.course.quizzes) return false;
 
                 const allLessonsCompleted = this.runningInfo.completed_lessons_id.length === this.course.lessons.length;
                 const allQuizzesCompleted = this.isCompleteAllQuizzes(this.course.quizzes);

@@ -21,7 +21,7 @@ class FrontendController extends Controller
     {
         try {
             $courseQuery = Course::where('status', 1)
-                ->with(['students', 'thumbnail:id,path', 'category:id,title', 'likes'])
+                ->with(['thumbnail:id,path', 'category:id,title', 'likes'])
                 ->withAvg('reviews', 'rating')
                 ->withCount('students');
 
@@ -64,7 +64,8 @@ class FrontendController extends Controller
                 ->when(!empty($categories), function($query) use ($categories) {
                     return $query->whereIn('category_id', $categories);
                 })
-                ->with(['students', 'thumbnail:id,path', 'category:id,title', 'likes', 'reviews'])
+                ->with(['thumbnail:id,path', 'category:id,title', 'likes', 'reviews'])
+                ->withCount('students')
                 ->withAvg('reviews', 'rating')
                 ->paginate(20);
 
@@ -79,7 +80,9 @@ class FrontendController extends Controller
     {
         try {
             $data = [];
-            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons.thumbnail:id,path', 'lessons.video:id,duration', 'course_reviews.review.user.avatar', 'quizzes.questions:id,quiz_id,title,option_a,option_b,option_c,option_d', 'user_purchased'])->findOrFail($id);
+            $data['course'] = Course::with(['thumbnail:id,path', 'category:id,title', 'likes', 'lessons.thumbnail:id,path', 'lessons.video:id,duration', 'course_reviews.review.user.avatar', 'quizzes.questions:id,quiz_id,title,option_a,option_b,option_c,option_d', 'user_purchased'])
+                ->withCount('students')
+                ->findOrFail($id);
             $data['likes'] = $data['course']->likes->pluck('user_id');
             $data['reviews'] = $data['course']->course_reviews->pluck('review');
 
