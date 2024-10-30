@@ -8,7 +8,7 @@
 
         <popular_courses :popular-courses="popularCourses"/>
 
-        <new_courses_section :new-courses="popularCourses"/>
+        <new_courses_section :new-courses="newCourses"/>
 
         <gap_registration_area/>
 
@@ -53,13 +53,15 @@
         data() {
             return {
                 popularCourses: [],
+                newCourses: [],
                 categories: [],
             };
         },
         mounted() {
             const _this = this;
             this.fetchData(this.urlGenerate(), (result) => {
-                _this.popularCourses = result['popular-courses'];
+                _this.popularCourses = result['popular_courses'];
+                _this.newCourses = result['new_courses'];
                 _this.categories = result['categories'];
             });
         }

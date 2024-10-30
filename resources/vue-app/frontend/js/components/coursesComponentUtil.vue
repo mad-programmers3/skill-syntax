@@ -14,6 +14,7 @@
                 <div class="course_content card-body">
                     <!-- Category Tag -->
                     <div style="padding-right: 15px">
+                        <span v-if="course.created_ago" class="tag mb-3 d-inline-block text-sm badge primary-bg3 p-1" style="font-size: 10px; text-transform: none;">{{ course.created_ago }}</span>
                         <span class="tag mb-3 d-inline-block text-sm badge badge-secondary p-1" style="font-size: 10px">{{course.category ? course.category.title : ''}}</span>
                     </div>
 
@@ -25,10 +26,10 @@
                     <!-- Course Details (Duration and Students) -->
                     <div class="mb-2 d-flex align-items-center justify-content-between">
                         <span class="text-black">
-                            <i class="fas fa-clock primary-text2 mr-1"></i> {{ course.duration }} 6 mon
+                            <i class="fas fa-clock primary-text2 mr-1"></i> {{ formatDaysToDuration(course.duration) }}
                         </span>
                         <span class="text-black">
-                            <i class="fas fa-user-graduate primary-text2 mr-1"></i> {{ !isEmptyData(course.students) ? course.students.length : 0}}/{{ course.sits }}
+                            <i class="fas fa-user-graduate primary-text2 mr-1"></i> {{ course.students_count}}/{{ course.sits }}
                         </span>
                     </div>
 

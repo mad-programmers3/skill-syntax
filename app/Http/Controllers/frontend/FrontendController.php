@@ -20,14 +20,39 @@ class FrontendController extends Controller
     public function index()
     {
         try {
-            $data = [];
-            $data['popular-courses'] = Course::where('status', 1)->with(['thumbnail:id,path', 'category:id,title', 'likes'])->take(8)->get();
-            $data['categories'] = Category::where('status', 1)->with(['thumbnail', 'courses:id,category_id,title'])->get();
+            $courseQuery = Course::where('status', 1)
+                ->with(['students', 'thumbnail:id,path', 'category:id,title', 'likes'])
+                ->withAvg('reviews', 'rating')
+                ->withCount('students');
+
+            $data = [
+                'popular_courses' => (clone $courseQuery)
+                    ->orderBy('students_count', 'desc')
+                    ->take(8)
+                    ->get(),
+
+                'new_courses' => $courseQuery
+                    ->orderBy('created_at', 'desc')
+                    ->take(8)
+                    ->get(),
+
+                'categories' => Category::where('status', 1)
+                    ->with(['thumbnail', 'courses:id,category_id,title'])
+                    ->get()
+            ];
+
+            $data['new_courses'] = $data['new_courses']->map(function ($course) {
+                $course->created_ago = $course->created_at_human;
+                return $course;
+            });
+
             return retRes('Fetched all data for home page', $data);
+
         } catch (Exception $e) {
             return retRes('Something went wrong', null, 500);
         }
     }
+
 
     // for courses page
     public function courses(Request $request)

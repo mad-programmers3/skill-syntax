@@ -111,7 +111,7 @@
                 <div class="w-50 pr-2">
                     <label class="form-label w-100">
                         Price
-                        <input type="number" class="form-control" placeholder="Enter course price" v-model="formData.price" v-validate="'required|decimal'" name="price" @input="validateField"/>
+                        <input type="number" step="0.01" min="0" class="form-control" placeholder="Enter course price" v-model="formData.price" v-validate="'required|decimal'" name="price" @input="validateField"/>
                     </label>
                 </div>
 

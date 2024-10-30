@@ -156,6 +156,16 @@ export default {
             return formattedTime.join(':'); // Join components with a colon
         },
 
+        formatDaysToDuration(days) {
+            if (this.isEmptyData(days)) return 'NA';
+
+            if (days >= 365) return Math.ceil(days / 365) + ' years'; // Convert days to years
+            if (days >= 30) return Math.ceil(days / 30) + ' months'; // Convert days to months
+            if (days >= 7) return Math.ceil(days / 7) + ' weeks'; // Convert days to weeks
+            return days + ' days'; // Keep days as-is
+
+        },
+
         // Authentication-related methods
 
         can(task) {

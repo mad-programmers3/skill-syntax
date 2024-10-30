@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,19 @@ class Course extends Model
         'user_id', 'category_id', 'sub_category_id', 'title', 'description', 'price', 'sits', 'start_date', 'end_date', 'thumbnail_id', 'status',
     ];
 
+    protected $appends = ['duration']; // Ensure duration is always included
 
+    public function getDurationAttribute()
+    {
+        $startDate = Carbon::parse($this->start_date);
+        $endDate = Carbon::parse($this->end_date);
+
+        return $startDate->diffInDays($endDate);
+    }
+    public function getCreatedAtHumanAttribute()
+    {
+        return Carbon::parse($this->created_at)->diffForHumans();
+    }
     // Relationship with User (Instructor)
     public function instructor()
     {
