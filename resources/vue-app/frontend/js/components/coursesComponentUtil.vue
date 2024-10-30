@@ -3,7 +3,7 @@
         <div v-for="course in courses" :key="course.id" class="col-lg-3 col-md-4 mb-4">
             <div class="single_course card h-80 w-100">
                 <div class="course_head position-relative">
-                    <img class="img-fluid rounded-top" :src="generateFileUrl(course.thumbnail)" alt="" style="object-fit: cover; height: 100%; width: 100%;">
+                    <img class="img-fluid rounded-top" :src="generateFileUrl(course.thumbnail)" alt="" style="object-fit: cover; height: 150px; width: 100%;">
 
                     <!-- Wishlist Remove Button -->
                     <button v-if="showCloseBtn"   @click="$emit('remove-course', course.id)"  class="wishlist-remove btn btn-danger btn-sm position-absolute">
