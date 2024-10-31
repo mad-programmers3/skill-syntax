@@ -22,7 +22,7 @@ class MyFileController extends Controller
             $file = $request->file('file');
             $key = $request->input('key');
             if ($file) {
-                $path = $file->store('uploads/'.$key, 'public'); // Store the file in public/images
+                $path = $file->store('uploads', 'public'); // Store the file in public/images
 
                 // Extract file information
                 $fileName = $file->getClientOriginalName();  // Get the original file name
