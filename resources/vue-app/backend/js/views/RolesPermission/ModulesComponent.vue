@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('module_add')">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('module_add')" :init-form-data="{status: 1, parent_id: 0}">
             <tr v-for="(module, index) in dataList.data" style="font-size: 0.8rem" :key="module.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td><i :class="module.icon"></i></td>

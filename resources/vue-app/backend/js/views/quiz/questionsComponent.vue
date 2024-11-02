@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('question_add')">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('question_add')" :init-form-data="{quiz_id: ''}">
             <tr v-for="(question, index) in dataList.data" style="font-size: 0.8rem" :key="question.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>{{ limitText(question.title) }}</td>

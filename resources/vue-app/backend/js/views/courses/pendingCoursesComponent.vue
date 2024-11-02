@@ -4,7 +4,7 @@
             <tr v-for="(course, index) in dataList.data" style="font-size: 0.8rem" :key="course.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>
-                    <img :src="generateFileUrl(course.thumbnail)" style="width: 50px; height: 35px; border-radius: 0%" alt="">
+                    <img :src="generateFileUrl(course.thumbnail, TYPE_COURSE)" style="width: 50px; height: 35px; border-radius: 0%" alt="">
                 </td>
                 <td>{{ limitText(course.title) }}</td>
                 <td>{{ limitText(course.category ? course.category.title : '' )}}</td>

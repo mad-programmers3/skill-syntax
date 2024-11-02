@@ -3226,7 +3226,7 @@ var render = function render() {
       }
     }, [_c("img", {
       attrs: {
-        src: _vm.generateFileUrl(course.thumbnail),
+        src: _vm.generateFileUrl(course.thumbnail, _vm.TYPE_COURSE),
         height: "70px",
         width: "100px"
       }
@@ -8269,7 +8269,7 @@ var render = function render() {
       padding: "10px"
     },
     attrs: {
-      src: _vm.course ? _vm.generateFileUrl(_vm.course.thumbnail) : _vm.asset(_vm.DEF_FILES[_vm.TYPE_COURSE]),
+      src: _vm.course ? _vm.generateFileUrl(_vm.course.thumbnail, _vm.TYPE_COURSE) : _vm.asset(_vm.DEF_FILES[_vm.TYPE_COURSE]),
       alt: "Course Thumbnail"
     }
   })]), _vm._v(" "), _c("div", {
@@ -10389,11 +10389,12 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       TYPE_LESSON_VIDEO: 2,
       TYPE_CATEGORY: 3,
       TYPE_USER: 4,
+      TYPE_UPLOAD: 5,
       DEF_FILES: {}
     };
   },
   created: function created() {
-    this.DEF_FILES = _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, this.TYPE_COURSE, 'images/course-def-thumbnail.jpg'), this.TYPE_LESSON, 'images/course-def-thumbnail.jpg'), this.TYPE_LESSON_VIDEO, 'images/course-def-thumbnail.jpg'), this.TYPE_CATEGORY, 'images/category-def-thumbnail.gif'), this.TYPE_USER, 'images/def-user-avatar.svg');
+    this.DEF_FILES = _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, this.TYPE_COURSE, 'images/course-def-thumbnail.jpg'), this.TYPE_LESSON, 'images/course-def-thumbnail.jpg'), this.TYPE_LESSON_VIDEO, 'images/course-def-thumbnail.jpg'), this.TYPE_CATEGORY, 'images/category-def-thumbnail.gif'), this.TYPE_USER, 'images/def-user-avatar.svg'), this.TYPE_UPLOAD, 'images/upload.jpg');
   },
   computed: {
     auth: function auth() {

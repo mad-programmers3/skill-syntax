@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('sub_category_add')" :init-form-data="{status: 1}">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('sub_category_add')" :init-form-data="{status: 1, category_id: ''}">
             <tr v-for="(data, index) in dataList.data" style="font-size: 0.8rem" :key="data.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>{{ limitText(data.title)}}</td>

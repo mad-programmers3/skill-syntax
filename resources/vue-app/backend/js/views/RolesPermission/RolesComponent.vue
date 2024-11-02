@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can(permPrefix +'_'+PERM_ADD)">
+        <data-table :table-heading="tableHeading" :show-add-btn="can(permPrefix +'_'+PERM_ADD)" :init-form-data="{status: 1}">
             <tr v-for="(role, index) in dataList.data" style="font-size: 0.8rem" :key="role.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>{{ limitText(role.name) }}</td>

@@ -28,6 +28,7 @@ export default {
             TYPE_LESSON_VIDEO: 2,
             TYPE_CATEGORY: 3,
             TYPE_USER: 4,
+            TYPE_UPLOAD: 5,
             DEF_FILES: {},
         };
     },
@@ -38,6 +39,7 @@ export default {
             [this.TYPE_LESSON_VIDEO]: 'images/course-def-thumbnail.jpg',
             [this.TYPE_CATEGORY]: 'images/category-def-thumbnail.gif',
             [this.TYPE_USER]: 'images/def-user-avatar.svg',
+            [this.TYPE_UPLOAD]: 'images/upload.jpg',
         };
     },
     computed: {

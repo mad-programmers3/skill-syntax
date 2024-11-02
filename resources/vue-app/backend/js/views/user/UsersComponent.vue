@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('user_add')">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('user_add')" :init-form-data="{role_id: ''}">
             <tr v-for="(user, index) in dataList.data" style="font-size: 0.8rem" :key="user.id">
                 <td>{{ (dataList.current_page - 1) * perPage + index + 1 }}</td>
                 <td>

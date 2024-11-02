@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('lesson_add')" :init-form-data="{status: 1}">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('lesson_add')" :init-form-data="{status: 1, course_id: ''}">
             <tr v-for="(lesson, index) in dataList.data" style="font-size: 0.8rem" :key="lesson.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>
@@ -51,44 +51,10 @@
         <Pagination v-if="dataList.last_page > 1" :currentPage="dataList.current_page" :lastPage="dataList.last_page"/>
 
         <validate-form-modal title="Lessons" width="700px" :current-page="dataList.current_page">
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    Title
-                    <input type="text" class="form-control" v-model="formData.title" v-validate="'required|min:3|max:255'" name="title" @input="validateField"/>
-                </label>
-            </div>
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    Description
-                    <textarea type="text" class="form-control" v-model="formData.description" v-validate="'max:500'" name="description" @input="validateField"></textarea>
-                </label>
-            </div>
-
-            <div class="mb-3">
-                <label class="form-label w-100">
-                    Courses
-                    <select class="form-control" v-model="formData.course_id" v-validate="'required'" name="course_id">
-                        <option value="" disabled>Select a course</option>
-                        <option v-for="course in courses" :key="course.id" :value="course.id">
-                            {{ course.title }}
-                        </option>
-                    </select>
-                </label>
-            </div>
-
-            <div class="mb-3">
-                <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0"/>
-                    <label class="custom-control-label" for="customSwitch">
-                        {{ formData.status ? 'Active' : 'Inactive' }}
-                    </label>
-                </div>
-            </div>
-
             <div class="mb-3 d-flex">
                 <div class="w-50 pr-2">
                     <div class="upload-area d-block m-auto" @click="$refs.thumbnailInput.click()">
-                        <img :src="generateFileUrl(formData.thumbnail, TYPE_LESSON)" alt="Preview" class="preview-img"/>
+                        <img :src="generateFileUrl(formData.thumbnail, TYPE_UPLOAD)" alt="Preview" class="preview-img"/>
                     </div>
                     <input type="file" ref="thumbnailInput" @change="handleFileUpload" class="file-input" accept="image/*"/>
                     <h5 class="text-center pt-1">Thumbnail</h5>
@@ -96,7 +62,7 @@
 
                 <div class="w-50 pl-2">
                     <div class="upload-area d-block m-auto" @click="$refs.videoInput.click()">
-                        <img v-if="isEmptyData(formData.video)" :src="generateFileUrl(null, TYPE_LESSON, TYPE_LESSON_VIDEO)" alt="Preview" class="preview-img">
+                        <img v-if="isEmptyData(formData.video)" :src="generateFileUrl(null, TYPE_UPLOAD)" alt="Preview" class="preview-img">
                         <video @click.prevent="" v-else ref="lessonVideo" class="rounded w-100" controls>
                             <source :src="generateFileUrl(formData.video, TYPE_LESSON_VIDEO)" type="video/mp4">
                             <source :src="generateFileUrl(formData.video, TYPE_LESSON_VIDEO)" type="video/webm">
@@ -109,6 +75,40 @@
                 </div>
             </div>
 
+            <div class="mb-3">
+                <label class="form-label w-100">
+                    Title
+                    <input type="text" class="form-control" v-model="formData.title" v-validate="'required|min:3|max:255'" name="title" @input="validateField"/>
+                </label>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label w-100">
+                    Course
+                    <select class="form-control" v-model="formData.course_id" v-validate="'required'" name="course_id">
+                        <option value="" disabled>Select a course</option>
+                        <option v-for="course in courses" :key="course.id" :value="course.id">
+                            {{ course.title }}
+                        </option>
+                    </select>
+                </label>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label w-100">
+                    Description
+                    <vue2-tinymce-editor v-model="formData.description"></vue2-tinymce-editor>
+                </label>
+            </div>
+
+            <div>
+                <div class="custom-control custom-switch">
+                    <input type="checkbox" class="custom-control-input" id="customSwitch" v-model="formData.status" :true-value="1" :false-value="0"/>
+                    <label class="custom-control-label" for="customSwitch">
+                        {{ formData.status ? 'Active' : 'Inactive' }}
+                    </label>
+                </div>
+            </div>
         </validate-form-modal>
     </div>
 </template>
@@ -119,10 +119,11 @@
     import Pagination from "../../components/Pagination"; // Import your Pagination component
     import validatorListComponentMixin from "../../mixins/validatorListComponentMixin";
     import ShowDetailsModal from "../../components/showDetailsModal";
+    import Vue2TinymceEditor from "vue2-tinymce-editor/src/lib-components/Vue2TinymceEditor";
 
     export default {
         name: "lessonsComponent",
-        components: {ShowDetailsModal, ValidateFormModal, DataTable, Pagination },
+        components: {Vue2TinymceEditor, ShowDetailsModal, ValidateFormModal, DataTable, Pagination },
         mixins: [validatorListComponentMixin],
         data() {
             return {

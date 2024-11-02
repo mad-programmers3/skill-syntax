@@ -1,6 +1,6 @@
 <template>
     <div>
-        <data-table :table-heading="tableHeading" :show-add-btn="can('permission_add')">
+        <data-table :table-heading="tableHeading" :show-add-btn="can('permission_add')" :init-form-data="{status: 1, module_id: ''}">
             <tr v-for="(permission, index) in dataList.data" style="font-size: 0.8rem" :key="permission.id">
                 <td>{{ (dataList.current_page - 1) * perPage  + index + 1 }}</td>
                 <td>{{ limitText(permission.name) }}</td>

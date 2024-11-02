@@ -1109,14 +1109,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Pagination__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/Pagination */ "./resources/vue-app/backend/js/components/Pagination.vue");
 /* harmony import */ var _mixins_validatorListComponentMixin__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/validatorListComponentMixin */ "./resources/vue-app/backend/js/mixins/validatorListComponentMixin.js");
 /* harmony import */ var _components_showDetailsModal__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/showDetailsModal */ "./resources/vue-app/backend/js/components/showDetailsModal.vue");
+/* harmony import */ var vue2_tinymce_editor_src_lib_components_Vue2TinymceEditor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue2-tinymce-editor/src/lib-components/Vue2TinymceEditor */ "./node_modules/vue2-tinymce-editor/src/lib-components/Vue2TinymceEditor.vue");
 
 
  // Import your Pagination component
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "lessonsComponent",
   components: {
+    Vue2TinymceEditor: vue2_tinymce_editor_src_lib_components_Vue2TinymceEditor__WEBPACK_IMPORTED_MODULE_5__["default"],
     ShowDetailsModal: _components_showDetailsModal__WEBPACK_IMPORTED_MODULE_4__["default"],
     ValidateFormModal: _components_validateFormModal__WEBPACK_IMPORTED_MODULE_1__["default"],
     DataTable: _components_dataTable__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -2195,7 +2198,7 @@ var render = function render() {
     attrs: {
       type: "submit"
     }
-  }, [_vm._v("Save changes")])])])])])]);
+  }, [_vm._v("Save")])])])])])]);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -2360,7 +2363,7 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can("course_review_add")
+      "show-add-btn": false
     }
   }, _vm._l(_vm.dataList.data, function (data, index) {
     return _c("tr", {
@@ -2477,7 +2480,7 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can("lesson_review_add")
+      "show-add-btn": false
     }
   }, _vm._l(_vm.dataList.data, function (data, index) {
     return _c("tr", {
@@ -2594,7 +2597,7 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can("review_add")
+      "show-add-btn": false
     }
   }, _vm._l(_vm.dataList.data, function (data, index) {
     return _c("tr", {
@@ -2711,7 +2714,7 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can("testimonial_add")
+      "show-add-btn": false
     }
   }, _vm._l(_vm.dataList.data, function (data, index) {
     return _c("tr", {
@@ -2828,7 +2831,11 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can("module_add")
+      "show-add-btn": _vm.can("module_add"),
+      "init-form-data": {
+        status: 1,
+        parent_id: 0
+      }
     }
   }, _vm._l(_vm.dataList.data, function (module, index) {
     return _c("tr", {
@@ -3130,7 +3137,11 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can("permission_add")
+      "show-add-btn": _vm.can("permission_add"),
+      "init-form-data": {
+        status: 1,
+        module_id: ""
+      }
     }
   }, _vm._l(_vm.dataList.data, function (permission, index) {
     return _c("tr", {
@@ -3499,7 +3510,10 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can(_vm.permPrefix + "_" + _vm.PERM_ADD)
+      "show-add-btn": _vm.can(_vm.permPrefix + "_" + _vm.PERM_ADD),
+      "init-form-data": {
+        status: 1
+      }
     }
   }, _vm._l(_vm.dataList.data, function (role, index) {
     return _c("tr", {
@@ -4082,7 +4096,11 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can("course_add")
+      "show-add-btn": _vm.can("course_add"),
+      "init-form-data": {
+        category_id: "",
+        sub_category_id: ""
+      }
     }
   }, _vm._l(_vm.dataList.data, function (course, index) {
     return _c("tr", {
@@ -4097,7 +4115,7 @@ var render = function render() {
         "border-radius": "0%"
       },
       attrs: {
-        src: _vm.generateFileUrl(course.thumbnail),
+        src: _vm.generateFileUrl(course.thumbnail, _vm.TYPE_COURSE),
         alt: ""
       }
     })]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.limitText(course.title)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.limitText(course.category ? course.category.title : "")))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDecimal(course.price)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(course.sits) + "/00")]), _vm._v(" "), _c("td", [_vm._v("\n                " + _vm._s(course.quizzes ? course.quizzes.length : "") + "\n\n                "), _c("i", {
@@ -4201,7 +4219,30 @@ var render = function render() {
       width: "700px",
       "current-page": _vm.dataList.current_page
     }
-  }, [_c("div", {
+  }, [_c("div", [_c("div", {
+    staticClass: "upload-area d-block m-auto",
+    on: {
+      click: function click() {
+        _vm.$refs.fileInput.click();
+      }
+    }
+  }, [_c("img", {
+    staticClass: "preview-img",
+    attrs: {
+      src: _vm.generateFileUrl(_vm.formData.thumbnail, _vm.TYPE_UPLOAD),
+      alt: "Preview"
+    }
+  })]), _vm._v(" "), _c("input", {
+    ref: "fileInput",
+    staticClass: "file-input",
+    attrs: {
+      type: "file",
+      accept: "image/*"
+    },
+    on: {
+      change: _vm.handleFileUpload
+    }
+  })]), _vm._v(" "), _c("div", {
     staticClass: "mb-3"
   }, [_c("label", {
     staticClass: "form-label w-100"
@@ -4234,18 +4275,6 @@ var render = function render() {
       }]
     }
   })])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label w-100"
-  }, [_vm._v("\n                Description\n                "), _c("vue2-tinymce-editor", {
-    model: {
-      value: _vm.formData.description,
-      callback: function callback($$v) {
-        _vm.$set(_vm.formData, "description", $$v);
-      },
-      expression: "formData.description"
-    }
-  })], 1)]), _vm._v(" "), _c("div", {
     staticClass: "mb-3 d-flex"
   }, [_c("div", {
     staticClass: "w-50 pr-2"
@@ -4499,30 +4528,19 @@ var render = function render() {
     attrs: {
       "for": "customSwitch"
     }
-  }, [_vm._v("\n                    " + _vm._s(_vm.formData.status ? "Active" : "Inactive") + "\n                ")])])]) : _vm._e(), _vm._v(" "), _c("div", [_c("div", {
-    staticClass: "upload-area d-block m-auto",
-    on: {
-      click: function click() {
-        _vm.$refs.fileInput.click();
-      }
+  }, [_vm._v("\n                    " + _vm._s(_vm.formData.status ? "Active" : "Inactive") + "\n                ")])])]) : _vm._e(), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label w-100"
+  }, [_vm._v("\n                Description\n                "), _c("vue2-tinymce-editor", {
+    model: {
+      value: _vm.formData.description,
+      callback: function callback($$v) {
+        _vm.$set(_vm.formData, "description", $$v);
+      },
+      expression: "formData.description"
     }
-  }, [_c("img", {
-    staticClass: "preview-img",
-    attrs: {
-      src: _vm.generateFileUrl(_vm.formData.thumbnail),
-      alt: "Preview"
-    }
-  })]), _vm._v(" "), _c("input", {
-    ref: "fileInput",
-    staticClass: "file-input",
-    attrs: {
-      type: "file",
-      accept: "image/*"
-    },
-    on: {
-      change: _vm.handleFileUpload
-    }
-  })])])], 1);
+  })], 1)])])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -4550,7 +4568,8 @@ var render = function render() {
       "table-heading": _vm.tableHeading,
       "show-add-btn": _vm.can("lesson_add"),
       "init-form-data": {
-        status: 1
+        status: 1,
+        course_id: ""
       }
     }
   }, _vm._l(_vm.dataList.data, function (lesson, index) {
@@ -4671,153 +4690,6 @@ var render = function render() {
       "current-page": _vm.dataList.current_page
     }
   }, [_c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label w-100"
-  }, [_vm._v("\n                Title\n                "), _c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.formData.title,
-      expression: "formData.title"
-    }, {
-      name: "validate",
-      rawName: "v-validate",
-      value: "required|min:3|max:255",
-      expression: "'required|min:3|max:255'"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "title"
-    },
-    domProps: {
-      value: _vm.formData.title
-    },
-    on: {
-      input: [function ($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.formData, "title", $event.target.value);
-      }, _vm.validateField]
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label w-100"
-  }, [_vm._v("\n                Description\n                "), _c("textarea", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.formData.description,
-      expression: "formData.description"
-    }, {
-      name: "validate",
-      rawName: "v-validate",
-      value: "max:500",
-      expression: "'max:500'"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      type: "text",
-      name: "description"
-    },
-    domProps: {
-      value: _vm.formData.description
-    },
-    on: {
-      input: [function ($event) {
-        if ($event.target.composing) return;
-        _vm.$set(_vm.formData, "description", $event.target.value);
-      }, _vm.validateField]
-    }
-  })])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3"
-  }, [_c("label", {
-    staticClass: "form-label w-100"
-  }, [_vm._v("\n                Courses\n                "), _c("select", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.formData.course_id,
-      expression: "formData.course_id"
-    }, {
-      name: "validate",
-      rawName: "v-validate",
-      value: "required",
-      expression: "'required'"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      name: "course_id"
-    },
-    on: {
-      change: function change($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
-          return o.selected;
-        }).map(function (o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val;
-        });
-        _vm.$set(_vm.formData, "course_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
-      }
-    }
-  }, [_c("option", {
-    attrs: {
-      value: "",
-      disabled: ""
-    }
-  }, [_vm._v("Select a course")]), _vm._v(" "), _vm._l(_vm.courses, function (course) {
-    return _c("option", {
-      key: course.id,
-      domProps: {
-        value: course.id
-      }
-    }, [_vm._v("\n                        " + _vm._s(course.title) + "\n                    ")]);
-  })], 2)])]), _vm._v(" "), _c("div", {
-    staticClass: "mb-3"
-  }, [_c("div", {
-    staticClass: "custom-control custom-switch"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.formData.status,
-      expression: "formData.status"
-    }],
-    staticClass: "custom-control-input",
-    attrs: {
-      type: "checkbox",
-      id: "customSwitch",
-      "true-value": 1,
-      "false-value": 0
-    },
-    domProps: {
-      checked: Array.isArray(_vm.formData.status) ? _vm._i(_vm.formData.status, null) > -1 : _vm._q(_vm.formData.status, 1)
-    },
-    on: {
-      change: function change($event) {
-        var $$a = _vm.formData.status,
-          $$el = $event.target,
-          $$c = $$el.checked ? 1 : 0;
-        if (Array.isArray($$a)) {
-          var $$v = null,
-            $$i = _vm._i($$a, $$v);
-          if ($$el.checked) {
-            $$i < 0 && _vm.$set(_vm.formData, "status", $$a.concat([$$v]));
-          } else {
-            $$i > -1 && _vm.$set(_vm.formData, "status", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
-          }
-        } else {
-          _vm.$set(_vm.formData, "status", $$c);
-        }
-      }
-    }
-  }), _vm._v(" "), _c("label", {
-    staticClass: "custom-control-label",
-    attrs: {
-      "for": "customSwitch"
-    }
-  }, [_vm._v("\n                    " + _vm._s(_vm.formData.status ? "Active" : "Inactive") + "\n                ")])])]), _vm._v(" "), _c("div", {
     staticClass: "mb-3 d-flex"
   }, [_c("div", {
     staticClass: "w-50 pr-2"
@@ -4831,7 +4703,7 @@ var render = function render() {
   }, [_c("img", {
     staticClass: "preview-img",
     attrs: {
-      src: _vm.generateFileUrl(_vm.formData.thumbnail, _vm.TYPE_LESSON),
+      src: _vm.generateFileUrl(_vm.formData.thumbnail, _vm.TYPE_UPLOAD),
       alt: "Preview"
     }
   })]), _vm._v(" "), _c("input", {
@@ -4858,7 +4730,7 @@ var render = function render() {
   }, [_vm.isEmptyData(_vm.formData.video) ? _c("img", {
     staticClass: "preview-img",
     attrs: {
-      src: _vm.generateFileUrl(null, _vm.TYPE_LESSON, _vm.TYPE_LESSON_VIDEO),
+      src: _vm.generateFileUrl(null, _vm.TYPE_UPLOAD),
       alt: "Preview"
     }
   }) : _c("video", {
@@ -4901,7 +4773,134 @@ var render = function render() {
     }
   }), _vm._v(" "), _c("h5", {
     staticClass: "text-center pt-1"
-  }, [_vm._v("Video")])])])])], 1);
+  }, [_vm._v("Video")])])]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label w-100"
+  }, [_vm._v("\n                Title\n                "), _c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.title,
+      expression: "formData.title"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: "required|min:3|max:255",
+      expression: "'required|min:3|max:255'"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      type: "text",
+      name: "title"
+    },
+    domProps: {
+      value: _vm.formData.title
+    },
+    on: {
+      input: [function ($event) {
+        if ($event.target.composing) return;
+        _vm.$set(_vm.formData, "title", $event.target.value);
+      }, _vm.validateField]
+    }
+  })])]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label w-100"
+  }, [_vm._v("\n                Course\n                "), _c("select", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.course_id,
+      expression: "formData.course_id"
+    }, {
+      name: "validate",
+      rawName: "v-validate",
+      value: "required",
+      expression: "'required'"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      name: "course_id"
+    },
+    on: {
+      change: function change($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function (o) {
+          return o.selected;
+        }).map(function (o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val;
+        });
+        _vm.$set(_vm.formData, "course_id", $event.target.multiple ? $$selectedVal : $$selectedVal[0]);
+      }
+    }
+  }, [_c("option", {
+    attrs: {
+      value: "",
+      disabled: ""
+    }
+  }, [_vm._v("Select a course")]), _vm._v(" "), _vm._l(_vm.courses, function (course) {
+    return _c("option", {
+      key: course.id,
+      domProps: {
+        value: course.id
+      }
+    }, [_vm._v("\n                        " + _vm._s(course.title) + "\n                    ")]);
+  })], 2)])]), _vm._v(" "), _c("div", {
+    staticClass: "mb-3"
+  }, [_c("label", {
+    staticClass: "form-label w-100"
+  }, [_vm._v("\n                Description\n                "), _c("vue2-tinymce-editor", {
+    model: {
+      value: _vm.formData.description,
+      callback: function callback($$v) {
+        _vm.$set(_vm.formData, "description", $$v);
+      },
+      expression: "formData.description"
+    }
+  })], 1)]), _vm._v(" "), _c("div", [_c("div", {
+    staticClass: "custom-control custom-switch"
+  }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.formData.status,
+      expression: "formData.status"
+    }],
+    staticClass: "custom-control-input",
+    attrs: {
+      type: "checkbox",
+      id: "customSwitch",
+      "true-value": 1,
+      "false-value": 0
+    },
+    domProps: {
+      checked: Array.isArray(_vm.formData.status) ? _vm._i(_vm.formData.status, null) > -1 : _vm._q(_vm.formData.status, 1)
+    },
+    on: {
+      change: function change($event) {
+        var $$a = _vm.formData.status,
+          $$el = $event.target,
+          $$c = $$el.checked ? 1 : 0;
+        if (Array.isArray($$a)) {
+          var $$v = null,
+            $$i = _vm._i($$a, $$v);
+          if ($$el.checked) {
+            $$i < 0 && _vm.$set(_vm.formData, "status", $$a.concat([$$v]));
+          } else {
+            $$i > -1 && _vm.$set(_vm.formData, "status", $$a.slice(0, $$i).concat($$a.slice($$i + 1)));
+          }
+        } else {
+          _vm.$set(_vm.formData, "status", $$c);
+        }
+      }
+    }
+  }), _vm._v(" "), _c("label", {
+    staticClass: "custom-control-label",
+    attrs: {
+      "for": "customSwitch"
+    }
+  }, [_vm._v("\n                    " + _vm._s(_vm.formData.status ? "Active" : "Inactive") + "\n                ")])])])])], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -4942,7 +4941,7 @@ var render = function render() {
         "border-radius": "0%"
       },
       attrs: {
-        src: _vm.generateFileUrl(course.thumbnail),
+        src: _vm.generateFileUrl(course.thumbnail, _vm.TYPE_COURSE),
         alt: ""
       }
     })]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.limitText(course.title)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.limitText(course.category ? course.category.title : "")))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(_vm.formatDecimal(course.price)))]), _vm._v(" "), _c("td", [_vm._v(_vm._s(course.sits) + "/00")]), _vm._v(" "), _c("td", [_vm.can("course_delete") ? _c("button", {
@@ -5007,7 +5006,8 @@ var render = function render() {
       "table-heading": _vm.tableHeading,
       "show-add-btn": _vm.can("sub_category_add"),
       "init-form-data": {
-        status: 1
+        status: 1,
+        category_id: ""
       }
     }
   }, _vm._l(_vm.dataList.data, function (data, index) {
@@ -5199,7 +5199,10 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can("question_add")
+      "show-add-btn": _vm.can("question_add"),
+      "init-form-data": {
+        quiz_id: ""
+      }
     }
   }, _vm._l(_vm.dataList.data, function (question, index) {
     return _c("tr", {
@@ -5749,7 +5752,10 @@ var render = function render() {
   return _c("div", [_c("data-table", {
     attrs: {
       "table-heading": _vm.tableHeading,
-      "show-add-btn": _vm.can("user_add")
+      "show-add-btn": _vm.can("user_add"),
+      "init-form-data": {
+        role_id: ""
+      }
     }
   }, _vm._l(_vm.dataList.data, function (user, index) {
     return _c("tr", {
@@ -7212,11 +7218,12 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       TYPE_LESSON_VIDEO: 2,
       TYPE_CATEGORY: 3,
       TYPE_USER: 4,
+      TYPE_UPLOAD: 5,
       DEF_FILES: {}
     };
   },
   created: function created() {
-    this.DEF_FILES = _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, this.TYPE_COURSE, 'images/course-def-thumbnail.jpg'), this.TYPE_LESSON, 'images/course-def-thumbnail.jpg'), this.TYPE_LESSON_VIDEO, 'images/course-def-thumbnail.jpg'), this.TYPE_CATEGORY, 'images/category-def-thumbnail.gif'), this.TYPE_USER, 'images/def-user-avatar.svg');
+    this.DEF_FILES = _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({}, this.TYPE_COURSE, 'images/course-def-thumbnail.jpg'), this.TYPE_LESSON, 'images/course-def-thumbnail.jpg'), this.TYPE_LESSON_VIDEO, 'images/course-def-thumbnail.jpg'), this.TYPE_CATEGORY, 'images/category-def-thumbnail.gif'), this.TYPE_USER, 'images/def-user-avatar.svg'), this.TYPE_UPLOAD, 'images/upload.jpg');
   },
   computed: {
     auth: function auth() {
